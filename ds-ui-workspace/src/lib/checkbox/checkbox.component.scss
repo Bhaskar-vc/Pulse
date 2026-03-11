@@ -1,0 +1,82 @@
+// Checkbox — matches Figma node 1427:364
+// Checked border: #6941c6 (secondary-700)
+// Unchecked border: #d0d5dd (border-neutral-300)
+// Shadow: 0px 4px 8px -2px rgba(16,24,40,.1), 0px 2px 4px -2px rgba(16,24,40,.06)
+
+.ds-checkbox {
+  display:     inline-flex;
+  align-items: flex-start;
+  gap:         10px;
+  cursor:      pointer;
+  user-select: none;
+
+  // ── Hidden native input ──────────────────────────────────
+  &__input {
+    position: absolute;
+    opacity:  0;
+    width:    0;
+    height:   0;
+    pointer-events: none;
+  }
+
+  // ── Visual box ──────────────────────────────────────────
+  &__box {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    flex-shrink:     0;
+    width:           20px;
+    height:          20px;
+    border:          2px solid var(--border-default); // #d0d5dd
+    border-radius:   var(--radius-xs);                // 4px
+    background:      var(--color-white);
+    box-shadow:      var(--shadow-md);
+    transition:      border-color 0.15s ease, background 0.15s ease;
+    margin-top:      1px;
+  }
+
+  &__check {
+    width:  12px;
+    height: 12px;
+    color:  var(--color-white);
+    flex-shrink: 0;
+  }
+
+  // ── Label area ──────────────────────────────────────────
+  &__content {
+    display:        flex;
+    flex-direction: column;
+    gap:            2px;
+  }
+
+  &__label {
+    font-family:  var(--font-family);
+    font-size:    var(--font-size-sm);
+    font-weight:  var(--font-weight-medium);
+    line-height:  var(--line-height-sm);
+    color:        var(--text-primary);
+  }
+
+  &__description {
+    font-family: var(--font-family);
+    font-size:   var(--font-size-xs);
+    line-height: var(--line-height-xs);
+    color:       var(--text-secondary);
+  }
+
+  // ── States ──────────────────────────────────────────────
+  &--checked .ds-checkbox__box,
+  &--indeterminate .ds-checkbox__box {
+    background:   var(--color-primary-700); // #6941c6
+    border-color: var(--color-primary-700);
+  }
+
+  &:hover:not(.ds-checkbox--disabled) .ds-checkbox__box {
+    border-color: var(--color-primary-600);
+  }
+
+  &--disabled {
+    cursor:  not-allowed;
+    opacity: 0.45;
+  }
+}
