@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { ShowcaseComponent } from '../showcase/showcase.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ShowcaseComponent],
-  template: `<ds-showcase />`
+  template: `
+    <iframe
+      src="/create-survey.html"
+      style="width:100%;height:100vh;border:none;display:block">
+    </iframe>
+  `
 })
 export class App {}

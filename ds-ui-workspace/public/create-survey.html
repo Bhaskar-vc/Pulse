@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1512"/>
+<title>Create Surveys – Vantage Pulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+a{text-decoration:none;color:inherit}
+
+/* ── NAVBAR ─────────────────────────────────────────────── */
+.navbar{position:fixed;top:0;left:0;right:0;height:64px;background:transparent;border-bottom:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:200}
+.navbar-left{display:flex;align-items:center;gap:12px}
+.vc-logo-group{display:flex;align-items:center;gap:10px}
+.vc-logo{display:flex;align-items:center;gap:8px}
+.vc-logo-text{font-size:13px;font-weight:700;color:#1d2939;letter-spacing:.3px}
+.sidebar-toggle{display:flex;align-items:center;justify-content:center;padding:4px;border:none;background:none;cursor:pointer;border-radius:6px;flex-shrink:0}
+.sidebar-toggle:hover{background:rgba(92,108,124,.12)}
+.nav-divider{width:1px;height:28px;background:#e4e7ec;margin:0 4px}
+.vp-brand{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:#6941c6;padding:6px 16px 6px 10px;border-radius:50px}
+.vp-brand svg{width:20px;height:20px;color:#6941c6}
+.navbar-right{display:flex;align-items:center;gap:16px}
+.nav-icons{display:flex;align-items:center;gap:16px}
+.nav-icon-btn{width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#667085;cursor:pointer}
+.nav-icon-btn svg{width:22px;height:22px}
+.nav-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;cursor:pointer;background:#e9d7fe;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#6941c6;flex-shrink:0}
+.nav-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar{position:fixed;top:64px;left:0;width:252px;height:calc(100vh - 64px);background:transparent;border-right:none;display:flex;flex-direction:column;padding:16px 12px 24px;z-index:100;overflow-y:auto;transition:width .22s ease}
+
+.sidebar-create-btn{display:flex;align-items:center;gap:8px;background:#7f56d9;color:#fff;font-size:14px;font-weight:500;padding:8px 16px 8px 12px;border-radius:8px;cursor:pointer;width:100%;margin-bottom:24px;transition:background .15s;border:none;overflow:hidden;white-space:nowrap}
+.sidebar-create-btn:hover{background:#6941c6}
+.sidebar-create-btn svg{width:20px;height:20px;flex-shrink:0}
+
+/* Collapsed sidebar */
+.sidebar.collapsed{width:64px;padding:12px 8px;align-items:center}
+.sidebar.collapsed .sidebar-create-btn{padding:8px;width:40px;min-width:unset;border-radius:10px;justify-content:center;margin-bottom:16px}
+.sidebar.collapsed .sidebar-create-btn .btn-text{display:none}
+.sidebar.collapsed .nav-item{justify-content:center;padding:10px 0;gap:0}
+.sidebar.collapsed .nav-item-text,.sidebar.collapsed .nav-item-chevron,.sidebar.collapsed .nav-sub,.sidebar.collapsed .nav-pro-badge{display:none}
+.sidebar.collapsed .nav-item-icon{width:20px;height:20px}
+.sidebar.collapsed .nav-item-icon svg{width:20px;height:20px}
+
+.sidebar-nav{display:flex;flex-direction:column;gap:2px;width:100%}
+
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;width:100%;transition:background .15s;font-size:12px;font-weight:500;color:#545470}
+.nav-item:hover{background:#f9fafb}
+.nav-item.active{color:#6941c6}
+.nav-item-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-item-icon svg{width:16px;height:16px}
+.nav-item-text{flex:1;font-size:12px;font-weight:500}
+.nav-item-chevron{width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:#98a2b3;flex-shrink:0}
+.nav-item-chevron svg{width:16px;height:16px}
+.nav-item-chevron.open svg{transform:rotate(90deg)}
+
+.nav-sub{display:flex;flex-direction:column;gap:0;position:relative;margin-left:13px}
+.nav-sub::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:#e4e7ec}
+.nav-sub-item{display:flex;align-items:center;padding:8px 10px 8px 18px;font-size:12px;font-weight:500;color:#545470;cursor:pointer;border-radius:8px;transition:background .15s}
+.nav-sub-item:hover{background:#f9fafb}
+.nav-sub-item.active{color:#6941c6}
+
+.nav-pro-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:400;color:#fff;background:linear-gradient(150deg,#dc6803 7%,#7f56d9 71%);line-height:16px}
+
+/* ── MAIN LAYOUT ─────────────────────────────────────────── */
+.main{margin-top:64px;margin-left:252px;padding:0 16px 16px 0;height:calc(100vh - 64px);overflow:hidden;display:flex;flex-direction:column;transition:margin-left .22s ease}
+.main-card{background:#fff;border-radius:18px;box-shadow:0 4px 8px -2px rgba(16,24,40,.1),0 2px 4px -2px rgba(16,24,40,.06);overflow:hidden;flex:1;display:flex;flex-direction:column;min-height:0}
+
+.card-header{padding:20px 30px;border-bottom:1px solid #e1e5ea;display:flex;align-items:center}
+.card-header h1{font-size:16px;font-weight:600;color:#29294c;letter-spacing:.024px;line-height:1.5}
+
+.card-body{padding:24px 30px 40px;flex:1;overflow-y:auto;min-height:0}
+
+/* ── OPTION CARDS ────────────────────────────────────────── */
+.option-cards{display:flex;gap:20px;margin-bottom:42px}
+.option-card{flex:1;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;display:flex;flex-direction:column;align-items:center;gap:30px;cursor:pointer;transition:box-shadow .2s,border-color .2s}
+.option-card:hover{border-color:#c9b8f5;box-shadow:0 4px 16px rgba(105,65,198,.1)}
+
+.option-card-title{font-size:14px;font-weight:600;color:#29294c;letter-spacing:.021px;align-self:flex-start;width:100%;text-align:center}
+
+.option-icon-wrap{width:121px;height:121px;border-radius:100px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.option-icon-wrap.purple{background:#fcfaff}
+.option-icon-wrap.green{background:#f6fef9}
+.option-icon-wrap.blue{background:#e0f2fe}
+.option-icon-wrap img{width:64px;height:64px;object-fit:contain}
+
+.option-card-desc{font-size:14px;font-weight:400;color:#545470;text-align:center;line-height:1.4;width:230px}
+
+.option-card-btn{background:#29294c;color:#fff;font-size:14px;font-weight:500;padding:8px 20px;border-radius:8px;border:none;cursor:pointer;min-height:36px;min-width:100px;line-height:20px;transition:background .15s;white-space:nowrap}
+.option-card-btn:hover{background:#1d2030}
+
+/* ── DIVIDER ─────────────────────────────────────────────── */
+.section-divider{height:1px;background:#e1e5ea;margin-bottom:42px}
+
+/* ── RECENT TEMPLATES ────────────────────────────────────── */
+.recent-header{font-size:16px;font-weight:600;color:#29294c;letter-spacing:.024px;margin-bottom:8px}
+.template-cards{display:flex;gap:24px;margin-top:8px}
+
+.template-card{flex:1;border:1px solid #e1e5ea;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(135.58deg,#fff 20.47%,#f9fafb 96.27%);cursor:pointer;transition:box-shadow .2s,border-color .2s}
+.template-card:hover{border-color:#c9b8f5;box-shadow:0 4px 16px rgba(105,65,198,.08)}
+
+.template-card-title{font-size:16px;font-weight:600;color:#29294c;letter-spacing:.024px;text-align:center;line-height:1.5}
+.template-card-meta{display:flex;align-items:center;justify-content:center;gap:7px;font-size:12px;font-weight:500;color:#707087;letter-spacing:.03px}
+.template-card-meta .dot{width:3px;height:3px;border-radius:50%;background:#d9d9d9;flex-shrink:0}
+
+.template-card-img{position:relative;height:179px;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.template-card-img::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:40px;width:99px;height:99px;border-radius:76.5px;background:linear-gradient(-27.38deg,#eaeaed 19%,#f9fafb 80%)}
+.template-card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+
+.template-card-actions{display:flex;gap:7px}
+.template-btn-select{flex:1;background:#f4f4f6;border:none;border-radius:8px;font-size:14px;font-weight:500;color:#29294c;padding:8px 14px;min-height:36px;cursor:pointer;transition:background .15s}
+.template-btn-select:hover{background:#e9e9ed}
+.template-btn-preview{flex:1;background:none;border:none;border-radius:8px;font-size:14px;font-weight:500;color:#29294c;padding:8px 14px;min-height:36px;cursor:pointer;transition:background .15s;text-align:center}
+.template-btn-preview:hover{background:#f4f4f6}
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <div class="vc-logo-group">
+      <a href="create-survey.html" class="vc-logo">
+        <img src="vc-logo.svg" height="22" alt="VantageCircle"/>
+      </a>
+      <!-- Sidebar toggle -->
+      <button class="sidebar-toggle" title="Toggle sidebar" onclick="toggleSidebar()">
+        <svg width="18" viewBox="0 0 19 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.75 13.5C0.75 10.4257 0.75 8.88858 1.42818 7.79898C1.67908 7.39585 1.99076 7.04522 2.34909 6.76295C3.31763 6 4.68397 6 7.41667 6H10.75C13.4827 6 14.849 6 15.8176 6.76295C16.1759 7.04522 16.4876 7.39585 16.7385 7.79898C17.4167 8.88858 17.4167 10.4257 17.4167 13.5C17.4167 16.5742 17.4167 18.1114 16.7385 19.201C16.4876 19.6042 16.1759 19.9547 15.8176 20.2371C14.849 21 13.4827 21 10.75 21H7.41667C4.68397 21 3.31763 21 2.34909 20.2371C1.99076 19.9547 1.67908 19.6042 1.42818 19.201C0.75 18.1114 0.75 16.5742 0.75 13.5Z" stroke="#5C6C7C" stroke-width="1.5"/>
+          <path d="M7.72656 6L7.72656 21" stroke="#5C6C7C" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M3.9668 8.875H4.66124M3.9668 12.25H4.66124" stroke="#5C6C7C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="vp-brand">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="currentColor"/></svg>
+      Vantage Pulse
+    </div>
+  </div>
+  <div class="navbar-right">
+    <div class="nav-icons">
+      <!-- user-add icon -->
+      <div class="nav-icon-btn" title="Invite">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11c1.657 0 3-1.343 3-3s-1.343-3-3-3"/><path d="M18 21c0-3.314-2.686-6-6-6s-6 2.686-6 6"/><circle cx="10" cy="8" r="3"/><path d="M21 15h-2m-1 0v-2m0 2v2"/></svg>
+      </div>
+      <!-- phone icon -->
+      <div class="nav-icon-btn" title="Support">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2h11C18.88 2 20 3.12 20 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-11C5.12 22 4 20.88 4 19.5v-15C4 3.12 5.12 2 6.5 2z"/><circle cx="12" cy="17" r="1"/></svg>
+      </div>
+      <!-- settings icon -->
+      <div class="nav-icon-btn" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </div>
+    </div>
+    <div class="nav-avatar">
+      <img src="https://www.figma.com/api/mcp/asset/2ebf6b0e-7b49-4c89-b291-e2f6a7aa4028" alt="avatar" onerror="this.style.display='none'"/>
+    </div>
+  </div>
+</nav>
+
+<!-- ── SIDEBAR ─────────────────────────────────────────────── -->
+<aside class="sidebar">
+
+  <!-- Create Survey button -->
+  <button class="sidebar-create-btn" onclick="window.location.href='get-started.html'">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10" cy="10" r="8.5"/><line x1="10" y1="6.5" x2="10" y2="13.5"/><line x1="6.5" y1="10" x2="13.5" y2="10"/>
+    </svg>
+    <span class="btn-text">Create Survey</span>
+  </button>
+
+  <nav class="sidebar-nav">
+
+    <!-- Overview -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1.5" y="1.5" width="5" height="5" rx="1"/><rect x="9.5" y="1.5" width="5" height="5" rx="1"/>
+          <rect x="1.5" y="9.5" width="5" height="5" rx="1"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Overview</span>
+    </div>
+
+    <!-- Insights -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12V8m4 4V5m4 7V7m4 5V3"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Insights</span>
+      <div class="nav-item-chevron">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Surveys (expanded) -->
+    <div class="nav-item active">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1.5" y="1.5" width="13" height="13" rx="2"/><line x1="4.5" y1="5.5" x2="11.5" y2="5.5"/><line x1="4.5" y1="8" x2="11.5" y2="8"/><line x1="4.5" y1="10.5" x2="8.5" y2="10.5"/>
+        </svg>
+      </div>
+      <span class="nav-item-text" style="color:#6941c6">Surveys</span>
+      <div class="nav-item-chevron open">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Surveys sub-items -->
+    <div class="nav-sub">
+      <div class="nav-sub-item active" onclick="window.location.href='get-started.html'">Create</div>
+      <div class="nav-sub-item">Manage</div>
+      <div class="nav-sub-item">Question</div>
+      <div class="nav-sub-item">Templates</div>
+    </div>
+
+    <!-- Action Planing -->
+    <div class="nav-item" style="margin-top:4px">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5l2.5 1.5"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Action Planing</span>
+      <div class="nav-item-chevron">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Configuration -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="8" r="2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Configuration</span>
+      <div class="nav-item-chevron">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Reports -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.5 1.5H3a1.5 1.5 0 00-1.5 1.5v10A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V3A1.5 1.5 0 0013 1.5h-1.5"/><rect x="5" y="1" width="6" height="3" rx="1"/><line x1="5" y1="7" x2="11" y2="7"/><line x1="5" y1="10" x2="11" y2="10"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Reports</span>
+    </div>
+
+    <!-- AI Hub -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 2l1.5 3.5L13 7l-3.5 1.5L8 12l-1.5-3.5L3 7l3.5-1.5z"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">AI Hub</span>
+      <span class="nav-pro-badge">Pro</span>
+    </div>
+
+  </nav>
+</aside>
+
+<!-- ── MAIN CONTENT ───────────────────────────────────────── -->
+<main class="main">
+  <div class="main-card">
+
+    <!-- Header -->
+    <div class="card-header">
+      <h1>Create Surveys</h1>
+    </div>
+
+    <div class="card-body">
+
+      <!-- Option Cards -->
+      <div class="option-cards">
+
+        <!-- Start from scratch -->
+        <div class="option-card">
+          <div class="option-card-title">Start from scratch</div>
+          <div class="option-icon-wrap purple">
+            <img src="https://www.figma.com/api/mcp/asset/7f2c5d42-b56a-4939-a737-f8b46a8b4493" alt="Start from scratch"/>
+          </div>
+          <p class="option-card-desc">Write your own questions and customize everything</p>
+          <button class="option-card-btn" onclick="localStorage.setItem('sidebarCollapsed','true');window.location.href='get-started.html'">Create Custom Survey</button>
+        </div>
+
+        <!-- Use ready-made templates -->
+        <div class="option-card">
+          <div class="option-card-title">Use ready-made templates</div>
+          <div class="option-icon-wrap green">
+            <img src="https://www.figma.com/api/mcp/asset/e7b77630-093e-4fbc-9890-637a5d328ed7" alt="Ready-made templates"/>
+          </div>
+          <p class="option-card-desc">Quick start with proven questions from HR experts</p>
+          <button class="option-card-btn">Browse Templates</button>
+        </div>
+
+        <!-- Automated surveys -->
+        <div class="option-card">
+          <div class="option-card-title">Automated surveys</div>
+          <div class="option-icon-wrap blue">
+            <img src="https://www.figma.com/api/mcp/asset/c176e67a-2ee6-48c0-90d3-1189d9c33388" alt="Automated surveys"/>
+          </div>
+          <p class="option-card-desc">Perfect for onboarding and work anniversaries</p>
+          <button class="option-card-btn">Set Up Automation</button>
+        </div>
+
+      </div>
+
+      <!-- Divider -->
+      <div class="section-divider"></div>
+
+      <!-- Recent Templates -->
+      <div class="recent-header">Your recent survey templates</div>
+      <div class="template-cards">
+
+        <!-- Onboarding -->
+        <div class="template-card">
+          <div class="template-card-title">Onboarding</div>
+          <div class="template-card-meta">
+            <span>44 questions</span>
+            <span class="dot"></span>
+            <span>12 mins</span>
+          </div>
+          <div class="template-card-img">
+            <img src="https://www.figma.com/api/mcp/asset/6ef6b5e4-91ec-4747-8941-5a5409ff2623" alt="Onboarding"/>
+          </div>
+          <div class="template-card-actions">
+            <button class="template-btn-select">Select</button>
+            <button class="template-btn-preview">Preview</button>
+          </div>
+        </div>
+
+        <!-- Psychosocial Health -->
+        <div class="template-card">
+          <div class="template-card-title">Psychosocial Health</div>
+          <div class="template-card-meta">
+            <span>8 questions</span>
+            <span class="dot"></span>
+            <span>5 mins</span>
+          </div>
+          <div class="template-card-img">
+            <img src="https://www.figma.com/api/mcp/asset/5ef47b6e-51c7-4db1-876c-71363a488ea6" alt="Psychosocial Health"/>
+          </div>
+          <div class="template-card-actions">
+            <button class="template-btn-select">Select</button>
+            <button class="template-btn-preview">Preview</button>
+          </div>
+        </div>
+
+        <!-- Back to office -->
+        <div class="template-card">
+          <div class="template-card-title">Back to office</div>
+          <div class="template-card-meta">
+            <span>4 questions</span>
+            <span class="dot"></span>
+            <span>2 mins</span>
+          </div>
+          <div class="template-card-img">
+            <img src="https://www.figma.com/api/mcp/asset/d2153fd5-3be4-453c-9583-de1982468fce" alt="Back to office"/>
+          </div>
+          <div class="template-card-actions">
+            <button class="template-btn-select">Select</button>
+            <button class="template-btn-preview">Preview</button>
+          </div>
+        </div>
+
+        <!-- 5 Years Work Anniversary -->
+        <div class="template-card">
+          <div class="template-card-title">5 Years Work Anniversary</div>
+          <div class="template-card-meta">
+            <span>12 questions</span>
+            <span class="dot"></span>
+            <span>3 mins</span>
+          </div>
+          <div class="template-card-img">
+            <img src="https://www.figma.com/api/mcp/asset/988d9774-ecdb-43e7-aae2-6916f2e30b0f" alt="5 Years Work Anniversary"/>
+          </div>
+          <div class="template-card-actions">
+            <button class="template-btn-select">Select</button>
+            <button class="template-btn-preview">Preview</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var sidebar=document.querySelector('.sidebar');
+  var main=document.querySelector('.main');
+  if(sidebar&&localStorage.getItem('sidebarCollapsed')==='true'){
+    sidebar.classList.add('collapsed');
+    if(main)main.style.marginLeft='64px';
+  }
+})();
+function toggleSidebar(){
+  var sidebar=document.querySelector('.sidebar');
+  var main=document.querySelector('.main');
+  if(!sidebar)return;
+  var c=sidebar.classList.toggle('collapsed');
+  localStorage.setItem('sidebarCollapsed',c?'true':'false');
+  if(main)main.style.marginLeft=c?'64px':'252px';
+}
+</script>
+</body>
+</html>
