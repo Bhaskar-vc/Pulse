@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1512"/>
+<title>Configure – Create Survey – Vantage Pulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
+button,input,textarea,select{font-family:inherit}
+a{text-decoration:none;color:inherit}
+
+/* ── NAVBAR ─────────────────────────────────────────────── */
+.navbar{position:fixed;top:0;left:0;right:0;height:64px;background:transparent;border-bottom:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:200}
+.navbar-left{display:flex;align-items:center;gap:12px}
+.vc-logo-group{display:flex;align-items:center;gap:10px}
+.vc-logo{display:flex;align-items:center}
+.sidebar-toggle{display:flex;align-items:center;justify-content:center;padding:4px;border:none;background:none;cursor:pointer;border-radius:6px;flex-shrink:0}
+.sidebar-toggle:hover{background:rgba(92,108,124,.12)}
+.nav-divider{width:1px;height:28px;background:#e4e7ec;margin:0 4px}
+.vp-brand{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:#6941c6;padding:6px 16px 6px 10px;border-radius:50px}
+.vp-brand svg{width:20px;height:20px;color:#6941c6}
+.navbar-right{display:flex;align-items:center;gap:16px}
+.nav-icons{display:flex;align-items:center;gap:16px}
+.nav-icon-btn{width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#667085;cursor:pointer}
+.nav-icon-btn svg{width:22px;height:22px}
+.nav-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;cursor:pointer;background:#e9d7fe;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#6941c6;flex-shrink:0}
+.nav-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar{position:fixed;top:64px;left:0;width:252px;height:calc(100vh - 64px);background:transparent;border-right:none;display:flex;flex-direction:column;padding:16px 12px 24px;z-index:100;overflow-y:auto;transition:width .22s ease}
+.sidebar-create-btn{display:flex;align-items:center;gap:8px;background:#7f56d9;color:#fff;font-size:14px;font-weight:500;padding:8px 16px 8px 12px;border-radius:8px;cursor:pointer;width:100%;margin-bottom:24px;transition:background .15s;border:none;overflow:hidden;white-space:nowrap}
+.sidebar-create-btn:hover{background:#6941c6}
+.sidebar-create-btn svg{width:20px;height:20px;flex-shrink:0}
+.sidebar.collapsed{width:64px;padding:12px 8px;align-items:center}
+.sidebar.collapsed .sidebar-create-btn{padding:8px;width:40px;min-width:unset;border-radius:10px;justify-content:center;margin-bottom:16px}
+.sidebar.collapsed .sidebar-create-btn .btn-text{display:none}
+.sidebar.collapsed .nav-item{justify-content:center;padding:10px 0;gap:0}
+.sidebar.collapsed .nav-item-text,.sidebar.collapsed .nav-item-chevron,.sidebar.collapsed .nav-sub,.sidebar.collapsed .nav-pro-badge{display:none}
+.sidebar.collapsed .nav-item-icon{width:20px;height:20px}
+.sidebar.collapsed .nav-item-icon svg{width:20px;height:20px}
+.sidebar-nav{display:flex;flex-direction:column;gap:2px;width:100%}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;width:100%;transition:background .15s;font-size:12px;font-weight:500;color:#545470}
+.nav-item:hover{background:#f9fafb}
+.nav-item.active{color:#6941c6}
+.nav-item-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-item-icon svg{width:16px;height:16px}
+.nav-item-text{flex:1;font-size:12px;font-weight:500}
+.nav-item-chevron{width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:#98a2b3;flex-shrink:0}
+.nav-item-chevron svg{width:16px;height:16px}
+.nav-item-chevron.open svg{transform:rotate(90deg)}
+.nav-sub{display:flex;flex-direction:column;gap:0;position:relative;margin-left:13px}
+.nav-sub::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:#e4e7ec}
+.nav-sub-item{display:flex;align-items:center;padding:8px 10px 8px 18px;font-size:12px;font-weight:500;color:#545470;cursor:pointer;border-radius:8px;transition:background .15s}
+.nav-sub-item:hover{background:#f9fafb}
+.nav-sub-item.active{color:#6941c6}
+.nav-pro-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:400;color:#fff;background:linear-gradient(150deg,#dc6803 7%,#7f56d9 71%);line-height:16px}
+
+/* ── MAIN ────────────────────────────────────────────────── */
+.main{margin-top:64px;margin-left:252px;padding:0 16px 16px 0;height:calc(100vh - 64px);overflow:hidden;display:flex;flex-direction:column;transition:margin-left .22s ease}
+.main-card{background:#fff;border-radius:18px;box-shadow:0 4px 8px -2px rgba(16,24,40,.1),0 2px 4px -2px rgba(16,24,40,.06);flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+
+/* ── TOP BAR ────────────────────────────────────────────── */
+.top-bar{display:flex;align-items:center;padding:18px 30px;border-bottom:1px solid #f2f4f7;flex-shrink:0;position:relative;min-height:64px}
+.back-btn{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:500;color:#29294c;padding:6px 8px;border-radius:8px;cursor:pointer;border:none;background:none;transition:background .15s;flex-shrink:0}
+.back-btn:hover{background:#f9fafb}
+.back-btn svg{width:20px;height:20px;color:#545470;flex-shrink:0}
+
+/* ── STEPPER ─────────────────────────────────────────────── */
+.stepper{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:0}
+.step-group{display:flex;align-items:center;gap:8px}
+.step-line{width:54px;height:1px;background:#e4e7ec;flex-shrink:0}
+.step-line.done{background:#12b76a}
+.step-circle{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-circle.done{background:#d1fadf}
+.step-circle.current{background:#7f56d9}
+.step-circle.inactive{background:#f2f4f7}
+.step-label{font-size:14px;font-weight:400;line-height:1.4;white-space:nowrap}
+.step-label.done-lbl{color:#29294c}
+.step-label.current-lbl{color:#6941c6;font-weight:500}
+.step-label.inactive-lbl{color:#d0d5dd}
+
+/* ── CONTENT AREA ────────────────────────────────────────── */
+.content-area{flex:1;display:flex;flex-direction:column;overflow-y:auto;min-height:0;padding:0 30px}
+.content-inner{width:100%;max-width:900px;margin:0 auto;padding:28px 0 32px}
+
+/* ── CONFIG SECTION ─────────────────────────────────────── */
+.config-section{display:flex;gap:32px;margin-bottom:32px}
+.config-left{flex:1;min-width:0}
+.config-right{width:220px;flex-shrink:0;padding-top:24px}
+.config-right p{font-size:12px;font-weight:400;color:#707087;line-height:1.6;letter-spacing:.03px}
+
+.section-label{font-size:11px;font-weight:600;color:#667085;letter-spacing:.7px;text-transform:uppercase;margin-bottom:12px}
+
+.section-box{border:1px solid #e4e7ec;border-radius:8px;padding:20px 24px;display:flex;flex-direction:column;gap:16px;background:#f9fafb}
+
+/* ── FORM FIELDS ─────────────────────────────────────────── */
+.field-row{display:flex;gap:16px}
+.field{display:flex;flex-direction:column;gap:6px;flex:1}
+.field-label{display:flex;align-items:center;gap:2px;font-size:12px;font-weight:400;color:#545470;letter-spacing:.03px;line-height:1.4}
+.field-label .req{color:#d92d20;font-size:14px;line-height:1}
+
+/* Custom select/dropdown */
+.select-wrap{position:relative;display:flex;align-items:center}
+.select-wrap select{width:100%;height:36px;padding:0 36px 0 12px;border:1px solid #e1e5ea;border-radius:6px;font-size:14px;font-weight:400;color:#29294c;background:#fff;outline:none;appearance:none;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.select-wrap select:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+.select-wrap::after{content:'';position:absolute;right:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23667085' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+
+/* ── TOGGLE ROW ─────────────────────────────────────────── */
+.toggle-row{border:none;border-radius:8px;padding:12px 0;display:flex;align-items:center;gap:10px;background:transparent}
+.toggle-row-info{flex:1}
+.toggle-row-title{font-size:14px;font-weight:500;color:#29294c;line-height:20px}
+.toggle-row-sub{font-size:12px;font-weight:400;color:#707087;letter-spacing:.03px;line-height:1.4;margin-top:2px}
+.toggle-switch{position:relative;width:28px;height:16px;flex-shrink:0;cursor:pointer}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:rgba(0,0,0,.09);border-radius:50px;transition:background .2s;box-shadow:inset 0 0 1px rgba(0,0,0,.02),inset 0 .5px 1.5px rgba(0,0,0,.12)}
+.toggle-switch input:checked+.toggle-track{background:#6941c6}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s}
+.toggle-switch input:checked~.toggle-thumb{transform:translateX(12px)}
+
+/* ── AUDIENCE TABS ──────────────────────────────────────── */
+.audience-tabs{display:flex;gap:16px;margin-bottom:4px}
+.audience-tab{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:400;color:#545470;cursor:pointer;padding:2px 0}
+.audience-tab input[type="checkbox"]{width:16px;height:16px;border:1.5px solid #d0d5dd;border-radius:4px;appearance:none;cursor:pointer;background:#fff;flex-shrink:0;position:relative;transition:background .15s,border-color .15s}
+.audience-tab input[type="checkbox"]:checked{background:#6941c6;border-color:#6941c6}
+.audience-tab input[type="checkbox"]:checked::after{content:'';position:absolute;left:3px;top:1px;width:5px;height:8px;border:1.5px solid #fff;border-top:none;border-left:none;transform:rotate(45deg)}
+.audience-tab-label{font-size:13px;font-weight:400;color:#344054}
+
+.audience-dropdowns{display:flex;gap:16px;margin-top:4px}
+.audience-drop-group{display:flex;flex-direction:column;gap:6px;flex:1}
+.audience-drop-label{font-size:12px;font-weight:400;color:#545470;letter-spacing:.03px}
+
+/* ── EMAIL INVITATION ───────────────────────────────────── */
+.email-editor{border:1px solid #e1e5ea;border-radius:8px;overflow:hidden}
+.email-toolbar{display:flex;align-items:center;gap:2px;padding:8px 12px;border-bottom:1px solid #f2f4f7;background:#fafafa;flex-wrap:wrap}
+.toolbar-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px;cursor:pointer;color:#545470;transition:background .15s;border:none;background:none;font-size:13px;font-weight:500}
+.toolbar-btn:hover{background:#f2f4f7}
+.toolbar-divider{width:1px;height:18px;background:#e4e7ec;margin:0 4px}
+.email-body{min-height:120px;padding:14px 16px;font-size:14px;color:#29294c;line-height:1.6;outline:none}
+.email-body[contenteditable="true"]:empty::before{content:'Type your email message here...';color:#98a2b3}
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+.page-footer{height:62px;border-top:1px solid #f2f4f7;display:flex;align-items:center;justify-content:space-between;padding:0 30px;flex-shrink:0}
+.btn-cancel{background:#f4f4f6;color:#29294c;font-size:14px;font-weight:500;height:36px;padding:0 20px;border-radius:8px;border:none;cursor:pointer;transition:background .15s}
+.btn-cancel:hover{background:#e9e9ed}
+.btn-continue{display:flex;align-items:center;gap:8px;background:#29294c;color:#fff;font-size:14px;font-weight:500;height:36px;padding:0 20px;border-radius:8px;border:none;cursor:pointer;transition:background .15s}
+.btn-continue:hover{background:#1d2030}
+.btn-continue svg{width:16px;height:16px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <div class="vc-logo-group">
+      <a href="create-survey.html" class="vc-logo">
+        <img src="vc-logo.svg" height="22" alt="VantageCircle"/>
+      </a>
+      <button class="sidebar-toggle" title="Toggle sidebar" onclick="toggleSidebar()">
+        <svg width="18" viewBox="0 0 19 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.75 13.5C0.75 10.4257 0.75 8.88858 1.42818 7.79898C1.67908 7.39585 1.99076 7.04522 2.34909 6.76295C3.31763 6 4.68397 6 7.41667 6H10.75C13.4827 6 14.849 6 15.8176 6.76295C16.1759 7.04522 16.4876 7.39585 16.7385 7.79898C17.4167 8.88858 17.4167 10.4257 17.4167 13.5C17.4167 16.5742 17.4167 18.1114 16.7385 19.201C16.4876 19.6042 16.1759 19.9547 15.8176 20.2371C14.849 21 13.4827 21 10.75 21H7.41667C4.68397 21 3.31763 21 2.34909 20.2371C1.99076 19.9547 1.67908 19.6042 1.42818 19.201C0.75 18.1114 0.75 16.5742 0.75 13.5Z" stroke="#5C6C7C" stroke-width="1.5"/>
+          <path d="M7.72656 6L7.72656 21" stroke="#5C6C7C" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M3.9668 8.875H4.66124M3.9668 12.25H4.66124" stroke="#5C6C7C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="vp-brand">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="currentColor"/></svg>
+      Vantage Pulse
+    </div>
+  </div>
+  <div class="navbar-right">
+    <div class="nav-icons">
+      <div class="nav-icon-btn" title="Invite">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11c1.657 0 3-1.343 3-3s-1.343-3-3-3"/><path d="M18 21c0-3.314-2.686-6-6-6s-6 2.686-6 6"/><circle cx="10" cy="8" r="3"/><path d="M21 15h-2m-1 0v-2m0 2v2"/></svg>
+      </div>
+      <div class="nav-icon-btn" title="Support">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2h11C18.88 2 20 3.12 20 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-11C5.12 22 4 20.88 4 19.5v-15C4 3.12 5.12 2 6.5 2z"/><circle cx="12" cy="17" r="1"/></svg>
+      </div>
+      <div class="nav-icon-btn" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </div>
+    </div>
+    <div class="nav-avatar">
+      <img src="https://www.figma.com/api/mcp/asset/2ebf6b0e-7b49-4c89-b291-e2f6a7aa4028" alt="avatar" onerror="this.style.display='none'"/>
+    </div>
+  </div>
+</nav>
+
+<!-- ── SIDEBAR ─────────────────────────────────────────────── -->
+<aside class="sidebar">
+  <button class="sidebar-create-btn" onclick="window.location.href='create-survey.html'">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10" cy="10" r="8.5"/><line x1="10" y1="6.5" x2="10" y2="13.5"/><line x1="6.5" y1="10" x2="13.5" y2="10"/>
+    </svg>
+    <span class="btn-text">Create Survey</span>
+  </button>
+  <nav class="sidebar-nav">
+    <div class="nav-item">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="5" height="5" rx="1"/><rect x="9.5" y="1.5" width="5" height="5" rx="1"/><rect x="1.5" y="9.5" width="5" height="5" rx="1"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/></svg></div>
+      <span class="nav-item-text">Overview</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12V8m4 4V5m4 7V7m4 5V3"/></svg></div>
+      <span class="nav-item-text">Insights</span>
+      <div class="nav-item-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div>
+    </div>
+    <div class="nav-item active">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="13" height="13" rx="2"/><line x1="4.5" y1="5.5" x2="11.5" y2="5.5"/><line x1="4.5" y1="8" x2="11.5" y2="8"/><line x1="4.5" y1="10.5" x2="8.5" y2="10.5"/></svg></div>
+      <span class="nav-item-text" style="color:#6941c6">Surveys</span>
+      <div class="nav-item-chevron open"><svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div>
+    </div>
+    <div class="nav-sub">
+      <div class="nav-sub-item active">Create</div>
+      <div class="nav-sub-item">Manage</div>
+      <div class="nav-sub-item">Question</div>
+      <div class="nav-sub-item">Templates</div>
+    </div>
+    <div class="nav-item" style="margin-top:4px">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5l2.5 1.5"/></svg></div>
+      <span class="nav-item-text">Action Planing</span>
+      <div class="nav-item-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div>
+    </div>
+    <div class="nav-item">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/></svg></div>
+      <span class="nav-item-text">Configuration</span>
+      <div class="nav-item-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div>
+    </div>
+    <div class="nav-item">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 1.5H3a1.5 1.5 0 00-1.5 1.5v10A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V3A1.5 1.5 0 0013 1.5h-1.5"/><rect x="5" y="1" width="6" height="3" rx="1"/><line x1="5" y1="7" x2="11" y2="7"/><line x1="5" y1="10" x2="11" y2="10"/></svg></div>
+      <span class="nav-item-text">Reports</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l1.5 3.5L13 7l-3.5 1.5L8 12l-1.5-3.5L3 7l3.5-1.5z"/></svg></div>
+      <span class="nav-item-text">AI Hub</span>
+      <span class="nav-pro-badge">Pro</span>
+    </div>
+  </nav>
+</aside>
+
+<!-- ── MAIN ─────────────────────────────────────────────────── -->
+<main class="main">
+  <div class="main-card">
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <button class="back-btn" onclick="window.location.href='pulse-select-questions.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back
+      </button>
+
+      <!-- Stepper -->
+      <div class="stepper">
+        <div class="step-group">
+          <div class="step-circle done">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="step-label done-lbl">Get Started</span>
+        </div>
+        <div class="step-line done"></div>
+        <div class="step-group">
+          <div class="step-circle done">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="step-label done-lbl">Select Questions</span>
+        </div>
+        <div class="step-line done"></div>
+        <div class="step-group">
+          <div class="step-circle current">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="step-label current-lbl">Configure</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-group">
+          <div class="step-circle inactive">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#d0d5dd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="step-label inactive-lbl">Preview &amp; Launch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-area">
+      <div class="content-inner">
+
+        <!-- SCHEDULING -->
+        <div class="config-section">
+          <div class="config-left">
+            <div class="section-label">Scheduling</div>
+            <div class="section-box">
+              <div class="field-row">
+                <div class="field">
+                  <div class="field-label">Start date <span class="req">*</span></div>
+                  <div class="select-wrap">
+                    <select>
+                      <option>01 Dec 2025</option>
+                      <option>15 Dec 2025</option>
+                      <option>01 Jan 2026</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field-label">End date <span class="req">*</span></div>
+                  <div class="select-wrap">
+                    <select>
+                      <option>31 Dec 2025</option>
+                      <option>31 Jan 2026</option>
+                      <option>28 Feb 2026</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="field" style="max-width:calc(50% - 8px)">
+                <div class="field-label">Time <span class="req">*</span></div>
+                <div class="select-wrap">
+                  <select>
+                    <option>12:00 PM</option>
+                    <option>9:00 AM</option>
+                    <option>6:00 PM</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="config-right">
+            <p>Scheduling enables you to automate the process of sending out surveys at the desired date and time. The survey will be active for the participants to attend during the selected duration.</p>
+          </div>
+        </div>
+
+        <!-- FREQUENCY -->
+        <div class="config-section">
+          <div class="config-left">
+            <div class="section-label">Frequency</div>
+            <div class="section-box">
+              <div class="field" style="max-width:calc(50% - 8px)">
+                <div class="select-wrap">
+                  <select>
+                    <option>Daily</option>
+                    <option>Weekly</option>
+                    <option>Monthly</option>
+                    <option>Quarterly</option>
+                  </select>
+                </div>
+              </div>
+              <div class="toggle-row">
+                <div class="toggle-row-info">
+                  <div class="toggle-row-title">Recurring Survey</div>
+                  <div class="toggle-row-sub">When enabled, participant identities are not recorded or linked to responses.</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked/>
+                  <span class="toggle-track"></span>
+                  <span class="toggle-thumb"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="config-right">
+            <p>Select how the participants will be receiving the questions during the duration of the survey.</p>
+          </div>
+        </div>
+
+        <!-- AUDIENCE -->
+        <div class="config-section">
+          <div class="config-left">
+            <div class="section-label">Audience</div>
+            <div class="section-box">
+              <div class="audience-tabs">
+                <label class="audience-tab">
+                  <input type="checkbox" checked/>
+                  <span class="audience-tab-label">Target by Segments</span>
+                </label>
+                <label class="audience-tab">
+                  <input type="checkbox"/>
+                  <span class="audience-tab-label">Target by Email</span>
+                </label>
+                <label class="audience-tab">
+                  <input type="checkbox"/>
+                  <span class="audience-tab-label">Upload CSV</span>
+                </label>
+              </div>
+              <div class="audience-dropdowns">
+                <div class="audience-drop-group">
+                  <div class="audience-drop-label">Including</div>
+                  <div class="select-wrap">
+                    <select>
+                      <option>All employees</option>
+                      <option>Department: Engineering</option>
+                      <option>Department: Marketing</option>
+                      <option>Department: Sales</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="audience-drop-group">
+                  <div class="audience-drop-label">Excluding</div>
+                  <div class="select-wrap">
+                    <select>
+                      <option>Finland</option>
+                      <option>None</option>
+                      <option>Germany</option>
+                      <option>France</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="config-right">
+            <p>Set your target audience for the survey. You can include or exclude specific groups from taking the survey.</p>
+          </div>
+        </div>
+
+        <!-- EMAIL INVITATION -->
+        <div class="config-section">
+          <div class="config-left">
+            <div class="section-label">Email Invitation</div>
+            <div class="section-box" style="gap:12px">
+              <div class="field">
+                <div class="field-label">Subject</div>
+                <div class="select-wrap" style="display:block">
+                  <input type="text" value="You're invited to participate in our Employee Pulse Survey"
+                    style="width:100%;height:36px;padding:0 12px;border:1px solid #e1e5ea;border-radius:6px;font-size:14px;color:#29294c;background:#fff;outline:none;transition:border-color .15s,box-shadow .15s"
+                    onfocus="this.style.borderColor='#7c3aed';this.style.boxShadow='0 0 0 3px rgba(124,58,237,.1)'"
+                    onblur="this.style.borderColor='#e1e5ea';this.style.boxShadow='none'"/>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field-label">Message</div>
+                <div class="email-editor">
+                  <div class="email-toolbar">
+                    <button class="toolbar-btn" title="Bold"><b>B</b></button>
+                    <button class="toolbar-btn" title="Italic"><i>I</i></button>
+                    <button class="toolbar-btn" title="Underline"><u>U</u></button>
+                    <div class="toolbar-divider"></div>
+                    <button class="toolbar-btn" title="Bullet list">
+                      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="5" y1="4" x2="13" y2="4"/><line x1="5" y1="8" x2="13" y2="8"/><line x1="5" y1="12" x2="13" y2="12"/><circle cx="2.5" cy="4" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="8" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
+                    </button>
+                    <button class="toolbar-btn" title="Link">
+                      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6.5 9.5a3.5 3.5 0 005 0l2-2a3.5 3.5 0 00-5-5l-1 1"/><path d="M9.5 6.5a3.5 3.5 0 00-5 0l-2 2a3.5 3.5 0 005 5l1-1"/></svg>
+                    </button>
+                  </div>
+                  <div class="email-body" contenteditable="true">Dear [Employee Name],<br><br>We would like to invite you to participate in our Employee Pulse Survey. Your feedback is valuable and will help us improve our workplace culture.<br><br>The survey takes approximately 5 minutes to complete. Your responses are anonymous.<br><br>Thank you for your time.<br><br>Best regards,<br>[Manager Name]</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="config-right">
+            <p>Customize the email invitation that will be sent to participants. Personalize the subject and message to encourage higher response rates.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="page-footer">
+      <button class="btn-cancel" onclick="window.location.href='create-survey.html'">Cancel</button>
+      <button class="btn-continue" onclick="window.location.href='preview-launch.html'">
+        Continue
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg>
+      </button>
+    </div>
+
+  </div>
+</main>
+
+<script>
+// ── SIDEBAR COLLAPSE ─────────────────────────────────────────
+(function(){
+  var sidebar=document.querySelector('.sidebar');
+  var main=document.querySelector('.main');
+  if(sidebar&&localStorage.getItem('sidebarCollapsed')==='true'){
+    sidebar.classList.add('collapsed');
+    if(main)main.style.marginLeft='64px';
+  }
+})();
+function toggleSidebar(){
+  var sidebar=document.querySelector('.sidebar');
+  var main=document.querySelector('.main');
+  if(!sidebar)return;
+  var c=sidebar.classList.toggle('collapsed');
+  localStorage.setItem('sidebarCollapsed',c?'true':'false');
+  if(main)main.style.marginLeft=c?'64px':'252px';
+}
+</script>
+</body>
+</html>

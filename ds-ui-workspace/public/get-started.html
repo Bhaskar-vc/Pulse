@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
+html,body{height:100%;overflow:hidden;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
 button,input,textarea{font-family:inherit}
 a{text-decoration:none;color:inherit}
 
@@ -84,8 +84,8 @@ a{text-decoration:none;color:inherit}
 .step-label.inactive{color:#d0d5dd}
 
 /* ── CONTENT AREA ────────────────────────────────────────── */
-.content-area{flex:1;display:flex;align-items:center;justify-content:center;padding:0 60px;overflow:auto;min-height:0}
-.content-inner{display:flex;align-items:center;gap:40px;width:100%;max-width:1240px}
+.content-area{flex:1;display:flex;flex-direction:column;overflow-y:auto;min-height:0;padding:0 60px}
+.content-inner{display:flex;align-items:center;gap:40px;width:100%;max-width:1240px;margin:auto;padding:24px 0}
 
 /* Illustration */
 .illustration-col{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:420px}

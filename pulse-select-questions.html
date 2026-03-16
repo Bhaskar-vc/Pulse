@@ -257,10 +257,14 @@ textarea.form-control{resize:vertical;min-height:80px}
 .modal-submit:hover{background:#5b21b6}
 
 /* ── TOAST ───────────────────────────────────────────────────── */
-.toast-container{position:fixed;bottom:24px;right:24px;z-index:600;display:flex;flex-direction:column;gap:8px;pointer-events:none}
-.toast{background:#1d2939;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,.2);display:flex;align-items:center;gap:8px;animation:tIn .3s ease;opacity:1;transition:opacity .3s}
-.toast.success{background:#039855}
-@keyframes tIn{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+.toast-container{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:600;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;white-space:nowrap}
+.toast{background:#fff;color:#344054;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,.1);border:1px solid #e4e7ec;display:flex;align-items:center;gap:8px;animation:tIn .25s ease;opacity:1;transition:opacity .3s}
+.toast .toast-icon{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toast.success{background:#f6fef9;border-color:#6ce9a6;color:#027a48}
+.toast.success .toast-icon{background:#d1fadf}
+.toast.info{background:#f5f3ff;border-color:#c4b5fd;color:#5b21b6}
+.toast.info .toast-icon{background:#ede9fe}
+@keyframes tIn{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
 
 /* ── BANK HEADER PADDING ─────────────────────────────────────── */
 .pb-inner{padding:0 0 0 0}
@@ -516,7 +520,7 @@ textarea.form-control{resize:vertical;min-height:80px}
               <span id="stat-count">0</span> questions selected &nbsp;from <span id="stat-cats">0</span> categories • ~<span id="stat-time">0</span>s to complete
             </div>
           </div>
-          <button class="add-custom-btn" onclick="openCustomModal()">
+          <button class="add-custom-btn" onclick="window.location.href='add-custom-question.html'">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Add Custom Question
           </button>
@@ -549,7 +553,7 @@ textarea.form-control{resize:vertical;min-height:80px}
     <!-- FOOTER -->
     <div class="page-footer">
       <button class="cancel-btn" onclick="if(confirm('Cancel survey creation?')) location.reload()">Cancel</button>
-      <button class="continue-btn" id="continue-btn" disabled>
+      <button class="continue-btn" id="continue-btn" disabled onclick="window.location.href='configure.html'">
         Continue
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
@@ -1000,12 +1004,14 @@ function toast(msg, type='') {
   const ct = document.getElementById('toasts');
   const t  = document.createElement('div');
   t.className = 'toast'+(type?' '+type:'');
-  t.innerHTML = (type==='success'
-    ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
-    : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
-  )+msg;
+  const icons = {
+    success: `<div class="toast-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="10 3 5 9 2 6"/></svg></div>`,
+    info:    `<div class="toast-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><line x1="6" y1="5" x2="6" y2="8"/><circle cx="6" cy="3.5" r=".5" fill="#6941c6"/></svg></div>`,
+    default: `<div class="toast-icon" style="background:#f2f4f7"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#667085" stroke-width="2" stroke-linecap="round"><line x1="3" y1="3" x2="9" y2="9"/><line x1="9" y1="3" x2="3" y2="9"/></svg></div>`,
+  };
+  t.innerHTML = (icons[type]||icons.default) + msg;
   ct.appendChild(t);
-  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 2200);
+  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 2400);
 }
 
 function renderAll() { renderBank(); renderSelected(); renderPreview(); updateStats(); updateAddAllCheckbox(); }
