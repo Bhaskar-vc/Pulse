@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulse Survey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(114deg, #e9f2fc 35%, #eae0ed 88%);
+      font-family: 'Inter', sans-serif;
+      color: #29294c;
+    }
+
+    /* ── SCREENS ─────────────────────────────────── */
+    .screen {
+      display: none;
+      min-height: 100vh;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 80px 16px 40px;
+    }
+    .screen.active { display: flex; }
+
+    /* ── LOGO ─────────────────────────────────────── */
+    .vc-logo {
+      position: absolute;
+      top: 28px;
+      left: 40px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .vc-logo-icon {
+      width: 22px;
+      height: 22px;
+    }
+    .vc-logo-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: #29294c;
+      letter-spacing: 0.12em;
+    }
+    .vc-logo-text b { font-weight: 700; }
+
+    /* ── BG ILLUSTRATION ─────────────────────────── */
+    .bg-art {
+      position: absolute;
+      left: -1px;
+      top: 143px;
+      width: 601px;
+      height: 665px;
+      opacity: 0.18;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    /* ── POWERED BY ───────────────────────────────── */
+    .powered-by {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      margin-top: 18px;
+    }
+    .powered-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 10px;
+      color: #707087;
+      letter-spacing: 0.025em;
+    }
+    .powered-logo {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: #29294c;
+      letter-spacing: 0.1em;
+    }
+    .powered-logo svg { opacity: 0.75; }
+
+    /* ═══════════════════════════════════════════════
+       SCREEN 1 — WELCOME
+    ═══════════════════════════════════════════════ */
+    .welcome-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(16,24,40,.10), 0 1px 2px rgba(16,24,40,.06);
+      width: 612px;
+      max-width: 100%;
+      padding: 31px 26px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Language button */
+    .lang-btn {
+      align-self: flex-end;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 16px;
+      height: 36px;
+      background: #f4f4f6;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #29294c;
+    }
+
+    /* Icon area */
+    .icon-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Survey info */
+    .survey-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: #29294c;
+      text-align: center;
+    }
+    .survey-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #707087;
+    }
+    .meta-dot {
+      width: 5px;
+      height: 5px;
+      background: #707087;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .survey-desc {
+      font-size: 14px;
+      color: #707087;
+      text-align: center;
+      line-height: 1.5;
+      max-width: 480px;
+    }
+    .info-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Start button */
+    .btn-start {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #7f56d9;
+      color: #fff;
+      border: 1px solid #7f56d9;
+      border-radius: 50px;
+      height: 44px;
+      padding: 0 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      min-width: 201px;
+      transition: background .15s, border-color .15s;
+    }
+    .btn-start:hover { background: #6941c6; border-color: #6941c6; }
+
+    /* Privacy bar */
+    .privacy-bar {
+      background: #f6fef9;
+      border-radius: 16px;
+      padding: 12px 8px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .privacy-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #707087;
+      white-space: nowrap;
+    }
+    .privacy-link {
+      font-size: 12px;
+      font-weight: 500;
+      color: #6941c6;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SCREEN 2 — QUESTION
+    ═══════════════════════════════════════════════ */
+    .question-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(16,24,40,.10), 0 1px 2px rgba(16,24,40,.06);
+      width: 595px;
+      max-width: 100%;
+      padding: 56px 60px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* Q header */
+    .q-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #707087;
+    }
+    .q-header-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .q-counter { font-size: 12px; color: #707087; }
+    .q-counter strong { color: #29294c; font-weight: 500; }
+
+    /* Q text */
+    .q-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: #29294c;
+      line-height: 1.7;
+      letter-spacing: 0.02px;
+    }
+
+    /* Rating */
+    .rating-section { display: flex; flex-direction: column; gap: 10px; }
+    .rating-row { display: flex; gap: 30px; }
+
+    .rating-btn {
+      width: 44px;
+      height: 48px;
+      border-radius: 8px;
+      border: 1.5px solid #d0d5dd;
+      background: #fff;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: #545470;
+      cursor: pointer;
+      transition: background .15s, border-color .15s, color .15s, transform .1s;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Per-value selected colours only (no hover colour change) */
+    .rating-btn[data-val="1"].selected { background:#FEF3F2; border-color:#F04438; color:#F04438; border-width:2px; }
+    .rating-btn[data-val="2"].selected { background:#FFFAEB; border-color:#F79009; color:#F79009; border-width:2px; }
+    .rating-btn[data-val="3"].selected { background:#FFFBEB; border-color:#F59E0B; color:#F59E0B; border-width:2px; }
+    .rating-btn[data-val="4"].selected { background:#ECFDF5; border-color:#17B26A; color:#17B26A; border-width:2px; }
+    .rating-btn[data-val="5"].selected { background:#F0FFF4; border-color:#32D583; color:#32D583; border-width:2px; }
+
+    /* Flip animation on click */
+    @keyframes btnFlip {
+      0%   { transform: scale(1) rotateY(0deg); }
+      45%  { transform: scale(1.08) rotateY(90deg); }
+      100% { transform: scale(1.06) rotateY(0deg); }
+    }
+    .rating-btn.selected { animation: btnFlip 0.38s ease-out forwards; }
+
+    /* Face show/hide — only on selected, not hover */
+    .rating-num { }
+    .rating-face { display: none; width: 26px; height: 26px; }
+    .rating-btn.selected .rating-num { display: none; }
+    .rating-btn.selected .rating-face { display: block; }
+
+    .rating-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #707087;
+      width: 100%;
+      max-width: 340px;
+    }
+
+    /* ── Multiple Choice (Single & Multi) ── */
+    .mc-section, .multi-section { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+    .mc-option, .multi-option {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px;
+      border: 1.5px solid #d0d5dd;
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: #344054;
+      transition: border-color .15s, background .15s;
+      text-align: left;
+      width: 100%;
+    }
+    .mc-option:hover, .multi-option:hover { border-color: #7F56D9; background: #faf5ff; }
+    .mc-option.selected { border-color: #7F56D9; background: #F9F5FF; color: #6941C6; border-width: 2px; }
+    .multi-option.selected { border-color: #17B26A; background: #ECFDF5; color: #027A48; border-width: 2px; }
+    .mc-dot {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid #d0d5dd; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s, background .15s;
+    }
+    .mc-option.selected .mc-dot { border-color: #7F56D9; background: #7F56D9; }
+    .mc-option.selected .mc-dot::after {
+      content: ''; width: 6px; height: 6px;
+      border-radius: 50%; background: #fff;
+    }
+    .multi-check {
+      width: 18px; height: 18px; border-radius: 4px;
+      border: 2px solid #d0d5dd; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s, background .15s;
+    }
+    .multi-option.selected .multi-check { border-color: #17B26A; background: #17B26A; }
+    .multi-option.selected .multi-check::after {
+      content: '';
+      display: block; width: 10px; height: 6px;
+      border-left: 2px solid #fff; border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translateY(-1px);
+    }
+
+    /* ── Yes / No ── */
+    .yesno-section { display: flex; gap: 16px; width: 100%; }
+    .yesno-btn {
+      flex: 1; padding: 18px 0;
+      border-radius: 12px; border: 2px solid #d0d5dd;
+      background: #fff; cursor: pointer;
+      font-size: 16px; font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      color: #344054;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      transition: border-color .15s, background .15s, transform .15s;
+    }
+    .yesno-btn:hover { transform: translateY(-2px); }
+    .yesno-btn[data-val="Yes"].selected { border-color: #17B26A; background: #ECFDF5; color: #027A48; }
+    .yesno-btn[data-val="No"].selected  { border-color: #F04438; background: #FEF3F2; color: #B42318; }
+    .yesno-btn svg { width: 28px; height: 28px; }
+
+    /* ── Open Ended override ── */
+    .open-only .comment-label { display: none; }
+
+    /* Comment */
+    .comment-section { display: flex; flex-direction: column; gap: 6px; }
+    .comment-label {
+      font-size: 12px;
+      color: #545470;
+    }
+    .comment-area {
+      width: 100%;
+      height: 88px;
+      border: 1px solid #d0d5dd;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #101828;
+      resize: none;
+      outline: none;
+      line-height: 1.5;
+      transition: border-color .15s;
+    }
+    .comment-area:focus { border-color: #7f56d9; }
+    .comment-area::placeholder { color: #d0d5dd; }
+
+    /* Required / Optional badge */
+    .q-label-row {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .q-required-badge {
+      font-size: 11px; font-weight: 600; font-family: 'Poppins', sans-serif;
+      color: #B42318; background: #FEF3F2; border: 1px solid #FECDCA;
+      border-radius: 999px; padding: 2px 10px; letter-spacing: 0.01em;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .q-optional-badge {
+      font-size: 11px; font-weight: 500; font-family: 'Inter', sans-serif;
+      color: #707087; background: #F2F4F7; border: 1px solid #E4E7EC;
+      border-radius: 999px; padding: 2px 10px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+
+    /* Snackbar */
+    .snackbar {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      transform: translateY(-12px);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 300px;
+      max-width: 420px;
+      background: #FFFBFA;
+      border-left: 12px solid #D92D20;
+      border-radius: 6px;
+      padding: 16px 20px 16px 20px;
+      box-shadow: 0px 12px 16px rgba(16,24,40,0.08), 0px 4px 6px rgba(16,24,40,0.03);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .28s ease, transform .28s ease;
+      z-index: 9999;
+    }
+    .snackbar.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .snackbar-icon { flex-shrink: 0; display: flex; align-items: center; }
+    .snackbar-msg {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #D92D20;
+      line-height: 1.4;
+    }
+
+    /* Skip */
+    .btn-skip {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #6941c6;
+      padding: 0;
+      width: fit-content;
+    }
+    .btn-skip:hover { text-decoration: underline; }
+    .btn-skip .skip-chevron { transition: transform .2s; }
+    .btn-skip.open .skip-chevron { transform: rotate(180deg); }
+
+    /* Skip reason panel */
+    .skip-panel {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      padding: 14px 0 2px;
+      animation: fadeSlideIn .18s ease;
+    }
+    .skip-panel.visible { display: flex; }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .skip-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #545470;
+      font-family: 'Inter', sans-serif;
+    }
+    .skip-cancel {
+      background: none; border: none; cursor: pointer;
+      font-size: 13px; color: #6941c6; text-decoration: underline;
+      font-family: 'Inter', sans-serif; padding: 0;
+    }
+    .skip-reasons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .skip-reason-btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1.5px solid #D6BBFB;
+      background: #F9F5FF;
+      color: #6941C6;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .skip-reason-btn:hover { background: #EDE9FE; border-color: #7F56D9; }
+
+    /* Navigation */
+    .q-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 4px;
+    }
+    .btn-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 1.5px solid #d0d5dd;
+      border-radius: 50px;
+      padding: 10px 22px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #29294c;
+      cursor: pointer;
+      min-width: 107px;
+      justify-content: center;
+      transition: border-color .15s, color .15s;
+    }
+    .btn-pill:hover:not(:disabled) { border-color: #7f56d9; color: #7f56d9; }
+    .btn-pill:disabled { color: #d0d5dd; border-color: #d0d5dd; cursor: default; }
+    .btn-pill.btn-next-active {
+      background: #7f56d9;
+      border-color: #7f56d9;
+      color: #fff;
+    }
+    .btn-pill.btn-next-active:hover { background: #6941c6; border-color: #6941c6; }
+
+    /* ═══════════════════════════════════════════════
+       SCREEN 3 — THANK YOU
+    ═══════════════════════════════════════════════ */
+    .thankyou-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(16,24,40,.10), 0 1px 2px rgba(16,24,40,.06);
+      width: 560px;
+      max-width: 100%;
+      padding: 56px 40px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .ty-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #d1fadf;
+      border: 16px solid #ecfdf3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ty-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: #29294c;
+    }
+    .ty-desc {
+      font-size: 14px;
+      color: #707087;
+      line-height: 1.6;
+      max-width: 380px;
+    }
+
+    /* Confetti dots */
+    .confetti {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    .dot {
+      position: absolute;
+      border-radius: 50%;
+      animation: fall 2.5s ease-in forwards;
+      opacity: 0;
+    }
+    @keyframes fall {
+      0%   { opacity: 1; transform: translateY(-10px) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(280px) rotate(360deg); }
+    }
+
+    /* Transition animations */
+    .screen-enter {
+      animation: fadeIn .3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 768px) {
+      .vc-logo { left: 20px; }
+      .welcome-card { padding: 24px 20px 28px; gap: 22px; }
+      .question-card { padding: 40px 28px 36px; gap: 22px; }
+      .thankyou-card { padding: 40px 24px 36px; }
+      .bg-art { opacity: 0.08; width: 320px; }
+      .rating-row { gap: 14px; }
+    }
+
+    @media (max-width: 480px) {
+      .screen { padding: 64px 12px 28px; }
+      .vc-logo { left: 16px; top: 18px; }
+      .welcome-card { padding: 18px 16px 22px; gap: 16px; border-radius: 12px; }
+      .question-card { padding: 36px 18px 28px; gap: 18px; border-radius: 12px; }
+      .thankyou-card { padding: 32px 18px 28px; gap: 14px; border-radius: 12px; }
+      .q-text { font-size: 16px; line-height: 1.6; }
+      .survey-title { font-size: 15px; }
+      .ty-title { font-size: 22px; }
+      .rating-row { gap: 6px; }
+      .rating-btn { width: 38px; height: 44px; font-size: 14px; }
+      .rating-labels { max-width: 100%; }
+      .btn-start { min-width: 160px; font-size: 13px; }
+      .btn-pill { padding: 8px 16px; font-size: 13px; min-width: 88px; }
+      .privacy-item { padding: 4px 8px; font-size: 11px; gap: 6px; }
+      .survey-desc { font-size: 12px; }
+      .bg-art { display: none; }
+      .icon-area { width: 160px; height: 180px; }
+    }
+
+    /* Survey hero SVG animations */
+    .survey-hero-svg { animation: heroFloat 3.5s ease-in-out infinite; }
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+    .hero-star-sm, .hero-star-md, .hero-star-xs {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .hero-star-sm { animation: starTwinkle 2.5s ease-in-out infinite 0.5s; }
+    .hero-star-md { animation: starTwinkle 3s ease-in-out infinite 1.2s; }
+    .hero-star-xs { animation: starTwinkle 2.2s ease-in-out infinite; }
+    @keyframes starTwinkle {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.25); opacity: 1; }
+    }
+    .hero-check {
+      stroke-dasharray: 28;
+      stroke-dashoffset: 28;
+      animation: drawCheck 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
+    }
+    @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 1 — WELCOME
+═══════════════════════════════════════════════ -->
+<div class="screen active" id="screen-welcome">
+
+  <!-- Logo -->
+  <a class="vc-logo" href="#">
+    <svg width="120" height="18" viewBox="0 0 150 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.699997"><path d="M10.9267 18.6875C9.47829 20.1015 7.44518 21.0668 7.35935 21.1069L6.2085 21.6487L6.7923 20.519C7.16899 19.7906 7.19876 19.0704 7.22994 18.3078C7.27017 17.3247 7.31149 16.3103 8.0354 15.1727C8.48502 14.4646 8.98709 13.8885 9.51368 13.4761L9.6434 13.3748L10.2125 13.9752L10.1043 14.0992C9.88908 14.3466 9.68827 14.6185 9.48923 14.9309C8.89069 15.8709 8.85615 16.7277 8.81904 17.6358C8.79955 18.1134 8.77924 18.6039 8.67349 19.1095C9.26866 18.7635 10.0096 18.2833 10.6696 17.7143L10.7977 17.603L11.3858 18.2014L11.2724 18.3279C11.1622 18.4505 11.0467 18.5704 10.9267 18.6875Z" fill="#29294C"/></g>
+<g opacity="0.800003"><path d="M6.11963 16.3804L5.95011 16.3886C3.79438 16.4931 1.32614 15.6033 1.22173 15.5657L0.0253906 15.1297L1.2408 14.7485C2.0234 14.5038 2.55574 14.017 3.12004 13.5021C3.84622 12.8391 4.59673 12.1539 5.91392 11.8692C6.74366 11.689 7.49924 11.6405 8.15958 11.7261L8.32206 11.7476L8.29645 12.5729L8.13299 12.584C7.79933 12.6059 7.4647 12.654 7.10897 12.7316C6.0187 12.9672 5.3855 13.5455 4.71489 14.1579C4.36161 14.4807 3.99966 14.8114 3.56605 15.092C4.23134 15.2706 5.09372 15.4597 5.96332 15.5279L6.13228 15.5411L6.11963 16.3804Z" fill="#29294C"/></g>
+<g opacity="0.5"><path d="M21.6627 15.6155L20.523 15.0395C19.79 14.6679 19.0682 14.6442 18.3033 14.619C17.32 14.5871 16.3043 14.5542 15.1601 13.8409C14.4441 13.3916 13.8679 12.8998 13.4496 12.3775L13.3467 12.2494L13.9404 11.6729L14.0655 11.7795C14.3208 11.9964 14.5946 12.1946 14.9024 12.3851C15.8514 12.9779 16.7086 13.0058 17.6171 13.0355C18.0951 13.0509 18.5859 13.067 19.0923 13.169C18.7385 12.575 18.2503 11.8361 17.6761 11.1807L17.5638 11.0534L18.1581 10.4612L18.2853 10.5733C19.8956 11.9963 21.0572 14.3663 21.1059 14.466L21.6627 15.6155Z" fill="#29294C"/></g>
+<g opacity="0.600006"><path d="M15.1988 21.8563L14.8061 20.6445C14.5527 19.8615 14.0604 19.332 13.5384 18.7714C12.8681 18.0506 12.1758 17.3052 11.877 15.991C11.6893 15.1711 11.6335 14.4157 11.7099 13.7473L11.7285 13.5845L12.555 13.5976L12.5683 13.7608C12.597 14.1111 12.649 14.4464 12.7283 14.7859C12.9754 15.8744 13.5599 16.5035 14.1784 17.1687C14.5054 17.5205 14.8405 17.8812 15.1259 18.3133C15.2982 17.6454 15.4783 16.7803 15.5383 15.9112L15.5496 15.7423L16.1358 15.6886L16.146 15.8582C16.5753 18.7531 15.6601 20.5506 15.623 20.655L15.1988 21.8563Z" fill="#29294C"/></g>
+<path d="M10.736 3.16872C12.1843 1.75469 14.2174 0.789428 14.3033 0.749265L15.4541 0.20752L14.8703 1.33716C14.4936 2.0656 14.4639 2.78579 14.4327 3.5484C14.3925 4.53152 14.3511 5.54593 13.6272 6.68352C13.1776 7.3916 12.6755 7.96764 12.1489 8.3801L12.0192 8.48145L11.4501 7.88102L11.5584 7.75699C11.7735 7.50965 11.9743 7.23774 12.1734 6.9253C12.7719 5.98534 12.8065 5.12846 12.8436 4.22042C12.8631 3.7428 12.8834 3.25235 12.9891 2.74667C12.394 3.09273 11.653 3.57292 10.9931 4.14193L10.8649 4.25325L10.2769 3.65483L10.3903 3.52835C10.5004 3.4056 10.616 3.28585 10.736 3.16872Z" fill="#29294C"/>
+<g opacity="0.399994"><path d="M15.5428 5.4757L15.7123 5.46752C17.868 5.36298 20.3363 6.2528 20.4407 6.29046L21.637 6.72645L20.4216 7.1076C19.639 7.35231 19.1067 7.83916 18.5424 8.35407C17.8162 9.01698 17.0657 9.70226 15.7485 9.98689C14.9187 10.1672 14.1632 10.2156 13.5028 10.13L13.3403 10.1085L13.3659 9.2832L13.5294 9.27208C13.8631 9.25019 14.1977 9.20208 14.5534 9.12451C15.6437 8.88891 16.2769 8.31061 16.9475 7.69819C17.3008 7.37542 17.6628 7.04476 18.0963 6.76417C17.4311 6.58554 16.5687 6.39646 15.6991 6.32818L15.5301 6.31498L15.5428 5.4757Z" fill="#29294C"/></g>
+<g opacity="0.899994"><path d="M0 6.24121L1.13967 6.81719C1.8727 7.18875 2.59447 7.21246 3.35947 7.23765C4.34264 7.26957 5.3584 7.30251 6.50253 8.01567C7.21862 8.46505 7.79479 8.95691 8.21305 9.47915L8.31599 9.60728L7.72222 10.1838L7.59721 10.0771C7.34186 9.86025 7.06806 9.66199 6.76026 9.47157C5.81132 8.87878 4.95402 8.8509 4.04561 8.82113C3.56756 8.80579 3.0768 8.78965 2.57039 8.68768C2.92415 9.28169 3.41235 10.0205 3.98655 10.676L4.09885 10.8033L3.50453 11.3955L3.37738 11.2834C1.76706 9.86043 0.605444 7.49037 0.556783 7.39066L0 6.24121Z" fill="#29294C"/></g>
+<g opacity="0.949997"><path d="M6.46438 0L6.85709 1.21174C7.11042 1.99471 7.60277 2.52423 8.1247 3.08481C8.79501 3.80567 9.48738 4.5511 9.78613 5.86524C9.97387 6.68519 10.0297 7.44059 9.95327 8.109L9.93468 8.27179L9.10819 8.25871L9.0948 8.09549C9.06612 7.74515 9.01417 7.40984 8.93482 7.07038C8.68772 5.98188 8.10325 5.35278 7.48472 4.68755C7.15779 4.3358 6.82261 3.97506 6.53725 3.54298C6.36492 4.21091 6.18483 5.07597 6.12486 5.94502L6.11355 6.11398L5.5273 6.16766L5.51716 5.99808C5.08788 3.10315 6.00308 1.3057 6.04019 1.20129L6.46438 0Z" fill="#29294C"/></g>
+<path d="M33.5541 6.51807L29.7396 15.4185H27.2602L23.4585 6.51807H26.1795L28.5953 12.3161L31.0619 6.51807H33.5541Z" fill="#29294C"/>
+<path d="M40.751 13.6892H36.9875L36.2881 15.4184H33.7197L37.6486 6.51807H40.128L44.0697 15.4184H41.4504L40.751 13.6892ZM40.0136 11.8328L38.8693 8.98471L37.725 11.8328H40.0136Z" fill="#29294C"/>
+<path d="M54.2675 6.51807V15.4185H52.1949L48.266 10.6758V15.4185H45.7993V6.51807H47.8718L51.8007 11.2607V6.51807H54.2675Z" fill="#29294C"/>
+<path d="M58.9593 8.51431H56.2256V6.51807H64.1978V8.51431H61.4768V15.4185H58.9593V8.51431Z" fill="#29294C"/>
+<path d="M71.6744 13.6892H67.9108L67.2115 15.4184H64.6431L68.572 6.51807H71.0514L74.993 15.4184H72.3737L71.6744 13.6892ZM70.937 11.8328L69.7926 8.98471L68.6483 11.8328H70.937Z" fill="#29294C"/>
+<path d="M82.5588 10.7775H84.7838V14.4649C83.7539 15.2023 82.3426 15.5965 81.0457 15.5965C78.2103 15.5965 76.1377 13.6765 76.1377 10.9683C76.1377 8.26004 78.2103 6.34009 81.0965 6.34009C82.7622 6.34009 84.11 6.91228 84.9874 7.96759L83.3852 9.41706C82.7749 8.74315 82.0756 8.42527 81.2237 8.42527C79.6979 8.42527 78.6807 9.42979 78.6807 10.9683C78.6807 12.4687 79.6979 13.5112 81.1983 13.5112C81.6687 13.5112 82.1138 13.4222 82.5588 13.2188V10.7775Z" fill="#29294C"/>
+<path d="M94.5495 13.473V15.4184H87.4038V6.51807H94.3843V8.46338H89.896V9.96373H93.8504V11.8455H89.896V13.473H94.5495Z" fill="#29294C"/>
+<path d="M97.5884 10.9682C97.5884 8.33615 99.5974 6.41626 102.306 6.41626C103.679 6.41626 104.874 6.88666 105.688 7.80216L104.861 8.60317C104.175 7.87846 103.336 7.54786 102.357 7.54786C100.348 7.54786 98.86 8.99734 98.86 10.9682C98.86 12.939 100.348 14.3885 102.357 14.3885C103.336 14.3885 104.175 14.0451 104.861 13.3204L105.688 14.1215C104.874 15.0369 103.679 15.52 102.293 15.52C99.5974 15.52 97.5884 13.6001 97.5884 10.9682Z" fill="#29294C"/>
+<rect x="109.032" y="6.51807" width="1.27153" height="8.90041" fill="#29294C"/>
+<path d="M119.687 15.4185L117.767 12.6847C117.589 12.6975 117.399 12.7102 117.208 12.7102H115.008V15.4185H113.737V6.51807H117.208C119.522 6.51807 120.921 7.68782 120.921 9.62048C120.921 10.9937 120.209 11.9855 118.963 12.4305L121.073 15.4185H119.687ZM119.649 9.62048C119.649 8.34901 118.797 7.62424 117.17 7.62424H115.008V11.6294H117.17C118.797 11.6294 119.649 10.8919 119.649 9.62048Z" fill="#29294C"/>
+<path d="M123.019 10.9682C123.019 8.33615 125.028 6.41626 127.736 6.41626C129.109 6.41626 130.304 6.88666 131.118 7.80216L130.291 8.60317C129.605 7.87846 128.766 7.54786 127.787 7.54786C125.778 7.54786 124.29 8.99734 124.29 10.9682C124.29 12.939 125.778 14.3885 127.787 14.3885C128.766 14.3885 129.605 14.0451 130.291 13.3204L131.118 14.1215C130.304 15.0369 129.109 15.52 127.723 15.52C125.028 15.52 123.019 13.6001 123.019 10.9682Z" fill="#29294C"/>
+<path d="M134.462 6.51807H135.733V14.3122H140.552V15.4185H134.462V6.51807Z" fill="#29294C"/>
+<path d="M150 14.3122V15.4185H143.541V6.51807H149.822V7.62424H144.812V10.3579H149.275V11.4387H144.812V14.3122H150Z" fill="#29294C"/>
+</svg>
+  </a>
+
+  <!-- Background art -->
+  <img class="bg-art"
+    src="https://www.figma.com/api/mcp/asset/c8d09008-f71d-4e59-85ea-61e25f4a3d76"
+    alt="" />
+
+  <!-- Card -->
+  <div class="welcome-card screen-enter">
+
+    <!-- Language selector -->
+    <button class="lang-btn">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="5.5" stroke="#707087" stroke-width="1.2"/>
+        <ellipse cx="8" cy="8" rx="2.8" ry="5.5" stroke="#707087" stroke-width="1.2"/>
+        <line x1="2.5" y1="8" x2="13.5" y2="8" stroke="#707087" stroke-width="1.2"/>
+      </svg>
+      English
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M4.5 6.5l3.5 3.5 3.5-3.5" stroke="#707087" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <!-- Icon area -->
+    <div class="icon-area">
+      <svg class="survey-hero-svg" width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="heroGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#EDE9FE"/>
+            <stop offset="100%" stop-color="#F5F3FF"/>
+          </radialGradient>
+          <!-- Soft fill for clipboard body -->
+          <linearGradient id="boardFill" x1="60" y1="64" x2="140" y2="154" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#F9F5FF"/>
+            <stop offset="100%" stop-color="#EDE9FE" stop-opacity="0.5"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Pulse rings -->
+        <circle cx="100" cy="100" r="68" stroke="#C4B5FD" stroke-width="2" fill="none">
+          <animate attributeName="r" from="68" to="96" dur="2.8s" repeatCount="indefinite" begin="0s"/>
+          <animate attributeName="opacity" values="0.6;0" dur="2.8s" repeatCount="indefinite" begin="0s"/>
+        </circle>
+        <circle cx="100" cy="100" r="68" stroke="#C4B5FD" stroke-width="2" fill="none">
+          <animate attributeName="r" from="68" to="96" dur="2.8s" repeatCount="indefinite" begin="1.4s"/>
+          <animate attributeName="opacity" values="0.6;0" dur="2.8s" repeatCount="indefinite" begin="1.4s"/>
+        </circle>
+
+        <!-- Background circle -->
+        <circle cx="100" cy="100" r="68" fill="url(#heroGrad)"/>
+
+        <!-- Clipboard body – soft purple outline, white fill -->
+        <rect x="60" y="64" width="80" height="90" rx="10" fill="white" fill-opacity="0.7" stroke="#9E77ED" stroke-width="3.5"/>
+        <!-- Clipboard clip -->
+        <rect x="79" y="57" width="42" height="16" rx="8" fill="#F5F3FF" stroke="#9E77ED" stroke-width="3.5"/>
+
+        <!-- Lines – all soft purple, varying length for visual rhythm -->
+        <line x1="74" y1="90" x2="126" y2="90" stroke="#C4B5FD" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="74" y1="107" x2="120" y2="107" stroke="#C4B5FD" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>
+        <line x1="74" y1="124" x2="108" y2="124" stroke="#C4B5FD" stroke-width="3.5" stroke-linecap="round" opacity="0.5"/>
+        <!-- Animated checkmark – single green accent -->
+        <path class="hero-check" d="M113,121 L118,126 L128,115" stroke="#17B26A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+        <!-- Star 1 – outline only, soft purple -->
+        <g class="hero-star-sm">
+          <path d="M155,22 L158,31 L167,31 L160,37 L163,46 L155,40 L147,46 L150,37 L143,31 L152,31 Z"
+            fill="none" stroke="#B692F6" stroke-width="2" stroke-linejoin="round" opacity="0.8"/>
+        </g>
+        <!-- Star 2 – outline only, muted purple -->
+        <g class="hero-star-md">
+          <path d="M168,61 L172,72 L184,73 L175,80 L178,92 L168,85 L158,92 L161,80 L152,73 L164,72 Z"
+            fill="none" stroke="#9E77ED" stroke-width="2.5" stroke-linejoin="round" opacity="0.6"/>
+        </g>
+        <!-- Star 3 – outline only, lightest -->
+        <g class="hero-star-xs">
+          <path d="M42,56 L44,62 L50,64 L44,66 L42,72 L40,66 L34,64 L40,62 Z"
+            fill="none" stroke="#B692F6" stroke-width="1.8" stroke-linejoin="round" opacity="0.7"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Survey info -->
+    <div class="info-block">
+      <div class="survey-title">Quick Pulse Check</div>
+      <div class="survey-meta">
+        <span>8 Questions</span>
+        <span class="meta-dot"></span>
+        <span>~2 Min Survey</span>
+      </div>
+      <p class="survey-desc">
+        This short pulse survey helps us understand what's working and what needs improvement.
+        Your responses are anonymous and securely handled.
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <button class="btn-start" onclick="startSurvey()">
+      Start Survey Now
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M3.75 9h10.5M9.75 4.5l4.5 4.5-4.5 4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <!-- Privacy bar -->
+    <div class="privacy-bar">
+      <div class="privacy-item">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="4.5" y="9" width="11" height="8.5" rx="2" stroke="#707087" stroke-width="1.3"/>
+          <path d="M7 9V6.5a3 3 0 016 0V9" stroke="#707087" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        Your identity is protected
+      </div>
+      <div class="privacy-item">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 10s3-5.5 7-5.5S17 10 17 10s-3 5.5-7 5.5S3 10 3 10z" stroke="#707087" stroke-width="1.3"/>
+          <circle cx="10" cy="10" r="2.5" stroke="#707087" stroke-width="1.3"/>
+          <line x1="3" y1="3" x2="17" y2="17" stroke="#707087" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        No name or email tracking
+      </div>
+    </div>
+
+    <a class="privacy-link" href="#">View privacy policy</a>
+  </div>
+
+  <!-- Powered by -->
+  <div class="powered-by">
+    <span class="powered-text">Powered by</span>
+    <div class="powered-logo">
+      <svg width="14" height="14" viewBox="0 0 22 22" fill="none">
+        <path d="M11 6C9.5 8.5 8 9.5 5.5 9.5c.7 2.5 3 4 5.5 9 2.5-5 4.8-6.5 5.5-9C14 9.5 12.5 8.5 11 6z" fill="#29294c"/>
+      </svg>
+      VANTAGE<b style="font-weight:700;">CIRCLE</b>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 2 — QUESTION
+═══════════════════════════════════════════════ -->
+<div class="screen" id="screen-question">
+
+  <!-- Logo -->
+  <a class="vc-logo" href="#">
+    <svg width="120" height="18" viewBox="0 0 150 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.699997"><path d="M10.9267 18.6875C9.47829 20.1015 7.44518 21.0668 7.35935 21.1069L6.2085 21.6487L6.7923 20.519C7.16899 19.7906 7.19876 19.0704 7.22994 18.3078C7.27017 17.3247 7.31149 16.3103 8.0354 15.1727C8.48502 14.4646 8.98709 13.8885 9.51368 13.4761L9.6434 13.3748L10.2125 13.9752L10.1043 14.0992C9.88908 14.3466 9.68827 14.6185 9.48923 14.9309C8.89069 15.8709 8.85615 16.7277 8.81904 17.6358C8.79955 18.1134 8.77924 18.6039 8.67349 19.1095C9.26866 18.7635 10.0096 18.2833 10.6696 17.7143L10.7977 17.603L11.3858 18.2014L11.2724 18.3279C11.1622 18.4505 11.0467 18.5704 10.9267 18.6875Z" fill="#29294C"/></g>
+<g opacity="0.800003"><path d="M6.11963 16.3804L5.95011 16.3886C3.79438 16.4931 1.32614 15.6033 1.22173 15.5657L0.0253906 15.1297L1.2408 14.7485C2.0234 14.5038 2.55574 14.017 3.12004 13.5021C3.84622 12.8391 4.59673 12.1539 5.91392 11.8692C6.74366 11.689 7.49924 11.6405 8.15958 11.7261L8.32206 11.7476L8.29645 12.5729L8.13299 12.584C7.79933 12.6059 7.4647 12.654 7.10897 12.7316C6.0187 12.9672 5.3855 13.5455 4.71489 14.1579C4.36161 14.4807 3.99966 14.8114 3.56605 15.092C4.23134 15.2706 5.09372 15.4597 5.96332 15.5279L6.13228 15.5411L6.11963 16.3804Z" fill="#29294C"/></g>
+<g opacity="0.5"><path d="M21.6627 15.6155L20.523 15.0395C19.79 14.6679 19.0682 14.6442 18.3033 14.619C17.32 14.5871 16.3043 14.5542 15.1601 13.8409C14.4441 13.3916 13.8679 12.8998 13.4496 12.3775L13.3467 12.2494L13.9404 11.6729L14.0655 11.7795C14.3208 11.9964 14.5946 12.1946 14.9024 12.3851C15.8514 12.9779 16.7086 13.0058 17.6171 13.0355C18.0951 13.0509 18.5859 13.067 19.0923 13.169C18.7385 12.575 18.2503 11.8361 17.6761 11.1807L17.5638 11.0534L18.1581 10.4612L18.2853 10.5733C19.8956 11.9963 21.0572 14.3663 21.1059 14.466L21.6627 15.6155Z" fill="#29294C"/></g>
+<g opacity="0.600006"><path d="M15.1988 21.8563L14.8061 20.6445C14.5527 19.8615 14.0604 19.332 13.5384 18.7714C12.8681 18.0506 12.1758 17.3052 11.877 15.991C11.6893 15.1711 11.6335 14.4157 11.7099 13.7473L11.7285 13.5845L12.555 13.5976L12.5683 13.7608C12.597 14.1111 12.649 14.4464 12.7283 14.7859C12.9754 15.8744 13.5599 16.5035 14.1784 17.1687C14.5054 17.5205 14.8405 17.8812 15.1259 18.3133C15.2982 17.6454 15.4783 16.7803 15.5383 15.9112L15.5496 15.7423L16.1358 15.6886L16.146 15.8582C16.5753 18.7531 15.6601 20.5506 15.623 20.655L15.1988 21.8563Z" fill="#29294C"/></g>
+<path d="M10.736 3.16872C12.1843 1.75469 14.2174 0.789428 14.3033 0.749265L15.4541 0.20752L14.8703 1.33716C14.4936 2.0656 14.4639 2.78579 14.4327 3.5484C14.3925 4.53152 14.3511 5.54593 13.6272 6.68352C13.1776 7.3916 12.6755 7.96764 12.1489 8.3801L12.0192 8.48145L11.4501 7.88102L11.5584 7.75699C11.7735 7.50965 11.9743 7.23774 12.1734 6.9253C12.7719 5.98534 12.8065 5.12846 12.8436 4.22042C12.8631 3.7428 12.8834 3.25235 12.9891 2.74667C12.394 3.09273 11.653 3.57292 10.9931 4.14193L10.8649 4.25325L10.2769 3.65483L10.3903 3.52835C10.5004 3.4056 10.616 3.28585 10.736 3.16872Z" fill="#29294C"/>
+<g opacity="0.399994"><path d="M15.5428 5.4757L15.7123 5.46752C17.868 5.36298 20.3363 6.2528 20.4407 6.29046L21.637 6.72645L20.4216 7.1076C19.639 7.35231 19.1067 7.83916 18.5424 8.35407C17.8162 9.01698 17.0657 9.70226 15.7485 9.98689C14.9187 10.1672 14.1632 10.2156 13.5028 10.13L13.3403 10.1085L13.3659 9.2832L13.5294 9.27208C13.8631 9.25019 14.1977 9.20208 14.5534 9.12451C15.6437 8.88891 16.2769 8.31061 16.9475 7.69819C17.3008 7.37542 17.6628 7.04476 18.0963 6.76417C17.4311 6.58554 16.5687 6.39646 15.6991 6.32818L15.5301 6.31498L15.5428 5.4757Z" fill="#29294C"/></g>
+<g opacity="0.899994"><path d="M0 6.24121L1.13967 6.81719C1.8727 7.18875 2.59447 7.21246 3.35947 7.23765C4.34264 7.26957 5.3584 7.30251 6.50253 8.01567C7.21862 8.46505 7.79479 8.95691 8.21305 9.47915L8.31599 9.60728L7.72222 10.1838L7.59721 10.0771C7.34186 9.86025 7.06806 9.66199 6.76026 9.47157C5.81132 8.87878 4.95402 8.8509 4.04561 8.82113C3.56756 8.80579 3.0768 8.78965 2.57039 8.68768C2.92415 9.28169 3.41235 10.0205 3.98655 10.676L4.09885 10.8033L3.50453 11.3955L3.37738 11.2834C1.76706 9.86043 0.605444 7.49037 0.556783 7.39066L0 6.24121Z" fill="#29294C"/></g>
+<g opacity="0.949997"><path d="M6.46438 0L6.85709 1.21174C7.11042 1.99471 7.60277 2.52423 8.1247 3.08481C8.79501 3.80567 9.48738 4.5511 9.78613 5.86524C9.97387 6.68519 10.0297 7.44059 9.95327 8.109L9.93468 8.27179L9.10819 8.25871L9.0948 8.09549C9.06612 7.74515 9.01417 7.40984 8.93482 7.07038C8.68772 5.98188 8.10325 5.35278 7.48472 4.68755C7.15779 4.3358 6.82261 3.97506 6.53725 3.54298C6.36492 4.21091 6.18483 5.07597 6.12486 5.94502L6.11355 6.11398L5.5273 6.16766L5.51716 5.99808C5.08788 3.10315 6.00308 1.3057 6.04019 1.20129L6.46438 0Z" fill="#29294C"/></g>
+<path d="M33.5541 6.51807L29.7396 15.4185H27.2602L23.4585 6.51807H26.1795L28.5953 12.3161L31.0619 6.51807H33.5541Z" fill="#29294C"/>
+<path d="M40.751 13.6892H36.9875L36.2881 15.4184H33.7197L37.6486 6.51807H40.128L44.0697 15.4184H41.4504L40.751 13.6892ZM40.0136 11.8328L38.8693 8.98471L37.725 11.8328H40.0136Z" fill="#29294C"/>
+<path d="M54.2675 6.51807V15.4185H52.1949L48.266 10.6758V15.4185H45.7993V6.51807H47.8718L51.8007 11.2607V6.51807H54.2675Z" fill="#29294C"/>
+<path d="M58.9593 8.51431H56.2256V6.51807H64.1978V8.51431H61.4768V15.4185H58.9593V8.51431Z" fill="#29294C"/>
+<path d="M71.6744 13.6892H67.9108L67.2115 15.4184H64.6431L68.572 6.51807H71.0514L74.993 15.4184H72.3737L71.6744 13.6892ZM70.937 11.8328L69.7926 8.98471L68.6483 11.8328H70.937Z" fill="#29294C"/>
+<path d="M82.5588 10.7775H84.7838V14.4649C83.7539 15.2023 82.3426 15.5965 81.0457 15.5965C78.2103 15.5965 76.1377 13.6765 76.1377 10.9683C76.1377 8.26004 78.2103 6.34009 81.0965 6.34009C82.7622 6.34009 84.11 6.91228 84.9874 7.96759L83.3852 9.41706C82.7749 8.74315 82.0756 8.42527 81.2237 8.42527C79.6979 8.42527 78.6807 9.42979 78.6807 10.9683C78.6807 12.4687 79.6979 13.5112 81.1983 13.5112C81.6687 13.5112 82.1138 13.4222 82.5588 13.2188V10.7775Z" fill="#29294C"/>
+<path d="M94.5495 13.473V15.4184H87.4038V6.51807H94.3843V8.46338H89.896V9.96373H93.8504V11.8455H89.896V13.473H94.5495Z" fill="#29294C"/>
+<path d="M97.5884 10.9682C97.5884 8.33615 99.5974 6.41626 102.306 6.41626C103.679 6.41626 104.874 6.88666 105.688 7.80216L104.861 8.60317C104.175 7.87846 103.336 7.54786 102.357 7.54786C100.348 7.54786 98.86 8.99734 98.86 10.9682C98.86 12.939 100.348 14.3885 102.357 14.3885C103.336 14.3885 104.175 14.0451 104.861 13.3204L105.688 14.1215C104.874 15.0369 103.679 15.52 102.293 15.52C99.5974 15.52 97.5884 13.6001 97.5884 10.9682Z" fill="#29294C"/>
+<rect x="109.032" y="6.51807" width="1.27153" height="8.90041" fill="#29294C"/>
+<path d="M119.687 15.4185L117.767 12.6847C117.589 12.6975 117.399 12.7102 117.208 12.7102H115.008V15.4185H113.737V6.51807H117.208C119.522 6.51807 120.921 7.68782 120.921 9.62048C120.921 10.9937 120.209 11.9855 118.963 12.4305L121.073 15.4185H119.687ZM119.649 9.62048C119.649 8.34901 118.797 7.62424 117.17 7.62424H115.008V11.6294H117.17C118.797 11.6294 119.649 10.8919 119.649 9.62048Z" fill="#29294C"/>
+<path d="M123.019 10.9682C123.019 8.33615 125.028 6.41626 127.736 6.41626C129.109 6.41626 130.304 6.88666 131.118 7.80216L130.291 8.60317C129.605 7.87846 128.766 7.54786 127.787 7.54786C125.778 7.54786 124.29 8.99734 124.29 10.9682C124.29 12.939 125.778 14.3885 127.787 14.3885C128.766 14.3885 129.605 14.0451 130.291 13.3204L131.118 14.1215C130.304 15.0369 129.109 15.52 127.723 15.52C125.028 15.52 123.019 13.6001 123.019 10.9682Z" fill="#29294C"/>
+<path d="M134.462 6.51807H135.733V14.3122H140.552V15.4185H134.462V6.51807Z" fill="#29294C"/>
+<path d="M150 14.3122V15.4185H143.541V6.51807H149.822V7.62424H144.812V10.3579H149.275V11.4387H144.812V14.3122H150Z" fill="#29294C"/>
+</svg>
+  </a>
+
+  <!-- Question Card -->
+  <div class="question-card screen-enter" id="question-card">
+    <!-- Header -->
+    <div class="q-header">
+      <div class="q-header-left">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 8s2.5-4.5 6-4.5S14 8 14 8s-2.5 4.5-6 4.5S2 8 2 8z" stroke="#707087" stroke-width="1.2"/>
+          <circle cx="8" cy="8" r="2" stroke="#707087" stroke-width="1.2"/>
+          <line x1="2" y1="2" x2="14" y2="14" stroke="#707087" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        <span>You are anonymous</span>
+      </div>
+      <span class="q-counter">Question <strong id="q-num">1</strong> of <strong id="q-total">8</strong></span>
+    </div>
+
+    <!-- Question -->
+    <div class="q-label-row">
+      <p class="q-text" id="q-text" style="margin:0;">I feel we have enough social interaction at my workplace</p>
+      <span id="q-badge" class="q-required-badge">Required</span>
+    </div>
+
+    <!-- Rating -->
+    <div class="rating-section">
+      <div class="rating-row" id="rating-row">
+        <button class="rating-btn" data-val="1" onclick="selectRating(this)">
+          <span class="rating-num">1</span>
+          <svg class="rating-face" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.8"/>
+            <!-- angry brows -->
+            <line x1="8" y1="9" x2="12" y2="10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="16" y1="10.5" x2="20" y2="9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <!-- eyes -->
+            <circle cx="10.5" cy="12.5" r="1.4" fill="currentColor"/>
+            <circle cx="17.5" cy="12.5" r="1.4" fill="currentColor"/>
+            <!-- frown -->
+            <path d="M9 19.5 Q14 16 19 19.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+          </svg>
+        </button>
+        <button class="rating-btn" data-val="2" onclick="selectRating(this)">
+          <span class="rating-num">2</span>
+          <svg class="rating-face" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.8"/>
+            <!-- eyes -->
+            <circle cx="10.5" cy="12" r="1.4" fill="currentColor"/>
+            <circle cx="17.5" cy="12" r="1.4" fill="currentColor"/>
+            <!-- sad frown -->
+            <path d="M9.5 19.5 Q14 23 18.5 19.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+          </svg>
+        </button>
+        <button class="rating-btn" data-val="3" onclick="selectRating(this)">
+          <span class="rating-num">3</span>
+          <svg class="rating-face" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.8"/>
+            <!-- eyes -->
+            <circle cx="10.5" cy="12" r="1.4" fill="currentColor"/>
+            <circle cx="17.5" cy="12" r="1.4" fill="currentColor"/>
+            <!-- neutral mouth -->
+            <line x1="9.5" y1="19" x2="18.5" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="rating-btn" data-val="4" onclick="selectRating(this)">
+          <span class="rating-num">4</span>
+          <svg class="rating-face" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.8"/>
+            <!-- eyes -->
+            <circle cx="10.5" cy="12" r="1.4" fill="currentColor"/>
+            <circle cx="17.5" cy="12" r="1.4" fill="currentColor"/>
+            <!-- smile -->
+            <path d="M9.5 17 Q14 21.5 18.5 17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+          </svg>
+        </button>
+        <button class="rating-btn" data-val="5" onclick="selectRating(this)">
+          <span class="rating-num">5</span>
+          <svg class="rating-face" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.8"/>
+            <!-- happy arc eyes -->
+            <path d="M8.5 12.5 Q10.5 10 12.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            <path d="M15.5 12.5 Q17.5 10 19.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            <!-- big smile -->
+            <path d="M8.5 16.5 Q14 23 19.5 16.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+          </svg>
+        </button>
+      </div>
+      <div class="rating-labels">
+        <span>Strongly disagree</span>
+        <span>Strongly agree</span>
+      </div>
+    </div>
+
+    <!-- Multiple Choice Single -->
+    <div class="mc-section" id="mc-section" style="display:none;"></div>
+
+    <!-- Multiple Choice Multi -->
+    <div class="multi-section" id="multi-section" style="display:none;"></div>
+
+    <!-- Yes / No -->
+    <div class="yesno-section" id="yesno-section" style="display:none;">
+      <button class="yesno-btn" data-val="Yes" onclick="selectYesNo(this)">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M8.5 14.5 L12.5 18.5 L19.5 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Yes
+      </button>
+      <button class="yesno-btn" data-val="No" onclick="selectYesNo(this)">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M9.5 9.5 L18.5 18.5 M18.5 9.5 L9.5 18.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        No
+      </button>
+    </div>
+
+    <!-- Comment -->
+    <div class="comment-section" id="comment-section">
+      <label class="comment-label">Add your comment <span style="color:#d0d5dd;">(optional)</span></label>
+      <textarea class="comment-area" id="q-comment" placeholder="Share your thoughts…"></textarea>
+    </div>
+
+    <!-- Skip -->
+    <button class="btn-skip" id="btn-skip-toggle" onclick="toggleSkipPanel()">
+      Skip Question
+      <svg class="skip-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M4.5 6.5l3.5 3.5 3.5-3.5" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <!-- Skip reason panel -->
+    <div class="skip-panel" id="skip-panel">
+      <div class="skip-panel-header">
+        <span>Select a reason</span>
+        <button class="skip-cancel" onclick="closeSkipPanel()">Cancel</button>
+      </div>
+      <div class="skip-reasons">
+        <button class="skip-reason-btn" onclick="skipWithReason('Not Applicable')">Not Applicable</button>
+        <button class="skip-reason-btn" onclick="skipWithReason('Not Sure')">Not Sure</button>
+        <button class="skip-reason-btn" onclick="skipWithReason('No Opinion')">No Opinion</button>
+        <button class="skip-reason-btn" onclick="skipWithReason('Other')">Other</button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="q-nav">
+      <button class="btn-pill" id="btn-back" onclick="prevQuestion()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back
+      </button>
+      <button class="btn-pill btn-next-active" id="btn-next" onclick="nextQuestion()">
+        Next
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Powered by -->
+  <div class="powered-by">
+    <span class="powered-text">Powered by</span>
+    <div class="powered-logo">
+      <svg width="14" height="14" viewBox="0 0 22 22" fill="none">
+        <path d="M11 6C9.5 8.5 8 9.5 5.5 9.5c.7 2.5 3 4 5.5 9 2.5-5 4.8-6.5 5.5-9C14 9.5 12.5 8.5 11 6z" fill="#29294c"/>
+      </svg>
+      VANTAGE<b style="font-weight:700;">CIRCLE</b>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 3 — THANK YOU
+═══════════════════════════════════════════════ -->
+<div class="screen" id="screen-thankyou">
+
+  <!-- Logo -->
+  <a class="vc-logo" href="#">
+    <svg width="120" height="18" viewBox="0 0 150 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.699997"><path d="M10.9267 18.6875C9.47829 20.1015 7.44518 21.0668 7.35935 21.1069L6.2085 21.6487L6.7923 20.519C7.16899 19.7906 7.19876 19.0704 7.22994 18.3078C7.27017 17.3247 7.31149 16.3103 8.0354 15.1727C8.48502 14.4646 8.98709 13.8885 9.51368 13.4761L9.6434 13.3748L10.2125 13.9752L10.1043 14.0992C9.88908 14.3466 9.68827 14.6185 9.48923 14.9309C8.89069 15.8709 8.85615 16.7277 8.81904 17.6358C8.79955 18.1134 8.77924 18.6039 8.67349 19.1095C9.26866 18.7635 10.0096 18.2833 10.6696 17.7143L10.7977 17.603L11.3858 18.2014L11.2724 18.3279C11.1622 18.4505 11.0467 18.5704 10.9267 18.6875Z" fill="#29294C"/></g>
+<g opacity="0.800003"><path d="M6.11963 16.3804L5.95011 16.3886C3.79438 16.4931 1.32614 15.6033 1.22173 15.5657L0.0253906 15.1297L1.2408 14.7485C2.0234 14.5038 2.55574 14.017 3.12004 13.5021C3.84622 12.8391 4.59673 12.1539 5.91392 11.8692C6.74366 11.689 7.49924 11.6405 8.15958 11.7261L8.32206 11.7476L8.29645 12.5729L8.13299 12.584C7.79933 12.6059 7.4647 12.654 7.10897 12.7316C6.0187 12.9672 5.3855 13.5455 4.71489 14.1579C4.36161 14.4807 3.99966 14.8114 3.56605 15.092C4.23134 15.2706 5.09372 15.4597 5.96332 15.5279L6.13228 15.5411L6.11963 16.3804Z" fill="#29294C"/></g>
+<g opacity="0.5"><path d="M21.6627 15.6155L20.523 15.0395C19.79 14.6679 19.0682 14.6442 18.3033 14.619C17.32 14.5871 16.3043 14.5542 15.1601 13.8409C14.4441 13.3916 13.8679 12.8998 13.4496 12.3775L13.3467 12.2494L13.9404 11.6729L14.0655 11.7795C14.3208 11.9964 14.5946 12.1946 14.9024 12.3851C15.8514 12.9779 16.7086 13.0058 17.6171 13.0355C18.0951 13.0509 18.5859 13.067 19.0923 13.169C18.7385 12.575 18.2503 11.8361 17.6761 11.1807L17.5638 11.0534L18.1581 10.4612L18.2853 10.5733C19.8956 11.9963 21.0572 14.3663 21.1059 14.466L21.6627 15.6155Z" fill="#29294C"/></g>
+<g opacity="0.600006"><path d="M15.1988 21.8563L14.8061 20.6445C14.5527 19.8615 14.0604 19.332 13.5384 18.7714C12.8681 18.0506 12.1758 17.3052 11.877 15.991C11.6893 15.1711 11.6335 14.4157 11.7099 13.7473L11.7285 13.5845L12.555 13.5976L12.5683 13.7608C12.597 14.1111 12.649 14.4464 12.7283 14.7859C12.9754 15.8744 13.5599 16.5035 14.1784 17.1687C14.5054 17.5205 14.8405 17.8812 15.1259 18.3133C15.2982 17.6454 15.4783 16.7803 15.5383 15.9112L15.5496 15.7423L16.1358 15.6886L16.146 15.8582C16.5753 18.7531 15.6601 20.5506 15.623 20.655L15.1988 21.8563Z" fill="#29294C"/></g>
+<path d="M10.736 3.16872C12.1843 1.75469 14.2174 0.789428 14.3033 0.749265L15.4541 0.20752L14.8703 1.33716C14.4936 2.0656 14.4639 2.78579 14.4327 3.5484C14.3925 4.53152 14.3511 5.54593 13.6272 6.68352C13.1776 7.3916 12.6755 7.96764 12.1489 8.3801L12.0192 8.48145L11.4501 7.88102L11.5584 7.75699C11.7735 7.50965 11.9743 7.23774 12.1734 6.9253C12.7719 5.98534 12.8065 5.12846 12.8436 4.22042C12.8631 3.7428 12.8834 3.25235 12.9891 2.74667C12.394 3.09273 11.653 3.57292 10.9931 4.14193L10.8649 4.25325L10.2769 3.65483L10.3903 3.52835C10.5004 3.4056 10.616 3.28585 10.736 3.16872Z" fill="#29294C"/>
+<g opacity="0.399994"><path d="M15.5428 5.4757L15.7123 5.46752C17.868 5.36298 20.3363 6.2528 20.4407 6.29046L21.637 6.72645L20.4216 7.1076C19.639 7.35231 19.1067 7.83916 18.5424 8.35407C17.8162 9.01698 17.0657 9.70226 15.7485 9.98689C14.9187 10.1672 14.1632 10.2156 13.5028 10.13L13.3403 10.1085L13.3659 9.2832L13.5294 9.27208C13.8631 9.25019 14.1977 9.20208 14.5534 9.12451C15.6437 8.88891 16.2769 8.31061 16.9475 7.69819C17.3008 7.37542 17.6628 7.04476 18.0963 6.76417C17.4311 6.58554 16.5687 6.39646 15.6991 6.32818L15.5301 6.31498L15.5428 5.4757Z" fill="#29294C"/></g>
+<g opacity="0.899994"><path d="M0 6.24121L1.13967 6.81719C1.8727 7.18875 2.59447 7.21246 3.35947 7.23765C4.34264 7.26957 5.3584 7.30251 6.50253 8.01567C7.21862 8.46505 7.79479 8.95691 8.21305 9.47915L8.31599 9.60728L7.72222 10.1838L7.59721 10.0771C7.34186 9.86025 7.06806 9.66199 6.76026 9.47157C5.81132 8.87878 4.95402 8.8509 4.04561 8.82113C3.56756 8.80579 3.0768 8.78965 2.57039 8.68768C2.92415 9.28169 3.41235 10.0205 3.98655 10.676L4.09885 10.8033L3.50453 11.3955L3.37738 11.2834C1.76706 9.86043 0.605444 7.49037 0.556783 7.39066L0 6.24121Z" fill="#29294C"/></g>
+<g opacity="0.949997"><path d="M6.46438 0L6.85709 1.21174C7.11042 1.99471 7.60277 2.52423 8.1247 3.08481C8.79501 3.80567 9.48738 4.5511 9.78613 5.86524C9.97387 6.68519 10.0297 7.44059 9.95327 8.109L9.93468 8.27179L9.10819 8.25871L9.0948 8.09549C9.06612 7.74515 9.01417 7.40984 8.93482 7.07038C8.68772 5.98188 8.10325 5.35278 7.48472 4.68755C7.15779 4.3358 6.82261 3.97506 6.53725 3.54298C6.36492 4.21091 6.18483 5.07597 6.12486 5.94502L6.11355 6.11398L5.5273 6.16766L5.51716 5.99808C5.08788 3.10315 6.00308 1.3057 6.04019 1.20129L6.46438 0Z" fill="#29294C"/></g>
+<path d="M33.5541 6.51807L29.7396 15.4185H27.2602L23.4585 6.51807H26.1795L28.5953 12.3161L31.0619 6.51807H33.5541Z" fill="#29294C"/>
+<path d="M40.751 13.6892H36.9875L36.2881 15.4184H33.7197L37.6486 6.51807H40.128L44.0697 15.4184H41.4504L40.751 13.6892ZM40.0136 11.8328L38.8693 8.98471L37.725 11.8328H40.0136Z" fill="#29294C"/>
+<path d="M54.2675 6.51807V15.4185H52.1949L48.266 10.6758V15.4185H45.7993V6.51807H47.8718L51.8007 11.2607V6.51807H54.2675Z" fill="#29294C"/>
+<path d="M58.9593 8.51431H56.2256V6.51807H64.1978V8.51431H61.4768V15.4185H58.9593V8.51431Z" fill="#29294C"/>
+<path d="M71.6744 13.6892H67.9108L67.2115 15.4184H64.6431L68.572 6.51807H71.0514L74.993 15.4184H72.3737L71.6744 13.6892ZM70.937 11.8328L69.7926 8.98471L68.6483 11.8328H70.937Z" fill="#29294C"/>
+<path d="M82.5588 10.7775H84.7838V14.4649C83.7539 15.2023 82.3426 15.5965 81.0457 15.5965C78.2103 15.5965 76.1377 13.6765 76.1377 10.9683C76.1377 8.26004 78.2103 6.34009 81.0965 6.34009C82.7622 6.34009 84.11 6.91228 84.9874 7.96759L83.3852 9.41706C82.7749 8.74315 82.0756 8.42527 81.2237 8.42527C79.6979 8.42527 78.6807 9.42979 78.6807 10.9683C78.6807 12.4687 79.6979 13.5112 81.1983 13.5112C81.6687 13.5112 82.1138 13.4222 82.5588 13.2188V10.7775Z" fill="#29294C"/>
+<path d="M94.5495 13.473V15.4184H87.4038V6.51807H94.3843V8.46338H89.896V9.96373H93.8504V11.8455H89.896V13.473H94.5495Z" fill="#29294C"/>
+<path d="M97.5884 10.9682C97.5884 8.33615 99.5974 6.41626 102.306 6.41626C103.679 6.41626 104.874 6.88666 105.688 7.80216L104.861 8.60317C104.175 7.87846 103.336 7.54786 102.357 7.54786C100.348 7.54786 98.86 8.99734 98.86 10.9682C98.86 12.939 100.348 14.3885 102.357 14.3885C103.336 14.3885 104.175 14.0451 104.861 13.3204L105.688 14.1215C104.874 15.0369 103.679 15.52 102.293 15.52C99.5974 15.52 97.5884 13.6001 97.5884 10.9682Z" fill="#29294C"/>
+<rect x="109.032" y="6.51807" width="1.27153" height="8.90041" fill="#29294C"/>
+<path d="M119.687 15.4185L117.767 12.6847C117.589 12.6975 117.399 12.7102 117.208 12.7102H115.008V15.4185H113.737V6.51807H117.208C119.522 6.51807 120.921 7.68782 120.921 9.62048C120.921 10.9937 120.209 11.9855 118.963 12.4305L121.073 15.4185H119.687ZM119.649 9.62048C119.649 8.34901 118.797 7.62424 117.17 7.62424H115.008V11.6294H117.17C118.797 11.6294 119.649 10.8919 119.649 9.62048Z" fill="#29294C"/>
+<path d="M123.019 10.9682C123.019 8.33615 125.028 6.41626 127.736 6.41626C129.109 6.41626 130.304 6.88666 131.118 7.80216L130.291 8.60317C129.605 7.87846 128.766 7.54786 127.787 7.54786C125.778 7.54786 124.29 8.99734 124.29 10.9682C124.29 12.939 125.778 14.3885 127.787 14.3885C128.766 14.3885 129.605 14.0451 130.291 13.3204L131.118 14.1215C130.304 15.0369 129.109 15.52 127.723 15.52C125.028 15.52 123.019 13.6001 123.019 10.9682Z" fill="#29294C"/>
+<path d="M134.462 6.51807H135.733V14.3122H140.552V15.4185H134.462V6.51807Z" fill="#29294C"/>
+<path d="M150 14.3122V15.4185H143.541V6.51807H149.822V7.62424H144.812V10.3579H149.275V11.4387H144.812V14.3122H150Z" fill="#29294C"/>
+</svg>
+  </a>
+
+  <div class="thankyou-card screen-enter">
+    <!-- Confetti -->
+    <div class="confetti" id="confetti"></div>
+
+    <!-- Check icon -->
+    <div class="ty-icon">
+      <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+        <path d="M8 19l7 7 15-15" stroke="#12b76a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="ty-title">Thank You!</div>
+    <p class="ty-desc">
+      Your responses have been recorded anonymously. Your feedback helps us build a better workplace for everyone.
+    </p>
+
+    <!-- Privacy row -->
+    <div class="privacy-bar" style="max-width:420px;">
+      <div class="privacy-item">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <rect x="4.5" y="9" width="11" height="8.5" rx="2" stroke="#707087" stroke-width="1.3"/>
+          <path d="M7 9V6.5a3 3 0 016 0V9" stroke="#707087" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        Responses are anonymous
+      </div>
+      <div class="privacy-item">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L12 8.5H19L13.5 12.5L15.5 19L10 15L4.5 19L6.5 12.5L1 8.5H8L10 2Z" fill="#12b76a" opacity="0.4"/>
+          <path d="M10 4L11.5 9H17.5L12.5 12.5L14 18L10 15.5L6 18L7.5 12.5L2.5 9H8.5L10 4Z" stroke="#12b76a" stroke-width="1.2"/>
+        </svg>
+        Securely handled
+      </div>
+    </div>
+
+    <button class="btn-start" style="margin-top:8px;" onclick="location.reload()">
+      Close Survey
+    </button>
+  </div>
+
+  <!-- Powered by -->
+  <div class="powered-by">
+    <span class="powered-text">Powered by</span>
+    <div class="powered-logo">
+      <svg width="14" height="14" viewBox="0 0 22 22" fill="none">
+        <path d="M11 6C9.5 8.5 8 9.5 5.5 9.5c.7 2.5 3 4 5.5 9 2.5-5 4.8-6.5 5.5-9C14 9.5 12.5 8.5 11 6z" fill="#29294c"/>
+      </svg>
+      VANTAGE<b style="font-weight:700;">CIRCLE</b>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  /* ──────────────────────────────────────
+     Survey Data
+  ────────────────────────────────────── */
+  const QUESTIONS = [
+    {
+      text: "I feel we have enough social interaction at my workplace",
+      type: "rating", required: true
+    },
+    {
+      text: "Which best describes your current work setup?",
+      type: "single", required: true,
+      options: ["Fully remote", "Hybrid (mix of remote & office)", "Fully in-office", "Field / on-site work"]
+    },
+    {
+      text: "Which of these workplace benefits do you currently use?",
+      type: "multi", required: false,
+      options: ["Health insurance", "Gym / wellness membership", "Learning & development budget", "Flexible working hours", "Mental health support"]
+    },
+    {
+      text: "I feel my manager supports my professional growth",
+      type: "rating", required: true
+    },
+    {
+      text: "What would most improve your day-to-day work experience?",
+      type: "open", required: false
+    },
+    {
+      text: "My workload is manageable and well-balanced",
+      type: "rating", required: true
+    },
+    {
+      text: "Would you recommend this company as a great place to work?",
+      type: "yesno", required: true
+    },
+    {
+      text: "I feel recognized and appreciated for my contributions",
+      type: "rating", required: false
+    }
+  ];
+
+  let currentQ = 0;
+  let answers  = new Array(QUESTIONS.length).fill(null);
+  let comments = new Array(QUESTIONS.length).fill('');
+
+  /* ──────────────────────────────────────
+     Screen helpers
+  ────────────────────────────────────── */
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => {
+      s.classList.remove('active');
+    });
+    const scr = document.getElementById(id);
+    scr.classList.add('active');
+    // Re-trigger animation
+    const card = scr.querySelector('.welcome-card, .question-card, .thankyou-card');
+    if (card) {
+      card.classList.remove('screen-enter');
+      void card.offsetWidth;
+      card.classList.add('screen-enter');
+    }
+  }
+
+  /* ──────────────────────────────────────
+     Welcome → Question
+  ────────────────────────────────────── */
+  function startSurvey() {
+    currentQ = 0;
+    renderQuestion();
+    showScreen('screen-question');
+  }
+
+  /* ──────────────────────────────────────
+     Render question
+  ────────────────────────────────────── */
+  function renderQuestion() {
+    const total = QUESTIONS.length;
+    const idx   = currentQ;
+    const q     = QUESTIONS[idx];
+
+    // Reset skip panel; hide for required questions
+    closeSkipPanel();
+    document.getElementById('btn-skip-toggle').style.display = q.required ? 'none' : '';
+
+    // Text & counter
+    document.getElementById('q-text').textContent = q.text;
+
+    // Required / Optional badge
+    const badge = document.getElementById('q-badge');
+    if (q.required) {
+      badge.textContent = 'Required';
+      badge.className = 'q-required-badge';
+    } else {
+      badge.textContent = 'Optional';
+      badge.className = 'q-optional-badge';
+    }
+    document.getElementById('q-num').textContent   = idx + 1;
+    document.getElementById('q-total').textContent = total;
+
+    // Hide all input sections
+    document.getElementById('rating-row').parentElement.style.display = 'none';
+    document.getElementById('mc-section').style.display    = 'none';
+    document.getElementById('multi-section').style.display = 'none';
+    document.getElementById('yesno-section').style.display = 'none';
+    document.getElementById('comment-section').style.display = '';
+
+    const saved = answers[idx];
+
+    if (q.type === 'rating') {
+      document.getElementById('rating-row').parentElement.style.display = '';
+      document.querySelectorAll('.rating-btn').forEach((btn, i) => {
+        btn.classList.remove('selected');
+        if (saved === i + 1) btn.classList.add('selected');
+      });
+
+    } else if (q.type === 'single') {
+      const section = document.getElementById('mc-section');
+      section.style.display = '';
+      section.innerHTML = q.options.map((opt, i) => `
+        <button class="mc-option${saved === opt ? ' selected' : ''}" onclick="selectMC(this,'${opt.replace(/'/g,"\\'")}')">
+          <span class="mc-dot"></span>
+          ${opt}
+        </button>`).join('');
+
+    } else if (q.type === 'multi') {
+      const section = document.getElementById('multi-section');
+      section.style.display = '';
+      const savedArr = Array.isArray(saved) ? saved : [];
+      section.innerHTML = q.options.map(opt => `
+        <button class="multi-option${savedArr.includes(opt) ? ' selected' : ''}" onclick="toggleMulti(this,'${opt.replace(/'/g,"\\'")}')">
+          <span class="multi-check"></span>
+          ${opt}
+        </button>`).join('');
+
+    } else if (q.type === 'open') {
+      // Textarea becomes the main answer — label changes
+      document.getElementById('q-comment').placeholder = 'Type your answer here…';
+      document.querySelector('.comment-label').innerHTML = 'Your answer';
+
+    } else if (q.type === 'yesno') {
+      document.getElementById('yesno-section').style.display = '';
+      document.querySelectorAll('.yesno-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.val === saved);
+      });
+    }
+
+    // Reset comment label for non-open types
+    if (q.type !== 'open') {
+      document.querySelector('.comment-label').innerHTML = 'Add your comment <span style="color:#d0d5dd;">(optional)</span>';
+    }
+
+    // Restore textarea value (open = answer, others = comment)
+    document.getElementById('q-comment').value =
+      q.type === 'open' ? (saved || '') : (comments[idx] || '');
+
+    // Back button
+    document.getElementById('btn-back').disabled = (idx === 0);
+
+    // Next / Submit label
+    const nextBtn = document.getElementById('btn-next');
+    const label   = idx === total - 1 ? 'Submit' : 'Next';
+    nextBtn.innerHTML = `${label}
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`;
+  }
+
+  /* ──────────────────────────────────────
+     Rating selection
+  ────────────────────────────────────── */
+  function selectRating(btn) {
+    document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.remove('selected');
+    void btn.offsetWidth; // force reflow for animation replay
+    btn.classList.add('selected');
+    answers[currentQ] = parseInt(btn.dataset.val);
+    clearError();
+  }
+
+  /* Multiple choice — single */
+  function selectMC(btn, val) {
+    document.querySelectorAll('.mc-option').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    answers[currentQ] = val;
+    clearError();
+  }
+
+  /* Multiple choice — multi */
+  function toggleMulti(btn, val) {
+    const saved = Array.isArray(answers[currentQ]) ? answers[currentQ] : [];
+    if (btn.classList.contains('selected')) {
+      btn.classList.remove('selected');
+      answers[currentQ] = saved.filter(v => v !== val);
+    } else {
+      btn.classList.add('selected');
+      answers[currentQ] = [...saved, val];
+    }
+    clearError();
+  }
+
+  /* Yes / No */
+  function selectYesNo(btn) {
+    document.querySelectorAll('.yesno-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    answers[currentQ] = btn.dataset.val;
+    clearError();
+  }
+
+  /* ──────────────────────────────────────
+     Validation
+  ────────────────────────────────────── */
+  function hasAnswer(idx) {
+    const q = QUESTIONS[idx];
+    const a = answers[idx];
+    if (q.type === 'open') return (a && a.trim().length > 0) || (comments[idx] && comments[idx].trim().length > 0);
+    if (q.type === 'multi') return Array.isArray(a) && a.length > 0;
+    return a !== null && a !== undefined;
+  }
+
+  let _snackTimer = null;
+  function showError(msg) {
+    const bar = document.getElementById('snackbar');
+    document.getElementById('snackbar-text').textContent = msg;
+    bar.classList.add('show');
+    clearTimeout(_snackTimer);
+    _snackTimer = setTimeout(() => bar.classList.remove('show'), 3500);
+  }
+
+  function clearError() {
+    // no-op: snackbar auto-dismisses
+  }
+
+  /* ──────────────────────────────────────
+     Navigation
+  ────────────────────────────────────── */
+  function saveCurrentComment() {
+    const val = document.getElementById('q-comment').value.trim();
+    if (QUESTIONS[currentQ].type === 'open') {
+      answers[currentQ] = val;
+    } else {
+      comments[currentQ] = val;
+    }
+  }
+
+  function nextQuestion() {
+    saveCurrentComment();
+    const q = QUESTIONS[currentQ];
+    if (q.required && !hasAnswer(currentQ)) {
+      const msgs = {
+        rating: 'Please select a rating to continue.',
+        single: 'Please choose an option to continue.',
+        multi:  'Please select at least one option.',
+        open:   'Please type your answer to continue.',
+        yesno:  'Please select Yes or No to continue.'
+      };
+      showError(msgs[q.type] || 'Please answer this question to continue.');
+      return;
+    }
+    if (currentQ === QUESTIONS.length - 1) {
+      submitSurvey();
+    } else {
+      currentQ++;
+      renderQuestion();
+    }
+  }
+
+  function prevQuestion() {
+    if (currentQ === 0) return;
+    saveCurrentComment();
+    currentQ--;
+    renderQuestion();
+  }
+
+  function toggleSkipPanel() {
+    const panel  = document.getElementById('skip-panel');
+    const toggle = document.getElementById('btn-skip-toggle');
+    const open   = panel.classList.contains('visible');
+    panel.classList.toggle('visible', !open);
+    toggle.classList.toggle('open', !open);
+  }
+
+  function closeSkipPanel() {
+    document.getElementById('skip-panel').classList.remove('visible');
+    document.getElementById('btn-skip-toggle').classList.remove('open');
+  }
+
+  function skipWithReason(reason) {
+    closeSkipPanel();
+    answers[currentQ]  = { skipped: true, reason };
+    comments[currentQ] = '';
+    if (currentQ === QUESTIONS.length - 1) {
+      submitSurvey();
+    } else {
+      currentQ++;
+      renderQuestion();
+    }
+  }
+
+  /* ──────────────────────────────────────
+     Submit
+  ────────────────────────────────────── */
+  function submitSurvey() {
+    // Log responses (in production, POST to API)
+    const payload = QUESTIONS.map((q, i) => ({
+      question: q.text,
+      type:     q.type,
+      answer:   answers[i],
+      comment:  q.type !== 'open' ? comments[i] : undefined
+    }));
+    console.log('Survey submitted:', payload);
+
+    // Show thank you
+    showScreen('screen-thankyou');
+    launchConfetti();
+  }
+
+  /* ──────────────────────────────────────
+     Confetti
+  ────────────────────────────────────── */
+  function launchConfetti() {
+    const container = document.getElementById('confetti');
+    container.innerHTML = '';
+    const colors = ['#7f56d9','#12b76a','#f79009','#ef4444','#06aed4','#6ce9a6'];
+    for (let i = 0; i < 42; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      const size = Math.random() * 8 + 5;
+      dot.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random() * 100}%;
+        top:${Math.random() * 20 - 10}px;
+        background:${colors[Math.floor(Math.random() * colors.length)]};
+        animation-delay:${Math.random() * 1}s;
+        animation-duration:${Math.random() * 1.5 + 1.5}s;
+      `;
+      container.appendChild(dot);
+    }
+  }
+</script>
+
+<!-- Snackbar -->
+<div class="snackbar" id="snackbar">
+  <span class="snackbar-icon">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="10" r="8.5" stroke="#D92D20" stroke-width="1.5"/>
+      <line x1="7" y1="7" x2="13" y2="13" stroke="#D92D20" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="13" y1="7" x2="7" y2="13" stroke="#D92D20" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </span>
+  <span class="snackbar-msg" id="snackbar-text">Please select an answer to continue.</span>
+</div>
+
+</body>
+</html>
