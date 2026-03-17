@@ -6,15 +6,16 @@
 <title>Preview & Launch – Vantage Pulse</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
-button,input,textarea,select{font-family:inherit}
+html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;font-size:14px;color:#29294c;background:#f3f6fd}
+button,input{font-family:inherit}
 a{text-decoration:none;color:inherit}
 
 /* ── NAVBAR ─────────────────────────────────────────────── */
-.navbar{position:fixed;top:0;left:0;right:0;height:64px;background:transparent;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:200}
+.navbar{position:fixed;top:0;left:0;right:0;height:64px;background:#f3f6fd;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:200}
 .navbar-left{display:flex;align-items:center;gap:12px}
 .vc-logo-group{display:flex;align-items:center;gap:10px}
 .vc-logo{display:flex;align-items:center}
@@ -43,7 +44,7 @@ a{text-decoration:none;color:inherit}
 .sidebar.collapsed .nav-item-icon{width:20px;height:20px}
 .sidebar-nav{display:flex;flex-direction:column;gap:2px;width:100%}
 .nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;width:100%;transition:background .15s;font-size:12px;font-weight:500;color:#545470}
-.nav-item:hover{background:#f9fafb}
+.nav-item:hover{background:rgba(255,255,255,.6)}
 .nav-item.active{color:#6941c6}
 .nav-item-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nav-item-icon svg{width:16px;height:16px}
@@ -54,7 +55,7 @@ a{text-decoration:none;color:inherit}
 .nav-sub{display:flex;flex-direction:column;gap:0;position:relative;margin-left:13px}
 .nav-sub::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:#e4e7ec}
 .nav-sub-item{display:flex;align-items:center;padding:8px 10px 8px 18px;font-size:12px;font-weight:500;color:#545470;cursor:pointer;border-radius:8px;transition:background .15s}
-.nav-sub-item:hover{background:#f9fafb}
+.nav-sub-item:hover{background:rgba(255,255,255,.6)}
 .nav-sub-item.active{color:#6941c6}
 .nav-pro-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:12px;color:#fff;background:linear-gradient(150deg,#dc6803 7%,#7f56d9 71%);line-height:16px}
 
@@ -62,134 +63,97 @@ a{text-decoration:none;color:inherit}
 .main{margin-top:64px;margin-left:252px;padding:0 16px 16px 0;height:calc(100vh - 64px);overflow:hidden;display:flex;flex-direction:column;transition:margin-left .22s ease}
 .main-card{background:#fff;border-radius:18px;box-shadow:0 4px 8px -2px rgba(16,24,40,.1),0 2px 4px -2px rgba(16,24,40,.06);flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
 
-/* ── TOP BAR ────────────────────────────────────────────── */
+/* ── TOP BAR ─────────────────────────────────────────────── */
 .top-bar{display:flex;align-items:center;padding:18px 30px;border-bottom:1px solid #f2f4f7;flex-shrink:0;position:relative;min-height:64px}
 .back-btn{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:500;color:#29294c;padding:6px 8px;border-radius:8px;cursor:pointer;border:none;background:none;transition:background .15s;flex-shrink:0}
 .back-btn:hover{background:#f9fafb}
 .back-btn svg{width:20px;height:20px;color:#545470;flex-shrink:0}
-
-/* ── STEPPER ─────────────────────────────────────────────── */
-.stepper{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center}
+.top-bar-right{margin-left:auto}
+.stepper{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:0}
 .step-group{display:flex;align-items:center;gap:8px}
 .step-line{width:54px;height:1px;background:#e4e7ec;flex-shrink:0}
 .step-line.done{background:#12b76a}
 .step-circle{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .step-circle.done{background:#d1fadf}
 .step-circle.current{background:#7f56d9}
+.step-circle.inactive{background:#f2f4f7}
 .step-label{font-size:14px;font-weight:400;white-space:nowrap}
 .step-label.done-lbl{color:#29294c}
 .step-label.current-lbl{color:#6941c6;font-weight:500}
+.step-label.inactive-lbl{color:#d0d5dd}
 
-/* ── CONTENT ─────────────────────────────────────────────── */
-.content-area{flex:1;overflow:hidden;display:flex;min-height:0}
+/* ── CONTENT AREA ────────────────────────────────────────── */
+.content-area{flex:1;overflow-y:auto;min-height:0;padding:24px 32px 32px}
+.content-area::-webkit-scrollbar{width:3px}
+.content-area::-webkit-scrollbar-thumb{background:#e4e7ec;border-radius:4px}
 
-/* ── LEFT: PREVIEW ───────────────────────────────────────── */
-.preview-col{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;border-right:1px solid #f2f4f7}
-.preview-col-head{padding:20px 28px 16px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
-.preview-col-title{font-size:14px;font-weight:600;color:#29294c}
-.preview-col-meta{font-size:12px;color:#98a2b3}
-.preview-scroll{flex:1;overflow-y:auto;padding:0 28px 28px;min-height:0}
+/* ── TWO-COLUMN LAYOUT ───────────────────────────────────── */
+.page-body{display:flex;gap:24px;max-width:1160px;margin:0 auto;align-items:flex-start}
+.left-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:16px}
+.right-col{width:300px;flex-shrink:0;position:sticky;top:0;display:flex;flex-direction:column;gap:16px}
 
-/* Preview tabs */
-.preview-tabs{display:flex;gap:0;background:#f4f4f6;border-radius:8px;padding:3px;border:1px solid #e4e7ec}
-.preview-tab{padding:5px 16px;border-radius:6px;font-size:13px;font-weight:500;color:#667085;cursor:pointer;border:none;background:none;transition:all .15s;white-space:nowrap}
-.preview-tab.active{background:#fff;color:#29294c;border:1px solid #d0d5dd;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+/* ── WHITE CARD ──────────────────────────────────────────── */
+.wcard{background:#fff;border-radius:14px;padding:24px;border:1px solid #f2f4f7;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 
-/* Email preview */
-.email-outer{background:#eef1f6;border-radius:12px;padding:16px}
-.email-card{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.08)}
-.email-header-bar{background:linear-gradient(135deg,#7f56d9 0%,#6941c6 100%);padding:18px 24px;display:flex;align-items:center;gap:10px}
-.email-logo-text{font-size:14px;font-weight:700;color:#fff;letter-spacing:.01px}
-.email-logo-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5);flex-shrink:0}
-.email-meta-block{padding:14px 24px;border-bottom:1px solid #f2f4f7;display:flex;flex-direction:column;gap:5px}
-.email-meta-row{display:flex;gap:8px;font-size:12px;line-height:1.4}
-.email-meta-key{color:#98a2b3;font-weight:500;width:50px;flex-shrink:0}
-.email-meta-val{color:#344054}
-.email-body-block{padding:24px}
-.email-hi{font-size:14px;font-weight:600;color:#29294c;margin-bottom:10px}
-.email-para{font-size:13px;color:#545470;line-height:1.65;margin-bottom:18px}
-.email-cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#7f56d9,#6941c6);color:#fff;font-size:13px;font-weight:600;padding:10px 22px;border-radius:8px;margin-bottom:20px;border:none;cursor:pointer}
-.email-note{font-size:11px;color:#98a2b3;line-height:1.55;border-top:1px solid #f2f4f7;padding-top:14px;margin-top:4px}
-.email-section-label{font-size:11px;font-weight:600;color:#667085;letter-spacing:.7px;text-transform:uppercase;margin-bottom:12px}
+/* ── STATUS BANNER ───────────────────────────────────────── */
+.status-banner{background:#ecfdf3;border-radius:12px;padding:18px 20px;display:flex;align-items:flex-start;gap:16px}
+.status-icon{width:40px;height:40px;background:#d1fadf;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.status-icon svg{width:20px;height:20px;color:#039855}
+.status-banner-title{font-size:15px;font-weight:600;color:#065f46;margin-bottom:4px}
+.status-banner-sub{font-size:13px;color:#047857;line-height:1.5}
 
-/* Survey header card */
-.survey-header-card{background:linear-gradient(135deg,#7f56d9 0%,#6941c6 100%);border-radius:12px;padding:24px;margin-bottom:16px;color:#fff}
-.survey-header-card h2{font-size:18px;font-weight:700;margin-bottom:6px;letter-spacing:.02px}
-.survey-header-card p{font-size:13px;opacity:.85;line-height:1.5}
-.survey-meta-chips{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.survey-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.18);border-radius:20px;padding:4px 10px;font-size:12px;font-weight:500;color:#fff}
-.survey-chip svg{width:12px;height:12px;opacity:.85}
+/* ── DETAILS GRID ────────────────────────────────────────── */
+.details-card-title{font-size:15px;font-weight:600;color:#1d2939;margin-bottom:20px}
+.details-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 16px}
+.detail-cell{}
+.detail-label{font-size:10px;font-weight:600;color:#98a2b3;letter-spacing:.6px;text-transform:uppercase;margin-bottom:5px}
+.detail-value{font-size:14px;font-weight:600;color:#1d2939;line-height:1.4}
+.detail-sub{font-size:12px;color:#667085;margin-top:2px}
+.detail-divider{grid-column:1/-1;height:1px;background:#f2f4f7}
 
-/* Question cards */
-.q-card{border:1px solid #f2f4f7;border-radius:10px;padding:18px 20px;margin-bottom:10px;background:#fff;transition:border-color .15s,box-shadow .15s}
-.q-card:hover{border-color:#d6bbfb;box-shadow:0 2px 8px rgba(105,65,198,.08)}
-.q-card-top{display:flex;align-items:flex-start;gap:12px}
-.q-num{width:24px;height:24px;border-radius:6px;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#6941c6;flex-shrink:0;margin-top:1px}
-.q-body{flex:1;min-width:0}
-.q-text{font-size:14px;font-weight:500;color:#29294c;line-height:1.5;margin-bottom:8px}
-.q-type-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px}
+/* ── QUESTION LIST ───────────────────────────────────────── */
+.q-list-title{font-size:15px;font-weight:600;color:#1d2939;margin-bottom:16px}
+.q-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #f9fafb}
+.q-row:last-child{border-bottom:none}
+.q-num{width:22px;height:22px;border-radius:6px;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#6941c6;flex-shrink:0;margin-top:1px}
+.q-text{font-size:13px;color:#29294c;line-height:1.5;flex:1}
+.q-badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;margin-top:5px;white-space:nowrap}
 .badge-rating{background:#f0f9ff;color:#026aa2}
 .badge-mcq{background:#fdf4ff;color:#9e1b8d}
 .badge-text{background:#f0fdf4;color:#166534}
 .badge-yesno{background:#fff7ed;color:#9a3412}
 .badge-scale{background:#fef9c3;color:#854d0e}
 
+/* ── RIGHT SUMMARY ───────────────────────────────────────── */
+.sum-title{font-size:15px;font-weight:600;color:#1d2939;margin-bottom:16px}
+.sum-inner{border-radius:10px;overflow:hidden}
+.sum-row{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #f9fafb}
+.sum-row:last-child{border-bottom:none}
+.sum-key{font-size:11px;font-weight:600;color:#98a2b3;letter-spacing:.5px;text-transform:uppercase}
+.sum-val{font-size:12px;font-weight:600;color:#1d2939;text-align:right}
+.sum-val.green{color:#039855}
 
-/* ── RIGHT: SUMMARY ──────────────────────────────────────── */
-.summary-col{width:320px;flex-shrink:0;display:flex;flex-direction:column;overflow-y:auto;padding:20px 24px 28px;gap:16px;min-height:0}
-
-.summary-name-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
-.summary-survey-name{font-size:15px;font-weight:600;color:#29294c;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.edit-name-btn{width:28px;height:28px;border:none;background:none;cursor:pointer;color:#98a2b3;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,color .15s}
-.edit-name-btn:hover{background:#f4f0ff;color:#6941c6}
-.edit-name-btn svg{width:14px;height:14px}
-
-/* Stats row */
-.stats-row{display:flex;gap:8px;margin-bottom:4px}
-.stat-chip{flex:1;background:#f9fafb;border:1px solid #f2f4f7;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
-.stat-chip-val{font-size:16px;font-weight:700;color:#29294c}
-.stat-chip-lbl{font-size:11px;color:#98a2b3;font-weight:400}
-
-/* Summary sections */
-.summary-section{display:flex;flex-direction:column;gap:8px}
-.summary-section-label{font-size:11px;font-weight:600;color:#667085;letter-spacing:.7px;text-transform:uppercase}
-.summary-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f9fafb}
-.summary-row:last-child{border-bottom:none}
-.summary-row-key{font-size:12px;color:#707087;display:flex;align-items:center;gap:6px}
-.summary-row-key svg{width:13px;height:13px;color:#98a2b3;flex-shrink:0}
-.summary-row-val{font-size:12px;font-weight:500;color:#29294c;text-align:right}
-.summary-box{background:#f9fafb;border:1px solid #f2f4f7;border-radius:8px;padding:12px 14px}
-
-/* Status badge */
-.status-badge{display:inline-flex;align-items:center;gap:5px;background:#ecfdf3;color:#027a48;font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px}
-.status-dot{width:6px;height:6px;border-radius:50%;background:#12b76a;flex-shrink:0}
-
-/* Launch button */
-.btn-launch{width:100%;height:44px;background:linear-gradient(135deg,#7f56d9,#6941c6);color:#fff;font-size:15px;font-weight:600;border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s,transform .1s;letter-spacing:.01px}
-.btn-launch:hover{opacity:.92;transform:translateY(-1px)}
+.btn-launch{width:100%;height:44px;background:#29294c;color:#fff;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:background .15s,transform .1s}
+.btn-launch svg{flex-shrink:0}
+.btn-launch:hover{background:#1d2030;transform:translateY(-1px)}
 .btn-launch:active{transform:translateY(0)}
-.btn-launch svg{width:18px;height:18px;flex-shrink:0}
-.btn-schedule{width:100%;height:36px;background:none;color:#6941c6;font-size:14px;font-weight:500;border:1px solid #d6bbfb;border-radius:8px;cursor:pointer;margin-top:8px;transition:background .15s}
-.btn-schedule:hover{background:#f9f5ff}
+.btn-draft{height:44px;padding:0 22px;background:none;color:#545470;font-size:14px;font-weight:500;border:1.5px solid #e4e7ec;border-radius:10px;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s}
+.btn-draft:hover{background:#f9fafb;border-color:#c0c5ce}
 
-/* Divider */
-.summary-divider{height:1px;background:#f2f4f7;margin:4px 0}
+.bottom-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 30px;border-top:1px solid #f2f4f7;flex-shrink:0}
+.btn-text-cancel{background:#f4f4f6;color:#29294c;font-size:14px;font-weight:500;height:44px;padding:0 20px;border-radius:10px;border:none;cursor:pointer;transition:background .15s}
+.btn-text-cancel:hover{background:#e9e9ed}
 
-/* ── FOOTER ─────────────────────────────────────────────── */
-.page-footer{height:62px;border-top:1px solid #f2f4f7;display:flex;align-items:center;justify-content:space-between;padding:0 30px;flex-shrink:0}
-.btn-cancel{background:#f4f4f6;color:#29294c;font-size:14px;font-weight:500;height:36px;padding:0 20px;border-radius:8px;border:none;cursor:pointer;transition:background .15s}
-.btn-cancel:hover{background:#e9e9ed}
-
-/* ── LAUNCH SUCCESS OVERLAY ──────────────────────────────── */
-.launch-overlay{position:fixed;inset:0;background:rgba(17,12,34,.6);backdrop-filter:blur(4px);z-index:600;display:none;align-items:center;justify-content:center}
+/* ── LAUNCH OVERLAY ──────────────────────────────────────── */
+.launch-overlay{position:fixed;inset:0;background:rgba(17,12,34,.5);backdrop-filter:blur(4px);z-index:600;display:none;align-items:center;justify-content:center}
 .launch-overlay.open{display:flex}
-.launch-modal{background:#fff;border-radius:20px;padding:40px 48px;display:flex;flex-direction:column;align-items:center;gap:16px;max-width:420px;width:100%;animation:popIn .3s cubic-bezier(.34,1.56,.64,1)}
 @keyframes popIn{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
-.launch-icon{width:64px;height:64px;background:linear-gradient(135deg,#ecfdf3,#d1fadf);border-radius:50%;display:flex;align-items:center;justify-content:center}
-.launch-icon svg{width:32px;height:32px;color:#039855}
+.launch-modal{background:#fff;border-radius:20px;padding:40px 48px;display:flex;flex-direction:column;align-items:center;gap:14px;max-width:400px;width:100%;animation:popIn .3s cubic-bezier(.34,1.56,.64,1)}
+.launch-icon{width:60px;height:60px;background:#d1fadf;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.launch-icon svg{width:28px;height:28px;color:#039855}
 .launch-title{font-size:20px;font-weight:700;color:#29294c;text-align:center}
-.launch-sub{font-size:14px;color:#667085;text-align:center;line-height:1.6}
-.launch-modal-btn{width:100%;height:44px;background:#29294c;color:#fff;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;margin-top:8px;transition:background .15s}
+.launch-sub{font-size:13px;color:#667085;text-align:center;line-height:1.6}
+.launch-modal-btn{width:100%;height:42px;background:#29294c;color:#fff;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;margin-top:6px;transition:background .15s}
 .launch-modal-btn:hover{background:#1d2030}
 </style>
 </head>
@@ -199,11 +163,9 @@ a{text-decoration:none;color:inherit}
 <nav class="navbar">
   <div class="navbar-left">
     <div class="vc-logo-group">
-      <a href="create-survey.html" class="vc-logo">
-        <img src="vc-logo.svg" height="22" alt="VantageCircle"/>
-      </a>
-      <button class="sidebar-toggle" title="Toggle sidebar" onclick="toggleSidebar()">
-        <svg width="18" viewBox="0 0 19 27" fill="none"><path d="M0.75 13.5C0.75 10.4257 0.75 8.88858 1.42818 7.79898C1.67908 7.39585 1.99076 7.04522 2.34909 6.76295C3.31763 6 4.68397 6 7.41667 6H10.75C13.4827 6 14.849 6 15.8176 6.76295C16.1759 7.04522 16.4876 7.39585 16.7385 7.79898C17.4167 8.88858 17.4167 10.4257 17.4167 13.5C17.4167 16.5742 17.4167 18.1114 16.7385 19.201C16.4876 19.6042 16.1759 19.9547 15.8176 20.2371C14.849 21 13.4827 21 10.75 21H7.41667C4.68397 21 3.31763 21 2.34909 20.2371C1.99076 19.9547 1.67908 19.6042 1.42818 19.201C0.75 18.1114 0.75 16.5742 0.75 13.5Z" stroke="#5C6C7C" stroke-width="1.5"/><path d="M7.72656 6L7.72656 21" stroke="#5C6C7C" stroke-width="1.5" stroke-linejoin="round"/><path d="M3.9668 8.875H4.66124M3.9668 12.25H4.66124" stroke="#5C6C7C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a href="create-survey.html" class="vc-logo"><img src="vc-logo.svg" height="22" alt="VantageCircle"/></a>
+      <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <svg width="18" viewBox="0 0 19 27" fill="none"><path d="M0.75 13.5C0.75 10.4257 0.75 8.88858 1.42818 7.79898C1.67908 7.39585 1.99076 7.04522 2.34909 6.76295C3.31763 6 4.68397 6 7.41667 6H10.75C13.4827 6 14.849 6 15.8176 6.76295C16.1759 7.04522 16.4876 7.39585 16.7385 7.79898C17.4167 8.88858 17.4167 10.4257 17.4167 13.5C17.4167 16.5742 17.4167 18.1114 16.7385 19.201C16.4876 19.6042 16.1759 19.9547 15.8176 20.2371C14.849 21 13.4827 21 10.75 21H7.41667C4.68397 21 3.31763 21 2.34909 20.2371C1.99076 19.9547 1.67908 19.6042 1.42818 19.201C0.75 18.1114 0.75 16.5742 0.75 13.5Z" stroke="#5C6C7C" stroke-width="1.5"/><path d="M7.72656 6L7.72656 21" stroke="#5C6C7C" stroke-width="1.5"/><path d="M3.9668 8.875H4.66124M3.9668 12.25H4.66124" stroke="#5C6C7C" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
     </div>
     <div class="nav-divider"></div>
@@ -218,9 +180,7 @@ a{text-decoration:none;color:inherit}
       <div class="nav-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2h11C18.88 2 20 3.12 20 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-11C5.12 22 4 20.88 4 19.5v-15C4 3.12 5.12 2 6.5 2z"/><circle cx="12" cy="17" r="1"/></svg></div>
       <div class="nav-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
     </div>
-    <div class="nav-avatar">
-      <img src="https://www.figma.com/api/mcp/asset/2ebf6b0e-7b49-4c89-b291-e2f6a7aa4028" alt="avatar" onerror="this.style.display='none'"/>
-    </div>
+    <div class="nav-avatar"><img src="https://www.figma.com/api/mcp/asset/2ebf6b0e-7b49-4c89-b291-e2f6a7aa4028" alt="" onerror="this.style.display='none'"/></div>
   </div>
 </nav>
 
@@ -235,7 +195,7 @@ a{text-decoration:none;color:inherit}
     <div class="nav-item"><div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12V8m4 4V5m4 7V7m4 5V3"/></svg></div><span class="nav-item-text">Insights</span><div class="nav-item-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div></div>
     <div class="nav-item active"><div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="13" height="13" rx="2"/><line x1="4.5" y1="5.5" x2="11.5" y2="5.5"/><line x1="4.5" y1="8" x2="11.5" y2="8"/><line x1="4.5" y1="10.5" x2="8.5" y2="10.5"/></svg></div><span class="nav-item-text" style="color:#6941c6">Surveys</span><div class="nav-item-chevron open"><svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div></div>
     <div class="nav-sub">
-      <div class="nav-sub-item active">Create</div>
+      <div class="nav-sub-item active" onclick="window.location.href='create-survey.html'">Create</div>
       <div class="nav-sub-item">Manage</div>
       <div class="nav-sub-item">Question</div>
       <div class="nav-sub-item">Templates</div>
@@ -249,366 +209,275 @@ a{text-decoration:none;color:inherit}
 
 <!-- MAIN -->
 <main class="main">
-  <div class="main-card">
+<div class="main-card">
 
-    <!-- Top Bar -->
-    <div class="top-bar">
-      <button class="back-btn" onclick="window.location.href='configure.html'">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        Back
-      </button>
-      <div class="stepper">
-        <div class="step-group">
-          <div class="step-circle done"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="step-label done-lbl">Get Started</span>
-        </div>
-        <div class="step-line done"></div>
-        <div class="step-group">
-          <div class="step-circle done"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="step-label done-lbl">Select Questions</span>
-        </div>
-        <div class="step-line done"></div>
-        <div class="step-group">
-          <div class="step-circle done"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="step-label done-lbl">Configure</span>
-        </div>
-        <div class="step-line done"></div>
-        <div class="step-group">
-          <div class="step-circle current"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="step-label current-lbl">Preview &amp; Launch</span>
-        </div>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <button class="back-btn" onclick="window.location.href='configure.html'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back
+    </button>
+    <div class="stepper">
+      <div class="step-group">
+        <div class="step-circle done"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="step-label done-lbl">Get Started</span>
+      </div>
+      <div class="step-line done"></div>
+      <div class="step-group">
+        <div class="step-circle done"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="step-label done-lbl">Select Questions</span>
+      </div>
+      <div class="step-line done"></div>
+      <div class="step-group">
+        <div class="step-circle done"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="step-label done-lbl">Configure</span>
+      </div>
+      <div class="step-line done"></div>
+      <div class="step-group">
+        <div class="step-circle current"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="step-label current-lbl">Preview &amp; Launch</span>
       </div>
     </div>
-
-    <!-- Content -->
-    <div class="content-area">
-
-      <!-- LEFT: Survey Preview / Email Preview -->
-      <div class="preview-col">
-        <div class="preview-col-head">
-          <div class="preview-tabs">
-            <button class="preview-tab active" onclick="switchPreviewTab('survey',this)">Survey Preview</button>
-            <button class="preview-tab" onclick="switchPreviewTab('email',this)">Email Preview</button>
-          </div>
-          <div class="preview-col-meta">8 questions · ~4 min</div>
-        </div>
-
-        <!-- Survey tab -->
-        <div id="tab-survey" class="preview-scroll">
-
-          <!-- Survey header -->
-          <div class="survey-header-card">
-            <h2>Employee Pulse Survey</h2>
-            <p>Your feedback is confidential and will help us create a better workplace for everyone.</p>
-            <div class="survey-meta-chips">
-              <div class="survey-chip">
-                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1.5"/><line x1="1" y1="5" x2="11" y2="5"/><line x1="4" y1="1" x2="4" y2="3"/><line x1="8" y1="1" x2="8" y2="3"/></svg>
-                01 Dec – 31 Dec 2025
-              </div>
-              <div class="survey-chip">
-                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3.5V6l1.5 1.5"/></svg>
-                Daily · 12:00 PM
-              </div>
-              <div class="survey-chip">
-                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 10a4 4 0 10-8 0"/><circle cx="6" cy="4" r="2"/></svg>
-                All employees
-              </div>
-            </div>
-          </div>
-
-          <!-- Q1 -->
-          <div class="q-card">
-            <div class="q-card-top">
-              <div class="q-num">1</div>
-              <div class="q-body">
-                <div class="q-text">My organization encourages employees to give recognition to one another</div>
-                <span class="q-type-badge badge-rating">
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1l1.2 3.6H11L8 6.8l1.2 3.6L6 8.2 2.8 10.4 4 6.8 1 4.6h3.8z"/></svg>
-                  Rating Scale (1-5)
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Q2 -->
-          <div class="q-card">
-            <div class="q-card-top">
-              <div class="q-num">2</div>
-              <div class="q-body">
-                <div class="q-text">Overall, how satisfied are you with working at this organization?</div>
-                <span class="q-type-badge badge-rating">
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1l1.2 3.6H11L8 6.8l1.2 3.6L6 8.2 2.8 10.4 4 6.8 1 4.6h3.8z"/></svg>
-                  Rating Scale (1-5)
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Q3 -->
-          <div class="q-card">
-            <div class="q-card-top">
-              <div class="q-num">3</div>
-              <div class="q-body">
-                <div class="q-text">I believe my pay is fair for the work I do.</div>
-                <span class="q-type-badge badge-rating">
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1l1.2 3.6H11L8 6.8l1.2 3.6L6 8.2 2.8 10.4 4 6.8 1 4.6h3.8z"/></svg>
-                  Rating Scale (1-5)
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Q4 -->
-          <div class="q-card">
-            <div class="q-card-top">
-              <div class="q-num">4</div>
-              <div class="q-body">
-                <div class="q-text">My manager provides me with regular, useful feedback.</div>
-                <span class="q-type-badge badge-rating">
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1l1.2 3.6H11L8 6.8l1.2 3.6L6 8.2 2.8 10.4 4 6.8 1 4.6h3.8z"/></svg>
-                  Rating Scale (1-5)
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Q5 -->
-          <div class="q-card">
-            <div class="q-card-top">
-              <div class="q-num">5</div>
-              <div class="q-body">
-                <div class="q-text">Which benefit matters most to you?</div>
-                <span class="q-type-badge badge-mcq">
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><circle cx="6" cy="6" r="2" fill="currentColor" stroke="none"/></svg>
-                  Multiple Choice
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Q6 -->
-          <div class="q-card">
-            <div class="q-card-top">
-              <div class="q-num">6</div>
-              <div class="q-body">
-                <div class="q-text">I am able to disconnect from work outside of working hours.</div>
-                <span class="q-type-badge badge-yesno">
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l3 3 5-5"/></svg>
-                  Yes / No
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Q7 -->
-          <div class="q-card">
-            <div class="q-card-top">
-              <div class="q-num">7</div>
-              <div class="q-body">
-                <div class="q-text">I would recommend this organization as a great place to work.</div>
-                <span class="q-type-badge badge-scale">
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 9l3-3 3 3 4-5"/></svg>
-                  Scale (1-10)
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Q8 -->
-          <div class="q-card">
-            <div class="q-card-top">
-              <div class="q-num">8</div>
-              <div class="q-body">
-                <div class="q-text">What is one thing that would improve your work experience?</div>
-                <span class="q-type-badge badge-text">
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="3" x2="11" y2="3"/><line x1="1" y1="6" x2="11" y2="6"/><line x1="1" y1="9" x2="7" y2="9"/></svg>
-                  Open Text
-                </span>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /tab-survey -->
-
-        <!-- Email tab -->
-        <div id="tab-email" class="preview-scroll" style="display:none">
-          <div class="email-section-label">Email Invitation Preview</div>
-          <div class="email-outer">
-            <div class="email-card">
-
-              <!-- Email header -->
-              <div class="email-header-bar">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
-                <span class="email-logo-text">VantageCircle · Pulse</span>
-              </div>
-
-              <!-- From / To / Subject -->
-              <div class="email-meta-block">
-                <div class="email-meta-row">
-                  <span class="email-meta-key">From</span>
-                  <span class="email-meta-val">Vantage Pulse &lt;pulse@vantagecircle.com&gt;</span>
-                </div>
-                <div class="email-meta-row">
-                  <span class="email-meta-key">To</span>
-                  <span class="email-meta-val">All Employees</span>
-                </div>
-                <div class="email-meta-row">
-                  <span class="email-meta-key">Subject</span>
-                  <span class="email-meta-val" style="color:#29294c;font-weight:500">How well does your workload align with your capacity?</span>
-                </div>
-              </div>
-
-              <!-- Body -->
-              <div class="email-body-block">
-                <p class="email-hi">Hi [Employee Name],</p>
-                <p class="email-para">We're running our <strong>Employee Pulse Survey</strong> and your feedback matters! This quick survey takes about <strong>4 minutes</strong> to complete and helps us understand what's working well and where we can improve.</p>
-                <p class="email-para">Your responses are completely <strong>confidential</strong> and will only be used to improve the workplace experience for everyone.</p>
-                <button class="email-cta-btn">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10"/><polyline points="9 4 13 8 9 12"/></svg>
-                  Take the Survey
-                </button>
-                <p class="email-note">
-                  This survey is active from <strong>01 Dec – 31 Dec 2025</strong>. If you have any questions, please contact your HR team.<br/><br/>
-                  You're receiving this email because you are part of the <em>All Employees</em> group at VantageCircle. To unsubscribe, contact your administrator.
-                </p>
-              </div>
-
-            </div>
-          </div>
-        </div><!-- /tab-email -->
-
-      </div><!-- /preview-col -->
-
-      <!-- RIGHT: Summary & Launch -->
-      <div class="summary-col">
-
-        <!-- Survey name -->
-        <div>
-          <div class="summary-name-row">
-            <div class="summary-survey-name">Employee Pulse Survey</div>
-            <button class="edit-name-btn" title="Edit name">
-              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l2 2L5 11l-3 1 1-3 7-7z"/></svg>
-            </button>
-          </div>
-          <div class="status-badge"><div class="status-dot"></div>Ready to launch</div>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats-row">
-          <div class="stat-chip">
-            <div class="stat-chip-val">8</div>
-            <div class="stat-chip-lbl">Questions</div>
-          </div>
-          <div class="stat-chip">
-            <div class="stat-chip-val">~4m</div>
-            <div class="stat-chip-lbl">Est. time</div>
-          </div>
-          <div class="stat-chip">
-            <div class="stat-chip-val">31</div>
-            <div class="stat-chip-lbl">Days active</div>
-          </div>
-        </div>
-
-        <div class="summary-divider"></div>
-
-        <!-- Schedule -->
-        <div class="summary-section">
-          <div class="summary-section-label">Schedule</div>
-          <div class="summary-box">
-            <div class="summary-row">
-              <div class="summary-row-key"><svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x=".5" y="1.5" width="12" height="11" rx="1.5"/><line x1=".5" y1="5" x2="12.5" y2="5"/><line x1="4" y1=".5" x2="4" y2="2.5"/><line x1="9" y1=".5" x2="9" y2="2.5"/></svg>Start date</div>
-              <div class="summary-row-val">01 Dec 2025</div>
-            </div>
-            <div class="summary-row">
-              <div class="summary-row-key"><svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x=".5" y="1.5" width="12" height="11" rx="1.5"/><line x1=".5" y1="5" x2="12.5" y2="5"/><line x1="4" y1=".5" x2="4" y2="2.5"/><line x1="9" y1=".5" x2="9" y2="2.5"/></svg>End date</div>
-              <div class="summary-row-val">31 Dec 2025</div>
-            </div>
-            <div class="summary-row">
-              <div class="summary-row-key"><svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="6.5" r="6"/><path d="M6.5 3.5V6.5l2 2"/></svg>Send time</div>
-              <div class="summary-row-val">12:00 PM</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Frequency -->
-        <div class="summary-section">
-          <div class="summary-section-label">Frequency</div>
-          <div class="summary-box">
-            <div class="summary-row">
-              <div class="summary-row-key"><svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7a5.5 5.5 0 0010.5-1.5"/><path d="M1 1v4h4"/><path d="M12 6a5.5 5.5 0 00-10.5 1.5"/></svg>Cadence</div>
-              <div class="summary-row-val">Daily</div>
-            </div>
-            <div class="summary-row">
-              <div class="summary-row-key"><svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7a5.5 5.5 0 0010.5-1.5"/><path d="M1 1v4h4"/></svg>Recurring</div>
-              <div class="summary-row-val" style="color:#039855">Enabled</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Audience -->
-        <div class="summary-section">
-          <div class="summary-section-label">Audience</div>
-          <div class="summary-box">
-            <div class="summary-row">
-              <div class="summary-row-key"><svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10a3 3 0 00-6 0"/><circle cx="6" cy="4.5" r="2"/><path d="M11.5 10a2.5 2.5 0 00-3-2.4"/><circle cx="10" cy="3.5" r="1.5"/></svg>Including</div>
-              <div class="summary-row-val">All employees</div>
-            </div>
-            <div class="summary-row">
-              <div class="summary-row-key"><svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="6.5" r="6"/><line x1="4" y1="4" x2="9" y2="9"/><line x1="9" y1="4" x2="4" y2="9"/></svg>Excluding</div>
-              <div class="summary-row-val">Finland</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="summary-divider"></div>
-
-        <!-- Save as Draft -->
-        <button class="btn-schedule">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:middle"><rect x=".5" y="1.5" width="13" height="11" rx="1.5"/><line x1=".5" y1="5" x2="13.5" y2="5"/><line x1="4" y1=".5" x2="4" y2="2.5"/><line x1="10" y1=".5" x2="10" y2="2.5"/></svg>
-          Save as Draft
-        </button>
-
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="page-footer">
-      <button class="btn-cancel" onclick="window.location.href='create-survey.html'">Cancel</button>
-      <div style="display:flex;align-items:center;gap:12px">
-        <button class="btn-cancel" onclick="window.location.href='configure.html'">Back to Configure</button>
-        <button class="btn-launch" style="width:auto;height:36px;padding:0 20px;font-size:14px;border-radius:8px" onclick="launchSurvey()">
-          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l6-6 6 6"/><path d="M9 3v12"/></svg>
-          Launch Survey
-        </button>
-      </div>
-    </div>
-
+    <div class="top-bar-right"></div>
   </div>
+
+  <!-- Scrollable content -->
+  <div class="content-area">
+  <div class="page-body">
+
+    <!-- LEFT COL -->
+    <div class="left-col">
+
+      <!-- Status banner -->
+      <div class="status-banner">
+        <div class="status-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-8"/></svg>
+        </div>
+        <div>
+          <div class="status-banner-title">Your survey is ready to launch</div>
+          <div class="status-banner-sub">Review the details below and click Launch Survey when you're ready. Your survey will be sent to all employees on the scheduled date.</div>
+        </div>
+      </div>
+
+      <!-- Survey details -->
+      <div class="wcard">
+        <div class="details-card-title">Survey details</div>
+        <div class="details-grid">
+
+          <div class="detail-cell">
+            <div class="detail-label">Survey name</div>
+            <div class="detail-value">Employee Pulse Survey</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">Total questions</div>
+            <div class="detail-value">8</div>
+            <div class="detail-sub">~4 min to complete</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">Audience</div>
+            <div class="detail-value">All employees</div>
+            <div class="detail-sub">Anonymous responses</div>
+          </div>
+
+          <div class="detail-divider"></div>
+
+          <div class="detail-cell">
+            <div class="detail-label">Start date</div>
+            <div class="detail-value" id="d-start">01 Dec 2025</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">End date</div>
+            <div class="detail-value" id="d-end">31 Dec 2025</div>
+            <div class="detail-sub" id="d-days">30 days active</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">Send time</div>
+            <div class="detail-value" id="d-time">12:00 PM</div>
+          </div>
+
+          <div class="detail-divider"></div>
+
+          <div class="detail-cell">
+            <div class="detail-label">Frequency</div>
+            <div class="detail-value" id="d-freq">Weekly</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">Recurring</div>
+            <div class="detail-value" id="d-recur" style="color:#039855">Enabled</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">Audience</div>
+            <div class="detail-value" id="d-aud">All Employees</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Questions -->
+      <div class="wcard">
+        <div class="q-list-title">Questions <span style="font-size:12px;font-weight:400;color:#98a2b3;margin-left:4px">8 total</span></div>
+
+        <div class="q-row">
+          <div class="q-num">1</div>
+          <div><div class="q-text">My organization encourages employees to give recognition to one another</div><span class="q-badge badge-rating">Rating Scale (1–5)</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">2</div>
+          <div><div class="q-text">Overall, how satisfied are you with working at this organization?</div><span class="q-badge badge-rating">Rating Scale (1–5)</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">3</div>
+          <div><div class="q-text">How well does your organization support your overall wellbeing and mental health?</div><span class="q-badge badge-rating">Rating Scale (1–5)</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">4</div>
+          <div><div class="q-text">My manager provides me with regular, useful feedback.</div><span class="q-badge badge-rating">Rating Scale (1–5)</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">5</div>
+          <div><div class="q-text">Which benefit matters most to you?</div><span class="q-badge badge-mcq">Multiple Choice</span></div>
+        </div>
+
+        <!-- Hidden questions -->
+        <div id="q-extra" style="display:none">
+          <div class="q-row">
+            <div class="q-num">6</div>
+            <div><div class="q-text">I am able to disconnect from work outside of working hours.</div><span class="q-badge badge-yesno">Yes / No</span></div>
+          </div>
+          <div class="q-row">
+            <div class="q-num">7</div>
+            <div><div class="q-text">I would recommend this organization as a great place to work.</div><span class="q-badge badge-scale">Scale (1–10)</span></div>
+          </div>
+          <div class="q-row">
+            <div class="q-num">8</div>
+            <div><div class="q-text">What is one thing that would improve your work experience?</div><span class="q-badge badge-text">Open Text</span></div>
+          </div>
+        </div>
+
+        <!-- View more toggle -->
+        <button id="q-toggle" onclick="toggleQuestions()" style="display:flex;align-items:center;gap:6px;margin-top:8px;padding:8px 0;background:none;border:none;font-size:13px;font-weight:500;color:#6941c6;cursor:pointer">
+          <svg id="q-toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          View 3 more questions
+        </button>
+
+      </div>
+
+      <!-- Email Preview -->
+      <div class="wcard" style="padding:0;overflow:hidden">
+        <!-- Card header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px 14px;border-bottom:1px solid #f2f4f7">
+          <div style="font-size:15px;font-weight:600;color:#1d2939">Email Preview</div>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:#667085;background:#f2f4f7;padding:3px 10px;border-radius:20px">
+            <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M7 1a6 6 0 100 12A6 6 0 007 1zm0 9V7m0-3v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Read-only preview
+          </span>
+        </div>
+
+        <!-- Email chrome -->
+        <div style="background:#f6f7fb;padding:16px 22px;border-bottom:1px solid #f2f4f7;display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;gap:8px;font-size:12px">
+            <span style="color:#98a2b3;width:44px;flex-shrink:0">From</span>
+            <span style="color:#344054;font-weight:500">Vantage Pulse &lt;noreply@vantagecircle.com&gt;</span>
+          </div>
+          <div style="display:flex;gap:8px;font-size:12px">
+            <span style="color:#98a2b3;width:44px;flex-shrink:0">To</span>
+            <span style="color:#344054">All Employees &lt;employees@yourcompany.com&gt;</span>
+          </div>
+          <div style="display:flex;gap:8px;font-size:12px">
+            <span style="color:#98a2b3;width:44px;flex-shrink:0">Subject</span>
+            <span style="color:#1d2939;font-weight:600">📋 We'd love your feedback — Employee Pulse Survey</span>
+          </div>
+        </div>
+
+        <!-- Email body -->
+        <div style="background:#f6f7fb;padding:20px 22px 24px">
+          <div style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e4e7ec;max-width:520px;margin:0 auto">
+
+            <!-- Email header band -->
+            <div style="background:#29294c;padding:24px 32px;display:flex;align-items:center;gap:12px">
+              <div style="width:32px;height:32px;background:#7f56d9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="#fff" opacity=".5"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="#fff" opacity=".8"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="#fff" opacity=".8"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="#fff"/></svg>
+              </div>
+              <span style="font-size:15px;font-weight:600;color:#fff;letter-spacing:.2px">Vantage Pulse</span>
+            </div>
+
+            <!-- Email content -->
+            <div style="padding:28px 32px">
+              <p style="font-size:14px;color:#344054;line-height:1.7;margin-bottom:14px">Dear <strong>[Employee Name]</strong>,</p>
+              <p style="font-size:13px;color:#667085;line-height:1.8;margin-bottom:14px">We would like to invite you to participate in our <strong style="color:#344054">Employee Pulse Survey</strong>. Your feedback is valuable and will help us improve our workplace culture.</p>
+              <p style="font-size:13px;color:#667085;line-height:1.8;margin-bottom:20px">The survey takes approximately <strong style="color:#344054">5 minutes</strong> to complete and your responses are completely anonymous.</p>
+
+              <!-- CTA button -->
+              <div style="text-align:center;margin-bottom:24px">
+                <div style="display:inline-block;background:#7f56d9;color:#fff;font-size:14px;font-weight:600;padding:12px 36px;border-radius:8px;cursor:default;letter-spacing:.2px">Take the Survey →</div>
+              </div>
+
+              <p style="font-size:13px;color:#667085;line-height:1.8;margin-bottom:20px">Thank you for your time and contribution.</p>
+              <p style="font-size:13px;color:#667085;line-height:1.8;">Best regards,<br/><strong style="color:#344054">[Programme Name]</strong></p>
+            </div>
+
+            <!-- Email footer -->
+            <div style="border-top:1px solid #f2f4f7;padding:16px 32px;background:#fafafa;text-align:center">
+              <p style="font-size:11px;color:#98a2b3;line-height:1.6">You're receiving this because you're part of the survey audience.<br/>
+              <span style="text-decoration:underline;cursor:default">Unsubscribe</span> · <span style="text-decoration:underline;cursor:default">View in browser</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /left-col -->
+
+    <!-- RIGHT COL -->
+    <div class="right-col">
+
+      <!-- Summary card -->
+      <div class="wcard" style="padding:20px">
+        <div class="sum-title">Survey summary</div>
+        <div class="sum-inner">
+          <div class="sum-row"><span class="sum-key">Survey</span><span class="sum-val">Employee Pulse</span></div>
+          <div class="sum-row"><span class="sum-key">Start</span><span class="sum-val" id="s-start">01 Dec 2025</span></div>
+          <div class="sum-row"><span class="sum-key">End</span><span class="sum-val" id="s-end">31 Dec 2025</span></div>
+          <div class="sum-row"><span class="sum-key">Frequency</span><span class="sum-val" id="s-freq">Weekly</span></div>
+          <div class="sum-row"><span class="sum-key">Audience</span><span class="sum-val" id="s-aud">All employees</span></div>
+          <div class="sum-row"><span class="sum-key">Anonymous</span><span class="sum-val green" id="s-anon">Yes</span></div>
+          <div class="sum-row"><span class="sum-key">Questions</span><span class="sum-val">8</span></div>
+        </div>
+      </div>
+
+    </div><!-- /right-col -->
+
+  </div><!-- /page-body -->
+  </div><!-- /content-area -->
+
+  <!-- Bottom action bar -->
+  <div class="bottom-bar">
+    <button class="btn-text-cancel" onclick="window.location.href='create-survey.html'">Cancel</button>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="btn-draft" style="height:44px;padding:0 22px">Save as Draft</button>
+      <button class="btn-launch" style="width:auto;padding:0 28px" onclick="launchSurvey()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.5-1.5 4.5 0 4.5s3-1.5 4.5-3L12 15l-3-3-4.5 4.5z"/><path d="M12 15l3.5-3.5c2-2 3-5 2.5-8.5-3.5-.5-6.5.5-8.5 2.5L6 9l6 6z"/><circle cx="16" cy="8" r="1.5" fill="currentColor" stroke="none"/></svg>
+        Launch Survey
+      </button>
+    </div>
+  </div>
+
+</div><!-- /main-card -->
 </main>
 
-<!-- Launch Success Overlay -->
+<!-- Launch Overlay -->
 <div class="launch-overlay" id="launchOverlay" onclick="if(event.target===this)closeLaunch()">
   <div class="launch-modal">
     <div class="launch-icon">
       <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16l7 7L26 9"/></svg>
     </div>
-    <div class="launch-title">Survey Launched! 🎉</div>
+    <div class="launch-title">Survey Launched!</div>
     <div class="launch-sub">Your <strong>Employee Pulse Survey</strong> is now live and will be sent to all employees starting <strong>01 Dec 2025</strong> at 12:00 PM.</div>
     <button class="launch-modal-btn" onclick="goDashboard()">Go to Dashboard</button>
-    <button style="background:none;border:none;font-size:13px;color:#98a2b3;cursor:pointer;margin-top:-8px" onclick="closeLaunch()">View Survey Details</button>
+    <button style="background:none;border:none;font-size:13px;color:#98a2b3;cursor:pointer;margin-top:-4px" onclick="closeLaunch()">View Survey Details</button>
   </div>
 </div>
 
 <script>
-// ── PREVIEW TAB SWITCHER ──────────────────────────────────────
-function switchPreviewTab(tab, btn) {
-  document.querySelectorAll('.preview-tab').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  document.getElementById('tab-survey').style.display = tab === 'survey' ? '' : 'none';
-  document.getElementById('tab-email').style.display  = tab === 'email'  ? '' : 'none';
-}
-
-// ── SIDEBAR ───────────────────────────────────────────────────
 (function(){
   var sidebar=document.querySelector('.sidebar');
   var main=document.querySelector('.main');
@@ -625,19 +494,45 @@ function toggleSidebar(){
   localStorage.setItem('sidebarCollapsed',c?'true':'false');
   if(main)main.style.marginLeft=c?'64px':'252px';
 }
-
-// ── LAUNCH ────────────────────────────────────────────────────
-function launchSurvey(){
-  document.getElementById('launchOverlay').classList.add('open');
+function loadConfig(){
+  var raw=localStorage.getItem('vp_cfg');
+  if(!raw)return;
+  var c=JSON.parse(raw);
+  var set=function(id,val){var el=document.getElementById(id);if(el&&val)el.textContent=val;};
+  set('d-start',c.start);
+  set('d-end',c.end);
+  set('d-time',c.time);
+  set('d-freq',c.freq);
+  set('d-days',c.days+' active');
+  set('d-aud',c.aud);
+  if(document.getElementById('d-recur')){
+    document.getElementById('d-recur').textContent=c.recurring?'Enabled':'Disabled';
+    document.getElementById('d-recur').style.color=c.recurring?'#039855':'#667085';
+  }
+  set('s-start',c.start);
+  set('s-end',c.end);
+  set('s-freq',c.freq);
+  set('s-aud',c.aud);
+  if(document.getElementById('s-anon')){
+    document.getElementById('s-anon').textContent=c.anonymous?'Yes':'No';
+  }
+  set('em-end',c.end);
 }
-function closeLaunch(){
-  document.getElementById('launchOverlay').classList.remove('open');
+document.addEventListener('DOMContentLoaded',loadConfig);
+function toggleQuestions(){
+  var extra=document.getElementById('q-extra');
+  var btn=document.getElementById('q-toggle');
+  var icon=document.getElementById('q-toggle-icon');
+  var open=extra.style.display==='block';
+  extra.style.display=open?'none':'block';
+  btn.innerHTML=(open
+    ?'<svg id="q-toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg> View 3 more questions'
+    :'<svg id="q-toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4-4 4 4"/></svg> Show less');
 }
-function goDashboard(){
-  localStorage.setItem('surveyLaunched','1');
-  window.location.href='create-survey.html';
-}
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLaunch();});
+function launchSurvey(){ document.getElementById('launchOverlay').classList.add('open'); }
+function closeLaunch(){ document.getElementById('launchOverlay').classList.remove('open'); }
+function goDashboard(){ window.location.href='create-survey.html'; }
+document.addEventListener('keydown',function(e){ if(e.key==='Escape')closeLaunch(); });
 </script>
 </body>
 </html>

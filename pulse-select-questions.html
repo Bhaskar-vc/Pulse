@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{min-height:100%;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
@@ -113,8 +114,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .pb-search-icon svg{width:14px;height:14px}
 
 .pb-body{flex:1;overflow-y:auto;padding:0}
-.pb-body::-webkit-scrollbar{width:4px}
-.pb-body::-webkit-scrollbar-thumb{background:#e4e7ec;border-radius:4px}
 
 /* accordion */
 .accord-header{display:flex;align-items:center;gap:0;padding:12px 0;cursor:pointer;user-select:none}
@@ -128,7 +127,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .accord-body.closed{display:none}
 
 /* question card in bank */
-.qcard{display:flex;align-items:center;gap:6px;padding:12px;border:1px solid #e1e5ea;border-radius:8px;margin-bottom:8px;background:#fff;transition:border-color .15s,box-shadow .15s}
+.qcard{display:flex;align-items:center;gap:6px;padding:12px;border:1px solid #e1e5ea;border-radius:8px;margin-bottom:8px;background:#f9fafb;transition:border-color .15s,box-shadow .15s}
 .qcard:last-child{margin-bottom:12px}
 .qcard:hover{border-color:#c9b8f5;box-shadow:0 1px 4px rgba(105,65,198,.08)}
 .qcard.selected{border-color:#e1e5ea;background:#fff}
@@ -150,7 +149,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .add-q-btn.added svg{color:#f04438}
 
 /* ── CENTER: SELECTED QUESTIONS ──────────────────────────────── */
-.panel-sel{flex:1;display:flex;flex-direction:column;border-right:1px solid #f2f4f7;min-width:0}
+.panel-sel{flex:1;display:flex;flex-direction:column;border-right:1px solid #f2f4f7;min-width:0;background:#f9fafb}
 .ps-header{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 24px 0;flex-shrink:0;gap:12px}
 .ps-title-wrap{display:flex;flex-direction:column;gap:8px}
 .ps-title{font-size:14px;font-weight:600;color:#29294c}
@@ -182,19 +181,24 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .sel-empty-sub{font-size:13px;color:#98a2b3}
 
 /* ── RIGHT: LIVE PREVIEW ─────────────────────────────────────── */
-.panel-prev{width:400px;flex-shrink:0;display:flex;flex-direction:column;padding:20px;background:#f3f6fd}
+.panel-prev{width:400px;flex-shrink:0;display:flex;flex-direction:column;padding:20px;background:#fff}
 .pp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-shrink:0}
 .pp-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:#29294c}
+.live-dot{position:relative;display:flex;align-items:center;justify-content:center;width:12px;height:12px;flex-shrink:0}
+.live-dot::after{content:'';position:absolute;width:10px;height:10px;background:#22c55e;border-radius:50%;z-index:1}
+.live-dot-ring{position:absolute;width:20px;height:20px;border-radius:50%;background:rgba(34,197,94,.35);animation:live-pulse 1.6s ease-out infinite}
+@keyframes live-pulse{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.8);opacity:0}}
 .pp-title img,.pp-title svg{width:20px;height:20px}
 .pp-collapse{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:6px;color:#667085;transition:background .15s;cursor:pointer}
 .pp-collapse:hover{background:rgba(0,0,0,.06)}
 .pp-collapse svg{width:20px;height:20px}
-.panel-prev{transition:width .25s ease,padding .25s ease}
+.panel-prev{transition:width .6s cubic-bezier(.4,0,.2,1),padding .6s cubic-bezier(.4,0,.2,1),opacity .5s ease}
 .panel-prev.collapsed{width:52px;padding:16px 14px;overflow:hidden}
 .panel-prev.collapsed .pp-title{display:none}
 .panel-prev.collapsed .pp-body{display:none}
 .panel-prev.collapsed .pp-header{justify-content:center}
-.panel-prev.collapsed .pp-collapse img{transform:scaleX(-1)}
+.pp-collapse img{transform:scaleX(-1)}
+.panel-prev.collapsed .pp-collapse img{transform:scaleX(1)}
 
 .pp-body{flex:1;display:flex;flex-direction:column;gap:0;overflow:hidden;min-height:0}
 .pp-progress-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;flex-shrink:0}
@@ -270,6 +274,73 @@ textarea.form-control{resize:vertical;min-height:80px}
 .pb-inner{padding:0 0 0 0}
 .pb-header,.pb-title-row,.pb-search,.accord-header,.qcard{padding-left:0;padding-right:0}
 .pb-title-row{padding:12px 0 10px}
+
+/* ── SCROLLBAR FIX ───────────────────────────────────────────── */
+.pb-body{flex:1;overflow-y:auto;padding:0;padding-right:6px;scrollbar-gutter:stable}
+.pb-body::-webkit-scrollbar{width:3px}
+.pb-body::-webkit-scrollbar-track{background:transparent}
+.pb-body::-webkit-scrollbar-thumb{background:#d0d5dd;border-radius:4px}
+.pb-body::-webkit-scrollbar-thumb:hover{background:#98a2b3}
+
+/* ── SKELETON LOADER ─────────────────────────────────────────── */
+@keyframes shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}
+.sk{background:linear-gradient(90deg,#f2f4f7 25%,#e9ebee 50%,#f2f4f7 75%);background-size:600px 100%;animation:shimmer 1.5s ease-in-out infinite;border-radius:6px}
+#skeleton{position:absolute;inset:0;display:flex;z-index:10;background:#fff;overflow:hidden;transition:opacity .35s ease;border-radius:0 0 18px 0}
+#skeleton.hide{opacity:0;pointer-events:none}
+.sk-bank{width:462px;flex-shrink:0;border-right:1px solid #f2f4f7;padding:16px 16px 0;display:flex;flex-direction:column;gap:0}
+.sk-sel{flex:1;border-right:1px solid #f2f4f7;padding:16px 24px;display:flex;flex-direction:column;gap:10px;background:#f9fafb}
+.sk-prev{width:52px;flex-shrink:0;padding:16px 14px;border-left:1px solid #f2f4f7}
+.sk-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.sk-qcard{border:1px solid #f0f0f0;border-radius:8px;padding:12px;margin-bottom:8px;display:flex;flex-direction:column;gap:8px;background:#fafafa}
+.sk-selcard{border:1px solid #f0f0f0;border-radius:6px;padding:20px 24px;background:#fff;display:flex;flex-direction:column;gap:10px}
+
+/* ── PAGE + PANEL ENTRANCE ───────────────────────────────────── */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideInCard{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
+@keyframes popIn{0%{transform:scale(.88);opacity:0}65%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+.page-card{animation:fadeInUp .4s cubic-bezier(.22,1,.36,1) both}
+
+/* ── MICRO INTERACTIONS ──────────────────────────────────────── */
+/* qcard hover lift */
+.qcard{transition:border-color .15s,box-shadow .15s,transform .15s}
+.qcard:hover{transform:translateY(-1px)}
+/* add button ripple */
+.add-q-btn{position:relative;overflow:hidden}
+/* selq card entrance */
+.selq-card-new{animation:slideInCard .22s ease both}
+/* rating button press */
+.rating-btn{transition:border-color .15s,background .15s,color .15s,transform .1s}
+.rating-btn:active{transform:scale(.92)}
+.rating-btn.selected-r{animation:popIn .18s ease both}
+/* continue btn enable pulse */
+@keyframes enablePulse{0%{box-shadow:0 0 0 0 rgba(105,65,198,.4)}70%{box-shadow:0 0 0 8px rgba(105,65,198,0)}100%{box-shadow:0 0 0 0 rgba(105,65,198,0)}}
+.continue-btn.just-enabled{animation:enablePulse .5s ease}
+/* add-custom-btn hover */
+.add-custom-btn{transition:background .15s,border-color .15s,transform .12s}
+.add-custom-btn:hover{transform:translateY(-1px)}
+/* accordion chevron smooth */
+.accord-chevron{transition:transform .22s cubic-bezier(.4,0,.2,1)}
+
+/* ── TOUR SPOTLIGHT + TOOLTIP ─────────────────────────────── */
+#tour-spotlight{position:fixed;z-index:491;border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,.55);transition:top .3s ease,left .3s ease,width .3s ease,height .3s ease,border-radius .3s ease,opacity .25s;pointer-events:none}
+#tour-spotlight.hide{opacity:0}
+#tour-tip{position:fixed;z-index:500;width:300px;background:rgba(22,18,40,.93);color:#fff;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:22px 22px 18px;box-shadow:0 16px 48px rgba(0,0,0,.45);transition:opacity .25s,transform .25s;pointer-events:auto}
+#tour-tip.hide{opacity:0;pointer-events:none;transform:scale(.96)}
+.tip-arrow{position:absolute;width:0;height:0}
+.tip-arrow.left{left:-9px;top:26px;border:9px solid transparent;border-right-color:rgba(22,18,40,.93);border-left-width:0}
+.tip-arrow.right{right:-9px;top:26px;border:9px solid transparent;border-left-color:rgba(22,18,40,.93);border-right-width:0}
+.tip-step-lbl{font-size:10px;font-weight:600;opacity:.5;letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px}
+.tip-title{font-size:15px;font-weight:700;margin-bottom:8px;line-height:1.35}
+.tip-desc{font-size:13px;line-height:1.65;opacity:.78;margin-bottom:18px}
+.tip-footer{display:flex;align-items:center;justify-content:space-between}
+.tip-left{display:flex;align-items:center;gap:10px}
+.tip-skip{font-size:12px;opacity:.55;cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:none;color:#fff;padding:0}
+.tip-skip:hover{opacity:.9}
+.tip-dots{display:flex;gap:5px}
+.tip-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .2s}
+.tip-dot.on{background:#fff;width:14px;border-radius:3px}
+.tip-next{background:#7f56d9;color:#fff;font-size:13px;font-weight:600;padding:7px 18px;border-radius:8px;border:none;cursor:pointer;transition:background .15s}
+.tip-next:hover{background:#6941c6}
 </style>
 </head>
 <body>
@@ -317,7 +388,7 @@ textarea.form-control{resize:vertical;min-height:80px}
 <aside class="side-nav">
 
   <!-- Create Survey button -->
-  <button class="sidebar-create-btn" onclick="window.location.href='get-started.html'">
+  <button class="sidebar-create-btn" onclick="window.location.href='create-survey.html'">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="10" cy="10" r="8.5"/><line x1="10" y1="6.5" x2="10" y2="13.5"/><line x1="6.5" y1="10" x2="13.5" y2="10"/>
     </svg>
@@ -365,7 +436,7 @@ textarea.form-control{resize:vertical;min-height:80px}
 
     <!-- Surveys sub-items -->
     <div class="nav-sub">
-      <div class="nav-sub-item active">Create</div>
+      <div class="nav-sub-item active" onclick="window.location.href='create-survey.html'" style="cursor:pointer">Create</div>
       <div class="nav-sub-item">Manage</div>
       <div class="nav-sub-item">Question</div>
       <div class="nav-sub-item">Templates</div>
@@ -467,7 +538,43 @@ textarea.form-control{resize:vertical;min-height:80px}
     </div>
 
     <!-- THREE PANELS -->
-    <div class="panels">
+    <div class="panels" style="position:relative">
+
+      <!-- ── SKELETON LOADER ── -->
+      <div id="skeleton">
+        <!-- Left: Question Bank -->
+        <div class="sk-bank">
+          <div class="sk-row" style="margin-bottom:14px">
+            <div class="sk" style="width:120px;height:14px"></div>
+            <div class="sk" style="width:28px;height:14px;margin-left:auto"></div>
+          </div>
+          <div class="sk" style="width:100%;height:34px;border-radius:6px;margin-bottom:14px"></div>
+          <!-- Cat 1 -->
+          <div class="sk-row"><div class="sk" style="width:16px;height:16px;border-radius:4px"></div><div class="sk" style="width:110px;height:13px"></div><div class="sk" style="width:24px;height:13px;margin-left:auto"></div></div>
+          <div class="sk-qcard"><div class="sk" style="width:90%;height:12px"></div><div class="sk" style="width:70%;height:12px"></div><div class="sk" style="width:60px;height:20px;border-radius:12px"></div></div>
+          <div class="sk-qcard"><div class="sk" style="width:85%;height:12px"></div><div class="sk" style="width:65%;height:12px"></div><div class="sk" style="width:60px;height:20px;border-radius:12px"></div></div>
+          <!-- Cat 2 -->
+          <div class="sk-row" style="margin-top:4px"><div class="sk" style="width:16px;height:16px;border-radius:4px"></div><div class="sk" style="width:140px;height:13px"></div><div class="sk" style="width:24px;height:13px;margin-left:auto"></div></div>
+          <div class="sk-qcard"><div class="sk" style="width:80%;height:12px"></div><div class="sk" style="width:60%;height:12px"></div><div class="sk" style="width:60px;height:20px;border-radius:12px"></div></div>
+          <div class="sk-qcard"><div class="sk" style="width:88%;height:12px"></div><div class="sk" style="width:72%;height:12px"></div><div class="sk" style="width:60px;height:20px;border-radius:12px"></div></div>
+          <div class="sk-qcard"><div class="sk" style="width:75%;height:12px"></div><div class="sk" style="width:55%;height:12px"></div><div class="sk" style="width:60px;height:20px;border-radius:12px"></div></div>
+        </div>
+        <!-- Center: Selected Questions -->
+        <div class="sk-sel">
+          <div class="sk-row" style="justify-content:space-between">
+            <div class="sk" style="width:130px;height:14px"></div>
+            <div class="sk" style="width:80px;height:28px;border-radius:6px"></div>
+          </div>
+          <div class="sk" style="width:100%;height:1px;background:#f2f4f7;margin:2px 0"></div>
+          <div class="sk-selcard"><div class="sk" style="width:85%;height:13px"></div><div class="sk" style="width:65%;height:13px"></div><div class="sk-row" style="gap:8px;margin:0"><div class="sk" style="width:64px;height:20px;border-radius:12px"></div><div class="sk" style="width:80px;height:20px;border-radius:12px"></div></div></div>
+          <div class="sk-selcard"><div class="sk" style="width:78%;height:13px"></div><div class="sk" style="width:60%;height:13px"></div><div class="sk-row" style="gap:8px;margin:0"><div class="sk" style="width:64px;height:20px;border-radius:12px"></div><div class="sk" style="width:80px;height:20px;border-radius:12px"></div></div></div>
+          <div class="sk-selcard"><div class="sk" style="width:90%;height:13px"></div><div class="sk" style="width:70%;height:13px"></div><div class="sk-row" style="gap:8px;margin:0"><div class="sk" style="width:64px;height:20px;border-radius:12px"></div><div class="sk" style="width:80px;height:20px;border-radius:12px"></div></div></div>
+        </div>
+        <!-- Right: Preview (collapsed) -->
+        <div class="sk-prev">
+          <div class="sk" style="width:24px;height:24px;border-radius:6px"></div>
+        </div>
+      </div>
 
       <!-- LEFT: QUESTION BANK -->
       <div class="panel-bank" style="padding:0 0 0 0">
@@ -522,7 +629,7 @@ textarea.form-control{resize:vertical;min-height:80px}
           </div>
           <button class="add-custom-btn" onclick="window.location.href='add-custom-question.html'">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Custom Question
+            Custom Question
           </button>
         </div>
         <div class="ps-divider"></div>
@@ -532,11 +639,11 @@ textarea.form-control{resize:vertical;min-height:80px}
       </div>
 
       <!-- RIGHT: LIVE PREVIEW -->
-      <div class="panel-prev">
+      <div class="panel-prev collapsed">
         <!-- Header -->
         <div class="pp-header">
           <div class="pp-title">
-            <img src="https://www.figma.com/api/mcp/asset/ddebc936-6070-4f58-a782-49ae6e44b5e6" width="20" height="20" alt=""/>
+            <span class="live-dot"><span class="live-dot-ring"></span></span>
             Live Preview
           </div>
           <button class="pp-collapse" title="Collapse" onclick="togglePreview()">
@@ -605,7 +712,7 @@ const CATEGORIES = [
   { name:'Recognition', questions:[
     {id:1, text:'My organization encourages employees to give recognition to one another', type:'Rating Scale (1-5)'},
     {id:2, text:'If I do great work, I know that it will be recognised', type:'Rating Scale (1-5)'},
-    {id:3, text:'Horem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis ...', type:'MCQ'},
+    {id:3, text:'How well does your organization support your overall wellbeing and mental health?', type:'MCQ'},
   ]},
   { name:'Employee Satisfaction', questions:[
     {id:4, text:'Overall, how satisfied are you with working at this organization?', type:'Rating Scale (1-5)'},
@@ -659,6 +766,35 @@ const CATEGORIES = [
 
 // State
 let selectedIds   = new Set();
+let expandedSelCards = new Set();
+const QUESTION_TYPES = ['Multiple Choice (Single select)','Multiple Choice (Multi select)','Rating Scale','Open Ended','Yes / No'];
+const SCALE_LABELS   = ['Not at all - Always','Never - Always','Strongly Disagree - Strongly Agree','Very Dissatisfied - Very Satisfied','Poor - Excellent'];
+const questionOverrides = {}; // id -> {type, scale}
+let openDropdown = null; // {id, field}
+
+function getQOverride(id, field, fallback) {
+  return (questionOverrides[id] && questionOverrides[id][field] !== undefined) ? questionOverrides[id][field] : fallback;
+}
+function setQOverride(id, field, value) {
+  if (!questionOverrides[id]) questionOverrides[id] = {};
+  questionOverrides[id][field] = value;
+  openDropdown = null;
+  renderSelected();
+}
+function toggleDropdown(id, field) {
+  if (openDropdown && openDropdown.id === id && openDropdown.field === field) {
+    openDropdown = null;
+  } else {
+    openDropdown = {id, field};
+  }
+  renderSelected();
+}
+document.addEventListener('click', e => {
+  if (openDropdown && !e.target.closest('.sel-dropdown')) {
+    openDropdown = null;
+    renderSelected();
+  }
+});
 let collapsed     = new Set(['Employee Satisfaction','Compensation and Benefits','Wellness','Manager Effectiveness','Work-Life Balance','Diversity & Inclusion','Learning & Development','Team Collaboration']);
 let searchQuery   = '';
 let customCounter = 1000;
@@ -713,7 +849,7 @@ function renderBank() {
 
 function renderQCard(q, catName) {
   const added = selectedIds.has(q.id);
-  return `<div style="display:flex;align-items:center;gap:6px;padding:12px;border:1px solid #e1e5ea;border-radius:8px;margin-bottom:8px;background:#fff;transition:border-color .15s"
+  return `<div style="display:flex;align-items:center;gap:6px;padding:12px;border:1px solid #e1e5ea;border-radius:8px;margin-bottom:8px;background:#f9fafb;transition:border-color .15s"
               onmouseenter="this.style.borderColor='#c9b8f5'" onmouseleave="this.style.borderColor='${added?'#e1e5ea':'#e1e5ea'}'">
     <div style="flex:1;display:flex;flex-direction:column;gap:10px;min-width:0">
       <p style="font-size:14px;font-weight:500;color:#545470;line-height:20px">${q.text}</p>
@@ -767,6 +903,67 @@ function renderSelected() {
   let html = '';
   Object.entries(groups).forEach(([cat, qs]) => {
     qs.forEach(q => {
+      const isOpen = expandedSelCards.has(q.id);
+      const chevron = isOpen
+        ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>`
+        : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+      const expandedBody = isOpen ? `
+        <div style="height:1px;background:#e1e5ea;margin:16px 0"></div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;gap:12px">
+            ${(()=>{
+              const selType  = getQOverride(q.id,'type', q.type);
+              const selScale = getQOverride(q.id,'scale', SCALE_LABELS[0]);
+              const typeOpen  = openDropdown && openDropdown.id===q.id && openDropdown.field==='type';
+              const scaleOpen = openDropdown && openDropdown.id===q.id && openDropdown.field==='scale';
+              const typeOpts  = QUESTION_TYPES.map(opt=>`
+                <div onclick="event.stopPropagation();setQOverride(${q.id},'type','${opt.replace(/'/g,"&#39;")}')"
+                     style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;color:${opt===selType?'#6941c6':'#29294c'};background:${opt===selType?'#f4f0fd':'transparent'};cursor:pointer;border-radius:4px"
+                     onmouseenter="this.style.background='${opt===selType?'#ede9fb':'#f9fafb'}'" onmouseleave="this.style.background='${opt===selType?'#f4f0fd':'transparent'}'">
+                  <span style="width:14px;font-size:13px">${opt===selType?'✓':''}</span>${opt}
+                </div>`).join('');
+              const scaleOpts = SCALE_LABELS.map(opt=>`
+                <div onclick="event.stopPropagation();setQOverride(${q.id},'scale','${opt.replace(/'/g,"&#39;")}')"
+                     style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;color:${opt===selScale?'#6941c6':'#29294c'};background:${opt===selScale?'#f4f0fd':'transparent'};cursor:pointer;border-radius:4px"
+                     onmouseenter="this.style.background='${opt===selScale?'#ede9fb':'#f9fafb'}'" onmouseleave="this.style.background='${opt===selScale?'#f4f0fd':'transparent'}'">
+                  <span style="width:14px;font-size:13px">${opt===selScale?'✓':''}</span>${opt}
+                </div>`).join('');
+              return `
+              <div class="sel-dropdown" style="flex:1;display:flex;flex-direction:column;gap:6px;position:relative">
+                <label style="font-size:12px;color:#545470;font-weight:400;letter-spacing:.03px">Question type</label>
+                <div onclick="event.stopPropagation();toggleDropdown(${q.id},'type')"
+                     style="display:flex;align-items:center;justify-content:space-between;border:1px solid ${typeOpen?'#9b8afb':'#d0d5dd'};border-radius:6px;padding:8px 16px;background:#fff;cursor:pointer;font-size:14px;font-weight:500;color:#29294c;user-select:none">
+                  <span>${selType}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#545470" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .18s;transform:rotate(${typeOpen?'180deg':'0deg'})"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                ${typeOpen?`<div class="sel-dropdown" onclick="event.stopPropagation()" style="position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #e4e7ec;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:100;padding:4px">${typeOpts}</div>`:''}
+              </div>
+              <div class="sel-dropdown" style="flex:1;display:flex;flex-direction:column;gap:6px;position:relative">
+                <label style="font-size:12px;color:#545470;font-weight:400;letter-spacing:.03px">Scale label</label>
+                <div onclick="event.stopPropagation();toggleDropdown(${q.id},'scale')"
+                     style="display:flex;align-items:center;justify-content:space-between;border:1px solid ${scaleOpen?'#9b8afb':'#d0d5dd'};border-radius:6px;padding:8px 16px;background:#fff;cursor:pointer;font-size:14px;font-weight:500;color:#29294c;user-select:none">
+                  <span>${selScale}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#545470" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .18s;transform:rotate(${scaleOpen?'180deg':'0deg'})"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                ${scaleOpen?`<div class="sel-dropdown" onclick="event.stopPropagation()" style="position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #e4e7ec;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:100;padding:4px">${scaleOpts}</div>`:''}
+              </div>`;
+            })()}
+          </div>
+          <div style="display:flex;gap:12px">
+            <div style="flex:1;display:flex;align-items:center;gap:8px">
+              <div onclick="this.dataset.on=this.dataset.on==='1'?'0':'1';this.style.background=this.dataset.on==='1'?'#12b76a':'rgba(0,0,0,0.09)';this.querySelector('.tog-thumb').style.transform=this.dataset.on==='1'?'translateX(12px)':'translateX(0)'" data-on="1" style="position:relative;width:28px;height:16px;border-radius:50px;background:#12b76a;cursor:pointer;flex-shrink:0;transition:background .2s;padding:2px;display:flex;align-items:center">
+                <div class="tog-thumb" style="width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s;transform:translateX(12px)"></div>
+              </div>
+              <span style="font-size:14px;font-weight:500;color:#29294c">Mandatory Question</span>
+            </div>
+            <div style="flex:1;display:flex;align-items:center;gap:8px">
+              <div onclick="this.dataset.on=this.dataset.on==='1'?'0':'1';this.style.background=this.dataset.on==='1'?'#12b76a':'rgba(0,0,0,0.09)';this.querySelector('.tog-thumb').style.transform=this.dataset.on==='1'?'translateX(12px)':'translateX(0)'" data-on="0" style="position:relative;width:28px;height:16px;border-radius:50px;background:rgba(0,0,0,0.09);cursor:pointer;flex-shrink:0;transition:background .2s;padding:2px;display:flex;align-items:center">
+                <div class="tog-thumb" style="width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s;transform:translateX(0)"></div>
+              </div>
+              <span style="font-size:14px;font-weight:500;color:#29294c">Mandatory Comment</span>
+            </div>
+          </div>
+        </div>` : '';
       html += `<div style="border:1px solid #e1e5ea;border-radius:6px;background:#fff;padding:20px 24px;margin-bottom:8px">
         <div style="display:flex;align-items:center;gap:12px">
           <div style="flex:1;display:flex;flex-direction:column;gap:10px;min-width:0">
@@ -774,14 +971,15 @@ function renderSelected() {
               <span style="color:#707087">Q${idx++}.</span> ${q.text}
             </p>
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-              <span style="display:inline-flex;align-items:center;align-self:flex-start;padding:2px 8px;border-radius:16px;font-size:12px;font-weight:500;border:1px solid #d0d5dd;color:#29294c;background:#fff;white-space:nowrap">${cat}</span>
-              <span class="${badgeClass(q.type)}" style="display:inline-flex;align-items:center;align-self:flex-start;padding:2px 8px;border-radius:16px;font-size:12px;font-weight:500;line-height:1.4;letter-spacing:.03px;white-space:nowrap">${q.type}</span>
+              <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:16px;font-size:12px;font-weight:500;border:1px solid #d0d5dd;color:#29294c;background:#fff;white-space:nowrap">${cat}</span>
+              <span class="${badgeClass(q.type)}" style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:16px;font-size:12px;font-weight:500;line-height:1.4;letter-spacing:.03px;white-space:nowrap">${q.type}</span>
             </div>
           </div>
-          <button onclick="toggleQ(${q.id})" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#98a2b3;border:none;background:transparent;border-radius:6px;cursor:pointer;flex-shrink:0" onmouseenter="this.style.background='#f9fafb'" onmouseleave="this.style.background='transparent'">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <button onclick="toggleSelCard(${q.id})" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#98a2b3;border:none;background:transparent;border-radius:6px;cursor:pointer;flex-shrink:0" onmouseenter="this.style.background='#f2f4f7'" onmouseleave="this.style.background='transparent'">
+            ${chevron}
           </button>
         </div>
+        ${expandedBody}
       </div>`;
     });
   });
@@ -803,28 +1001,41 @@ function renderPreview() {
   const current = all[previewIndex];
   const progressPct = Math.round(((previewIndex + 1) / total) * 100);
 
+  // Use overrides if set
+  const activeType  = getQOverride(current.id, 'type',  current.type);
+  const activeScale = getQOverride(current.id, 'scale', SCALE_LABELS[0]);
+
+  // Parse scale label string into [left, right]
+  const scaleParts = activeScale.includes(' - ') ? activeScale.split(' - ') : ['Strongly disagree','Strongly agree'];
+
   let responseHtml = '';
-  if (current.type.startsWith('Rating') || current.type.startsWith('Scale')) {
-    const max = current.type.includes('10') ? 10 : 5;
-    const labels = max<=5 ? ['Strongly disagree','Strongly agree'] : ['Strongly disagree','Strongly agree'];
-    const btnCount = max<=5 ? 5 : 10;
+  let isRating = false;
+  if (activeType === 'Rating Scale' || activeType.startsWith('Rating') || activeType.startsWith('Scale')) {
+    isRating = true;
+    const max = activeType.includes('10') ? 10 : 5;
+    const btnCount = max <= 5 ? 5 : 10;
     responseHtml = `
       <div style="display:flex;flex-direction:column;gap:10px;width:${btnCount<=5?268:508}px">
         <div class="pp-rating-btns">
-          ${Array.from({length:btnCount},(_, i)=>`
+          ${Array.from({length:btnCount},(_,i)=>`
             <button onclick="selectRating(${i+1},this)" class="rating-btn" id="rbtn-${i+1}">${i+1}</button>
           `).join('')}
         </div>
         <div style="display:flex;justify-content:space-between;font-size:12px;color:#707087;line-height:1.4;letter-spacing:.03px">
-          <span>Strongly disagree</span><span>Strongly agree</span>
+          <span>${scaleParts[0]}</span><span>${scaleParts[1]}</span>
         </div>
       </div>`;
-  } else if (current.type==='MCQ') {
+  } else if (activeType === 'Multiple Choice (Single select)' || activeType === 'MCQ') {
     responseHtml = ['Always','Often','Sometimes','Rarely','Never'].map(o=>`
       <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e1e5ea;border-radius:8px;cursor:pointer;margin-bottom:6px;font-size:13px;color:#344054" onmouseenter="this.style.borderColor='#9e77ed'" onmouseleave="this.style.borderColor='#e1e5ea'">
         <span style="width:16px;height:16px;border:1.5px solid #d0d5dd;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff"></span>${o}
       </label>`).join('');
-  } else if (current.type==='Yes/No') {
+  } else if (activeType === 'Multiple Choice (Multi select)') {
+    responseHtml = ['Always','Often','Sometimes','Rarely','Never'].map(o=>`
+      <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e1e5ea;border-radius:8px;cursor:pointer;margin-bottom:6px;font-size:13px;color:#344054" onmouseenter="this.style.borderColor='#9e77ed'" onmouseleave="this.style.borderColor='#e1e5ea'">
+        <span style="width:16px;height:16px;border:1.5px solid #d0d5dd;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff"></span>${o}
+      </label>`).join('');
+  } else if (activeType === 'Yes / No' || activeType === 'Yes/No') {
     responseHtml = ['Yes','No'].map(o=>`
       <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e1e5ea;border-radius:8px;cursor:pointer;margin-bottom:6px;font-size:13px;color:#344054" onmouseenter="this.style.borderColor='#9e77ed'" onmouseleave="this.style.borderColor='#e1e5ea'">
         <span style="width:16px;height:16px;border:1.5px solid #d0d5dd;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff"></span>${o}
@@ -853,7 +1064,7 @@ function renderPreview() {
         <div>${responseHtml}</div>
 
         <!-- Comment box (for rating types) -->
-        ${(current.type.startsWith('Rating')||current.type.startsWith('Scale'))?`
+        ${isRating?`
         <div style="display:flex;flex-direction:column;gap:6px">
           <div style="display:flex;align-items:center;gap:2px">
             <span style="font-size:12px;color:#545470;line-height:1.4;letter-spacing:.03px">Add your comment </span>
@@ -872,12 +1083,12 @@ function renderPreview() {
       <!-- Back / Next -->
       <div style="display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
         <button onclick="previewNav(-1)" ${previewIndex===0?'disabled':''} style="display:flex;align-items:center;gap:4px;min-width:60px;width:88px;padding:4px 12px;border-radius:50px;border:1px solid #d0d5dd;background:#fff;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;color:${previewIndex===0?'#d0d5dd':'#29294c'};justify-content:center;cursor:${previewIndex===0?'not-allowed':'pointer'}" ${previewIndex>0?'onmouseenter="this.style.background=\'#f9fafb\'" onmouseleave="this.style.background=\'#fff\'"':''}>
-          <img src="https://www.figma.com/api/mcp/asset/5a977cbc-0631-4920-9001-8e541e49ffca" width="11" height="11" alt="" style="transform:scaleX(-1)"/>
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="${previewIndex===0?'#d0d5dd':'#29294c'}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 2 3 5.5 7 9"/></svg>
           Back
         </button>
         <button onclick="previewNav(1)" ${previewIndex===total-1?'disabled':''} style="display:flex;align-items:center;gap:4px;min-width:60px;width:88px;padding:4px 12px;border-radius:50px;border:1px solid #d0d5dd;background:#fff;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;color:${previewIndex===total-1?'#d0d5dd':'#29294c'};justify-content:center;cursor:${previewIndex===total-1?'not-allowed':'pointer'}" ${previewIndex<total-1?'onmouseenter="this.style.background=\'#f9fafb\'" onmouseleave="this.style.background=\'#fff\'"':''}>
           Next
-          <img src="https://www.figma.com/api/mcp/asset/67f32449-7a02-4198-8e7d-2660f5a2bf7e" width="11" height="11" alt=""/>
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="${previewIndex===total-1?'#d0d5dd':'#29294c'}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 2 8 5.5 4 9"/></svg>
         </button>
       </div>
     </div>`;
@@ -908,7 +1119,10 @@ function updateStats() {
   document.getElementById('stat-count').textContent = count;
   document.getElementById('stat-cats').textContent  = cats.size;
   document.getElementById('stat-time').textContent  = Math.round(count*20);
-  document.getElementById('continue-btn').disabled  = count===0;
+  const btn = document.getElementById('continue-btn');
+  const wasDisabled = btn.disabled;
+  btn.disabled = count===0;
+  if (wasDisabled && count>0) { btn.classList.add('just-enabled'); setTimeout(()=>btn.classList.remove('just-enabled'),600); }
 }
 
 // ── ACTIONS ──────────────────────────────────────────────────
@@ -954,13 +1168,54 @@ function toggleQ(id) {
     const remaining = getAllQs().filter(q => selectedIds.has(q.id)).length;
     if (previewIndex >= remaining) previewIndex = Math.max(0, remaining - 1);
   } else {
+    const wasEmpty = selectedIds.size === 0;
     selectedIds.add(id);
     toast('Question added','success');
+    // if (wasEmpty) {
+    //   document.querySelector('.panel-prev').classList.remove('collapsed');
+    // }
+    // jump preview to the newly added question
+    const all = getAllQs().filter(q => selectedIds.has(q.id));
+    previewIndex = all.findIndex(q => q.id === id);
+    if (previewIndex < 0) previewIndex = all.length - 1;
   }
+  renderAll();
+  // animate the newly added card
+  if (selectedIds.has(id)) {
+    const cards = document.querySelectorAll('#sel-body > div');
+    if (cards.length) {
+      const last = cards[cards.length - 1];
+      last.classList.add('selq-card-new');
+    }
+  }
+}
+function toggleSelCard(id) {
+  if (expandedSelCards.has(id)) {
+    expandedSelCards.delete(id);
+  } else {
+    expandedSelCards.add(id);
+    // jump preview to this question
+    const all = getAllQs().filter(q => selectedIds.has(q.id));
+    const idx = all.findIndex(q => q.id === id);
+    if (idx >= 0) { previewIndex = idx; renderPreview(); }
+  }
+  renderSelected();
+}
+function removeSelCard(id) {
+  selectedIds.delete(id);
+  expandedSelCards.delete(id);
+  const remaining = getAllQs().filter(q => selectedIds.has(q.id)).length;
+  if (previewIndex >= remaining) previewIndex = Math.max(0, remaining - 1);
   renderAll();
 }
 function toggleCat(name) {
-  if (collapsed.has(name)) collapsed.delete(name); else collapsed.add(name);
+  if (collapsed.has(name)) {
+    // opening this one — collapse all others
+    CATEGORIES.forEach(c => collapsed.add(c.name));
+    collapsed.delete(name);
+  } else {
+    collapsed.add(name);
+  }
   renderBank();
 }
 function addAllQuestions() {
@@ -1017,7 +1272,16 @@ function toast(msg, type='') {
 function renderAll() { renderBank(); renderSelected(); renderPreview(); updateStats(); updateAddAllCheckbox(); }
 
 document.addEventListener('keydown', e => { if (e.key==='Escape') closeCustomModal(); });
-renderAll();
+
+// Show skeleton, render, then fade out skeleton
+setTimeout(() => {
+  renderAll();
+  const sk = document.getElementById('skeleton');
+  if (sk) {
+    sk.classList.add('hide');
+    setTimeout(() => { sk.remove(); setTimeout(showTour, 300); }, 380);
+  }
+}, 600);
 </script>
 <script>
 (function(){
@@ -1035,6 +1299,117 @@ function toggleSidebar(){
   var c=sidebar.classList.toggle('collapsed');
   localStorage.setItem('sidebarCollapsed',c?'true':'false');
   if(page)page.style.marginLeft=c?'64px':'252px';
+}
+</script>
+
+<!-- TOUR SPOTLIGHT -->
+<div id="tour-spotlight" class="hide"></div>
+
+<!-- TOUR TOOLTIP -->
+<div id="tour-tip" class="hide">
+  <div class="tip-arrow left"></div>
+  <div class="tip-step-lbl">Step 1 of 3</div>
+  <div class="tip-title">Browse the Question Bank</div>
+  <div class="tip-desc">Explore 35+ questions organised by category. Use the search bar to find specific topics quickly.</div>
+  <div class="tip-footer">
+    <div class="tip-left">
+      <button class="tip-skip" onclick="dismissTour()">Skip tour</button>
+      <div class="tip-dots">
+        <div class="tip-dot on"></div>
+        <div class="tip-dot"></div>
+        <div class="tip-dot"></div>
+      </div>
+    </div>
+    <button class="tip-next" onclick="tourNext()">Next →</button>
+  </div>
+</div>
+
+<script>
+const TOUR_KEY = 'vp_pq_tour_v4';
+const tourSteps = [
+  {
+    title: 'Browse the Question Bank',
+    desc: 'Explore 35+ questions organised by category. Use the search bar to find specific topics quickly.',
+    target: () => document.querySelector('.panel-bank'),
+    spotPad: 6, spotRadius: 12, arrow: 'left'
+  },
+  {
+    title: 'Add questions with one click',
+    desc: 'Tap the purple + button next to any question to add it here. Use "Add all" to select every question at once.',
+    target: () => document.querySelector('.add-q-btn'),
+    spotPad: 8, spotRadius: 10, arrow: 'left'
+  },
+  {
+    title: 'Live Preview panel',
+    desc: 'Click the collapse arrow on the far right to open the Live Preview. See exactly how each question looks to respondents.',
+    target: () => document.querySelector('.pp-collapse'),
+    spotPad: 8, spotRadius: 10, arrow: 'right'
+  }
+];
+let tourStep = 0;
+
+function positionTip() {
+  const tip = document.getElementById('tour-tip');
+  const spot = document.getElementById('tour-spotlight');
+  const arrow = tip.querySelector('.tip-arrow');
+  const s = tourSteps[tourStep];
+  const el = s.target();
+  if (!el) return;
+
+  const r = el.getBoundingClientRect();
+  const p = s.spotPad;
+
+  // Spotlight
+  spot.style.top    = (r.top - p) + 'px';
+  spot.style.left   = (r.left - p) + 'px';
+  spot.style.width  = (r.width + p * 2) + 'px';
+  spot.style.height = (r.height + p * 2) + 'px';
+  spot.style.borderRadius = s.spotRadius + 'px';
+
+  // Tooltip — left arrow: tip to the right of target; right arrow: tip to the left
+  const tipW = 300;
+  if (s.arrow === 'left') {
+    const bank = document.querySelector('.panel-bank');
+    const br = bank ? bank.getBoundingClientRect() : r;
+    tip.style.left  = (br.right + 16) + 'px';
+    tip.style.top   = Math.max(r.top + r.height / 2 - 80, 80) + 'px';
+    tip.style.right = 'auto';
+    arrow.className = 'tip-arrow left';
+  } else {
+    tip.style.left  = (r.left - tipW - 16) + 'px';
+    tip.style.top   = Math.max(r.top + r.height / 2 - 80, 80) + 'px';
+    tip.style.right = 'auto';
+    arrow.className = 'tip-arrow right';
+  }
+}
+
+function updateTip() {
+  const tip = document.getElementById('tour-tip');
+  const s = tourSteps[tourStep];
+  tip.querySelector('.tip-step-lbl').textContent = `Step ${tourStep + 1} of ${tourSteps.length}`;
+  tip.querySelector('.tip-title').textContent = s.title;
+  tip.querySelector('.tip-desc').textContent = s.desc;
+  tip.querySelector('.tip-next').textContent = tourStep < tourSteps.length - 1 ? 'Next →' : 'Got it!';
+  tip.querySelectorAll('.tip-dot').forEach((d, i) => d.classList.toggle('on', i === tourStep));
+  positionTip();
+}
+
+function tourNext() {
+  if (tourStep < tourSteps.length - 1) { tourStep++; updateTip(); }
+  else dismissTour();
+}
+
+function dismissTour() {
+  localStorage.setItem(TOUR_KEY, '1');
+  document.getElementById('tour-tip').classList.add('hide');
+  document.getElementById('tour-spotlight').classList.add('hide');
+}
+
+function showTour() {
+  // if (localStorage.getItem(TOUR_KEY)) return;
+  updateTip();
+  document.getElementById('tour-tip').classList.remove('hide');
+  document.getElementById('tour-spotlight').classList.remove('hide');
 }
 </script>
 </body>
