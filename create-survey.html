@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
@@ -78,7 +79,10 @@ a{text-decoration:none;color:inherit}
 
 /* ── OPTION CARDS ────────────────────────────────────────── */
 .option-cards{display:flex;gap:24px;margin-bottom:42px;justify-content:center}
-.option-card{flex:0 0 calc(25% - 18px);max-width:calc(25% - 18px);background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;display:flex;flex-direction:column;align-items:center;gap:30px;cursor:pointer;transition:box-shadow .2s,border-color .2s}
+.option-card{flex:0 0 calc(25% - 18px);max-width:calc(25% - 18px);border:1px solid #e5e7eb;border-radius:12px;padding:24px;display:flex;flex-direction:column;align-items:center;gap:30px;cursor:pointer;transition:box-shadow .2s,border-color .2s}
+.option-card.card-purple{background:linear-gradient(160deg,#faf8ff 0%,#fff 50%,#f5f2fe 100%)}
+.option-card.card-green{background:linear-gradient(160deg,#f7fef9 0%,#fff 50%,#f0faf2 100%)}
+.option-card.card-blue{background:linear-gradient(160deg,#f5f9ff 0%,#fff 50%,#eef4fe 100%)}
 .option-card:hover{border-color:#c9b8f5;box-shadow:0 4px 16px rgba(105,65,198,.1)}
 
 .option-card-title{font-size:14px;font-weight:600;color:#29294c;letter-spacing:.021px;align-self:flex-start;width:100%;text-align:center}
@@ -101,7 +105,7 @@ a{text-decoration:none;color:inherit}
 .recent-header{font-size:16px;font-weight:600;color:#29294c;letter-spacing:.024px;margin-bottom:8px}
 .template-cards{display:flex;gap:24px;margin-top:8px}
 
-.template-card{flex:1;border:1px solid #e1e5ea;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(135.58deg,#fff 20.47%,#f9fafb 96.27%);cursor:pointer;transition:box-shadow .2s,border-color .2s}
+.template-card{flex:1;border:1px solid #e1e5ea;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;background:#f9fafb;cursor:pointer;transition:box-shadow .2s,border-color .2s}
 .template-card:hover{border-color:#c9b8f5;box-shadow:0 4px 16px rgba(105,65,198,.08)}
 
 .template-card-title{font-size:16px;font-weight:600;color:#29294c;letter-spacing:.024px;text-align:center;line-height:1.5}
@@ -110,7 +114,7 @@ a{text-decoration:none;color:inherit}
 
 .template-card-img{position:relative;height:179px;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .template-card-img::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:40px;width:99px;height:99px;border-radius:76.5px;background:linear-gradient(-27.38deg,#eaeaed 19%,#f9fafb 80%)}
-.template-card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.template-card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;mix-blend-mode:multiply}
 
 .template-card-actions{display:flex;gap:7px}
 .template-btn-select{flex:1;background:#f4f4f6;border:none;border-radius:8px;font-size:14px;font-weight:500;color:#29294c;padding:8px 14px;min-height:36px;cursor:pointer;transition:background .15s}
@@ -180,7 +184,7 @@ a{text-decoration:none;color:inherit}
 <aside class="sidebar">
 
   <!-- Create Survey button -->
-  <button class="sidebar-create-btn" onclick="window.location.href='get-started.html'">
+  <button class="sidebar-create-btn" onclick="window.location.href='create-survey.html'">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="10" cy="10" r="8.5"/><line x1="10" y1="6.5" x2="10" y2="13.5"/><line x1="6.5" y1="10" x2="13.5" y2="10"/>
     </svg>
@@ -228,7 +232,7 @@ a{text-decoration:none;color:inherit}
 
     <!-- Surveys sub-items -->
     <div class="nav-sub">
-      <div class="nav-sub-item active" onclick="window.location.href='get-started.html'">Create</div>
+      <div class="nav-sub-item active" onclick="window.location.href='create-survey.html'" style="cursor:pointer">Create</div>
       <div class="nav-sub-item">Manage</div>
       <div class="nav-sub-item">Question</div>
       <div class="nav-sub-item">Templates</div>
@@ -299,33 +303,33 @@ a{text-decoration:none;color:inherit}
       <div class="option-cards">
 
         <!-- Start from scratch -->
-        <div class="option-card">
+        <div class="option-card card-purple" onclick="localStorage.setItem('sidebarCollapsed','true');window.location.href='get-started.html'">
           <div class="option-card-title">Start from scratch</div>
           <div class="option-icon-wrap purple">
             <img src="https://www.figma.com/api/mcp/asset/7f2c5d42-b56a-4939-a737-f8b46a8b4493" alt="Start from scratch"/>
           </div>
           <p class="option-card-desc">Write your own questions and customize everything</p>
-          <button class="option-card-btn" onclick="localStorage.setItem('sidebarCollapsed','true');window.location.href='get-started.html'">Create Custom Survey</button>
+          <button class="option-card-btn" onclick="event.stopPropagation();localStorage.setItem('sidebarCollapsed','true');window.location.href='get-started.html'">Create Custom Survey</button>
         </div>
 
         <!-- Use ready-made templates -->
-        <div class="option-card">
+        <div class="option-card card-green" onclick="">
           <div class="option-card-title">Use ready-made templates</div>
           <div class="option-icon-wrap green">
             <img src="https://www.figma.com/api/mcp/asset/e7b77630-093e-4fbc-9890-637a5d328ed7" alt="Ready-made templates"/>
           </div>
           <p class="option-card-desc">Quick start with proven questions from HR experts</p>
-          <button class="option-card-btn">Browse Templates</button>
+          <button class="option-card-btn" onclick="event.stopPropagation()">Browse Templates</button>
         </div>
 
         <!-- Automated surveys -->
-        <div class="option-card">
+        <div class="option-card card-blue" onclick="">
           <div class="option-card-title">Automated surveys</div>
           <div class="option-icon-wrap blue">
             <img src="https://www.figma.com/api/mcp/asset/c176e67a-2ee6-48c0-90d3-1189d9c33388" alt="Automated surveys"/>
           </div>
           <p class="option-card-desc">Perfect for onboarding and work anniversaries</p>
-          <button class="option-card-btn">Set Up Automation</button>
+          <button class="option-card-btn" onclick="event.stopPropagation()">Set Up Automation</button>
         </div>
 
       </div>
