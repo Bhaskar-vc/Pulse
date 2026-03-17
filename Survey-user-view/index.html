@@ -459,65 +459,85 @@
     .btn-skip {
       background: none;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
       color: #6941c6;
-      padding: 0;
+      padding: 7px 14px;
       width: fit-content;
+      transition: background .15s, border-color .15s;
     }
-    .btn-skip:hover { text-decoration: underline; }
-    .btn-skip .skip-chevron { transition: transform .2s; }
+    .btn-skip:hover { background: #F9F5FF; border-color: #C4B5FD; }
+    .btn-skip .skip-chevron { transition: transform .22s ease; }
+    .btn-skip.open { background: #F9F5FF; border-color: #C4B5FD; }
     .btn-skip.open .skip-chevron { transform: rotate(180deg); }
 
     /* Skip reason panel */
     .skip-panel {
       display: none;
       flex-direction: column;
-      gap: 12px;
-      padding: 14px 0 2px;
-      animation: fadeSlideIn .18s ease;
+      gap: 14px;
+      background: #FAFAFA;
+      border: 1px solid #EAE9F0;
+      border-radius: 12px;
+      padding: 16px;
+      animation: fadeSlideIn .2s ease;
     }
     .skip-panel.visible { display: flex; }
     @keyframes fadeSlideIn {
-      from { opacity: 0; transform: translateY(-6px); }
+      from { opacity: 0; transform: translateY(-8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     .skip-panel-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      color: #545470;
-      font-family: 'Inter', sans-serif;
+      justify-content: space-between;
+    }
+    .skip-panel-title {
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      color: #344054;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
     .skip-cancel {
       background: none; border: none; cursor: pointer;
-      font-size: 13px; color: #6941c6; text-decoration: underline;
-      font-family: 'Inter', sans-serif; padding: 0;
+      display: flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 6px;
+      color: #707087; transition: background .15s;
+      padding: 0;
     }
+    .skip-cancel:hover { background: #EDE9FE; color: #6941C6; }
     .skip-reasons {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 8px;
     }
     .skip-reason-btn {
-      padding: 8px 16px;
-      border-radius: 20px;
-      border: 1.5px solid #D6BBFB;
-      background: #F9F5FF;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1.5px solid #E9D7FE;
+      background: #fff;
       color: #6941C6;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
-      transition: background .15s, border-color .15s;
+      text-align: left;
+      transition: background .15s, border-color .15s, transform .1s;
     }
-    .skip-reason-btn:hover { background: #EDE9FE; border-color: #7F56D9; }
+    .skip-reason-btn:hover {
+      background: #F9F5FF;
+      border-color: #9E77ED;
+      transform: translateY(-1px);
+    }
+    .skip-reason-btn:active { transform: translateY(0); }
 
     /* Navigation */
     .q-nav {
@@ -685,7 +705,7 @@
 
   <!-- Logo -->
   <a class="vc-logo" href="#">
-    <svg width="120" height="18" viewBox="0 0 150 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="150" height="22" viewBox="0 0 150 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g opacity="0.699997"><path d="M10.9267 18.6875C9.47829 20.1015 7.44518 21.0668 7.35935 21.1069L6.2085 21.6487L6.7923 20.519C7.16899 19.7906 7.19876 19.0704 7.22994 18.3078C7.27017 17.3247 7.31149 16.3103 8.0354 15.1727C8.48502 14.4646 8.98709 13.8885 9.51368 13.4761L9.6434 13.3748L10.2125 13.9752L10.1043 14.0992C9.88908 14.3466 9.68827 14.6185 9.48923 14.9309C8.89069 15.8709 8.85615 16.7277 8.81904 17.6358C8.79955 18.1134 8.77924 18.6039 8.67349 19.1095C9.26866 18.7635 10.0096 18.2833 10.6696 17.7143L10.7977 17.603L11.3858 18.2014L11.2724 18.3279C11.1622 18.4505 11.0467 18.5704 10.9267 18.6875Z" fill="#29294C"/></g>
 <g opacity="0.800003"><path d="M6.11963 16.3804L5.95011 16.3886C3.79438 16.4931 1.32614 15.6033 1.22173 15.5657L0.0253906 15.1297L1.2408 14.7485C2.0234 14.5038 2.55574 14.017 3.12004 13.5021C3.84622 12.8391 4.59673 12.1539 5.91392 11.8692C6.74366 11.689 7.49924 11.6405 8.15958 11.7261L8.32206 11.7476L8.29645 12.5729L8.13299 12.584C7.79933 12.6059 7.4647 12.654 7.10897 12.7316C6.0187 12.9672 5.3855 13.5455 4.71489 14.1579C4.36161 14.4807 3.99966 14.8114 3.56605 15.092C4.23134 15.2706 5.09372 15.4597 5.96332 15.5279L6.13228 15.5411L6.11963 16.3804Z" fill="#29294C"/></g>
 <g opacity="0.5"><path d="M21.6627 15.6155L20.523 15.0395C19.79 14.6679 19.0682 14.6442 18.3033 14.619C17.32 14.5871 16.3043 14.5542 15.1601 13.8409C14.4441 13.3916 13.8679 12.8998 13.4496 12.3775L13.3467 12.2494L13.9404 11.6729L14.0655 11.7795C14.3208 11.9964 14.5946 12.1946 14.9024 12.3851C15.8514 12.9779 16.7086 13.0058 17.6171 13.0355C18.0951 13.0509 18.5859 13.067 19.0923 13.169C18.7385 12.575 18.2503 11.8361 17.6761 11.1807L17.5638 11.0534L18.1581 10.4612L18.2853 10.5733C19.8956 11.9963 21.0572 14.3663 21.1059 14.466L21.6627 15.6155Z" fill="#29294C"/></g>
@@ -769,7 +789,7 @@
         <line x1="74" y1="107" x2="120" y2="107" stroke="#C4B5FD" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>
         <line x1="74" y1="124" x2="108" y2="124" stroke="#C4B5FD" stroke-width="3.5" stroke-linecap="round" opacity="0.5"/>
         <!-- Animated checkmark – single green accent -->
-        <path class="hero-check" d="M113,121 L118,126 L128,115" stroke="#7F56D9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path class="hero-check" d="M113,121 L118,126 L128,115" stroke="#17B26A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
 
         <!-- Star 1 – outline only, soft purple -->
         <g class="hero-star-sm">
@@ -853,7 +873,7 @@
 
   <!-- Logo -->
   <a class="vc-logo" href="#">
-    <svg width="120" height="18" viewBox="0 0 150 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="150" height="22" viewBox="0 0 150 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g opacity="0.699997"><path d="M10.9267 18.6875C9.47829 20.1015 7.44518 21.0668 7.35935 21.1069L6.2085 21.6487L6.7923 20.519C7.16899 19.7906 7.19876 19.0704 7.22994 18.3078C7.27017 17.3247 7.31149 16.3103 8.0354 15.1727C8.48502 14.4646 8.98709 13.8885 9.51368 13.4761L9.6434 13.3748L10.2125 13.9752L10.1043 14.0992C9.88908 14.3466 9.68827 14.6185 9.48923 14.9309C8.89069 15.8709 8.85615 16.7277 8.81904 17.6358C8.79955 18.1134 8.77924 18.6039 8.67349 19.1095C9.26866 18.7635 10.0096 18.2833 10.6696 17.7143L10.7977 17.603L11.3858 18.2014L11.2724 18.3279C11.1622 18.4505 11.0467 18.5704 10.9267 18.6875Z" fill="#29294C"/></g>
 <g opacity="0.800003"><path d="M6.11963 16.3804L5.95011 16.3886C3.79438 16.4931 1.32614 15.6033 1.22173 15.5657L0.0253906 15.1297L1.2408 14.7485C2.0234 14.5038 2.55574 14.017 3.12004 13.5021C3.84622 12.8391 4.59673 12.1539 5.91392 11.8692C6.74366 11.689 7.49924 11.6405 8.15958 11.7261L8.32206 11.7476L8.29645 12.5729L8.13299 12.584C7.79933 12.6059 7.4647 12.654 7.10897 12.7316C6.0187 12.9672 5.3855 13.5455 4.71489 14.1579C4.36161 14.4807 3.99966 14.8114 3.56605 15.092C4.23134 15.2706 5.09372 15.4597 5.96332 15.5279L6.13228 15.5411L6.11963 16.3804Z" fill="#29294C"/></g>
 <g opacity="0.5"><path d="M21.6627 15.6155L20.523 15.0395C19.79 14.6679 19.0682 14.6442 18.3033 14.619C17.32 14.5871 16.3043 14.5542 15.1601 13.8409C14.4441 13.3916 13.8679 12.8998 13.4496 12.3775L13.3467 12.2494L13.9404 11.6729L14.0655 11.7795C14.3208 11.9964 14.5946 12.1946 14.9024 12.3851C15.8514 12.9779 16.7086 13.0058 17.6171 13.0355C18.0951 13.0509 18.5859 13.067 19.0923 13.169C18.7385 12.575 18.2503 11.8361 17.6761 11.1807L17.5638 11.0534L18.1581 10.4612L18.2853 10.5733C19.8956 11.9963 21.0572 14.3663 21.1059 14.466L21.6627 15.6155Z" fill="#29294C"/></g>
@@ -896,7 +916,7 @@
     <!-- Question -->
     <div class="q-label-row">
       <p class="q-text" id="q-text" style="margin:0;">I feel we have enough social interaction at my workplace</p>
-      <span id="q-badge" class="q-required-badge">Required</span>
+      <span id="q-badge" style="display:none;"></span>
     </div>
 
     <!-- Rating -->
@@ -1000,16 +1020,20 @@
     <!-- Skip -->
     <button class="btn-skip" id="btn-skip-toggle" onclick="toggleSkipPanel()">
       Skip Question
-      <svg class="skip-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M4.5 6.5l3.5 3.5 3.5-3.5" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg class="skip-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M3.5 5.5l3.5 3.5 3.5-3.5" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
 
     <!-- Skip reason panel -->
     <div class="skip-panel" id="skip-panel">
       <div class="skip-panel-header">
-        <span>Select a reason</span>
-        <button class="skip-cancel" onclick="closeSkipPanel()">Cancel</button>
+        <span class="skip-panel-title">Why are you skipping?</span>
+        <button class="skip-cancel" onclick="closeSkipPanel()" title="Cancel">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
       </div>
       <div class="skip-reasons">
         <button class="skip-reason-btn" onclick="skipWithReason('Not Applicable')">Not Applicable</button>
@@ -1056,7 +1080,7 @@
 
   <!-- Logo -->
   <a class="vc-logo" href="#">
-    <svg width="120" height="18" viewBox="0 0 150 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="150" height="22" viewBox="0 0 150 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g opacity="0.699997"><path d="M10.9267 18.6875C9.47829 20.1015 7.44518 21.0668 7.35935 21.1069L6.2085 21.6487L6.7923 20.519C7.16899 19.7906 7.19876 19.0704 7.22994 18.3078C7.27017 17.3247 7.31149 16.3103 8.0354 15.1727C8.48502 14.4646 8.98709 13.8885 9.51368 13.4761L9.6434 13.3748L10.2125 13.9752L10.1043 14.0992C9.88908 14.3466 9.68827 14.6185 9.48923 14.9309C8.89069 15.8709 8.85615 16.7277 8.81904 17.6358C8.79955 18.1134 8.77924 18.6039 8.67349 19.1095C9.26866 18.7635 10.0096 18.2833 10.6696 17.7143L10.7977 17.603L11.3858 18.2014L11.2724 18.3279C11.1622 18.4505 11.0467 18.5704 10.9267 18.6875Z" fill="#29294C"/></g>
 <g opacity="0.800003"><path d="M6.11963 16.3804L5.95011 16.3886C3.79438 16.4931 1.32614 15.6033 1.22173 15.5657L0.0253906 15.1297L1.2408 14.7485C2.0234 14.5038 2.55574 14.017 3.12004 13.5021C3.84622 12.8391 4.59673 12.1539 5.91392 11.8692C6.74366 11.689 7.49924 11.6405 8.15958 11.7261L8.32206 11.7476L8.29645 12.5729L8.13299 12.584C7.79933 12.6059 7.4647 12.654 7.10897 12.7316C6.0187 12.9672 5.3855 13.5455 4.71489 14.1579C4.36161 14.4807 3.99966 14.8114 3.56605 15.092C4.23134 15.2706 5.09372 15.4597 5.96332 15.5279L6.13228 15.5411L6.11963 16.3804Z" fill="#29294C"/></g>
 <g opacity="0.5"><path d="M21.6627 15.6155L20.523 15.0395C19.79 14.6679 19.0682 14.6442 18.3033 14.619C17.32 14.5871 16.3043 14.5542 15.1601 13.8409C14.4441 13.3916 13.8679 12.8998 13.4496 12.3775L13.3467 12.2494L13.9404 11.6729L14.0655 11.7795C14.3208 11.9964 14.5946 12.1946 14.9024 12.3851C15.8514 12.9779 16.7086 13.0058 17.6171 13.0355C18.0951 13.0509 18.5859 13.067 19.0923 13.169C18.7385 12.575 18.2503 11.8361 17.6761 11.1807L17.5638 11.0534L18.1581 10.4612L18.2853 10.5733C19.8956 11.9963 21.0572 14.3663 21.1059 14.466L21.6627 15.6155Z" fill="#29294C"/></g>
@@ -1269,8 +1293,8 @@
 
     } else if (q.type === 'open') {
       // Textarea becomes the main answer — label changes
-      document.getElementById('q-comment').placeholder = 'Type your answer here…';
-      document.querySelector('.comment-label').innerHTML = 'Your answer';
+      document.getElementById('q-comment').placeholder = 'Write your thoughts here…';
+      document.querySelector('.comment-label').innerHTML = 'Share your feedback';
 
     } else if (q.type === 'yesno') {
       document.getElementById('yesno-section').style.display = '';
@@ -1380,15 +1404,19 @@
   function nextQuestion() {
     saveCurrentComment();
     const q = QUESTIONS[currentQ];
-    if (q.required && !hasAnswer(currentQ)) {
-      const msgs = {
-        rating: 'Please select a rating to continue.',
-        single: 'Please choose an option to continue.',
-        multi:  'Please select at least one option.',
-        open:   'Please type your answer to continue.',
-        yesno:  'Please select Yes or No to continue.'
-      };
-      showError(msgs[q.type] || 'Please answer this question to continue.');
+    if (!hasAnswer(currentQ)) {
+      if (q.required) {
+        const msgs = {
+          rating: 'Please select a rating to continue.',
+          single: 'Please choose an option to continue.',
+          multi:  'Please select at least one option.',
+          open:   'Please share your thoughts to continue.',
+          yesno:  'Please select Yes or No to continue.'
+        };
+        showError(msgs[q.type] || 'Please answer this question to continue.');
+      } else {
+        showError('This question is optional — click Skip if you want to skip it.');
+      }
       return;
     }
     if (currentQ === QUESTIONS.length - 1) {
