@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Input — Pulse Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary-700: #29294c;
+  --primary-600: #545470;
+  --primary-500: #707087;
+  --primary-400: #9d9dad;
+  --primary-300: #bdbdc8;
+  --primary-200: #eaeaed;
+  --primary-100: #f4f4f6;
+  --primary-50:  #f9fafb;
+  --secondary-700: #6941c6;
+  --secondary-600: #7f56d9;
+  --secondary-100: #f4ebff;
+  --secondary-50:  #f9f5ff;
+  --error-700: #d92d20;
+  --error-600: #f04438;
+  --error-100: #fef3f2;
+  --success-700: #039855;
+  --success-100: #ecfdf3;
+  --text-primary: #29294c;
+  --text-secondary: #707087;
+  --text-tertiary: #9d9dad;
+  --text-placeholder: #bdbdc8;
+  --text-link: #6941c6;
+  --border-default: #eaeaed;
+  --border-focus: #7f56d9;
+  --bg-page: #f9fafb;
+  --sidebar-w: 240px;
+  --font: 'Inter', sans-serif;
+}
+
+body { font-family: var(--font); color: var(--text-primary); background: var(--bg-page); display: flex; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar { width: var(--sidebar-w); min-width: var(--sidebar-w); background: #fff; border-right: 1px solid var(--border-default); padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid var(--border-default); margin-bottom: 16px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: var(--primary-700); }
+.sidebar-logo sub { font-size: 10px; color: var(--text-tertiary); font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; border-radius: 0;
+  text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 48px 56px;
+  max-width: 1100px;
+}
+
+/* ── Page header ── */
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text-primary); }
+.breadcrumb-sep { opacity: .4; }
+.page-header { margin-bottom: 40px; }
+.page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+.page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 640px; }
+.page-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+.tag-figma  { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+.tag-wcag   { background: #eff8ff; color: #026aa2; border-color: #b9e6fe; }
+
+/* ── Sections ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; }
+.section-desc  { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+.divider { border: none; border-top: 1px solid var(--border-default); margin: 48px 0; }
+
+/* ── Demo canvas ── */
+.demo-canvas {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 32px;
+}
+.demo-canvas + .demo-canvas { margin-top: 16px; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.demo-row + .demo-row { margin-top: 24px; }
+.demo-col { display: flex; flex-direction: column; gap: 16px; min-width: 240px; flex: 1; }
+.demo-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text-tertiary); margin-bottom: 8px; }
+
+/* ── INPUT COMPONENT STYLES ── */
+
+/* Field wrapper */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label {
+  font-size: 14px; font-weight: 500; color: var(--primary-700);
+  display: flex; align-items: center; gap: 4px;
+}
+.field-hint {
+  font-size: 12px; color: var(--text-secondary); line-height: 1.4;
+  display: flex; align-items: flex-start; gap: 4px;
+}
+.field-hint.error { color: var(--error-700); }
+
+/* Input wrapper — holds leading icon + input */
+.input-wrap {
+  display: flex; align-items: center;
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  height: 40px;
+  padding: 0 12px;
+  gap: 8px;
+  transition: border-color .15s, box-shadow .15s;
+  cursor: text;
+}
+.input-wrap:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(127, 86, 217, 0.12);
+  outline: none;
+}
+.input-wrap.state-filled { border-color: var(--primary-300); }
+.input-wrap.state-disabled {
+  background: var(--primary-100);
+  border-color: var(--border-default);
+  cursor: not-allowed;
+}
+.input-wrap.state-error {
+  border-color: var(--error-600);
+}
+.input-wrap.state-error:focus-within {
+  border-color: var(--error-600);
+  box-shadow: 0 0 0 3px rgba(240, 68, 56, .12);
+}
+
+.input-wrap input {
+  flex: 1;
+  border: none; outline: none;
+  background: transparent;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text-primary);
+  min-width: 0;
+}
+.input-wrap input::placeholder { color: var(--text-placeholder); }
+.input-wrap input:disabled { cursor: not-allowed; color: var(--text-tertiary); }
+
+/* Leading icon slot */
+.input-icon {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-tertiary); flex-shrink: 0;
+}
+.input-wrap.state-disabled .input-icon { color: var(--primary-300); }
+.input-wrap.state-error .input-icon { color: var(--error-600); }
+
+/* Trailing slot */
+.input-trailing {
+  display: flex; align-items: center; gap: 4px;
+  flex-shrink: 0; color: var(--text-tertiary);
+}
+.input-trailing .clear-btn {
+  background: none; border: none; padding: 2px; cursor: pointer;
+  color: var(--text-tertiary); display: flex; align-items: center;
+  border-radius: 4px;
+  transition: color .12s, background .12s;
+}
+.input-trailing .clear-btn:hover { color: var(--primary-700); background: var(--primary-100); }
+
+/* Help icon */
+.help-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; cursor: help;
+  color: var(--text-tertiary);
+}
+
+/* Textarea */
+.input-wrap.is-textarea {
+  height: auto;
+  min-height: 88px;
+  align-items: flex-start;
+  padding: 10px 12px;
+}
+.input-wrap.is-textarea textarea {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-family: var(--font); font-size: 14px; color: var(--text-primary);
+  resize: vertical; line-height: 1.5; min-width: 0;
+}
+.input-wrap.is-textarea textarea::placeholder { color: var(--text-placeholder); }
+
+/* Search input */
+.input-wrap.is-search input { font-size: 14px; }
+
+/* Payment input — prefix badge */
+.input-prefix {
+  display: flex; align-items: center;
+  background: var(--primary-50);
+  border-right: 1px solid var(--border-default);
+  padding: 0 10px;
+  margin: -1px 8px -1px -13px;
+  border-radius: 8px 0 0 8px;
+  height: calc(100% + 2px);
+  font-size: 12px; font-weight: 600; color: var(--text-secondary);
+  flex-shrink: 0;
+  gap: 4px;
+}
+.input-suffix {
+  display: flex; align-items: center;
+  background: var(--primary-50);
+  border-left: 1px solid var(--border-default);
+  padding: 0 10px;
+  margin: -1px -13px -1px 8px;
+  border-radius: 0 8px 8px 0;
+  height: calc(100% + 2px);
+  font-size: 12px; font-weight: 600; color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* Char count */
+.char-count { font-size: 11px; color: var(--text-tertiary); text-align: right; }
+
+/* ── Anatomy diagram ── */
+.anatomy-wrap {
+  background: #fff; border: 1px solid var(--border-default);
+  border-radius: 12px; padding: 40px 40px 32px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+}
+.anatomy-input-demo { position: relative; padding-top: 32px; }
+.anatomy-callout {
+  position: absolute;
+  font-size: 10px; font-weight: 500;
+  background: var(--primary-700); color: #fff;
+  padding: 2px 7px; border-radius: 4px;
+  white-space: nowrap;
+}
+.anatomy-callout::after {
+  content: '';
+  position: absolute; width: 1px; background: var(--primary-300);
+}
+.anatomy-list { display: flex; flex-direction: column; gap: 10px; padding-top: 8px; }
+.anatomy-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--text-secondary); line-height: 1.4;
+}
+.anatomy-num {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  background: var(--primary-700); color: #fff;
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.anatomy-item strong { color: var(--text-primary); }
+
+/* ── States table ── */
+.states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.state-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 16px; }
+.state-card-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text-tertiary); margin-bottom: 12px; }
+
+/* ── Props table ── */
+.props-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.props-table th { text-align: left; padding: 10px 14px; background: var(--primary-50); color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border-default); }
+.props-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; line-height: 1.4; }
+.props-table tr:last-child td { border-bottom: none; }
+.props-table tbody tr:hover td { background: var(--primary-50); }
+.badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 4px; }
+.badge-bool { background: #ecfdf3; color: #039855; }
+.badge-string { background: #eff8ff; color: #026aa2; }
+.badge-enum { background: #f9f5ff; color: #6941c6; }
+.badge-optional { background: var(--primary-100); color: var(--text-secondary); }
+.badge-required { background: #fef3f2; color: #d92d20; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--primary-50); padding: 2px 6px; border-radius: 4px; color: var(--secondary-700); }
+
+/* ── Do / Don't ── */
+.do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.do-card, .dont-card { border-radius: 12px; overflow: hidden; border: 1px solid var(--border-default); }
+.do-card .card-header { background: #ecfdf3; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #039855; display: flex; align-items: center; gap: 6px; }
+.dont-card .card-header { background: #fef3f2; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #d92d20; display: flex; align-items: center; gap: 6px; }
+.card-body { padding: 20px; background: #fff; }
+.card-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px; }
+.card-body p:last-child { margin-bottom: 0; }
+.card-example { margin-top: 16px; padding: 20px; background: var(--primary-50); border-radius: 8px; display: flex; flex-direction: column; gap: 12px; }
+
+/* ── Code block ── */
+.code-block { position: relative; background: #1e1e2e; border-radius: 10px; padding: 20px; overflow-x: auto; margin-top: 16px; }
+.code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; color: #cdd6f4; }
+.code-block .token-tag    { color: #89dceb; }
+.code-block .token-attr   { color: #89b4fa; }
+.code-block .token-str    { color: #a6e3a1; }
+.code-block .token-comment { color: #6c7086; font-style: italic; }
+.copy-btn {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  color: #cdd6f4; font-size: 11px; font-family: var(--font); font-weight: 500;
+  padding: 5px 12px; border-radius: 6px; cursor: pointer;
+  transition: background .15s;
+}
+.copy-btn:hover { background: rgba(255,255,255,.15); }
+
+/* ── Usage guidelines table ── */
+.guide-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.guide-table th { text-align: left; padding: 10px 14px; background: var(--primary-50); color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border-default); }
+.guide-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; line-height: 1.5; }
+.guide-table tr:last-child td { border-bottom: none; }
+
+/* SVG icons helper */
+.icon { display: inline-flex; align-items: center; justify-content: center; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link active">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Components</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Input</span>
+  </div>
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Purple document gradient -->
+        <linearGradient id="doc-input" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#b8a0ff"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <!-- Folder dark gradient -->
+        <linearGradient id="fld-input" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2d2d50"/>
+          <stop offset="100%" stop-color="#12122a"/>
+        </linearGradient>
+        <!-- Purple inner glow -->
+        <radialGradient id="glow-input" cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
+          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Top shine -->
+        <linearGradient id="shine-input" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- Folder drop shadow -->
+        <filter id="fs-input" x="-18%" y="-12%" width="136%" height="136%">
+          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
+        </filter>
+        <!-- Text glow -->
+        <filter id="tg-input" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="2.8" result="blur"/>
+          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
+          <feComposite in="c" in2="blur" operator="in" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── Purple document peeking behind folder ── -->
+      <g transform="rotate(12, 141, 46)" opacity="0.97">
+        <!-- Document body -->
+        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-input)"/>
+        <!-- Folded corner (lighter) -->
+        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
+        <!-- Folded corner (shadow) -->
+        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
+      </g>
+
+      <!-- ── Dark glass folder ── -->
+      <!-- Single path: full folder shape (tab + body as one outline) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#fld-input)"
+            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            filter="url(#fs-input)"/>
+
+      <!-- Purple glow inside (same path, no stroke/shadow) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#glow-input)"/>
+
+      <!-- Top glass shine strip -->
+      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-input)"/>
+
+      <!-- Component name text -->
+      <text x="100" y="132"
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.93)"
+            font-family="Inter, system-ui, -apple-system, sans-serif"
+            font-size="16" font-weight="800"
+            letter-spacing="1.6"
+            textLength="76" lengthAdjust="spacingAndGlyphs"
+            filter="url(#tg-input)">INPUT</text>
+
+      <!-- Subtle underline below name -->
+      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
+    </svg>
+  </div>
+    <h1 class="page-title">Input</h1>
+    <p class="page-subtitle">Input fields let users enter and edit text. They come in three types — Default, Input field (with leading icon), and Payment — each with full label, hint, validation, and state support.</p>
+    <div class="page-tags">
+      <span class="tag tag-stable">Stable</span>
+      <span class="tag tag-wcag">WCAG AA</span>
+      <span class="tag tag-figma">Figma · 245-13276</span>
+    </div>
+  </div>
+
+  <!-- ── OVERVIEW ─────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">A quick tour of the full-featured input with all optional slots turned on.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <div style="max-width:320px;width:100%">
+          <div class="field">
+            <label class="field-label">
+              Email address
+              <span class="help-icon" title="We'll never share your email">
+                <!-- info circle -->
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#9d9dad" stroke-width="1.2"/><path d="M7 6.5v4" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round"/><circle cx="7" cy="4.5" r=".75" fill="#9d9dad"/></svg>
+              </span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#9d9dad" stroke-width="1.2"/></svg>
+              </span>
+              <input type="email" placeholder="you@company.com">
+              <span class="input-trailing">
+                <!-- help / clear -->
+              </span>
+            </div>
+            <span class="field-hint">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="margin-top:1px;flex-shrink:0"><circle cx="6.5" cy="6.5" r="5.5" stroke="#9d9dad" stroke-width="1.1"/><path d="M6.5 6v3" stroke="#9d9dad" stroke-width="1.1" stroke-linecap="round"/><circle cx="6.5" cy="4" r=".7" fill="#9d9dad"/></svg>
+              This is a hint explaining what to enter.
+            </span>
+          </div>
+        </div>
+
+        <div style="max-width:320px;width:100%">
+          <div class="field">
+            <label class="field-label">Phone number</label>
+            <div class="input-wrap">
+              <div class="input-prefix">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect width="16" height="12" rx="2" fill="#f0f9ff"/><path d="M0 4h16M0 8h16" stroke="#b9e6fe" stroke-width=".8"/><rect width="6" height="12" rx="2 0 0 2" fill="#026aa2"/></svg>
+                US
+              </div>
+              <input type="tel" placeholder="+1 (555) 000-0000">
+            </div>
+          </div>
+        </div>
+
+        <div style="max-width:320px;width:100%">
+          <div class="field">
+            <label class="field-label">Amount</label>
+            <div class="input-wrap">
+              <div class="input-prefix">USD</div>
+              <input type="number" placeholder="1,000.00">
+              <div class="input-suffix">.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── ANATOMY ─────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Anatomy</h2>
+    <p class="section-desc">All parts of an input field. Every part except the input itself is optional.</p>
+
+    <div class="anatomy-wrap">
+      <!-- Left: labelled diagram -->
+      <div>
+        <div style="position:relative;padding-top:24px;padding-bottom:8px;">
+          <!-- ① label -->
+          <div style="font-size:11px;font-weight:600;color:var(--text-secondary);margin-bottom:28px;position:relative;">
+            Label
+            <span style="position:absolute;left:28px;top:-4px;">
+              <svg width="30" height="20" fill="none"><path d="M2 18 Q20 18 28 4" stroke="var(--primary-300)" stroke-width="1" fill="none" marker-end="url(#a)"/></svg>
+            </span>
+          </div>
+
+          <!-- The actual labelled input -->
+          <div class="field">
+            <div style="display:flex;align-items:center;gap:4px;">
+              <label class="field-label" style="font-size:13px;">Label</label>
+              <span class="help-icon" title="Help text">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#9d9dad" stroke-width="1.2"/><path d="M7 6.5v4" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round"/><circle cx="7" cy="4.5" r=".75" fill="#9d9dad"/></svg>
+              </span>
+            </div>
+            <div class="input-wrap" style="border-color:var(--border-focus);box-shadow:0 0 0 3px rgba(127,86,217,.12);">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="#9d9dad" stroke-width="1.2"/><path d="M10.5 10.5l3 3" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round"/></svg>
+              </span>
+              <input type="text" value="Input value" style="color:var(--text-primary)">
+              <span class="input-trailing">
+                <button class="clear-btn">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+              </span>
+            </div>
+            <span class="field-hint">Hint text appears here</span>
+          </div>
+        </div>
+
+        <!-- Pointer labels under the input -->
+        <div style="display:flex;gap:0;margin-top:8px;">
+          <div style="width:36px;text-align:center;font-size:10px;font-weight:700;color:var(--primary-700);">①</div>
+          <div style="flex:1;text-align:center;font-size:10px;font-weight:700;color:var(--primary-700);">②</div>
+          <div style="width:36px;"></div>
+        </div>
+      </div>
+
+      <!-- Right: legend -->
+      <div class="anatomy-list">
+        <div class="anatomy-item">
+          <div class="anatomy-num">①</div>
+          <div><strong>Label</strong> — Short, clear description of the field. Always left-aligned. Accompanies a help icon when more context is needed.</div>
+        </div>
+        <div class="anatomy-item">
+          <div class="anatomy-num">②</div>
+          <div><strong>Input container</strong> — 40px tall by default, 8px border-radius. Contains the leading icon, input element, and trailing actions.</div>
+        </div>
+        <div class="anatomy-item">
+          <div class="anatomy-num">③</div>
+          <div><strong>Leading icon</strong> — Optional 16×16 icon reinforcing the input purpose (email, search, phone, etc.).</div>
+        </div>
+        <div class="anatomy-item">
+          <div class="anatomy-num">④</div>
+          <div><strong>Placeholder / value</strong> — Placeholder text is `--text-placeholder` (#bdbdc8). Filled value is `--text-primary`.</div>
+        </div>
+        <div class="anatomy-item">
+          <div class="anatomy-num">⑤</div>
+          <div><strong>Trailing actions</strong> — Clear (×) button appears when field is filled. Can also carry a visibility toggle for passwords.</div>
+        </div>
+        <div class="anatomy-item">
+          <div class="anatomy-num">⑥</div>
+          <div><strong>Hint text</strong> — Supporting copy below the input. Turns red with an error icon in the destructive state.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── TYPES ──────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Types</h2>
+    <p class="section-desc">Three structural types. Choose based on the context and what extra affordances the user needs.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+
+        <!-- Default -->
+        <div class="demo-col">
+          <div class="demo-label">Default</div>
+          <div class="field">
+            <label class="field-label">Full name</label>
+            <div class="input-wrap">
+              <input type="text" placeholder="Jane Appleseed">
+            </div>
+          </div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Plain text field. No leading icon. Used for names, free-form text, and generic inputs.</p>
+        </div>
+
+        <!-- Input field (leading icon) -->
+        <div class="demo-col">
+          <div class="demo-label">With leading icon</div>
+          <div class="field">
+            <label class="field-label">Email address</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#9d9dad" stroke-width="1.2"/></svg>
+              </span>
+              <input type="email" placeholder="you@company.com">
+            </div>
+          </div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Adds a 16px icon at the left edge. Reinforces input type — use for email, search, URL, phone.</p>
+        </div>
+
+        <!-- Payment input -->
+        <div class="demo-col">
+          <div class="demo-label">Payment / prefix-suffix</div>
+          <div class="field">
+            <label class="field-label">Budget</label>
+            <div class="input-wrap">
+              <div class="input-prefix">$</div>
+              <input type="number" placeholder="0.00">
+              <div class="input-suffix">USD</div>
+            </div>
+          </div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Fixed prefix/suffix badge for currency, units, or country codes. Content is read-only.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Textarea -->
+    <div class="demo-canvas" style="margin-top:16px;">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">Textarea</div>
+          <div class="field">
+            <label class="field-label">Message</label>
+            <div class="input-wrap is-textarea">
+              <textarea placeholder="Write your message here…" rows="3"></textarea>
+            </div>
+            <div class="char-count">0 / 500</div>
+          </div>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Search</div>
+          <div class="field">
+            <div class="input-wrap is-search">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="#9d9dad" stroke-width="1.2"/><path d="M10.5 10.5l3 3" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round"/></svg>
+              </span>
+              <input type="search" placeholder="Search…">
+            </div>
+          </div>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Password</div>
+          <div class="field">
+            <label class="field-label">Password</label>
+            <div class="input-wrap" id="pw-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="7" rx="1.5" stroke="#9d9dad" stroke-width="1.2"/><path d="M5 7V5a3 3 0 016 0v2" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round"/></svg>
+              </span>
+              <input type="password" id="pw-input" placeholder="Enter password">
+              <span class="input-trailing">
+                <button class="clear-btn" onclick="togglePw()" title="Show/hide">
+                  <svg id="eye-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="8" rx="6" ry="4" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.8" stroke="currentColor" stroke-width="1.2"/></svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── STATES ─────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">States</h2>
+    <p class="section-desc">All five interactive states. Every state must be visually distinct and never rely on color alone.</p>
+
+    <div class="states-grid">
+
+      <!-- Placeholder -->
+      <div class="state-card">
+        <div class="state-card-label">Placeholder</div>
+        <div class="field">
+          <label class="field-label" style="font-size:13px;">Email</label>
+          <div class="input-wrap">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#9d9dad" stroke-width="1.2"/></svg></span>
+            <input type="email" placeholder="you@company.com" readonly>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#eaeaed</code><br>Placeholder: <code>#bdbdc8</code></p>
+      </div>
+
+      <!-- Focused -->
+      <div class="state-card">
+        <div class="state-card-label">Focused</div>
+        <div class="field">
+          <label class="field-label" style="font-size:13px;">Email</label>
+          <div class="input-wrap" style="border-color:var(--border-focus);box-shadow:0 0 0 3px rgba(127,86,217,.12);">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#7f56d9" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#7f56d9" stroke-width="1.2"/></svg></span>
+            <input type="email" placeholder="you@company.com" readonly>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#7f56d9</code><br>Ring: <code>rgba(127,86,217,.12)</code></p>
+      </div>
+
+      <!-- Filled -->
+      <div class="state-card">
+        <div class="state-card-label">Filled</div>
+        <div class="field">
+          <label class="field-label" style="font-size:13px;">Email</label>
+          <div class="input-wrap state-filled">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#bdbdc8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#bdbdc8" stroke-width="1.2"/></svg></span>
+            <input type="email" value="jane@pulse.io" readonly>
+            <span class="input-trailing">
+              <button class="clear-btn"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            </span>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#bdbdc8</code><br>Value: <code>#29294c</code></p>
+      </div>
+
+      <!-- Disabled -->
+      <div class="state-card">
+        <div class="state-card-label">Disabled</div>
+        <div class="field">
+          <label class="field-label" style="font-size:13px;color:var(--text-tertiary);">Email</label>
+          <div class="input-wrap state-disabled">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#bdbdc8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#bdbdc8" stroke-width="1.2"/></svg></span>
+            <input type="email" placeholder="you@company.com" disabled>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">BG: <code>#f4f4f6</code><br>Cursor: <code>not-allowed</code></p>
+      </div>
+
+      <!-- Error -->
+      <div class="state-card">
+        <div class="state-card-label">Destructive (Error)</div>
+        <div class="field">
+          <label class="field-label" style="font-size:13px;">Email</label>
+          <div class="input-wrap state-error">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#f04438" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#f04438" stroke-width="1.2"/></svg></span>
+            <input type="email" value="not-an-email" readonly>
+          </div>
+          <span class="field-hint error">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="margin-top:1px;flex-shrink:0"><circle cx="6.5" cy="6.5" r="5.5" stroke="#d92d20" stroke-width="1.1"/><path d="M6.5 4v3" stroke="#d92d20" stroke-width="1.1" stroke-linecap="round"/><circle cx="6.5" cy="9" r=".7" fill="#d92d20"/></svg>
+            This doesn't look like a valid email.
+          </span>
+        </div>
+        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#f04438</code><br>Hint: <code>#d92d20</code></p>
+      </div>
+
+      <!-- Success -->
+      <div class="state-card">
+        <div class="state-card-label">Validated</div>
+        <div class="field">
+          <label class="field-label" style="font-size:13px;">Email</label>
+          <div class="input-wrap" style="border-color:#039855;">
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#039855" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#039855" stroke-width="1.2"/></svg></span>
+            <input type="email" value="jane@pulse.io" readonly>
+            <span class="input-trailing" style="color:#039855;">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="#039855" stroke-width="1.2"/><path d="M4.5 7.5l2 2 4-4" stroke="#039855" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#039855</code><br>Icon: success-700</p>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── LABEL + HINT COMBINATIONS ─────────── -->
+  <div class="section">
+    <h2 class="section-title">Label & Hint Combinations</h2>
+    <p class="section-desc">The four slot combinations — label and hint are independently optional.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="flex-wrap:wrap;gap:24px;">
+
+        <div style="min-width:220px;flex:1">
+          <div class="demo-label">No label, no hint</div>
+          <div class="field">
+            <div class="input-wrap">
+              <input type="text" placeholder="Placeholder text">
+            </div>
+          </div>
+        </div>
+
+        <div style="min-width:220px;flex:1">
+          <div class="demo-label">Label only</div>
+          <div class="field">
+            <label class="field-label">Field label</label>
+            <div class="input-wrap">
+              <input type="text" placeholder="Placeholder text">
+            </div>
+          </div>
+        </div>
+
+        <div style="min-width:220px;flex:1">
+          <div class="demo-label">Label + hint</div>
+          <div class="field">
+            <label class="field-label">
+              Field label
+              <span class="help-icon" title="More context"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#9d9dad" stroke-width="1.2"/><path d="M7 6.5v4" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round"/><circle cx="7" cy="4.5" r=".75" fill="#9d9dad"/></svg></span>
+            </label>
+            <div class="input-wrap">
+              <input type="text" placeholder="Placeholder text">
+            </div>
+            <span class="field-hint">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="margin-top:1px;flex-shrink:0"><circle cx="6.5" cy="6.5" r="5.5" stroke="#9d9dad" stroke-width="1.1"/><path d="M6.5 6v3" stroke="#9d9dad" stroke-width="1.1" stroke-linecap="round"/><circle cx="6.5" cy="4" r=".7" fill="#9d9dad"/></svg>
+              Helpful supporting information.
+            </span>
+          </div>
+        </div>
+
+        <div style="min-width:220px;flex:1">
+          <div class="demo-label">Hint only (no label)</div>
+          <div class="field">
+            <div class="input-wrap state-error">
+              <input type="text" value="bad input" readonly>
+            </div>
+            <span class="field-hint error">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="margin-top:1px;flex-shrink:0"><circle cx="6.5" cy="6.5" r="5.5" stroke="#d92d20" stroke-width="1.1"/><path d="M6.5 4v3" stroke="#d92d20" stroke-width="1.1" stroke-linecap="round"/><circle cx="6.5" cy="9" r=".7" fill="#d92d20"/></svg>
+              Inline error without a visible label.
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── PROPS TABLE ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Props / Variants</h2>
+    <p class="section-desc">All component properties and their accepted values, directly mirroring the Figma component API.</p>
+
+    <table class="props-table">
+      <thead>
+        <tr>
+          <th>Prop</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Options</th>
+          <th>Required</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>type</code></td>
+          <td><span class="badge badge-enum">enum</span></td>
+          <td><code>"default"</code></td>
+          <td><code>default</code> · <code>input-field</code> · <code>payment</code> · <code>textarea</code> · <code>search</code> · <code>password</code></td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+        <tr>
+          <td><code>state</code></td>
+          <td><span class="badge badge-enum">enum</span></td>
+          <td><code>"placeholder"</code></td>
+          <td><code>placeholder</code> · <code>focused</code> · <code>filled</code> · <code>disabled</code></td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+        <tr>
+          <td><code>label</code></td>
+          <td><span class="badge badge-string">string</span></td>
+          <td>—</td>
+          <td>Any text. When set, renders a <code>&lt;label&gt;</code> above the field.</td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+        <tr>
+          <td><code>placeholder</code></td>
+          <td><span class="badge badge-string">string</span></td>
+          <td>—</td>
+          <td>Short hint shown inside the field when empty.</td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+        <tr>
+          <td><code>hintText</code></td>
+          <td><span class="badge badge-string">string</span></td>
+          <td>—</td>
+          <td>Supporting copy shown below the input. Turns red when <code>destructive=true</code>.</td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+        <tr>
+          <td><code>leadingIcon</code></td>
+          <td><span class="badge badge-bool">boolean</span></td>
+          <td><code>false</code></td>
+          <td>Shows a 16px icon at the left edge of the input container.</td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+        <tr>
+          <td><code>helpIcon</code></td>
+          <td><span class="badge badge-bool">boolean</span></td>
+          <td><code>false</code></td>
+          <td>Appends a circled ⓘ icon next to the label. Triggers a tooltip on hover.</td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+        <tr>
+          <td><code>destructive</code></td>
+          <td><span class="badge badge-bool">boolean</span></td>
+          <td><code>false</code></td>
+          <td>Switches border, icon, and hint text to the error palette.</td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+        <tr>
+          <td><code>disabled</code></td>
+          <td><span class="badge badge-bool">boolean</span></td>
+          <td><code>false</code></td>
+          <td>Applies grey background, muted text, and <code>not-allowed</code> cursor.</td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+        <tr>
+          <td><code>prefix</code></td>
+          <td><span class="badge badge-string">string</span></td>
+          <td>—</td>
+          <td>Fixed badge on the left side (e.g. <code>$</code>, <code>USD</code>, <code>US</code>). Payment type only.</td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+        <tr>
+          <td><code>suffix</code></td>
+          <td><span class="badge badge-string">string</span></td>
+          <td>—</td>
+          <td>Fixed badge on the right side (e.g. <code>.00</code>, <code>kg</code>). Payment type only.</td>
+          <td><span class="badge badge-optional">Optional</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── DO / DON'T ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Do's & Don'ts</h2>
+    <div class="do-dont-grid">
+
+      <div class="do-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Do
+        </div>
+        <div class="card-body">
+          <p>Always pair a visible <code>&lt;label&gt;</code> with every input. Use <code>for</code>/<code>id</code> to link them for screen readers.</p>
+          <div class="card-example">
+            <div class="field">
+              <label class="field-label" for="do-email">Work email</label>
+              <div class="input-wrap">
+                <input type="email" id="do-email" placeholder="jane@acme.com">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dont-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="#d92d20" stroke-width="2" stroke-linecap="round"/></svg>
+          Don't
+        </div>
+        <div class="card-body">
+          <p>Don't use placeholder text as a substitute for a label. Placeholders disappear when the user starts typing.</p>
+          <div class="card-example">
+            <div class="field">
+              <div class="input-wrap">
+                <input type="email" placeholder="Work email ← not a label!">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="do-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Do
+        </div>
+        <div class="card-body">
+          <p>Show inline error messages <em>immediately below</em> the field that caused them. Include the error icon alongside the text.</p>
+          <div class="card-example">
+            <div class="field">
+              <label class="field-label" style="font-size:13px;">Email</label>
+              <div class="input-wrap state-error">
+                <input type="email" value="not-valid" readonly>
+              </div>
+              <span class="field-hint error">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="margin-top:1px;flex-shrink:0"><circle cx="6.5" cy="6.5" r="5.5" stroke="#d92d20" stroke-width="1.1"/><path d="M6.5 4v3" stroke="#d92d20" stroke-width="1.1" stroke-linecap="round"/><circle cx="6.5" cy="9" r=".7" fill="#d92d20"/></svg>
+                Enter a valid email address.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dont-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="#d92d20" stroke-width="2" stroke-linecap="round"/></svg>
+          Don't
+        </div>
+        <div class="card-body">
+          <p>Don't only change border color to signal an error state. Always add a text message and icon — color-blind users will miss a color-only signal.</p>
+          <div class="card-example">
+            <div class="field">
+              <div class="input-wrap" style="border-color:#f04438;">
+                <input type="email" value="not-valid" readonly>
+                <!-- no error text = bad -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="do-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Do
+        </div>
+        <div class="card-body">
+          <p>Use the <strong>leading icon</strong> to reinforce the expected input type — email envelope, phone, lock, search — keeping icons semantic and consistent.</p>
+        </div>
+      </div>
+
+      <div class="dont-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="#d92d20" stroke-width="2" stroke-linecap="round"/></svg>
+          Don't
+        </div>
+        <div class="card-body">
+          <p>Don't use decorative or unrelated icons as leading icons. Avoid using star, sparkle, or abstract icons that don't reflect the input's purpose.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── CODE ───────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Code</h2>
+    <p class="section-desc">Copy-paste HTML patterns for each input variant.</p>
+
+    <!-- Default -->
+    <h3 style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Default input</h3>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-comment">&lt;!-- Field wrapper --&gt;</span>
+<span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"field"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"field-label"</span> <span class="token-attr">for</span>=<span class="token-str">"email"</span><span class="token-tag">&gt;</span>Email address<span class="token-tag">&lt;/label&gt;</span>
+  <span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-wrap"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"email"</span> <span class="token-attr">id</span>=<span class="token-str">"email"</span> <span class="token-attr">placeholder</span>=<span class="token-str">"you@company.com"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;/div&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"field-hint"</span><span class="token-tag">&gt;</span>We'll never share your email.<span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></pre>
+    </div>
+
+    <!-- With icon -->
+    <h3 style="font-size:14px;font-weight:600;color:var(--text-primary);margin:24px 0 8px;">With leading icon</h3>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-wrap"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"input-icon"</span><span class="token-tag">&gt;</span>
+    <span class="token-comment">&lt;!-- 16x16 SVG icon --&gt;</span>
+  <span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"email"</span> <span class="token-attr">placeholder</span>=<span class="token-str">"you@company.com"</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></pre>
+    </div>
+
+    <!-- Error -->
+    <h3 style="font-size:14px;font-weight:600;color:var(--text-primary);margin:24px 0 8px;">Error / Destructive state</h3>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"field"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"field-label"</span><span class="token-tag">&gt;</span>Email<span class="token-tag">&lt;/label&gt;</span>
+  <span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-wrap state-error"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"email"</span> <span class="token-attr">aria-invalid</span>=<span class="token-str">"true"</span> <span class="token-attr">aria-describedby</span>=<span class="token-str">"email-err"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;/div&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"field-hint error"</span> <span class="token-attr">id</span>=<span class="token-str">"email-err"</span> <span class="token-attr">role</span>=<span class="token-str">"alert"</span><span class="token-tag">&gt;</span>
+    Enter a valid email address.
+  <span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></pre>
+    </div>
+
+    <!-- Payment -->
+    <h3 style="font-size:14px;font-weight:600;color:var(--text-primary);margin:24px 0 8px;">Payment / prefix-suffix</h3>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-wrap"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-prefix"</span><span class="token-tag">&gt;</span>$<span class="token-tag">&lt;/div&gt;</span>
+  <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"number"</span> <span class="token-attr">placeholder</span>=<span class="token-str">"0.00"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-suffix"</span><span class="token-tag">&gt;</span>USD<span class="token-tag">&lt;/div&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></pre>
+    </div>
+
+    <!-- Disabled -->
+    <h3 style="font-size:14px;font-weight:600;color:var(--text-primary);margin:24px 0 8px;">Disabled</h3>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-wrap state-disabled"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"text"</span> <span class="token-attr">placeholder</span>=<span class="token-str">"Not editable"</span> <span class="token-attr">disabled</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── ACCESSIBILITY ──────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Accessibility</h2>
+    <table class="guide-table">
+      <thead><tr><th>Requirement</th><th>Implementation</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Visible label</strong></td>
+          <td>Every input must have a visible <code>&lt;label&gt;</code> connected via <code>for</code>/<code>id</code>. Never use only <code>aria-label</code> or <code>aria-placeholder</code>.</td>
+        </tr>
+        <tr>
+          <td><strong>Error association</strong></td>
+          <td>Add <code>aria-invalid="true"</code> to the <code>&lt;input&gt;</code> and <code>aria-describedby="hint-id"</code> pointing to the error message. Use <code>role="alert"</code> on the hint to announce it live.</td>
+        </tr>
+        <tr>
+          <td><strong>Focus visible</strong></td>
+          <td>The purple ring (<code>box-shadow: 0 0 0 3px rgba(127,86,217,.12)</code>) provides a visible 3px focus indicator compliant with WCAG 2.4.11 Focus Appearance.</td>
+        </tr>
+        <tr>
+          <td><strong>Disabled state</strong></td>
+          <td>Use the native <code>disabled</code> attribute so assistive technologies announce it. Don't use <code>aria-disabled</code> alone — it still allows focus.</td>
+        </tr>
+        <tr>
+          <td><strong>Touch target</strong></td>
+          <td>The 40px height meets the WCAG 2.5.5 minimum 44×44px requirement when accounting for 2px padding on each side.</td>
+        </tr>
+        <tr>
+          <td><strong>Placeholder contrast</strong></td>
+          <td>Placeholder color <code>#bdbdc8</code> has a 2.5:1 contrast ratio — intentionally below 4.5:1, as placeholder is a hint not a label. Always provide a separate label.</td>
+        </tr>
+        <tr>
+          <td><strong>Autocomplete</strong></td>
+          <td>Set <code>autocomplete</code> attributes (<code>email</code>, <code>tel</code>, <code>current-password</code>, etc.) on relevant fields to aid autofill and reduce friction.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── FOR DESIGNERS ──────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">For Designers</h2>
+    <table class="guide-table">
+      <thead><tr><th>Task</th><th>Guideline</th></tr></thead>
+      <tbody>
+        <tr><td>Choosing a type</td><td>Use <strong>Default</strong> for names, text, general fields. <strong>With leading icon</strong> for email, phone, search, URL. <strong>Payment</strong> for monetary values, codes, measurements.</td></tr>
+        <tr><td>Label copy</td><td>Keep labels to 2–3 words. Sentence case. No colon. Describe the field — not the action (e.g. "Email address" not "Enter email").</td></tr>
+        <tr><td>Hint text</td><td>Use for formatting requirements, constraints, or one-line context. Keep it under 80 chars. Don't repeat the label.</td></tr>
+        <tr><td>Error message copy</td><td>Be specific: "Enter a valid email address" not just "Invalid email". Don't use ALL CAPS or exclamation marks.</td></tr>
+        <tr><td>Width</td><td>Match input width to the expected content length — short for postal codes, full-width for addresses. Avoid inputs wider than their container.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── FOR DEVELOPERS ─────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">For Developers</h2>
+    <table class="guide-table">
+      <thead><tr><th>Scenario</th><th>Recommendation</th></tr></thead>
+      <tbody>
+        <tr><td>Error validation</td><td>Validate on <code>blur</code> (not on keystroke) for most fields. Validate on submit, then show inline errors. Clear errors as the user corrects them.</td></tr>
+        <tr><td>Password toggle</td><td>Toggle between <code>type="password"</code> and <code>type="text"</code> on the input element. Update the eye icon and its <code>aria-label</code> accordingly.</td></tr>
+        <tr><td>Controlled state</td><td>Always manage both the <code>value</code> and the <code>state-*</code> class from a single source of truth. Don't let CSS and JS state diverge.</td></tr>
+        <tr><td>Character count</td><td>Pair with <code>maxlength</code> attribute. Update count on <code>input</code> event. Show as "N / max" right-aligned below the input.</td></tr>
+        <tr><td>Required fields</td><td>Use native <code>required</code> attribute. Don't use asterisk (*) without an accessible legend explaining it.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.nextElementSibling;
+  const text = pre.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
+function togglePw() {
+  const input = document.getElementById('pw-input');
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

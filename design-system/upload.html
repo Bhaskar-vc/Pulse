@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload – Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1d2939;
+  background: #f8f9fb;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── Sidebar ── */
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #eaeaed; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #eaeaed; margin-bottom: 16px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #29294c; }
+.sidebar-logo sub { font-size: 10px; color: #9d9dad; font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; border-radius: 0;
+  text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+}
+.content {
+  max-width: 1100px;
+  margin: 0;
+  padding: 48px 56px;
+}
+
+/* ── Page Header ── */
+.page-header { margin-bottom: 44px; }
+.breadcrumb { font-size: 12px; color: #98a2b3; margin-bottom: 10px; }
+.breadcrumb span { color: #6941c6; }
+.page-title { font-size: 30px; font-weight: 700; color: #101828; letter-spacing: -.4px; line-height: 1.2; }
+.page-desc { margin-top: 8px; font-size: 15px; color: #475467; line-height: 1.6; max-width: 600px; }
+.tag-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.page-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.tag-a11y   { color: #026aa2; background: #e0f2fe; border-color: #b9e6fe; }
+.tag-figma  { color: #6941c6; background: #f4f0fd; border-color: #d6bbfb; }
+
+/* ── Section ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 700; color: #101828; padding-bottom: 12px; border-bottom: 1px solid #e4e7ec; margin-bottom: 20px; }
+.section-desc { font-size: 14px; color: #475467; line-height: 1.7; margin-bottom: 20px; }
+
+/* ── Demo Box ── */
+.demo-box { background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 24px; margin-bottom: 12px; }
+.demo-box-label { font-size: 12px; font-weight: 600; color: #98a2b3; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px; }
+.variant-heading { font-size: 13px; font-weight: 600; color: #344054; margin: 24px 0 10px; }
+
+/* ── Props Table ── */
+.ds-table-wrap { border: 1px solid #e4e7ec; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-table thead { background: #f9fafb; }
+.ds-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .05em; }
+.ds-table td { padding: 11px 16px; border-top: 1px solid #f2f4f7; color: #344054; }
+.ds-table tr:hover td { background: #fafbff; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: #f2f4f7; color: #29294c; padding: 2px 6px; border-radius: 4px; }
+
+/* ── Code Block ── */
+.code-block { background: #0f172a; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.code-block-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155; }
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.copy-btn { font-size: 11px; font-weight: 600; color: #94a3b8; background: none; border: 1px solid #334155; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s, color .15s; }
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; }
+.c-tag     { color: #7dd3fc; }
+.c-attr    { color: #a5b4fc; }
+.c-val     { color: #86efac; }
+
+/* ── Do / Don't ── */
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.do-card, .dont-card { border-radius: 12px; padding: 20px; border: 1.5px solid; }
+.do-card { border-color: #a6f4c5; background: #f6fef9; }
+.dont-card { border-color: #fecdca; background: #fffbfa; }
+.do-header, .dont-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.do-header { color: #027a48; }
+.dont-header { color: #b42318; }
+.do-icon, .dont-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.do-icon { background: #027a48; color: #fff; }
+.dont-icon { background: #b42318; color: #fff; }
+.do-card ul, .dont-card ul { padding-left: 18px; }
+.do-card li, .dont-card li { font-size: 13px; color: #344054; line-height: 1.7; }
+
+/* ── A11y ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid #e4e7ec; border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: #101828; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: #475467; line-height: 1.7; }
+
+/* ── Anatomy ── */
+.anatomy-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+.anatomy-item { display: flex; align-items: flex-start; gap: 10px; background: #f9fafb; border-radius: 8px; padding: 10px 14px; border: 1px solid #f2f4f7; }
+.anatomy-num { width: 22px; height: 22px; border-radius: 50%; background: #6941c6; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.anatomy-text { font-size: 13px; color: #344054; }
+.anatomy-text strong { color: #101828; font-weight: 600; }
+
+/* ════════════════════════════════
+   UPLOAD COMPONENT STYLES
+   ════════════════════════════════ */
+
+/* Drop Zone — base */
+.upload-zone {
+  border: 2px dashed #eaeaed;
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  background: #ffffff;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  position: relative;
+  outline: none;
+}
+.upload-zone:hover,
+.upload-zone:focus-visible {
+  border-color: #9e77ed;
+  background: #fdfaff;
+}
+.upload-zone.dragover {
+  border-color: #7f56d9;
+  background: #f9f5ff;
+}
+.upload-zone.dragover .upload-icon { color: #7f56d9; }
+.upload-zone.dragover .upload-icon svg { color: #7f56d9; }
+.upload-zone.has-error {
+  border-color: #f04438;
+  background: #fef3f2;
+}
+
+/* Hidden real input */
+.upload-input {
+  position: absolute; opacity: 0; width: 100%; height: 100%;
+  top: 0; left: 0; cursor: pointer; z-index: 2;
+}
+
+/* Upload icon */
+.upload-icon {
+  width: 40px; height: 40px;
+  margin: 0 auto 12px;
+  color: #9d9dad;
+  display: flex; align-items: center; justify-content: center;
+  transition: color .2s;
+}
+.upload-icon svg { width: 40px; height: 40px; }
+
+/* Upload text */
+.upload-text {
+  font-size: 14px;
+  color: #29294c;
+  margin-bottom: 4px;
+}
+.upload-text strong { font-weight: 600; color: #29294c; }
+.upload-text span { color: #707087; font-weight: 400; }
+.upload-subtext {
+  font-size: 12px;
+  color: #9d9dad;
+}
+
+/* Progress bar (inside zone during upload) */
+.upload-progress-wrap {
+  margin-top: 16px; display: none;
+}
+.upload-progress-wrap.visible { display: block; }
+.upload-progress-bar-bg {
+  width: 100%; height: 6px; background: #eaeaed; border-radius: 99px; overflow: hidden;
+}
+.upload-progress-bar {
+  height: 100%; background: #7f56d9; border-radius: 99px;
+  transition: width .3s ease;
+  width: 0%;
+}
+.upload-progress-text {
+  font-size: 12px; color: #707087; margin-top: 6px;
+}
+
+/* File list */
+.file-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid #eaeaed;
+  border-radius: 8px;
+  background: #fff;
+  animation: file-in .18s ease;
+}
+@keyframes file-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.file-thumb {
+  width: 40px; height: 40px; border-radius: 6px;
+  object-fit: cover; flex-shrink: 0; border: 1px solid #eaeaed;
+}
+.file-icon-wrap {
+  width: 40px; height: 40px; border-radius: 6px; flex-shrink: 0;
+  background: #f4f4f6; border: 1px solid #eaeaed;
+  display: flex; align-items: center; justify-content: center;
+}
+.file-icon-wrap svg { width: 20px; height: 20px; color: #707087; }
+.file-info { flex: 1; min-width: 0; }
+.file-name { font-size: 13px; font-weight: 500; color: #29294c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-size { font-size: 12px; color: #9d9dad; margin-top: 1px; }
+.file-status-icon { flex-shrink: 0; width: 20px; height: 20px; }
+.file-status-icon.success { color: #039855; }
+.file-status-icon.error   { color: #f04438; }
+.file-remove {
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 6px;
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #9d9dad; transition: background .12s, color .12s;
+}
+.file-remove:hover { background: #fee4e2; color: #f04438; }
+.file-remove svg { width: 14px; height: 14px; }
+
+/* File item progress bar */
+.file-progress { width: 100%; margin-top: 6px; }
+.file-progress-bg { width: 100%; height: 4px; background: #eaeaed; border-radius: 99px; overflow: hidden; }
+.file-progress-fill { height: 100%; background: #7f56d9; border-radius: 99px; transition: width .4s; }
+
+/* Error message below zone */
+.upload-error-msg {
+  font-size: 12px; color: #f04438;
+  margin-top: 8px; display: flex; align-items: center; gap: 5px;
+}
+.upload-error-msg svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ── Compact variant ── */
+.upload-zone-compact {
+  border: 2px dashed #eaeaed;
+  border-radius: 8px;
+  padding: 12px 16px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  position: relative;
+}
+.upload-zone-compact:hover { border-color: #9e77ed; background: #fdfaff; }
+.upload-zone-compact.dragover { border-color: #7f56d9; background: #f9f5ff; }
+.upload-zone-compact .compact-icon { color: #9d9dad; flex-shrink: 0; }
+.upload-zone-compact .compact-icon svg { width: 20px; height: 20px; }
+.upload-zone-compact .compact-text { font-size: 13px; color: #29294c; }
+.upload-zone-compact .compact-text span { color: #707087; }
+.upload-zone-compact .compact-subtext { font-size: 11px; color: #9d9dad; margin-top: 1px; }
+.upload-zone-compact .compact-btn {
+  margin-left: auto; flex-shrink: 0;
+  font-size: 12px; font-weight: 600; padding: 6px 14px;
+  border-radius: 7px; border: 1px solid #eaeaed;
+  background: #fff; color: #29294c; cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+.upload-zone-compact .compact-btn:hover { background: #f4f0fd; border-color: #d6bbfb; color: #6941c6; }
+
+/* ── Button-only variant ── */
+.upload-btn-wrap { display: flex; align-items: center; gap: 12px; }
+.upload-btn-only {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 500; padding: 9px 18px;
+  border-radius: 8px; border: 1.5px solid #eaeaed;
+  background: #fff; color: #29294c; cursor: pointer;
+  transition: background .12s, border-color .12s;
+  font-family: inherit; position: relative;
+}
+.upload-btn-only:hover { background: #f9fafb; border-color: #d6bbfb; color: #6941c6; }
+.upload-btn-only svg { width: 16px; height: 16px; }
+.upload-btn-hint { font-size: 12px; color: #9d9dad; }
+
+/* State demo labels */
+.state-label-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+.state-chip { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid #eaeaed; background: #f9fafb; color: #475467; }
+.state-chip.active-state { border-color: #d6bbfb; background: #f4f0fd; color: #6941c6; }
+
+/* Anatomy label */
+.anatomy-label {
+  display: inline-block; background: #f4f0fd; color: #6941c6;
+  font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;
+  letter-spacing: .04em; margin-left: 6px; vertical-align: middle;
+}
+
+@media (max-width: 640px) {
+  .do-dont { grid-template-columns: 1fr; }
+  .a11y-grid { grid-template-columns: 1fr; }
+  .content {
+  max-width: 1100px;
+  margin: 0;
+  padding: 48px 56px;
+}
+  .anatomy-list { grid-template-columns: 1fr; }
+}
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link active">Upload</a>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<main class="main">
+<div class="content">
+
+  <!-- Page Header -->
+  <header class="page-header">
+  <div class="ph-folder-icon">
+    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Purple document gradient -->
+        <linearGradient id="doc-upload" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#b8a0ff"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <!-- Folder dark gradient -->
+        <linearGradient id="fld-upload" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2d2d50"/>
+          <stop offset="100%" stop-color="#12122a"/>
+        </linearGradient>
+        <!-- Purple inner glow -->
+        <radialGradient id="glow-upload" cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
+          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Top shine -->
+        <linearGradient id="shine-upload" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- Folder drop shadow -->
+        <filter id="fs-upload" x="-18%" y="-12%" width="136%" height="136%">
+          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
+        </filter>
+        <!-- Text glow -->
+        <filter id="tg-upload" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="2.8" result="blur"/>
+          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
+          <feComposite in="c" in2="blur" operator="in" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── Purple document peeking behind folder ── -->
+      <g transform="rotate(12, 141, 46)" opacity="0.97">
+        <!-- Document body -->
+        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-upload)"/>
+        <!-- Folded corner (lighter) -->
+        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
+        <!-- Folded corner (shadow) -->
+        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
+      </g>
+
+      <!-- ── Dark glass folder ── -->
+      <!-- Single path: full folder shape (tab + body as one outline) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#fld-upload)"
+            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            filter="url(#fs-upload)"/>
+
+      <!-- Purple glow inside (same path, no stroke/shadow) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#glow-upload)"/>
+
+      <!-- Top glass shine strip -->
+      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-upload)"/>
+
+      <!-- Component name text -->
+      <text x="100" y="132"
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.93)"
+            font-family="Inter, system-ui, -apple-system, sans-serif"
+            font-size="16" font-weight="800"
+            letter-spacing="1.6"
+            textLength="76" lengthAdjust="spacingAndGlyphs"
+            filter="url(#tg-upload)">UPLOAD</text>
+
+      <!-- Subtle underline below name -->
+      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
+    </svg>
+  </div>
+    <div class="breadcrumb">Components › <span>Upload</span></div>
+    <h1 class="page-title">File Upload</h1>
+    <p class="page-desc">A drag-and-drop upload zone for accepting file input. Supports single and multiple files, image previews, upload progress, and error states.</p>
+    <div class="tag-row">
+      <span class="page-tag tag-stable">Stable</span>
+      <span class="page-tag tag-a11y">WCAG AA</span>
+      <span class="page-tag tag-figma">Figma 232-209</span>
+    </div>
+  </header>
+
+  <!-- ── Overview / Live Demo ── -->
+  <section class="section" id="overview">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">Drag files into the zone or click to open a file picker. Files appear in the list below with upload progress, then settle into their success state.</p>
+
+    <div class="demo-box">
+      <label for="main-upload-input" style="display:block;">
+        <div class="upload-zone" id="main-zone" tabindex="0" role="button"
+             aria-label="Upload files — click or drag and drop"
+             ondragover="handleDragOver(event, 'main-zone')"
+             ondragleave="handleDragLeave(event, 'main-zone')"
+             ondrop="handleDrop(event, 'main-zone', 'main-file-list')">
+          <input type="file" class="upload-input" id="main-upload-input"
+                 multiple accept="image/*,.pdf,.svg,.fig"
+                 onchange="handleFileInput(event, 'main-file-list')"
+                 aria-hidden="true" tabindex="-1"/>
+          <div class="upload-icon" id="main-zone-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+            </svg>
+          </div>
+          <div class="upload-text">
+            <strong>Click to upload</strong> <span>or drag and drop</span>
+          </div>
+          <div class="upload-subtext">SVG, PNG, JPG or GIF (max. 800×400px)</div>
+          <div class="upload-progress-wrap" id="main-zone-progress">
+            <div class="upload-progress-bar-bg">
+              <div class="upload-progress-bar" id="main-progress-bar"></div>
+            </div>
+            <div class="upload-progress-text" id="main-progress-text">Uploading…</div>
+          </div>
+        </div>
+      </label>
+
+      <!-- File list -->
+      <div class="file-list" id="main-file-list"></div>
+    </div>
+  </section>
+
+  <!-- ── Anatomy ── -->
+  <section class="section" id="anatomy">
+    <h2 class="section-title">Anatomy</h2>
+    <div class="demo-box">
+      <div class="upload-zone" style="cursor:default; pointer-events:none;" aria-hidden="true">
+        <div class="upload-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+        </div>
+        <div class="upload-text">
+          <strong>Click to upload <span class="anatomy-label">2</span></strong>
+          <span> or drag and drop</span>
+        </div>
+        <div class="upload-subtext">SVG, PNG, JPG or GIF (max. 800×400px) <span class="anatomy-label">3</span></div>
+        <div style="position:absolute;top:12px;left:12px;font-size:10px;font-weight:700;color:#6941c6;">Drop zone border <span class="anatomy-label">1</span></div>
+        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);">
+          <span class="anatomy-label" style="position:relative;top:0;left:0;">Icon 4</span>
+        </div>
+      </div>
+    </div>
+    <div class="anatomy-list">
+      <div class="anatomy-item"><div class="anatomy-num">1</div><div class="anatomy-text"><strong>Drop zone</strong> — 2px dashed border, border-radius 12px, 32px padding.</div></div>
+      <div class="anatomy-item"><div class="anatomy-num">2</div><div class="anatomy-text"><strong>Upload text</strong> — Bold "Click to upload" + regular "or drag and drop".</div></div>
+      <div class="anatomy-item"><div class="anatomy-num">3</div><div class="anatomy-text"><strong>Constraint hint</strong> — File types and max dimensions, 12px #9d9dad.</div></div>
+      <div class="anatomy-item"><div class="anatomy-num">4</div><div class="anatomy-text"><strong>Icon</strong> — 40×40px upload arrow. Gray (#9d9dad) idle, purple (#7f56d9) on dragover.</div></div>
+    </div>
+  </section>
+
+  <!-- ── Variants ── -->
+  <section class="section" id="variants">
+    <h2 class="section-title">Variants</h2>
+
+    <!-- Default -->
+    <div class="variant-heading">Default Drop Zone</div>
+    <div class="demo-box">
+      <label for="default-upload">
+        <div class="upload-zone" tabindex="0" role="button" aria-label="Upload files"
+             ondragover="handleDragOver(event, this)"
+             ondragleave="handleDragLeave(event, this)"
+             ondrop="handleDrop(event, null, 'variant-file-list')">
+          <input type="file" class="upload-input" id="default-upload" multiple accept="image/*" onchange="handleFileInput(event, 'variant-file-list')" aria-hidden="true" tabindex="-1"/>
+          <div class="upload-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+          </div>
+          <div class="upload-text"><strong>Click to upload</strong> <span>or drag and drop</span></div>
+          <div class="upload-subtext">SVG, PNG, JPG or GIF (max. 800×400px)</div>
+        </div>
+      </label>
+      <div class="file-list" id="variant-file-list"></div>
+    </div>
+
+    <!-- Compact -->
+    <div class="variant-heading">Compact — Single-line inline</div>
+    <div class="demo-box">
+      <label for="compact-upload" style="display:block;">
+        <div class="upload-zone-compact" tabindex="0" role="button" aria-label="Upload file"
+             ondragover="this.classList.add('dragover')"
+             ondragleave="this.classList.remove('dragover')"
+             ondrop="this.classList.remove('dragover'); event.preventDefault();">
+          <input type="file" class="upload-input" id="compact-upload" accept="image/*" aria-hidden="true" tabindex="-1"/>
+          <div class="compact-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+          </div>
+          <div>
+            <div class="compact-text"><strong>Upload file</strong> <span>or drag here</span></div>
+            <div class="compact-subtext">PNG, JPG up to 2MB</div>
+          </div>
+          <div class="compact-btn">Browse</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Button only -->
+    <div class="variant-heading">Button-only</div>
+    <div class="demo-box">
+      <label for="btn-upload">
+        <div class="upload-btn-wrap">
+          <button class="upload-btn-only" type="button" tabindex="-1" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            Choose file
+          </button>
+          <input type="file" id="btn-upload" style="position:absolute;opacity:0;width:1px;height:1px;" accept="image/*" aria-label="Upload file"/>
+          <span class="upload-btn-hint">No file chosen</span>
+        </div>
+      </label>
+    </div>
+  </section>
+
+  <!-- ── States ── -->
+  <section class="section" id="states">
+    <h2 class="section-title">States</h2>
+
+    <!-- Idle / Empty -->
+    <div class="variant-heading">Idle / Empty</div>
+    <div class="demo-box">
+      <div class="upload-zone" style="cursor:default;pointer-events:none;" aria-hidden="true">
+        <div class="upload-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg></div>
+        <div class="upload-text"><strong>Click to upload</strong> <span>or drag and drop</span></div>
+        <div class="upload-subtext">SVG, PNG, JPG or GIF (max. 800×400px)</div>
+      </div>
+    </div>
+
+    <!-- Dragover / Active -->
+    <div class="variant-heading">Drag Over / Active</div>
+    <div class="demo-box">
+      <div class="upload-zone dragover" style="cursor:copy;pointer-events:none;" aria-hidden="true">
+        <div class="upload-icon" style="color:#7f56d9;"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg></div>
+        <div class="upload-text" style="color:#6941c6;"><strong>Drop files to upload</strong></div>
+        <div class="upload-subtext" style="color:#9e77ed;">Release to upload your files</div>
+      </div>
+    </div>
+
+    <!-- Uploading -->
+    <div class="variant-heading">Uploading</div>
+    <div class="demo-box">
+      <div class="upload-zone" style="cursor:default;pointer-events:none;" aria-hidden="true">
+        <div class="upload-icon" style="color:#7f56d9;"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg></div>
+        <div class="upload-text"><strong>Uploading…</strong></div>
+        <div class="upload-progress-wrap visible">
+          <div class="upload-progress-bar-bg"><div class="upload-progress-bar" style="width:62%;"></div></div>
+          <div class="upload-progress-text">62% — 1.2 MB of 2 MB</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success -->
+    <div class="variant-heading">Success — file uploaded</div>
+    <div class="demo-box">
+      <div class="file-list" style="margin-top:0;">
+        <div class="file-item">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' rx='6' fill='%23f4f0fd'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='18'%3E🖼%3C/text%3E%3C/svg%3E"
+               alt="preview" class="file-thumb"/>
+          <div class="file-info">
+            <div class="file-name">hero-banner.png</div>
+            <div class="file-size">800 × 400px · 142 KB</div>
+          </div>
+          <div class="file-status-icon success">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <button class="file-remove" aria-label="Remove hero-banner.png"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="variant-heading">Error state</div>
+    <div class="demo-box">
+      <div class="upload-zone has-error" style="cursor:default;pointer-events:none;" aria-hidden="true">
+        <div class="upload-icon" style="color:#f04438;"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg></div>
+        <div class="upload-text" style="color:#b42318;"><strong>Upload failed</strong></div>
+        <div class="upload-subtext" style="color:#f04438;">File exceeds 5 MB limit</div>
+      </div>
+      <div class="upload-error-msg" role="alert">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        File too large. Maximum allowed size is 5 MB.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Props Table ── -->
+  <section class="section" id="props">
+    <h2 class="section-title">Props</h2>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead>
+          <tr>
+            <th>Prop</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>accept</code></td><td><code>string</code></td><td><code>'*'</code></td><td>Accepted MIME types or extensions, e.g. <code>'image/*,.pdf'</code></td></tr>
+          <tr><td><code>multiple</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Allow selecting more than one file at a time</td></tr>
+          <tr><td><code>maxSize</code></td><td><code>number</code></td><td>—</td><td>Maximum file size in bytes</td></tr>
+          <tr><td><code>maxFiles</code></td><td><code>number</code></td><td>—</td><td>Maximum number of files that can be queued</td></tr>
+          <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Disable zone — prevents drag and click interactions</td></tr>
+          <tr><td><code>variant</code></td><td><code>'default' | 'compact' | 'button'</code></td><td><code>'default'</code></td><td>Upload zone layout variant</td></tr>
+          <tr><td><code>hint</code></td><td><code>string</code></td><td>—</td><td>Sub-text below the upload prompt (file type hint)</td></tr>
+          <tr><td><code>onDrop</code></td><td><code>(files: FileList) => void</code></td><td>—</td><td>Callback when files are dropped or selected</td></tr>
+          <tr><td><code>onRemove</code></td><td><code>(file: File) => void</code></td><td>—</td><td>Callback when a file is removed from the list</td></tr>
+          <tr><td><code>onError</code></td><td><code>(error: string) => void</code></td><td>—</td><td>Callback on validation error (size/type exceeded)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── Do's & Don'ts ── -->
+  <section class="section" id="do-dont">
+    <h2 class="section-title">Do's &amp; Don'ts</h2>
+    <div class="do-dont">
+      <div class="do-card">
+        <div class="do-header"><div class="do-icon">✓</div> Do</div>
+        <ul>
+          <li>Display accepted file types and max size in the zone</li>
+          <li>Show per-file upload progress feedback</li>
+          <li>Provide image thumbnails for visual file recognition</li>
+          <li>Allow removing files from the queue before submission</li>
+          <li>Label the zone clearly for screen readers</li>
+          <li>Validate on drop, not just on submit</li>
+        </ul>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><div class="dont-icon">✕</div> Don't</div>
+        <ul>
+          <li>Don't accept files silently — always confirm receipt</li>
+          <li>Don't use upload to replace a simple file input where drag isn't relevant</li>
+          <li>Don't auto-submit on drop without user confirmation</li>
+          <li>Don't display file paths — just names and sizes</li>
+          <li>Don't block the UI during upload — show progress inline</li>
+          <li>Don't silently fail — always show clear error messages</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Accessibility ── -->
+  <section class="section" id="accessibility">
+    <h2 class="section-title">Accessibility</h2>
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Keyboard Access
+        </h4>
+        <ul>
+          <li>Zone is reachable via Tab key (<code>tabindex="0"</code>)</li>
+          <li>Enter or Space activates the file picker</li>
+          <li>Hidden file input is paired with a visible label</li>
+          <li>Remove buttons are fully keyboard-accessible</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          Screen Readers
+        </h4>
+        <ul>
+          <li>Zone has <code>role="button"</code> and descriptive <code>aria-label</code></li>
+          <li>Error messages use <code>role="alert"</code> for immediate announcement</li>
+          <li>Success confirmation should update a live region</li>
+          <li>File list items have accessible names including file name and size</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+          Color Contrast
+        </h4>
+        <ul>
+          <li>Dragover purple border (#7f56d9) passes AA contrast on white</li>
+          <li>Error red (#f04438) text on light background (#fef3f2) meets AA</li>
+          <li>Upload text colors (#29294c, #707087) both pass 4.5:1</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Motion
+        </h4>
+        <ul>
+          <li>File-in animation is subtle (180ms)</li>
+          <li>Progress bar transitions use <code>ease</code> — not jarring</li>
+          <li>Respects <code>prefers-reduced-motion</code> by skipping animations</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Code ── -->
+  <section class="section" id="code">
+    <h2 class="section-title">Code</h2>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">upload.html — Default drop zone</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">&lt;!-- File Upload Zone --&gt;</span>
+<span class="c-tag">&lt;label</span> <span class="c-attr">for</span>=<span class="c-val">"upload"</span><span class="c-tag">&gt;</span>
+
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"upload-zone"</span>
+       <span class="c-attr">role</span>=<span class="c-val">"button"</span>
+       <span class="c-attr">tabindex</span>=<span class="c-val">"0"</span>
+       <span class="c-attr">aria-label</span>=<span class="c-val">"Upload files"</span><span class="c-tag">&gt;</span>
+
+    <span class="c-comment">&lt;!-- Hidden real input --&gt;</span>
+    <span class="c-tag">&lt;input</span> <span class="c-attr">type</span>=<span class="c-val">"file"</span>
+           <span class="c-attr">id</span>=<span class="c-val">"upload"</span>
+           <span class="c-attr">class</span>=<span class="c-val">"upload-input"</span>
+           <span class="c-attr">multiple</span>
+           <span class="c-attr">accept</span>=<span class="c-val">"image/*,.pdf"</span>
+           <span class="c-attr">aria-hidden</span>=<span class="c-val">"true"</span>
+           <span class="c-attr">tabindex</span>=<span class="c-val">"-1"</span><span class="c-tag">/&gt;</span>
+
+    <span class="c-comment">&lt;!-- Icon --&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"upload-icon"</span><span class="c-tag">&gt;</span>...<span class="c-tag">&lt;/div&gt;</span>
+
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"upload-text"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;strong&gt;</span>Click to upload<span class="c-tag">&lt;/strong&gt;</span>
+      or drag and drop
+    <span class="c-tag">&lt;/div&gt;</span>
+
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"upload-subtext"</span><span class="c-tag">&gt;</span>
+      SVG, PNG, JPG up to 5MB
+    <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/label&gt;</span></pre></div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">CSS — Core upload tokens</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">/* Empty / Idle state */</span>
+<span class="c-tag">.upload-zone</span> {
+  <span class="c-attr">border</span>: <span class="c-val">2px dashed #eaeaed</span>;
+  <span class="c-attr">border-radius</span>: <span class="c-val">12px</span>;
+  <span class="c-attr">padding</span>: <span class="c-val">32px</span>;
+  <span class="c-attr">background</span>: <span class="c-val">#ffffff</span>;
+  <span class="c-attr">text-align</span>: <span class="c-val">center</span>;
+}
+
+<span class="c-comment">/* Drag over / active */</span>
+<span class="c-tag">.upload-zone.dragover</span> {
+  <span class="c-attr">border-color</span>: <span class="c-val">#7f56d9</span>;
+  <span class="c-attr">background</span>: <span class="c-val">#f9f5ff</span>;
+}
+
+<span class="c-comment">/* Icon states */</span>
+<span class="c-tag">.upload-icon</span>      { <span class="c-attr">color</span>: <span class="c-val">#9d9dad</span>; } <span class="c-comment">/* idle */</span>
+<span class="c-tag">.dragover .upload-icon</span> { <span class="c-attr">color</span>: <span class="c-val">#7f56d9</span>; } <span class="c-comment">/* active */</span></pre></div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<script>
+// ── Drag & Drop Handlers ──
+
+function handleDragOver(event, zoneIdOrEl) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'copy';
+  const zone = typeof zoneIdOrEl === 'string'
+    ? document.getElementById(zoneIdOrEl)
+    : zoneIdOrEl;
+  if (zone) {
+    zone.classList.add('dragover');
+    const icon = zone.querySelector('.upload-icon');
+    if (icon) icon.style.color = '#7f56d9';
+  }
+}
+
+function handleDragLeave(event, zoneIdOrEl) {
+  const zone = typeof zoneIdOrEl === 'string'
+    ? document.getElementById(zoneIdOrEl)
+    : zoneIdOrEl;
+  if (zone && !zone.contains(event.relatedTarget)) {
+    zone.classList.remove('dragover');
+    const icon = zone.querySelector('.upload-icon');
+    if (icon) icon.style.color = '';
+  }
+}
+
+function handleDrop(event, zoneIdOrEl, fileListId) {
+  event.preventDefault();
+  const zone = typeof zoneIdOrEl === 'string'
+    ? document.getElementById(zoneIdOrEl)
+    : zoneIdOrEl;
+  if (zone) {
+    zone.classList.remove('dragover');
+    const icon = zone.querySelector('.upload-icon');
+    if (icon) icon.style.color = '';
+  }
+  const files = Array.from(event.dataTransfer.files);
+  if (files.length > 0 && fileListId) {
+    simulateUpload(files, fileListId, zone);
+  }
+}
+
+function handleFileInput(event, fileListId) {
+  const files = Array.from(event.target.files);
+  if (files.length > 0) {
+    const zone = event.target.closest('.upload-zone');
+    simulateUpload(files, fileListId, zone);
+    event.target.value = '';
+  }
+}
+
+// Format bytes
+function formatBytes(bytes) {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B','KB','MB','GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+// Get file type icon SVG
+function getFileIcon(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (['png','jpg','jpeg','gif','webp','svg'].includes(ext)) {
+    return `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`;
+  }
+  if (ext === 'pdf') {
+    return `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>`;
+  }
+  return `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>`;
+}
+
+// Check if image
+function isImage(file) {
+  return file.type.startsWith('image/');
+}
+
+function simulateUpload(files, listId, zone) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+
+  files.forEach((file, idx) => {
+    const id = 'fi-' + Date.now() + '-' + idx;
+
+    // Create placeholder item with progress
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.id = id;
+
+    const iconHtml = `<div class="file-icon-wrap" id="${id}-icon">${getFileIcon(file)}</div>`;
+    item.innerHTML = `
+      ${iconHtml}
+      <div class="file-info">
+        <div class="file-name">${file.name}</div>
+        <div class="file-size" id="${id}-size">Uploading…</div>
+        <div class="file-progress" id="${id}-progress">
+          <div class="file-progress-bg">
+            <div class="file-progress-fill" id="${id}-fill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="file-status-icon" id="${id}-status"></div>
+      <button class="file-remove" aria-label="Remove ${file.name}" onclick="removeFile('${id}')" style="display:none;" id="${id}-remove">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    `;
+    list.appendChild(item);
+
+    // If image, load as thumbnail
+    if (isImage(file)) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const iconEl = document.getElementById(`${id}-icon`);
+        if (iconEl) {
+          iconEl.outerHTML = `<img src="${e.target.result}" alt="${file.name}" class="file-thumb" id="${id}-icon"/>`;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Simulate progress
+    let progress = 0;
+    const duration = 1200 + Math.random() * 800;
+    const startTime = Date.now();
+
+    const tick = () => {
+      const elapsed = Date.now() - startTime;
+      progress = Math.min(100, Math.round((elapsed / duration) * 100));
+      const fillEl = document.getElementById(`${id}-fill`);
+      if (fillEl) fillEl.style.width = progress + '%';
+
+      if (progress < 100) {
+        requestAnimationFrame(tick);
+      } else {
+        // Done
+        const progressEl = document.getElementById(`${id}-progress`);
+        const sizeEl = document.getElementById(`${id}-size`);
+        const statusEl = document.getElementById(`${id}-status`);
+        const removeEl = document.getElementById(`${id}-remove`);
+        if (progressEl) progressEl.style.display = 'none';
+        if (sizeEl) sizeEl.textContent = formatBytes(file.size);
+        if (statusEl) {
+          statusEl.className = 'file-status-icon success';
+          statusEl.innerHTML = `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+        }
+        if (removeEl) removeEl.style.display = '';
+      }
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
+function removeFile(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity .15s';
+    setTimeout(() => el.remove(), 160);
+  }
+}
+
+function copyCode(btn) {
+  const code = btn.closest('.code-block').querySelector('pre').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// Keyboard activate zone
+document.querySelectorAll('.upload-zone[tabindex="0"]').forEach(zone => {
+  zone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      const input = zone.querySelector('.upload-input');
+      if (input) input.click();
+    }
+  });
+});
+
+// Respect reduced-motion
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const style = document.createElement('style');
+  style.textContent = '.file-item, .file-progress-fill { animation: none !important; transition: none !important; }';
+  document.head.appendChild(style);
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

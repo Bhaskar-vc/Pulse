@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Button – Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1d2939;
+  background: #f8f9fb;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── Layout ── */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: #fff;
+  border-right: 1px solid #eaeaed;
+  padding: 24px 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid #eaeaed;
+  margin-bottom: 16px;
+}
+.sidebar-logo span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #29294c;
+}
+.sidebar-logo sub {
+  font-size: 10px;
+  color: #9d9dad;
+  font-weight: 400;
+  display: block;
+  margin-top: 2px;
+}
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title {
+  padding: 6px 20px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9d9dad;
+}
+.sidebar-link {
+  display: block;
+  padding: 7px 20px;
+  font-size: 13px;
+  color: #4a4a68;
+  border-radius: 0;
+  text-decoration: none;
+  transition: background .15s, color .15s;
+}
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+.main {
+  margin-left: 240px;
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+}
+.content {
+  max-width: 1100px;
+  margin: 0;
+  padding: 48px 56px;
+}
+
+/* ── Page Header ── */
+.page-header { margin-bottom: 44px; }
+.breadcrumb { font-size: 12px; color: #98a2b3; margin-bottom: 10px; }
+.breadcrumb span { color: #6941c6; }
+.page-title { font-size: 30px; font-weight: 700; color: #101828; letter-spacing: -.4px; line-height: 1.2; }
+.page-desc { margin-top: 8px; font-size: 15px; color: #475467; line-height: 1.6; max-width: 600px; }
+.tag-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.page-tag {
+  font-size: 11px; font-weight: 600; padding: 3px 10px;
+  border-radius: 99px; border: 1px solid;
+}
+.tag-stable { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.tag-a11y   { color: #026aa2; background: #e0f2fe; border-color: #b9e6fe; }
+.tag-figma  { color: #6941c6; background: #f4f0fd; border-color: #d6bbfb; }
+
+/* ── Section ── */
+.section { margin-bottom: 56px; }
+.section-title {
+  font-size: 18px; font-weight: 700; color: #101828;
+  padding-bottom: 12px; border-bottom: 1px solid #e4e7ec;
+  margin-bottom: 20px;
+}
+.section-desc { font-size: 14px; color: #475467; line-height: 1.7; margin-bottom: 16px; }
+
+/* ── Demo Box ── */
+.demo-box {
+  background: #fff;
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 12px;
+}
+.demo-box-label { font-size: 12px; font-weight: 600; color: #98a2b3; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.demo-dark { background: #1d2939; border-color: #344054; }
+
+/* ── Variant Section Heading ── */
+.variant-heading { font-size: 13px; font-weight: 600; color: #344054; margin: 20px 0 10px; }
+
+/* ── Table ── */
+.ds-table-wrap { border: 1px solid #e4e7ec; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-table thead { background: #f9fafb; }
+.ds-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .05em; }
+.ds-table td { padding: 11px 16px; border-top: 1px solid #f2f4f7; color: #344054; }
+.ds-table tr:hover td { background: #fafbff; }
+code {
+  font-family: 'Fira Code', monospace;
+  font-size: 11.5px;
+  background: #f2f4f7;
+  color: #29294c;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ── Do / Don't ── */
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.do-card, .dont-card {
+  border-radius: 12px;
+  padding: 20px;
+  border: 1.5px solid;
+}
+.do-card { border-color: #a6f4c5; background: #f6fef9; }
+.dont-card { border-color: #fecdca; background: #fffbfa; }
+.do-header, .dont-header {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 700;
+  margin-bottom: 12px;
+}
+.do-header { color: #027a48; }
+.dont-header { color: #b42318; }
+.do-icon, .dont-icon {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; flex-shrink: 0;
+}
+.do-icon { background: #027a48; color: #fff; }
+.dont-icon { background: #b42318; color: #fff; }
+.do-card ul, .dont-card ul { padding-left: 18px; }
+.do-card li, .dont-card li { font-size: 13px; color: #344054; line-height: 1.7; }
+.do-demo, .dont-demo {
+  margin-top: 16px; padding-top: 16px;
+  border-top: 1px solid; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.do-demo { border-color: #a6f4c5; }
+.dont-demo { border-color: #fecdca; }
+
+/* ── Code Block ── */
+.code-block {
+  background: #0f172a;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.code-block-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155;
+}
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'Fira Code', monospace; }
+.copy-btn {
+  font-size: 11px; font-weight: 600; color: #94a3b8;
+  background: none; border: 1px solid #334155; border-radius: 6px;
+  padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif;
+  transition: background .15s, color .15s;
+}
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'Fira Code', monospace; font-size: 12.5px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; }
+.c-tag     { color: #7dd3fc; }
+.c-attr    { color: #a5b4fc; }
+.c-val     { color: #86efac; }
+.c-text    { color: #fde68a; }
+
+/* ── Spec Chip ── */
+.spec-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.spec-chip {
+  font-size: 12px; font-weight: 500; color: #344054;
+  background: #f9fafb; border: 1px solid #e4e7ec;
+  border-radius: 6px; padding: 4px 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.spec-chip-label { color: #98a2b3; font-size: 11px; }
+
+/* ── Accessibility Box ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid #e4e7ec; border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: #101828; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: #475467; line-height: 1.7; }
+
+/* ── States Row ── */
+.states-grid { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+.state-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.state-label { font-size: 11px; color: #98a2b3; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+
+/* ──────────────────────────────────
+   DESIGN SYSTEM BUTTON TOKENS
+   Source: Figma node 8064-6597
+────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 4px 16px;
+  min-width: 64px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: background .15s, border-color .15s, box-shadow .15s, opacity .15s;
+  text-decoration: none;
+}
+.btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+.btn-sm { height: 32px; padding: 2px 12px; font-size: 13px; min-width: 56px; }
+.btn-lg { height: 40px; padding: 6px 20px; font-size: 15px; min-width: 72px; }
+.btn:disabled, .btn[aria-disabled="true"] {
+  background: #f2f4f7 !important; color: #98a2b3 !important;
+  border-color: transparent !important; cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+
+/* — Solid — */
+.btn-solid-primary   { background:#29294c; color:#fff; border-color:#29294c; }
+.btn-solid-primary:not(:disabled):hover   { background:#1e1e38; border-color:#1e1e38; }
+.btn-solid-primary:not(:disabled):focus-visible { box-shadow:0 0 0 3px #b9aee9; outline:none; }
+
+.btn-solid-secondary { background:#6941c6; color:#fff; border-color:#6941c6; }
+.btn-solid-secondary:not(:disabled):hover { background:#5531a1; border-color:#5531a1; }
+.btn-solid-secondary:not(:disabled):focus-visible { box-shadow:0 0 0 3px #d6bbfb; outline:none; }
+
+.btn-solid-success   { background:#12b76a; color:#fff; border-color:#12b76a; }
+.btn-solid-success:not(:disabled):hover   { background:#0e9155; border-color:#0e9155; }
+.btn-solid-success:not(:disabled):focus-visible { box-shadow:0 0 0 3px #a6f4c5; outline:none; }
+
+.btn-solid-info      { background:#0ba5ec; color:#fff; border-color:#0ba5ec; }
+.btn-solid-info:not(:disabled):hover      { background:#0989c5; border-color:#0989c5; }
+.btn-solid-info:not(:disabled):focus-visible { box-shadow:0 0 0 3px #b9e6fe; outline:none; }
+
+.btn-solid-warning   { background:#f79009; color:#fff; border-color:#f79009; }
+.btn-solid-warning:not(:disabled):hover   { background:#dc7a05; border-color:#dc7a05; }
+.btn-solid-warning:not(:disabled):focus-visible { box-shadow:0 0 0 3px #fedf89; outline:none; }
+
+.btn-solid-error     { background:#f04438; color:#fff; border-color:#f04438; }
+.btn-solid-error:not(:disabled):hover     { background:#d92d20; border-color:#d92d20; }
+.btn-solid-error:not(:disabled):focus-visible { box-shadow:0 0 0 3px #fecdca; outline:none; }
+
+/* — Light — */
+.btn-light-primary   { background:#eeedf6; color:#29294c; border-color:transparent; }
+.btn-light-primary:not(:disabled):hover   { background:#e0dff0; }
+.btn-light-primary:not(:disabled):focus-visible { box-shadow:0 0 0 3px #b9aee9; outline:none; }
+
+.btn-light-secondary { background:#f4f0fd; color:#6941c6; border-color:transparent; }
+.btn-light-secondary:not(:disabled):hover { background:#ede9fb; }
+.btn-light-secondary:not(:disabled):focus-visible { box-shadow:0 0 0 3px #d6bbfb; outline:none; }
+
+.btn-light-success   { background:#ecfdf5; color:#027a48; border-color:transparent; }
+.btn-light-success:not(:disabled):hover   { background:#d1fadf; }
+.btn-light-success:not(:disabled):focus-visible { box-shadow:0 0 0 3px #a6f4c5; outline:none; }
+
+.btn-light-info      { background:#e0f2fe; color:#026aa2; border-color:transparent; }
+.btn-light-info:not(:disabled):hover      { background:#bae8fd; }
+.btn-light-info:not(:disabled):focus-visible { box-shadow:0 0 0 3px #b9e6fe; outline:none; }
+
+.btn-light-warning   { background:#fffaeb; color:#b54708; border-color:transparent; }
+.btn-light-warning:not(:disabled):hover   { background:#fef0c7; }
+.btn-light-warning:not(:disabled):focus-visible { box-shadow:0 0 0 3px #fedf89; outline:none; }
+
+.btn-light-error     { background:#fef3f2; color:#b42318; border-color:transparent; }
+.btn-light-error:not(:disabled):hover     { background:#fee4e2; }
+.btn-light-error:not(:disabled):focus-visible { box-shadow:0 0 0 3px #fecdca; outline:none; }
+
+/* — Ghost — */
+.btn-ghost-primary   { background:transparent; color:#29294c; border-color:transparent; }
+.btn-ghost-primary:not(:disabled):hover   { background:#eeedf6; }
+.btn-ghost-primary:not(:disabled):focus-visible { box-shadow:0 0 0 3px #b9aee9; outline:none; }
+
+.btn-ghost-secondary { background:transparent; color:#6941c6; border-color:transparent; }
+.btn-ghost-secondary:not(:disabled):hover { background:#f4f0fd; }
+.btn-ghost-secondary:not(:disabled):focus-visible { box-shadow:0 0 0 3px #d6bbfb; outline:none; }
+
+.btn-ghost-success   { background:transparent; color:#027a48; border-color:transparent; }
+.btn-ghost-success:not(:disabled):hover   { background:#ecfdf5; }
+.btn-ghost-success:not(:disabled):focus-visible { box-shadow:0 0 0 3px #a6f4c5; outline:none; }
+
+.btn-ghost-info      { background:transparent; color:#026aa2; border-color:transparent; }
+.btn-ghost-info:not(:disabled):hover      { background:#e0f2fe; }
+.btn-ghost-info:not(:disabled):focus-visible { box-shadow:0 0 0 3px #b9e6fe; outline:none; }
+
+.btn-ghost-warning   { background:transparent; color:#b54708; border-color:transparent; }
+.btn-ghost-warning:not(:disabled):hover   { background:#fffaeb; }
+.btn-ghost-warning:not(:disabled):focus-visible { box-shadow:0 0 0 3px #fedf89; outline:none; }
+
+.btn-ghost-error     { background:transparent; color:#b42318; border-color:transparent; }
+.btn-ghost-error:not(:disabled):hover     { background:#fef3f2; }
+.btn-ghost-error:not(:disabled):focus-visible { box-shadow:0 0 0 3px #fecdca; outline:none; }
+
+/* — Outlined — */
+.btn-outlined-primary   { background:transparent; color:#29294c; border-color:#29294c; }
+.btn-outlined-primary:not(:disabled):hover   { background:#eeedf6; }
+.btn-outlined-primary:not(:disabled):focus-visible { box-shadow:0 0 0 3px #b9aee9; outline:none; }
+
+.btn-outlined-secondary { background:transparent; color:#6941c6; border-color:#6941c6; }
+.btn-outlined-secondary:not(:disabled):hover { background:#f4f0fd; }
+.btn-outlined-secondary:not(:disabled):focus-visible { box-shadow:0 0 0 3px #d6bbfb; outline:none; }
+
+.btn-outlined-success   { background:transparent; color:#027a48; border-color:#12b76a; }
+.btn-outlined-success:not(:disabled):hover   { background:#ecfdf5; }
+.btn-outlined-success:not(:disabled):focus-visible { box-shadow:0 0 0 3px #a6f4c5; outline:none; }
+
+.btn-outlined-info      { background:transparent; color:#026aa2; border-color:#0ba5ec; }
+.btn-outlined-info:not(:disabled):hover      { background:#e0f2fe; }
+.btn-outlined-info:not(:disabled):focus-visible { box-shadow:0 0 0 3px #b9e6fe; outline:none; }
+
+.btn-outlined-warning   { background:transparent; color:#b54708; border-color:#f79009; }
+.btn-outlined-warning:not(:disabled):hover   { background:#fffaeb; }
+.btn-outlined-warning:not(:disabled):focus-visible { box-shadow:0 0 0 3px #fedf89; outline:none; }
+
+.btn-outlined-error     { background:transparent; color:#b42318; border-color:#f04438; }
+.btn-outlined-error:not(:disabled):hover     { background:#fef3f2; }
+.btn-outlined-error:not(:disabled):focus-visible { box-shadow:0 0 0 3px #fecdca; outline:none; }
+
+/* — Tinted — */
+.btn-tinted-primary   { background:#eeedf6; color:#29294c; border-color:#29294c; }
+.btn-tinted-primary:not(:disabled):hover   { background:#e0dff0; }
+.btn-tinted-primary:not(:disabled):focus-visible { box-shadow:0 0 0 3px #b9aee9; outline:none; }
+
+.btn-tinted-secondary { background:#f4f0fd; color:#6941c6; border-color:#6941c6; }
+.btn-tinted-secondary:not(:disabled):hover { background:#ede9fb; }
+.btn-tinted-secondary:not(:disabled):focus-visible { box-shadow:0 0 0 3px #d6bbfb; outline:none; }
+
+.btn-tinted-success   { background:#ecfdf5; color:#027a48; border-color:#12b76a; }
+.btn-tinted-success:not(:disabled):hover   { background:#d1fadf; }
+.btn-tinted-success:not(:disabled):focus-visible { box-shadow:0 0 0 3px #a6f4c5; outline:none; }
+
+.btn-tinted-info      { background:#e0f2fe; color:#026aa2; border-color:#0ba5ec; }
+.btn-tinted-info:not(:disabled):hover      { background:#bae8fd; }
+.btn-tinted-info:not(:disabled):focus-visible { box-shadow:0 0 0 3px #b9e6fe; outline:none; }
+
+.btn-tinted-warning   { background:#fffaeb; color:#b54708; border-color:#f79009; }
+.btn-tinted-warning:not(:disabled):hover   { background:#fef0c7; }
+.btn-tinted-warning:not(:disabled):focus-visible { box-shadow:0 0 0 3px #fedf89; outline:none; }
+
+.btn-tinted-error     { background:#fef3f2; color:#b42318; border-color:#f04438; }
+.btn-tinted-error:not(:disabled):hover     { background:#fee4e2; }
+.btn-tinted-error:not(:disabled):focus-visible { box-shadow:0 0 0 3px #fecdca; outline:none; }
+
+/* ── Color Swatch ── */
+.color-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.color-swatch { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.swatch-dot { width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(0,0,0,.08); }
+.swatch-name { font-size: 10px; color: #667085; font-weight: 500; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- ══ SIDEBAR ══ -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link active">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+<div class="content">
+
+  <!-- Header -->
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Purple document gradient -->
+        <linearGradient id="doc-button" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#b8a0ff"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <!-- Folder dark gradient -->
+        <linearGradient id="fld-button" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2d2d50"/>
+          <stop offset="100%" stop-color="#12122a"/>
+        </linearGradient>
+        <!-- Purple inner glow -->
+        <radialGradient id="glow-button" cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
+          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Top shine -->
+        <linearGradient id="shine-button" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- Folder drop shadow -->
+        <filter id="fs-button" x="-18%" y="-12%" width="136%" height="136%">
+          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
+        </filter>
+        <!-- Text glow -->
+        <filter id="tg-button" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="2.8" result="blur"/>
+          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
+          <feComposite in="c" in2="blur" operator="in" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── Purple document peeking behind folder ── -->
+      <g transform="rotate(12, 141, 46)" opacity="0.97">
+        <!-- Document body -->
+        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-button)"/>
+        <!-- Folded corner (lighter) -->
+        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
+        <!-- Folded corner (shadow) -->
+        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
+      </g>
+
+      <!-- ── Dark glass folder ── -->
+      <!-- Single path: full folder shape (tab + body as one outline) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#fld-button)"
+            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            filter="url(#fs-button)"/>
+
+      <!-- Purple glow inside (same path, no stroke/shadow) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#glow-button)"/>
+
+      <!-- Top glass shine strip -->
+      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-button)"/>
+
+      <!-- Component name text -->
+      <text x="100" y="132"
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.93)"
+            font-family="Inter, system-ui, -apple-system, sans-serif"
+            font-size="16" font-weight="800"
+            letter-spacing="1.6"
+            textLength="76" lengthAdjust="spacingAndGlyphs"
+            filter="url(#tg-button)">BUTTON</text>
+
+      <!-- Subtle underline below name -->
+      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
+    </svg>
+  </div>
+    <p class="breadcrumb">Components › <span>Button</span></p>
+    <h1 class="page-title">Button</h1>
+    <p class="page-desc">Triggers an action or event. Available in 5 variants × 6 semantic colors × 3 sizes. Supports icons, loading states, and full keyboard accessibility.</p>
+    <div class="tag-row">
+      <span class="page-tag tag-stable">Stable</span>
+      <span class="page-tag tag-a11y">WCAG AA</span>
+      <span class="page-tag tag-figma">Figma node 8064-6597</span>
+    </div>
+  </div>
+
+  <!-- 1. Overview -->
+  <section class="section" id="overview">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">Buttons communicate actions. Use one <strong>solid primary</strong> as the main call-to-action per view. Support variants for hierarchy and context — secondary, outlined, or light for alternatives; ghost for low-emphasis inline actions; tinted where subtle prominence is needed.</p>
+    <div class="demo-box">
+      <div class="demo-row">
+        <button type="button" class="btn btn-solid-primary">Save changes</button>
+        <button type="button" class="btn btn-outlined-primary">Cancel</button>
+        <button type="button" class="btn btn-ghost-secondary">Learn more</button>
+        <button type="button" class="btn btn-solid-error">Delete</button>
+        <button type="button" class="btn btn-solid-primary" disabled>Disabled</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Variants -->
+  <section class="section" id="variants">
+    <h2 class="section-title">Variants</h2>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead><tr>
+          <th>Variant</th><th>When to use</th><th>Figma token (primary example)</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><strong>Solid</strong></td><td>Primary action — highest emphasis. One per section.</td><td><code>color/primary-500</code> bg · <code>color/white</code> text</td></tr>
+          <tr><td><strong>Light</strong></td><td>Secondary actions. Softer alternative to solid.</td><td><code>bg/bg-primary-50</code> bg · <code>text/text-primary-500</code></td></tr>
+          <tr><td><strong>Ghost</strong></td><td>Low emphasis — toolbars, inline, tertiary actions.</td><td>Transparent bg · <code>text/text-primary-500</code> · hover: <code>bg/bg-primary-25</code></td></tr>
+          <tr><td><strong>Outlined</strong></td><td>Medium emphasis with clear boundary. Cancel / alternatives.</td><td>Transparent bg · <code>border/border-primary-500</code></td></tr>
+          <tr><td><strong>Tinted</strong></td><td>Medium emphasis, slight fill. Combines outlined + light.</td><td><code>bg/bg-primary-25</code> + <code>border/border-primary-500</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="variant-heading">Solid</p>
+    <div class="demo-box">
+      <div class="demo-row">
+        <button type="button" class="btn btn-solid-primary">Primary</button>
+        <button type="button" class="btn btn-solid-secondary">Secondary</button>
+        <button type="button" class="btn btn-solid-success">Success</button>
+        <button type="button" class="btn btn-solid-info">Info</button>
+        <button type="button" class="btn btn-solid-warning">Warning</button>
+        <button type="button" class="btn btn-solid-error">Error</button>
+        <button type="button" class="btn btn-solid-primary" disabled>Disabled</button>
+      </div>
+    </div>
+
+    <p class="variant-heading">Light</p>
+    <div class="demo-box">
+      <div class="demo-row">
+        <button type="button" class="btn btn-light-primary">Primary</button>
+        <button type="button" class="btn btn-light-secondary">Secondary</button>
+        <button type="button" class="btn btn-light-success">Success</button>
+        <button type="button" class="btn btn-light-info">Info</button>
+        <button type="button" class="btn btn-light-warning">Warning</button>
+        <button type="button" class="btn btn-light-error">Error</button>
+        <button type="button" class="btn btn-light-primary" disabled>Disabled</button>
+      </div>
+    </div>
+
+    <p class="variant-heading">Ghost</p>
+    <div class="demo-box">
+      <div class="demo-row">
+        <button type="button" class="btn btn-ghost-primary">Primary</button>
+        <button type="button" class="btn btn-ghost-secondary">Secondary</button>
+        <button type="button" class="btn btn-ghost-success">Success</button>
+        <button type="button" class="btn btn-ghost-info">Info</button>
+        <button type="button" class="btn btn-ghost-warning">Warning</button>
+        <button type="button" class="btn btn-ghost-error">Error</button>
+        <button type="button" class="btn btn-ghost-primary" disabled>Disabled</button>
+      </div>
+    </div>
+
+    <p class="variant-heading">Outlined</p>
+    <div class="demo-box">
+      <div class="demo-row">
+        <button type="button" class="btn btn-outlined-primary">Primary</button>
+        <button type="button" class="btn btn-outlined-secondary">Secondary</button>
+        <button type="button" class="btn btn-outlined-success">Success</button>
+        <button type="button" class="btn btn-outlined-info">Info</button>
+        <button type="button" class="btn btn-outlined-warning">Warning</button>
+        <button type="button" class="btn btn-outlined-error">Error</button>
+        <button type="button" class="btn btn-outlined-primary" disabled>Disabled</button>
+      </div>
+    </div>
+
+    <p class="variant-heading">Tinted</p>
+    <div class="demo-box">
+      <div class="demo-row">
+        <button type="button" class="btn btn-tinted-primary">Primary</button>
+        <button type="button" class="btn btn-tinted-secondary">Secondary</button>
+        <button type="button" class="btn btn-tinted-success">Success</button>
+        <button type="button" class="btn btn-tinted-info">Info</button>
+        <button type="button" class="btn btn-tinted-warning">Warning</button>
+        <button type="button" class="btn btn-tinted-error">Error</button>
+        <button type="button" class="btn btn-tinted-primary" disabled>Disabled</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Colors -->
+  <section class="section" id="colors">
+    <h2 class="section-title">Semantic Colors</h2>
+    <p class="section-desc">Each color maps to a semantic intent. Always choose the color that reflects the action's meaning — not just aesthetics.</p>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead><tr><th>Color</th><th>Token</th><th>Hex</th><th>When to use</th></tr></thead>
+        <tbody>
+          <tr><td><button type="button" class="btn btn-sm btn-solid-primary">Primary</button></td><td><code>color/primary-500</code></td><td><code>#29294c</code></td><td>Default primary action (Save, Submit, Continue)</td></tr>
+          <tr><td><button type="button" class="btn btn-sm btn-solid-secondary">Secondary</button></td><td><code>color/secondary-500</code></td><td><code>#6941c6</code></td><td>Alternative primary, accent actions</td></tr>
+          <tr><td><button type="button" class="btn btn-sm btn-solid-success">Success</button></td><td><code>color/success-500</code></td><td><code>#12b76a</code></td><td>Confirm, complete, approve, positive outcomes</td></tr>
+          <tr><td><button type="button" class="btn btn-sm btn-solid-info">Info</button></td><td><code>color/info-500</code></td><td><code>#0ba5ec</code></td><td>Informational, help, neutral-next actions</td></tr>
+          <tr><td><button type="button" class="btn btn-sm btn-solid-warning">Warning</button></td><td><code>color/warning-500</code></td><td><code>#f79009</code></td><td>Caution required — proceed with care</td></tr>
+          <tr><td><button type="button" class="btn btn-sm btn-solid-error">Error</button></td><td><code>color/error-500</code></td><td><code>#f04438</code></td><td>Destructive — delete, remove, irreversible</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. States -->
+  <section class="section" id="states">
+    <h2 class="section-title">Interactive States</h2>
+    <p class="section-desc">Every button has 5 states. States are defined per variant × color in Figma. Focus ring uses <code>box-shadow: 0 0 0 3px &lt;color-ring&gt;</code> (no outline).</p>
+    <div class="demo-box">
+      <div class="demo-box-label">Solid Primary — all states</div>
+      <div class="states-grid">
+        <div class="state-item">
+          <button type="button" class="btn btn-solid-primary">Default</button>
+          <span class="state-label">Default</span>
+        </div>
+        <div class="state-item">
+          <button type="button" class="btn btn-solid-primary" style="background:#1e1e38;border-color:#1e1e38;">Hover</button>
+          <span class="state-label">Hover</span>
+        </div>
+        <div class="state-item">
+          <button type="button" class="btn btn-solid-primary" style="background:#1e1e38;border-color:#1e1e38;box-shadow:0 0 0 3px #b9aee9;">Focus</button>
+          <span class="state-label">Focus</span>
+        </div>
+        <div class="state-item">
+          <button type="button" class="btn btn-solid-primary" disabled>Disabled</button>
+          <span class="state-label">Disabled</span>
+        </div>
+        <div class="state-item">
+          <button type="button" class="btn btn-solid-primary" style="background:#9e99c2;border-color:#9e99c2;cursor:not-allowed;">Disabled color</button>
+          <span class="state-label">Disabled color</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Sizes -->
+  <section class="section" id="sizes">
+    <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">Three sizes: <code>sm</code>, <code>md</code> (default), <code>lg</code>. Figma base is md. Use <code>fix-height</code> tokens — do not set height manually.</p>
+    <div class="ds-table-wrap" style="margin-bottom:16px;">
+      <table class="ds-table">
+        <thead><tr>
+          <th>Size</th><th>Height <code>fix-height</code></th><th>Padding <code>v / h</code></th><th>Font <code>font</code></th><th>Gap <code>h-gap</code></th><th>Min width</th><th>Radius</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><strong>sm</strong></td><td>32px</td><td>2px / 12px</td><td>13px</td><td>8px</td><td>56px</td><td>8px</td></tr>
+          <tr><td><strong>md</strong></td><td>36px</td><td>4px / 16px</td><td>14px</td><td>8px</td><td>64px</td><td>8px</td></tr>
+          <tr><td><strong>lg</strong></td><td>40px</td><td>6px / 20px</td><td>15px</td><td>8px</td><td>72px</td><td>8px</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="demo-box">
+      <div class="demo-row" style="align-items:center;">
+        <button type="button" class="btn btn-sm btn-solid-primary">Small</button>
+        <button type="button" class="btn btn-solid-primary">Medium</button>
+        <button type="button" class="btn btn-lg btn-solid-primary">Large</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Icon Placement -->
+  <section class="section" id="icons">
+    <h2 class="section-title">Icon Placement</h2>
+    <p class="section-desc">4 options: no icon, icon left, icon right, icon only. Gap between icon and label is always <code>h-gap = 8px</code>. Icon-only buttons <strong>must</strong> have <code>aria-label</code>.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="demo-box">
+        <div class="demo-box-label">No icon</div>
+        <button type="button" class="btn btn-solid-primary">Save</button>
+      </div>
+      <div class="demo-box">
+        <div class="demo-box-label">Icon left</div>
+        <button type="button" class="btn btn-solid-primary">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Add item
+        </button>
+      </div>
+      <div class="demo-box">
+        <div class="demo-box-label">Icon right</div>
+        <button type="button" class="btn btn-outlined-secondary">
+          Next
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="demo-box">
+        <div class="demo-box-label">Icon only — always set aria-label</div>
+        <div class="demo-row">
+          <button type="button" class="btn btn-solid-primary" aria-label="Close" style="padding:4px 10px;min-width:36px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+          <button type="button" class="btn btn-ghost-secondary" aria-label="Edit" style="padding:4px 10px;min-width:36px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+          </button>
+          <button type="button" class="btn btn-outlined-error" aria-label="Delete" style="padding:4px 10px;min-width:36px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Do / Don't -->
+  <section class="section" id="do-dont">
+    <h2 class="section-title">Do's and Don'ts</h2>
+
+    <div class="do-dont">
+      <div class="do-card">
+        <div class="do-header"><span class="do-icon">✓</span> Do</div>
+        <ul>
+          <li>Use one <strong>solid primary</strong> button per section.</li>
+          <li>Use <strong>outlined or light</strong> for cancel/back alternatives.</li>
+          <li>Use <strong>error/solid</strong> for destructive, irreversible actions.</li>
+          <li>Keep labels short — 1–3 words, sentence case.</li>
+          <li>Always add <code>aria-label</code> on icon-only buttons.</li>
+          <li>Use <code>&lt;button&gt;</code> for actions, <code>&lt;a&gt;</code> for navigation.</li>
+        </ul>
+        <div class="do-demo">
+          <button type="button" class="btn btn-solid-primary">Save</button>
+          <button type="button" class="btn btn-outlined-primary">Cancel</button>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><span class="dont-icon">✕</span> Don't</div>
+        <ul>
+          <li>Don't use multiple solid primary buttons in one view.</li>
+          <li>Don't use <code>div</code> or <code>span</code> with click handlers instead of <code>&lt;button&gt;</code>.</li>
+          <li>Don't omit <code>aria-label</code> on icon-only buttons.</li>
+          <li>Don't use long labels or ALL CAPS text.</li>
+          <li>Don't mix conflicting semantic colors (e.g. error for save).</li>
+          <li>Don't use error style for non-destructive caution — use warning.</li>
+        </ul>
+        <div class="dont-demo">
+          <button type="button" class="btn btn-solid-primary">Save Changes</button>
+          <button type="button" class="btn btn-solid-primary">Submit Form</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="do-dont">
+      <div class="do-card">
+        <div class="do-header"><span class="do-icon">✓</span> Correct hierarchy</div>
+        <ul><li>Primary → solid. Secondary → outlined or light.</li></ul>
+        <div class="do-demo">
+          <button type="button" class="btn btn-solid-success">Approve</button>
+          <button type="button" class="btn btn-outlined-primary">Review later</button>
+          <button type="button" class="btn btn-ghost-primary">Skip</button>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><span class="dont-icon">✕</span> Wrong semantic</div>
+        <ul><li>Don't use error color for safe, reversible actions.</li></ul>
+        <div class="dont-demo">
+          <button type="button" class="btn btn-solid-error">Save draft</button>
+          <button type="button" class="btn btn-solid-error">Send email</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. For Designers -->
+  <section class="section" id="designers">
+    <h2 class="section-title">For Designers</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div class="demo-box">
+        <div class="demo-box-label">Figma properties</div>
+        <div class="spec-row">
+          <span class="spec-chip"><span class="spec-chip-label">variant</span> solid · light · ghost · outlined · tinted</span>
+          <span class="spec-chip"><span class="spec-chip-label">color</span> primary · secondary · success · info · warning · error</span>
+          <span class="spec-chip"><span class="spec-chip-label">state</span> default · hover · focus · disable · disable-color</span>
+          <span class="spec-chip"><span class="spec-chip-label">size</span> sm · md · lg</span>
+          <span class="spec-chip"><span class="spec-chip-label">iconLeft</span> true / false</span>
+          <span class="spec-chip"><span class="spec-chip-label">iconRight</span> true / false</span>
+          <span class="spec-chip"><span class="spec-chip-label">showTag</span> true / false</span>
+        </div>
+      </div>
+      <div class="demo-box">
+        <div class="demo-box-label">Design guidelines</div>
+        <ul style="padding-left:16px;">
+          <li style="font-size:13px;line-height:1.8;color:#344054;">Use auto-layout — never detach button instances.</li>
+          <li style="font-size:13px;line-height:1.8;color:#344054;">Set <code>fix-height</code> via token, not manual height override.</li>
+          <li style="font-size:13px;line-height:1.8;color:#344054;">Minimum 8px gap between adjacent buttons.</li>
+          <li style="font-size:13px;line-height:1.8;color:#344054;">On dark backgrounds use <strong>light / ghost</strong> variants, not solid.</li>
+          <li style="font-size:13px;line-height:1.8;color:#344054;">Use <strong>disable-color</strong> state when button is loading (not plain disable).</li>
+          <li style="font-size:13px;line-height:1.8;color:#344054;">Full-width buttons should only be used on mobile or inside modals.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. For Developers -->
+  <section class="section" id="developers">
+    <h2 class="section-title">For Developers</h2>
+    <div class="a11y-grid" style="margin-bottom:16px;">
+      <div class="a11y-card">
+        <h4>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" stroke="#6941c6" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#6941c6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          HTML semantics
+        </h4>
+        <ul>
+          <li>Use <code>&lt;button&gt;</code> for all actions — never <code>div</code>, <code>span</code>.</li>
+          <li>Set <code>type="button"</code> or <code>type="submit"</code> explicitly.</li>
+          <li>Use <code>&lt;a href&gt;</code> only for actual page navigation.</li>
+          <li>Set <code>disabled</code> attribute when action unavailable.</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#6941c6" stroke-width="1.5"/><path d="M8 5v3.5L10.5 10" stroke="#6941c6" stroke-width="1.5" stroke-linecap="round"/></svg>
+          CSS class naming
+        </h4>
+        <ul>
+          <li>Base: <code>btn</code></li>
+          <li>Variant: <code>btn-solid-*</code> <code>btn-light-*</code> <code>btn-ghost-*</code> <code>btn-outlined-*</code> <code>btn-tinted-*</code></li>
+          <li>Size: <code>btn-sm</code> / <code>btn-lg</code> (md is default)</li>
+          <li>Colors: <code>primary</code> <code>secondary</code> <code>success</code> <code>info</code> <code>warning</code> <code>error</code></li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v3M8 11v3M2 8h3M11 8h3M4.2 4.2l2.1 2.1M9.7 9.7l2.1 2.1M4.2 11.8l2.1-2.1M9.7 6.3l2.1-2.1" stroke="#6941c6" stroke-width="1.5" stroke-linecap="round"/></svg>
+          States
+        </h4>
+        <ul>
+          <li>Use CSS <code>:hover</code>, <code>:focus-visible</code>, <code>:disabled</code>.</li>
+          <li>Focus ring: <code>box-shadow: 0 0 0 3px &lt;ring-color&gt;</code>.</li>
+          <li>Never use <code>outline: none</code> without a visible <code>:focus-visible</code> alternative.</li>
+          <li>Loading: add spinner + <code>aria-busy="true"</code>, set color to disable-color.</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M4 8h8M6 12h4" stroke="#6941c6" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Tokens (CSS variables)
+        </h4>
+        <ul>
+          <li><code>--fix-height</code> — 32 / 36 / 40px</li>
+          <li><code>--h-padding</code> — 12 / 16 / 20px</li>
+          <li><code>--v-padding</code> — 2 / 4 / 6px</li>
+          <li><code>--h-gap</code> — 8px (icon ↔ label)</li>
+          <li><code>--radius</code> — 8px</li>
+          <li><code>--font</code> — 13 / 14 / 15px</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Accessibility -->
+  <section class="section" id="a11y">
+    <h2 class="section-title">Accessibility</h2>
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>⌨️ Keyboard</h4>
+        <ul>
+          <li><kbd>Tab</kbd> — move focus to button</li>
+          <li><kbd>Enter</kbd> / <kbd>Space</kbd> — activate</li>
+          <li>Never set <code>tabindex="-1"</code> on interactive buttons</li>
+          <li>Always show <code>:focus-visible</code> ring</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>🖥️ Screen reader</h4>
+        <ul>
+          <li>Use clear, action-oriented labels ("Save", "Delete survey")</li>
+          <li>Icon-only: always set <code>aria-label</code></li>
+          <li>Decorative icons: set <code>aria-hidden="true"</code></li>
+          <li>Disabled state is announced automatically</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>🎨 Color contrast</h4>
+        <ul>
+          <li>Solid: white text on semantic fill — all meet WCAG AA</li>
+          <li>Light / ghost / outlined / tinted: text uses semantic dark token</li>
+          <li>Disabled: <code>text-disabled</code> on <code>bg-disabled</code> — intentionally lower contrast</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>📱 Touch target</h4>
+        <ul>
+          <li>Minimum 44×44px tap target (WCAG 2.5.5)</li>
+          <li>sm size (32px height) — use only on desktop or with extra padding</li>
+          <li>Icon-only: always at least 36×36px visible + 44×44 touch</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Code -->
+  <section class="section" id="code">
+    <h2 class="section-title">Code — Copy for Developers</h2>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">button.html — all variants</span>
+        <button class="copy-btn" onclick="copyCode(this, 'code-variants')">Copy</button>
+      </div>
+      <div class="code-body">
+        <pre id="code-variants"><span class="c-comment">&lt;!-- SOLID --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">type</span>=<span class="c-val">"button"</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-solid-primary"</span><span class="c-tag">&gt;</span><span class="c-text">Save</span><span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">type</span>=<span class="c-val">"button"</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-solid-error"</span><span class="c-tag">&gt;</span><span class="c-text">Delete</span><span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-comment">&lt;!-- LIGHT --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">type</span>=<span class="c-val">"button"</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-light-primary"</span><span class="c-tag">&gt;</span><span class="c-text">Cancel</span><span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-comment">&lt;!-- GHOST --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">type</span>=<span class="c-val">"button"</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-ghost-secondary"</span><span class="c-tag">&gt;</span><span class="c-text">Skip</span><span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-comment">&lt;!-- OUTLINED --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">type</span>=<span class="c-val">"button"</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-outlined-primary"</span><span class="c-tag">&gt;</span><span class="c-text">Back</span><span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-comment">&lt;!-- TINTED --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">type</span>=<span class="c-val">"button"</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-tinted-success"</span><span class="c-tag">&gt;</span><span class="c-text">Done</span><span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-comment">&lt;!-- DISABLED --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">type</span>=<span class="c-val">"button"</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-solid-primary"</span> <span class="c-attr">disabled</span><span class="c-tag">&gt;</span><span class="c-text">Save</span><span class="c-tag">&lt;/button&gt;</span></pre>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">sizes + icon placement</span>
+        <button class="copy-btn" onclick="copyCode(this, 'code-sizes')">Copy</button>
+      </div>
+      <div class="code-body">
+        <pre id="code-sizes"><span class="c-comment">&lt;!-- Sizes --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-sm btn-solid-primary"</span><span class="c-tag">&gt;</span><span class="c-text">Small</span><span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-solid-primary"</span><span class="c-tag">&gt;</span><span class="c-text">Medium (default)</span><span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-lg btn-solid-primary"</span><span class="c-tag">&gt;</span><span class="c-text">Large</span><span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-comment">&lt;!-- Icon left --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-solid-primary"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;svg</span> <span class="c-attr">aria-hidden</span>=<span class="c-val">"true"</span> <span class="c-tag">…&gt;&lt;/svg&gt;</span>
+  <span class="c-text">Add item</span>
+<span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-comment">&lt;!-- Icon right --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-outlined-primary"</span><span class="c-tag">&gt;</span>
+  <span class="c-text">Next</span>
+  <span class="c-tag">&lt;svg</span> <span class="c-attr">aria-hidden</span>=<span class="c-val">"true"</span> <span class="c-tag">…&gt;&lt;/svg&gt;</span>
+<span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-comment">&lt;!-- Icon only — aria-label required --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"btn btn-solid-primary"</span> <span class="c-attr">aria-label</span>=<span class="c-val">"Close"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;svg</span> <span class="c-attr">aria-hidden</span>=<span class="c-val">"true"</span> <span class="c-tag">…&gt;&lt;/svg&gt;</span>
+<span class="c-tag">&lt;/button&gt;</span></pre>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<script>
+function copyCode(btn, id) {
+  const pre = document.getElementById(id);
+  const text = pre.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

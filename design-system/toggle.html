@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toggle — Pulse Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button { border: none; outline: none; background: none; padding: 0; cursor: pointer; }
+
+:root {
+  --primary-700: #29294c;
+  --primary-600: #545470;
+  --primary-500: #707087;
+  --primary-400: #9d9dad;
+  --primary-300: #bdbdc8;
+  --primary-200: #eaeaed;
+  --primary-100: #f4f4f6;
+  --primary-50:  #f9fafb;
+  --secondary-700: #6941c6;
+  --secondary-600: #7f56d9;
+  --secondary-500: #9e77ed;
+  --secondary-400: #b692f6;
+  --secondary-300: #d6bbfb;
+  --secondary-200: #e9d7fe;
+  --secondary-100: #f4ebff;
+  --secondary-50:  #f9f5ff;
+  --error-700: #d92d20;
+  --error-600: #f04438;
+  --error-100: #fef3f2;
+  --success-700: #039855;
+  --success-600: #12b76a;
+  --success-100: #ecfdf3;
+  --text-primary: #29294c;
+  --text-secondary: #707087;
+  --text-tertiary: #9d9dad;
+  --text-placeholder: #bdbdc8;
+  --text-link: #6941c6;
+  --border-default: #eaeaed;
+  --border-focus: #7f56d9;
+  --bg-page: #f9fafb;
+  --sidebar-w: 240px;
+  --font: 'Inter', sans-serif;
+  --toggle-off-bg: rgba(0, 0, 0, 0.09);
+  --toggle-on-bg: #12b76a;
+}
+
+body { font-family: var(--font); color: var(--text-primary); background: var(--bg-page); display: flex; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar { width: var(--sidebar-w); min-width: var(--sidebar-w); background: #fff; border-right: 1px solid var(--border-default); padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid var(--border-default); margin-bottom: 16px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: var(--primary-700); }
+.sidebar-logo sub { font-size: 10px; color: var(--text-tertiary); font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; border-radius: 0;
+  text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 48px 56px;
+  max-width: 1100px;
+}
+
+/* ── Page header ── */
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text-primary); }
+.breadcrumb-sep { opacity: .4; }
+.page-header { margin-bottom: 40px; }
+.page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+.page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 640px; }
+.page-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+.tag-figma  { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+.tag-wcag   { background: #eff8ff; color: #026aa2; border-color: #b9e6fe; }
+
+/* ── Sections ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; }
+.section-desc  { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+.divider { border: none; border-top: 1px solid var(--border-default); margin: 48px 0; }
+
+/* ── Demo canvas ── */
+.demo-canvas {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 32px;
+}
+.demo-canvas + .demo-canvas { margin-top: 16px; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+.demo-row + .demo-row { margin-top: 24px; }
+.demo-col { display: flex; flex-direction: column; gap: 16px; min-width: 160px; flex: 1; }
+.demo-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text-tertiary); margin-bottom: 8px; }
+
+/* ── Code block ── */
+.code-block { position: relative; background: #1e1e2e; border-radius: 10px; padding: 20px; overflow-x: auto; margin-top: 16px; }
+.code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; color: #cdd6f4; }
+.code-block .token-tag    { color: #89dceb; }
+.code-block .token-attr   { color: #89b4fa; }
+.code-block .token-str    { color: #a6e3a1; }
+.code-block .token-comment { color: #6c7086; font-style: italic; }
+.copy-btn {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  color: #cdd6f4; font-size: 11px; font-family: var(--font); font-weight: 500;
+  padding: 5px 12px; border-radius: 6px; cursor: pointer;
+  transition: background .15s;
+}
+.copy-btn:hover { background: rgba(255,255,255,.15); }
+.copy-btn.copied { color: #a6e3a1; border-color: #a6e3a1; }
+
+/* ── Props table ── */
+.props-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid var(--border-default); border-radius: 10px; overflow: hidden; }
+.props-table th { text-align: left; padding: 10px 14px; background: var(--primary-50); color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border-default); }
+.props-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; line-height: 1.5; }
+.props-table tr:last-child td { border-bottom: none; }
+.props-table code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--primary-100); color: var(--secondary-700); padding: 2px 6px; border-radius: 4px; }
+
+/* ── Do / Don't ── */
+.do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+.do-card, .dont-card { border-radius: 12px; padding: 20px; border: 1.5px solid; }
+.do-card { border-color: #a6f4c5; background: #f6fef9; }
+.dont-card { border-color: #fecdca; background: #fffbfa; }
+.do-header, .dont-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.do-header { color: #027a48; }
+.dont-header { color: #b42318; }
+.do-icon, .dont-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+.do-icon { background: #027a48; color: #fff; }
+.dont-icon { background: #b42318; color: #fff; }
+.do-card p, .dont-card p { font-size: 13px; color: #344054; line-height: 1.6; }
+
+/* ── Anatomy card ── */
+.anatomy-card {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.anatomy-diagram {
+  background: var(--primary-50);
+  border-bottom: 1px solid var(--border-default);
+  padding: 48px 40px 40px;
+  display: flex;
+  justify-content: center;
+}
+.anatomy-parts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: none;
+}
+.anatomy-part {
+  padding: 18px 20px;
+  border-right: 1px solid var(--border-default);
+  border-top: 1px solid var(--border-default);
+}
+.anatomy-part:last-child { border-right: none; }
+.anatomy-part-num {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--secondary-600); color: #fff;
+  font-size: 10px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 8px;
+}
+.anatomy-part-name { font-size: 12px; font-weight: 600; color: var(--primary-700); margin-bottom: 4px; }
+.anatomy-part-token { font-size: 11px; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; background: var(--primary-100); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 4px; }
+.anatomy-part-desc { font-size: 11px; color: var(--text-tertiary); line-height: 1.5; margin-top: 4px; }
+
+/* ── States grid ── */
+.states-matrix { border: 1px solid var(--border-default); border-radius: 12px; overflow: hidden; }
+.states-matrix-header { display: grid; background: var(--primary-50); border-bottom: 1px solid var(--border-default); }
+.states-matrix-row    { display: grid; border-bottom: 1px solid var(--border-default); }
+.states-matrix-row:last-child { border-bottom: none; }
+.states-matrix-cell { padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
+.states-matrix-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-tertiary); }
+.states-matrix-row-label { font-size: 13px; font-weight: 600; color: var(--text-primary); padding: 16px 20px; display: flex; align-items: center; border-right: 1px solid var(--border-default); }
+
+/* ── Accessibility cards ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ── For designers / devs ── */
+.for-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.for-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 20px; }
+.for-card h4 { font-size: 14px; font-weight: 600; color: var(--primary-700); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.for-card ul { padding-left: 16px; }
+.for-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ── Notification panel ── */
+.notif-panel { background: #fff; border: 1px solid var(--border-default); border-radius: 12px; overflow: hidden; max-width: 480px; }
+.notif-panel-header { padding: 16px 20px; border-bottom: 1px solid var(--border-default); }
+.notif-panel-header h3 { font-size: 14px; font-weight: 600; color: var(--primary-700); }
+.notif-panel-header p { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.notif-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-default); }
+.notif-item:last-child { border-bottom: none; }
+.notif-item-text h4 { font-size: 13px; font-weight: 500; color: var(--primary-700); }
+.notif-item-text p  { font-size: 12px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
+
+/* ═══════════════════════════════════════
+   TOGGLE COMPONENT STYLES
+   Source: Figma node 975-2864
+═══════════════════════════════════════ */
+
+/* Base toggle — wraps track + thumb */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+}
+.toggle.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Hide native input */
+.toggle input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Track */
+.toggle-track {
+  position: relative;
+  border-radius: 999px;
+  background: var(--toggle-off-bg);
+  /* Off-state inset shadow from Figma */
+  box-shadow: inset 0 0 1px 0 rgba(0,0,0,0.02), inset 0 0.5px 1.5px 0 rgba(0,0,0,0.12);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Gradient depth overlay on on-state track (Figma mix-blend-overlay) */
+.toggle-track::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(102,102,102,0.75) 0%, rgba(102,102,102,0) 67.708%);
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.toggle.is-on .toggle-track::before { opacity: 1; }
+
+/* Thumb */
+.toggle-thumb {
+  position: absolute;
+  top: 50%;
+  background: #fff;
+  border-radius: 50%;
+  /* Shadow/sm token from Figma: two drop shadows */
+  box-shadow: 0 1px 2px rgba(16,24,40,0.06), 0 1px 3px rgba(16,24,40,0.10);
+  transition: transform 0.2s ease;
+  transform: translateY(-50%) translateX(0);
+  z-index: 2;
+}
+
+/* Sizes */
+
+/* sm: 28×16px track, 12px thumb, 2px inset */
+.toggle.size-sm .toggle-track { width: 28px; height: 16px; }
+.toggle.size-sm .toggle-thumb { width: 12px; height: 12px; left: 2px; }
+.toggle.size-sm.is-on .toggle-thumb { transform: translateY(-50%) translateX(12px); }
+
+/* md: 36×20px track, 16px thumb, 2px inset */
+.toggle.size-md .toggle-track { width: 36px; height: 20px; }
+.toggle.size-md .toggle-thumb { width: 16px; height: 16px; left: 2px; }
+.toggle.size-md.is-on .toggle-thumb { transform: translateY(-50%) translateX(16px); }
+
+/* lg: 44×24px track, 20px thumb, 2px inset */
+.toggle.size-lg .toggle-track { width: 44px; height: 24px; }
+.toggle.size-lg .toggle-thumb { width: 20px; height: 20px; left: 2px; }
+.toggle.size-lg.is-on .toggle-thumb { transform: translateY(-50%) translateX(20px); }
+
+/* On state */
+.toggle.is-on .toggle-track {
+  background: var(--toggle-on-bg);
+  /* On-state inset shadow from Figma */
+  box-shadow: inset 0 0.5px 2.5px 0 rgba(102,102,102,0.75);
+}
+
+/* Disabled state — both on and off use same gray track + stronger inset shadow */
+.toggle.is-disabled .toggle-track {
+  box-shadow: inset 0 0 2px 2px rgba(0,0,0,0.02), inset 0 0 1.5px 0.35px rgba(0,0,0,0.12);
+}
+.toggle.is-disabled.is-on .toggle-track {
+  /* On+Disabled: gray track (not green) per Figma */
+  background: var(--toggle-off-bg);
+}
+.toggle.is-disabled.is-on .toggle-track::before { opacity: 0; }
+
+/* Focus ring */
+.toggle:focus-visible .toggle-track,
+.toggle:focus-within .toggle-track {
+  box-shadow: inset 0 0 1px 0 rgba(0,0,0,0.02), inset 0 0.5px 1.5px 0 rgba(0,0,0,0.12), 0 0 0 3px rgba(127,86,217,.12);
+}
+.toggle.is-on:focus-visible .toggle-track,
+.toggle.is-on:focus-within .toggle-track {
+  box-shadow: inset 0 0.5px 2.5px 0 rgba(102,102,102,0.75), 0 0 0 3px rgba(18,183,106,.2);
+}
+
+/* Toggle with label wrapper */
+.toggle-wrap {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+.toggle-wrap.is-disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+.toggle-label-wrap { display: flex; flex-direction: column; gap: 2px; }
+.toggle-label { font-size: 14px; font-weight: 500; color: var(--text-primary); line-height: 1.4; }
+.toggle-supporting { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link active">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Components</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Toggle</span>
+  </div>
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Purple document gradient -->
+        <linearGradient id="doc-toggle" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#b8a0ff"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <!-- Folder dark gradient -->
+        <linearGradient id="fld-toggle" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2d2d50"/>
+          <stop offset="100%" stop-color="#12122a"/>
+        </linearGradient>
+        <!-- Purple inner glow -->
+        <radialGradient id="glow-toggle" cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
+          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Top shine -->
+        <linearGradient id="shine-toggle" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- Folder drop shadow -->
+        <filter id="fs-toggle" x="-18%" y="-12%" width="136%" height="136%">
+          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
+        </filter>
+        <!-- Text glow -->
+        <filter id="tg-toggle" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="2.8" result="blur"/>
+          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
+          <feComposite in="c" in2="blur" operator="in" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── Purple document peeking behind folder ── -->
+      <g transform="rotate(12, 141, 46)" opacity="0.97">
+        <!-- Document body -->
+        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-toggle)"/>
+        <!-- Folded corner (lighter) -->
+        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
+        <!-- Folded corner (shadow) -->
+        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
+      </g>
+
+      <!-- ── Dark glass folder ── -->
+      <!-- Single path: full folder shape (tab + body as one outline) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#fld-toggle)"
+            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            filter="url(#fs-toggle)"/>
+
+      <!-- Purple glow inside (same path, no stroke/shadow) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#glow-toggle)"/>
+
+      <!-- Top glass shine strip -->
+      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-toggle)"/>
+
+      <!-- Component name text -->
+      <text x="100" y="132"
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.93)"
+            font-family="Inter, system-ui, -apple-system, sans-serif"
+            font-size="16" font-weight="800"
+            letter-spacing="1.6"
+            textLength="76" lengthAdjust="spacingAndGlyphs"
+            filter="url(#tg-toggle)">TOGGLE</text>
+
+      <!-- Subtle underline below name -->
+      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
+    </svg>
+  </div>
+    <h1 class="page-title">Toggle</h1>
+    <p class="page-subtitle">Toggles let users switch a setting immediately between on and off. Unlike checkboxes, they apply the change instantly — no submit action required. Use them for real-time preference changes, feature flags, and notification settings.</p>
+    <div class="page-tags">
+      <span class="tag tag-stable">Stable</span>
+      <span class="tag tag-wcag">WCAG AA</span>
+      <span class="tag tag-figma">Figma · 975-2864</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── OVERVIEW ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">All three sizes live side-by-side below. Click any toggle to see the smooth animated transition. The green "on" state uses the success-600 token (#12b76a).</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="align-items:center;gap:48px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <div class="demo-label">sm</div>
+          <button class="toggle size-sm is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Small toggle example">
+            <input type="checkbox" checked>
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <div class="demo-label">md</div>
+          <button class="toggle size-md is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Medium toggle example">
+            <input type="checkbox" checked>
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <div class="demo-label">lg</div>
+          <button class="toggle size-lg interactive-toggle" role="switch" aria-checked="false" aria-label="Large toggle example">
+            <input type="checkbox">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </button>
+        </div>
+        <div style="flex:1;max-width:320px;">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">Click any toggle to see the animated state change. The thumb slides smoothly across the track with a 0.2s ease transition. The track background fades between gray (off) and green (on).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── ANATOMY ───────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Anatomy</h2>
+    <p class="section-desc">The toggle is composed of a track, a thumb, and an optional label group. The diagram below annotates every measurable part of the medium-size toggle in both states.</p>
+
+    <div class="anatomy-card">
+
+      <!-- SVG diagram -->
+      <div class="anatomy-diagram">
+        <svg viewBox="0 0 760 300" width="100%" style="max-width:760px;overflow:visible;" aria-hidden="true">
+          <defs>
+            <!-- Arrowhead marker -->
+            <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#7f56d9"/>
+            </marker>
+            <marker id="arr-rev" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto">
+              <path d="M6,0 L0,3 L6,6 Z" fill="#7f56d9"/>
+            </marker>
+            <!-- Thumb drop shadow filter -->
+            <filter id="thumb-shadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="rgba(16,24,40,0.10)"/>
+              <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="rgba(16,24,40,0.06)"/>
+            </filter>
+          </defs>
+
+          <!-- ─── OFF STATE (left) ─────────────────────── -->
+          <text x="148" y="32" text-anchor="middle" fill="#9d9dad" font-size="11" font-weight="600" font-family="Inter,sans-serif" letter-spacing="0.08em">OFF STATE</text>
+
+          <!-- Track (off) — 4× scale: 36×20 → 144×80 -->
+          <rect x="76" y="100" width="144" height="80" rx="40" fill="rgba(0,0,0,0.09)" stroke="#d0d5dd" stroke-width="1"/>
+          <!-- Inset shadow hint line -->
+          <rect x="76" y="100" width="144" height="80" rx="40" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="2" stroke-dasharray="4,3" opacity="0.6"/>
+          <!-- Thumb (off) — left: 2px offset → 8px at 4×, r=32 -->
+          <circle cx="116" cy="140" r="32" fill="white" filter="url(#thumb-shadow)" stroke="#eaeaed" stroke-width="0.5"/>
+
+          <!-- ── Callout: 1 — Track ── -->
+          <circle cx="148" cy="100" r="3" fill="#7f56d9"/>
+          <line x1="148" y1="100" x2="148" y2="64" stroke="#7f56d9" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="148" y1="64" x2="260" y2="64" stroke="#7f56d9" stroke-width="1"/>
+          <circle cx="262" cy="64" r="10" fill="#7f56d9"/>
+          <text x="262" y="68" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter,sans-serif">1</text>
+
+          <!-- ── Callout: 2 — Thumb ── -->
+          <circle cx="116" cy="108" r="3" fill="#7f56d9"/>
+          <line x1="116" y1="108" x2="116" y2="72" stroke="#7f56d9" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="116" y1="72" x2="54" y2="72" stroke="#7f56d9" stroke-width="1"/>
+          <circle cx="52" cy="72" r="10" fill="#7f56d9"/>
+          <text x="52" y="76" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter,sans-serif">2</text>
+
+          <!-- ── Callout: 3 — Inset shadow ── -->
+          <circle cx="108" cy="104" r="3" fill="#7f56d9"/>
+          <line x1="108" y1="104" x2="44" y2="104" stroke="#7f56d9" stroke-width="1" stroke-dasharray="3,2"/>
+          <circle cx="42" cy="104" r="10" fill="#7f56d9"/>
+          <text x="42" y="108" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter,sans-serif">3</text>
+
+          <!-- ── Dimension: 2px offset ── -->
+          <line x1="76" y1="195" x2="84" y2="195" stroke="#7f56d9" stroke-width="1" marker-end="url(#arr)"/>
+          <line x1="116" y1="195" x2="108" y2="195" stroke="#7f56d9" stroke-width="1" marker-end="url(#arr)"/>
+          <line x1="76" y1="188" x2="76" y2="202" stroke="#7f56d9" stroke-width="1"/>
+          <line x1="116" y1="188" x2="116" y2="202" stroke="#7f56d9" stroke-width="1"/>
+          <text x="96" y="214" text-anchor="middle" fill="#6941c6" font-size="10" font-weight="600" font-family="Inter,sans-serif">2px offset</text>
+
+          <!-- ── Dimension: 36px width ── -->
+          <line x1="76" y1="232" x2="220" y2="232" stroke="#7f56d9" stroke-width="1"/>
+          <line x1="76" y1="226" x2="76" y2="238" stroke="#7f56d9" stroke-width="1"/>
+          <line x1="220" y1="226" x2="220" y2="238" stroke="#7f56d9" stroke-width="1"/>
+          <text x="148" y="248" text-anchor="middle" fill="#6941c6" font-size="10" font-weight="600" font-family="Inter,sans-serif">36px</text>
+
+          <!-- ── Dimension: 20px height ── -->
+          <line x1="52" y1="100" x2="52" y2="180" stroke="#7f56d9" stroke-width="1"/>
+          <line x1="46" y1="100" x2="58" y2="100" stroke="#7f56d9" stroke-width="1"/>
+          <line x1="46" y1="180" x2="58" y2="180" stroke="#7f56d9" stroke-width="1"/>
+          <text x="38" y="144" text-anchor="middle" fill="#6941c6" font-size="10" font-weight="600" font-family="Inter,sans-serif" transform="rotate(-90,38,144)">20px</text>
+
+          <!-- ─── ON STATE (right) ─────────────────────── -->
+          <text x="548" y="32" text-anchor="middle" fill="#9d9dad" font-size="11" font-weight="600" font-family="Inter,sans-serif" letter-spacing="0.08em">ON STATE</text>
+
+          <!-- Track (on) -->
+          <rect x="476" y="100" width="144" height="80" rx="40" fill="#12b76a"/>
+          <!-- Overlay gradient (Figma mix-blend-overlay) -->
+          <rect x="476" y="100" width="144" height="80" rx="40" fill="url(#onOverlay)" opacity="0.3"/>
+          <defs>
+            <linearGradient id="onOverlay" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#666" stop-opacity="0.75"/>
+              <stop offset="67%" stop-color="#666" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Thumb (on) — travel 16px → 64px at 4× -->
+          <circle cx="580" cy="140" r="32" fill="white" filter="url(#thumb-shadow)" stroke="#eaeaed" stroke-width="0.5"/>
+
+          <!-- ── Callout: 4 — On-state fill ── -->
+          <circle cx="510" cy="140" r="3" fill="#7f56d9"/>
+          <line x1="510" y1="140" x2="430" y2="140" stroke="#7f56d9" stroke-width="1" stroke-dasharray="3,2"/>
+          <circle cx="428" cy="140" r="10" fill="#7f56d9"/>
+          <text x="428" y="144" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter,sans-serif">4</text>
+
+          <!-- ── Callout: 5 — Thumb shadow ── -->
+          <circle cx="580" cy="108" r="3" fill="#7f56d9"/>
+          <line x1="580" y1="108" x2="580" y2="64" stroke="#7f56d9" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="580" y1="64" x2="660" y2="64" stroke="#7f56d9" stroke-width="1"/>
+          <circle cx="662" cy="64" r="10" fill="#7f56d9"/>
+          <text x="662" y="68" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter,sans-serif">5</text>
+
+          <!-- ── Callout: 6 — Focus ring (shown as dashed outline) ── -->
+          <rect x="464" y="88" width="168" height="104" rx="52" fill="none" stroke="rgba(127,86,217,0.3)" stroke-width="10" stroke-dasharray="5,3"/>
+          <circle cx="620" cy="88" r="3" fill="#7f56d9"/>
+          <line x1="620" y1="88" x2="670" y2="56" stroke="#7f56d9" stroke-width="1" stroke-dasharray="3,2"/>
+          <circle cx="672" cy="54" r="10" fill="#7f56d9"/>
+          <text x="672" y="58" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter,sans-serif">6</text>
+
+          <!-- ── Dimension: 16px thumb diameter ── -->
+          <line x1="548" y1="172" x2="548" y2="195" stroke="#7f56d9" stroke-width="1"/>
+          <line x1="612" y1="172" x2="612" y2="195" stroke="#7f56d9" stroke-width="1"/>
+          <line x1="548" y1="195" x2="612" y2="195" stroke="#7f56d9" stroke-width="1"/>
+          <line x1="548" y1="189" x2="548" y2="201" stroke="#7f56d9" stroke-width="1"/>
+          <line x1="612" y1="189" x2="612" y2="201" stroke="#7f56d9" stroke-width="1"/>
+          <text x="580" y="214" text-anchor="middle" fill="#6941c6" font-size="10" font-weight="600" font-family="Inter,sans-serif">16px Ø</text>
+
+          <!-- ── Dimension: travel 16px ── -->
+          <line x1="116" y1="232" x2="180" y2="232" stroke="#12b76a" stroke-width="1" stroke-dasharray="2,2"/>
+          <line x1="476" y1="246" x2="580" y2="246" stroke="#12b76a" stroke-width="1.5"/>
+          <line x1="476" y1="240" x2="476" y2="252" stroke="#12b76a" stroke-width="1.5"/>
+          <line x1="580" y1="240" x2="580" y2="252" stroke="#12b76a" stroke-width="1.5"/>
+          <text x="528" y="264" text-anchor="middle" fill="#039855" font-size="10" font-weight="600" font-family="Inter,sans-serif">travel: 16px</text>
+
+          <!-- State labels under each toggle -->
+          <text x="148" y="280" text-anchor="middle" fill="#9d9dad" font-size="11" font-family="Inter,sans-serif">rgba(0,0,0,.09) · thumb left: 2px</text>
+          <text x="548" y="280" text-anchor="middle" fill="#9d9dad" font-size="11" font-family="Inter,sans-serif">#12b76a · thumb right: 2px</text>
+        </svg>
+      </div>
+
+      <!-- Part descriptions -->
+      <div class="anatomy-parts">
+        <div class="anatomy-part">
+          <div class="anatomy-part-num">1</div>
+          <div class="anatomy-part-name">Track</div>
+          <div class="anatomy-part-token">--toggle-off-bg</div>
+          <div class="anatomy-part-desc">Pill-shaped container. Off: <code style="font-size:10px;font-family:monospace;">rgba(0,0,0,.09)</code>. On: <code style="font-size:10px;font-family:monospace;">#12b76a</code>. Inset shadow gives tactile depth.</div>
+        </div>
+        <div class="anatomy-part">
+          <div class="anatomy-part-num">2</div>
+          <div class="anatomy-part-name">Thumb</div>
+          <div class="anatomy-part-token">bg: #ffffff</div>
+          <div class="anatomy-part-desc">White circle. Always 2px inset from track edge. Drops 2-layer shadow: <code style="font-size:10px;font-family:monospace;">0 1px 2px</code> + <code style="font-size:10px;font-family:monospace;">0 1px 3px</code>.</div>
+        </div>
+        <div class="anatomy-part">
+          <div class="anatomy-part-num">3</div>
+          <div class="anatomy-part-name">Inset Shadow</div>
+          <div class="anatomy-part-token">inset box-shadow</div>
+          <div class="anatomy-part-desc">Off: <code style="font-size:10px;font-family:monospace;">inset 0 0.5px 1.5px rgba(0,0,0,.12)</code>. On: <code style="font-size:10px;font-family:monospace;">inset 0 0.5px 2.5px rgba(102,102,102,.75)</code>.</div>
+        </div>
+        <div class="anatomy-part">
+          <div class="anatomy-part-num">4</div>
+          <div class="anatomy-part-name">On-State Fill</div>
+          <div class="anatomy-part-token">--toggle-on-bg</div>
+          <div class="anatomy-part-desc">Uses the <strong>success-600</strong> token. Do not substitute. A gradient overlay (<code style="font-size:10px;font-family:monospace;">mix-blend-mode: overlay</code>) adds depth.</div>
+        </div>
+        <div class="anatomy-part" style="border-top:1px solid var(--border-default);">
+          <div class="anatomy-part-num">5</div>
+          <div class="anatomy-part-name">Thumb Shadow</div>
+          <div class="anatomy-part-token">Shadow/sm</div>
+          <div class="anatomy-part-desc">Two-layer drop shadow token. Gives the thumb tactile elevation above the track in all states.</div>
+        </div>
+        <div class="anatomy-part" style="border-top:1px solid var(--border-default);">
+          <div class="anatomy-part-num">6</div>
+          <div class="anatomy-part-name">Focus Ring</div>
+          <div class="anatomy-part-token">box-shadow</div>
+          <div class="anatomy-part-desc">Off: <code style="font-size:10px;font-family:monospace;">0 0 0 3px rgba(127,86,217,.12)</code>. On: <code style="font-size:10px;font-family:monospace;">0 0 0 3px rgba(18,183,106,.2)</code>. Uses <code style="font-size:10px;font-family:monospace;">:focus-visible</code>.</div>
+        </div>
+        <div class="anatomy-part" style="border-top:1px solid var(--border-default);">
+          <div class="anatomy-part-num">7</div>
+          <div class="anatomy-part-name">Label</div>
+          <div class="anatomy-part-token">toggle-label</div>
+          <div class="anatomy-part-desc">14px / 500 weight / <code style="font-size:10px;font-family:monospace;">#29294c</code>. Optional. Always required for accessibility — use <code style="font-size:10px;font-family:monospace;">aria-label</code> if hidden.</div>
+        </div>
+        <div class="anatomy-part" style="border-top:1px solid var(--border-default);">
+          <div class="anatomy-part-num">8</div>
+          <div class="anatomy-part-name">Supporting Text</div>
+          <div class="anatomy-part-token">toggle-supporting</div>
+          <div class="anatomy-part-desc">12px / 400 weight / <code style="font-size:10px;font-family:monospace;">#707087</code>. Optional secondary description below the label. 2px gap below label.</div>
+        </div>
+      </div>
+
+      <!-- Size token table -->
+      <div style="padding:20px 24px;border-top:1px solid var(--border-default);background:var(--primary-50);">
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:12px;">Size tokens — all three variants</p>
+        <table class="props-table" style="background:#fff;">
+          <thead>
+            <tr><th>Size</th><th>Track W</th><th>Track H</th><th>Thumb Ø</th><th>Inset offset</th><th>Travel</th><th>Use case</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>sm</code></td><td>28px</td><td>16px</td><td>12px</td><td>2px</td><td>12px</td>
+              <td style="color:var(--text-secondary);">Dense tables, compact settings rows</td>
+            </tr>
+            <tr>
+              <td><code>md</code> <span style="font-size:10px;color:var(--text-tertiary);">default</span></td><td>36px</td><td>20px</td><td>16px</td><td>2px</td><td>16px</td>
+              <td style="color:var(--text-secondary);">Settings pages, preference panels</td>
+            </tr>
+            <tr>
+              <td><code>lg</code></td><td>44px</td><td>24px</td><td>20px</td><td>2px</td><td>20px</td>
+              <td style="color:var(--text-secondary);">Mobile-first, onboarding, prominent flags</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── SIZES ─────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">Three sizes cover the full range of density contexts, from compact settings panels to mobile-first preference screens.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">sm — 28×16px</div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button class="toggle size-sm interactive-toggle" role="switch" aria-checked="false" aria-label="Small off">
+              <input type="checkbox">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span style="font-size:13px;color:var(--text-secondary);">Off</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button class="toggle size-sm is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Small on">
+              <input type="checkbox" checked>
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span style="font-size:13px;color:var(--text-secondary);">On</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Track: 28×16px · Thumb: 12×12px · Offset: 2px</p>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Use in dense data tables, compact settings rows, action bars</p>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">md — 36×20px (default)</div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button class="toggle size-md interactive-toggle" role="switch" aria-checked="false" aria-label="Medium off">
+              <input type="checkbox">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span style="font-size:13px;color:var(--text-secondary);">Off</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button class="toggle size-md is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Medium on">
+              <input type="checkbox" checked>
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span style="font-size:13px;color:var(--text-secondary);">On</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Track: 36×20px · Thumb: 16×16px · Offset: 2px</p>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Default for most settings, preference pages, notification lists</p>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">lg — 44×24px</div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button class="toggle size-lg interactive-toggle" role="switch" aria-checked="false" aria-label="Large off">
+              <input type="checkbox">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span style="font-size:13px;color:var(--text-secondary);">Off</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button class="toggle size-lg is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Large on">
+              <input type="checkbox" checked>
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span style="font-size:13px;color:var(--text-secondary);">On</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Track: 44×24px · Thumb: 20×20px · Offset: 2px</p>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Use in mobile-first layouts, onboarding, prominent feature flags</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <table class="props-table">
+        <thead>
+          <tr><th>Size</th><th>Track</th><th>Thumb</th><th>Travel distance</th><th>Use case</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>sm</code></td><td>28×16px</td><td>12×12px</td><td>12px</td><td>Dense UIs, data tables, compact action bars</td></tr>
+          <tr><td><code>md</code></td><td>36×20px</td><td>16×16px</td><td>16px</td><td>Default for settings, preferences, notification panels</td></tr>
+          <tr><td><code>lg</code></td><td>44×24px</td><td>20×20px</td><td>20px</td><td>Mobile-first flows, prominent on/off features, onboarding</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── STATES ─────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">States</h2>
+    <p class="section-desc">Two behavioral states × two interactive states = four cells per size. Disabled toggles render at 40% opacity and are fully non-interactive.</p>
+
+    <!-- sm row -->
+    <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:12px;">sm (28×16px)</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">Off — Default</div>
+        <button class="toggle size-sm interactive-toggle" role="switch" aria-checked="false" aria-label="sm off default">
+          <input type="checkbox">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Bg: rgba(0,0,0,.09)</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">On — Default</div>
+        <button class="toggle size-sm is-on interactive-toggle" role="switch" aria-checked="true" aria-label="sm on default">
+          <input type="checkbox" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Bg: #12b76a</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">Off — Disabled</div>
+        <button class="toggle size-sm is-disabled" role="switch" aria-checked="false" aria-disabled="true" aria-label="sm off disabled">
+          <input type="checkbox" disabled>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Opacity 0.4</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">On — Disabled</div>
+        <button class="toggle size-sm is-on is-disabled" role="switch" aria-checked="true" aria-disabled="true" aria-label="sm on disabled">
+          <input type="checkbox" checked disabled>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Opacity 0.4</p>
+      </div>
+    </div>
+
+    <!-- md row -->
+    <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:12px;">md (36×20px)</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">Off — Default</div>
+        <button class="toggle size-md interactive-toggle" role="switch" aria-checked="false" aria-label="md off default">
+          <input type="checkbox">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Bg: rgba(0,0,0,.09)</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">On — Default</div>
+        <button class="toggle size-md is-on interactive-toggle" role="switch" aria-checked="true" aria-label="md on default">
+          <input type="checkbox" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Bg: #12b76a</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">Off — Disabled</div>
+        <button class="toggle size-md is-disabled" role="switch" aria-checked="false" aria-disabled="true" aria-label="md off disabled">
+          <input type="checkbox" disabled>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Opacity 0.4</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">On — Disabled</div>
+        <button class="toggle size-md is-on is-disabled" role="switch" aria-checked="true" aria-disabled="true" aria-label="md on disabled">
+          <input type="checkbox" checked disabled>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Opacity 0.4</p>
+      </div>
+    </div>
+
+    <!-- lg row -->
+    <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:12px;">lg (44×24px)</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">Off — Default</div>
+        <button class="toggle size-lg interactive-toggle" role="switch" aria-checked="false" aria-label="lg off default">
+          <input type="checkbox">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Bg: rgba(0,0,0,.09)</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">On — Default</div>
+        <button class="toggle size-lg is-on interactive-toggle" role="switch" aria-checked="true" aria-label="lg on default">
+          <input type="checkbox" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Bg: #12b76a</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">Off — Disabled</div>
+        <button class="toggle size-lg is-disabled" role="switch" aria-checked="false" aria-disabled="true" aria-label="lg off disabled">
+          <input type="checkbox" disabled>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Opacity 0.4</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);">On — Disabled</div>
+        <button class="toggle size-lg is-on is-disabled" role="switch" aria-checked="true" aria-disabled="true" aria-label="lg on disabled">
+          <input type="checkbox" checked disabled>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </button>
+        <p style="font-size:11px;color:var(--text-tertiary);">Opacity 0.4</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── WITH LABEL ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">With Label</h2>
+    <p class="section-desc">Toggles should almost always have a visible label. Supporting text adds a secondary description below the label for additional context.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">Right label (default)</div>
+          <label class="toggle-wrap">
+            <button class="toggle size-md interactive-toggle" role="switch" aria-checked="false" aria-label="Dark mode">
+              <input type="checkbox">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span class="toggle-label-wrap">
+              <span class="toggle-label">Dark mode</span>
+            </span>
+          </label>
+          <label class="toggle-wrap">
+            <button class="toggle size-md is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Auto-save">
+              <input type="checkbox" checked>
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span class="toggle-label-wrap">
+              <span class="toggle-label">Auto-save</span>
+            </span>
+          </label>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Standard layout. Toggle on the left, label on the right.</p>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Label + supporting text</div>
+          <label class="toggle-wrap" style="align-items:flex-start;">
+            <button class="toggle size-md is-on interactive-toggle" role="switch" aria-checked="true" style="margin-top:2px;" aria-label="Email notifications">
+              <input type="checkbox" checked>
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span class="toggle-label-wrap">
+              <span class="toggle-label">Email notifications</span>
+              <span class="toggle-supporting">Receive weekly digest and activity updates</span>
+            </span>
+          </label>
+          <label class="toggle-wrap" style="align-items:flex-start;">
+            <button class="toggle size-md interactive-toggle" role="switch" aria-checked="false" style="margin-top:2px;" aria-label="Two-factor authentication">
+              <input type="checkbox">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span class="toggle-label-wrap">
+              <span class="toggle-label">Two-factor authentication</span>
+              <span class="toggle-supporting">Adds an extra layer of security to your account</span>
+            </span>
+          </label>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Supporting text at 12px in --text-secondary color.</p>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Left label</div>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:220px;">
+              <span class="toggle-label">Notifications</span>
+              <button class="toggle size-md is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Notifications">
+                <input type="checkbox" checked>
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:220px;">
+              <span class="toggle-label">Analytics</span>
+              <button class="toggle size-md interactive-toggle" role="switch" aria-checked="false" aria-label="Analytics">
+                <input type="checkbox">
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:220px;">
+              <span class="toggle-label" style="opacity:.5;">Marketing</span>
+              <button class="toggle size-md is-disabled" role="switch" aria-checked="false" aria-disabled="true" aria-label="Marketing">
+                <input type="checkbox" disabled>
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </button>
+            </div>
+          </div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Use in settings rows where space is constrained.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── TOGGLE GROUP ─────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Toggle Group</h2>
+    <p class="section-desc">Real-world example: a notification settings panel. All toggles are interactive. Each operates independently.</p>
+
+    <div class="demo-canvas">
+      <div class="notif-panel">
+        <div class="notif-panel-header">
+          <h3>Notification preferences</h3>
+          <p>Manage how and when we contact you</p>
+        </div>
+
+        <div class="notif-item">
+          <div class="notif-item-text">
+            <h4>Email notifications</h4>
+            <p>Weekly digest, product updates, and account alerts</p>
+          </div>
+          <button class="toggle size-md is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Email notifications">
+            <input type="checkbox" checked>
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </button>
+        </div>
+
+        <div class="notif-item">
+          <div class="notif-item-text">
+            <h4>Push notifications</h4>
+            <p>Real-time alerts in your browser or mobile app</p>
+          </div>
+          <button class="toggle size-md is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Push notifications">
+            <input type="checkbox" checked>
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </button>
+        </div>
+
+        <div class="notif-item">
+          <div class="notif-item-text">
+            <h4>SMS alerts</h4>
+            <p>Critical security and billing notifications only</p>
+          </div>
+          <button class="toggle size-md interactive-toggle" role="switch" aria-checked="false" aria-label="SMS alerts">
+            <input type="checkbox">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </button>
+        </div>
+
+        <div class="notif-item">
+          <div class="notif-item-text">
+            <h4>Marketing emails</h4>
+            <p>Tips, offers, and feature announcements</p>
+          </div>
+          <button class="toggle size-md interactive-toggle" role="switch" aria-checked="false" aria-label="Marketing emails">
+            <input type="checkbox">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </button>
+        </div>
+
+        <div class="notif-item">
+          <div class="notif-item-text">
+            <h4>Slack integration</h4>
+            <p>Requires workspace connection — contact admin</p>
+          </div>
+          <button class="toggle size-md is-disabled" role="switch" aria-checked="false" aria-disabled="true" aria-label="Slack integration — unavailable">
+            <input type="checkbox" disabled>
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── PROPS TABLE ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Props</h2>
+    <p class="section-desc">All configurable properties of the Toggle component.</p>
+
+    <table class="props-table">
+      <thead>
+        <tr>
+          <th>Prop</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Values</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>size</code></td>
+          <td>string</td>
+          <td><code>"md"</code></td>
+          <td><code>"sm"</code> <code>"md"</code> <code>"lg"</code></td>
+          <td>Controls track and thumb dimensions. sm=28×16, md=36×20, lg=44×24.</td>
+        </tr>
+        <tr>
+          <td><code>checked</code> / <code>isOn</code></td>
+          <td>boolean</td>
+          <td><code>false</code></td>
+          <td><code>true</code> <code>false</code></td>
+          <td>Whether the toggle is in the "on" state. Drives track color and thumb position.</td>
+        </tr>
+        <tr>
+          <td><code>disabled</code></td>
+          <td>boolean</td>
+          <td><code>false</code></td>
+          <td><code>true</code> <code>false</code></td>
+          <td>Renders at 40% opacity. Sets <code>cursor: not-allowed</code> and removes pointer events.</td>
+        </tr>
+        <tr>
+          <td><code>label</code></td>
+          <td>string</td>
+          <td>—</td>
+          <td>Any text</td>
+          <td>Visible label text. Should also be set as <code>aria-label</code> when no visible label is used.</td>
+        </tr>
+        <tr>
+          <td><code>supportingText</code></td>
+          <td>string</td>
+          <td>—</td>
+          <td>Any text</td>
+          <td>Secondary descriptive text shown at 12px below the label.</td>
+        </tr>
+        <tr>
+          <td><code>onChange</code></td>
+          <td>function</td>
+          <td>—</td>
+          <td>Callback</td>
+          <td>Called immediately when the toggle is clicked. Receives the new boolean state.</td>
+        </tr>
+        <tr>
+          <td><code>aria-label</code></td>
+          <td>string</td>
+          <td>—</td>
+          <td>Any string</td>
+          <td>Required if no visible label. Describes what the toggle controls to screen readers.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── DO'S AND DON'TS ─────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Do's &amp; Don'ts</h2>
+
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <div class="do-header"><span class="do-icon">✓</span> Use for instant setting changes</div>
+        <p>Toggles apply changes immediately without a submit button. This mental model is well-understood. Use them for settings that take effect in real time — dark mode, notifications, feature flags.</p>
+        <div style="margin-top:12px;">
+          <label class="toggle-wrap">
+            <button class="toggle size-md is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Dark mode example">
+              <input type="checkbox" checked>
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+            <span class="toggle-label">Dark mode (applies instantly)</span>
+          </label>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><span class="dont-icon">✕</span> Don't use in submit-based forms</div>
+        <p>If the user's preference only takes effect after clicking a "Save" button, use a checkbox instead. Toggles imply immediacy. Mixing them with form submission creates a confusing UX contract.</p>
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center;opacity:.6;">
+          <button class="toggle size-md" role="switch" aria-checked="false" style="pointer-events:none;" aria-label="Form toggle example">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </button>
+          <span style="font-size:13px;color:#344054;">Receive emails</span>
+          <span style="font-size:12px;color:var(--text-secondary);margin-left:8px;">(inside a form — use checkbox)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="do-dont-grid" style="margin-top:16px;">
+      <div class="do-card">
+        <div class="do-header"><span class="do-icon">✓</span> Always provide a visible label</div>
+        <p>A toggle without a label gives no indication of what it controls. Even in compact settings rows, include a brief label or use <code style="font-size:11px;background:var(--secondary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">aria-label</code> at minimum for screen readers.</p>
+        <div style="margin-top:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;max-width:220px;">
+            <span style="font-size:13px;font-weight:500;color:var(--text-primary);">Notifications</span>
+            <button class="toggle size-md is-on interactive-toggle" role="switch" aria-checked="true" aria-label="Notifications">
+              <input type="checkbox" checked>
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><span class="dont-icon">✕</span> Don't use for mutually exclusive choices</div>
+        <p>Toggles are binary — on or off. If users need to pick one from several options (e.g., Monthly / Annual / Custom billing), use radio buttons. Toggles do not communicate mutual exclusivity.</p>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;opacity:.6;">
+          <label class="toggle-wrap"><button class="toggle size-md is-on" style="pointer-events:none;" aria-label="Monthly" role="switch" aria-checked="true"><span class="toggle-track"><span class="toggle-thumb"></span></span></button><span class="toggle-label" style="text-decoration:line-through;">Monthly</span></label>
+          <label class="toggle-wrap"><button class="toggle size-md is-on" style="pointer-events:none;" aria-label="Annual" role="switch" aria-checked="true"><span class="toggle-track"><span class="toggle-thumb"></span></span></button><span class="toggle-label" style="text-decoration:line-through;">Annual</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="do-dont-grid" style="margin-top:16px;">
+      <div class="do-card">
+        <div class="do-header"><span class="do-icon">✓</span> Use consistent sizes in a group</div>
+        <p>All toggles within a settings panel or list should be the same size. Consistency makes the UI predictable and easier to scan.</p>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><span class="dont-icon">✕</span> Don't use toggles for destructive actions</div>
+        <p>If the "on" state triggers an irreversible or high-stakes action (e.g., "Delete account", "Wipe all data"), use a dedicated button with a confirmation dialog instead. Toggles imply reversibility.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── ACCESSIBILITY ─────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Accessibility</h2>
+    <p class="section-desc">The toggle uses <code style="font-size:12px;background:var(--primary-100);color:var(--secondary-700);padding:2px 6px;border-radius:4px;font-family:monospace;">role="switch"</code> and <code style="font-size:12px;background:var(--primary-100);color:var(--secondary-700);padding:2px 6px;border-radius:4px;font-family:monospace;">aria-checked</code> to communicate state to assistive technology. All interactive states meet WCAG 2.1 AA.</p>
+
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#6941c6" stroke-width="1.3"/><path d="M8 5v4M8 10.5v.5" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round"/></svg>
+          ARIA Roles &amp; Attributes
+        </h4>
+        <ul>
+          <li>Set <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">role="switch"</code> on the clickable element</li>
+          <li>Toggle <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">aria-checked="true"</code>/<code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">"false"</code> on state change</li>
+          <li>Set <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">aria-disabled="true"</code> when disabled (don't just remove pointer-events)</li>
+          <li>Provide <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">aria-label</code> when no visible label is present</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="#6941c6" stroke-width="1.3"/><path d="M5 8h6M8 5v6" stroke="#6941c6" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Keyboard Interaction
+        </h4>
+        <ul>
+          <li><kbd style="background:var(--primary-100);padding:1px 5px;border-radius:3px;font-size:11px;font-family:monospace;">Tab</kbd> — moves focus to the toggle</li>
+          <li><kbd style="background:var(--primary-100);padding:1px 5px;border-radius:3px;font-size:11px;font-family:monospace;">Space</kbd> or <kbd style="background:var(--primary-100);padding:1px 5px;border-radius:3px;font-size:11px;font-family:monospace;">Enter</kbd> — activates the toggle</li>
+          <li>Focus ring uses purple-toned <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">box-shadow</code> so it works inside overflow containers</li>
+          <li>The native <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;button&gt;</code> element is used so keyboard handling is free</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="#6941c6" stroke-width="1.3"/><path d="M2 13c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="#6941c6" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Color &amp; Contrast
+        </h4>
+        <ul>
+          <li>On state: #12b76a track — white thumb has sufficient contrast (4.5:1+)</li>
+          <li>Off state: rgba(0,0,0,.09) is intentionally subtle — pair with a label always</li>
+          <li>Label text (#29294c on white): contrast ratio ≥ 7:1</li>
+          <li>Supporting text (#707087): meets 4.5:1 for normal text</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3v10" stroke="#6941c6" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Motion &amp; Animation
+        </h4>
+        <ul>
+          <li>Thumb and track transitions are 0.2s ease — below the 400ms threshold for vestibular sensitivity</li>
+          <li>Respect <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">prefers-reduced-motion</code> by removing transitions in production</li>
+          <li>State change is also communicated via <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">aria-checked</code> — not just animation</li>
+          <li>Never use animation as the sole affordance for state change</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── CODE SNIPPETS ─────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Code</h2>
+    <p class="section-desc">Copy-paste ready markup and JavaScript for common toggle patterns.</p>
+
+    <!-- Basic toggle HTML -->
+    <p style="font-size:13px;font-weight:600;color:var(--primary-700);margin-bottom:8px;">Basic Toggle (HTML)</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-comment">&lt;!-- Off state --&gt;</span>
+<span class="token-tag">&lt;button</span>
+  <span class="token-attr">class</span>=<span class="token-str">"toggle size-md"</span>
+  <span class="token-attr">role</span>=<span class="token-str">"switch"</span>
+  <span class="token-attr">aria-checked</span>=<span class="token-str">"false"</span>
+  <span class="token-attr">aria-label</span>=<span class="token-str">"Dark mode"</span>
+  <span class="token-attr">onclick</span>=<span class="token-str">"toggleSwitch(this)"</span>
+<span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"toggle-track"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"toggle-thumb"</span><span class="token-tag">&gt;&lt;/span&gt;</span>
+  <span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/button&gt;</span>
+
+<span class="token-comment">&lt;!-- On state --&gt;</span>
+<span class="token-tag">&lt;button</span>
+  <span class="token-attr">class</span>=<span class="token-str">"toggle size-md is-on"</span>
+  <span class="token-attr">role</span>=<span class="token-str">"switch"</span>
+  <span class="token-attr">aria-checked</span>=<span class="token-str">"true"</span>
+  <span class="token-attr">aria-label</span>=<span class="token-str">"Dark mode"</span>
+  <span class="token-attr">onclick</span>=<span class="token-str">"toggleSwitch(this)"</span>
+<span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"toggle-track"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"toggle-thumb"</span><span class="token-tag">&gt;&lt;/span&gt;</span>
+  <span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/button&gt;</span></pre>
+    </div>
+
+    <!-- Toggle with label -->
+    <p style="font-size:13px;font-weight:600;color:var(--primary-700);margin-bottom:8px;margin-top:20px;">Toggle with label + supporting text</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"toggle-wrap"</span> <span class="token-attr">style</span>=<span class="token-str">"align-items:flex-start;"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;button</span>
+    <span class="token-attr">class</span>=<span class="token-str">"toggle size-md"</span>
+    <span class="token-attr">role</span>=<span class="token-str">"switch"</span>
+    <span class="token-attr">aria-checked</span>=<span class="token-str">"false"</span>
+    <span class="token-attr">style</span>=<span class="token-str">"margin-top:2px;"</span>
+  <span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"toggle-track"</span><span class="token-tag">&gt;</span>
+      <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"toggle-thumb"</span><span class="token-tag">&gt;&lt;/span&gt;</span>
+    <span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;/button&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"toggle-label-wrap"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"toggle-label"</span><span class="token-tag">&gt;</span>Email notifications<span class="token-tag">&lt;/span&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"toggle-supporting"</span><span class="token-tag">&gt;</span>
+      Receive weekly digest and activity updates
+    <span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/label&gt;</span></pre>
+    </div>
+
+    <!-- JavaScript -->
+    <p style="font-size:13px;font-weight:600;color:var(--primary-700);margin-bottom:8px;margin-top:20px;">Toggle JavaScript handler</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-comment">/**
+ * Toggle a switch on click.
+ * Handles .is-on class, aria-checked, and optional onChange callback.
+ */</span>
+<span class="token-tag">function</span> toggleSwitch(btn, onChange) {
+  <span class="token-tag">if</span> (btn.classList.contains(<span class="token-str">'is-disabled'</span>)) <span class="token-tag">return</span>;
+
+  <span class="token-tag">const</span> isOn = btn.classList.toggle(<span class="token-str">'is-on'</span>);
+  btn.setAttribute(<span class="token-str">'aria-checked'</span>, String(isOn));
+
+  <span class="token-tag">if</span> (typeof onChange === <span class="token-str">'function'</span>) {
+    onChange(isOn);
+  }
+}
+
+<span class="token-comment">// Reduced-motion support</span>
+<span class="token-tag">const</span> mq = window.matchMedia(<span class="token-str">'(prefers-reduced-motion: reduce)'</span>);
+<span class="token-tag">if</span> (mq.matches) {
+  document.querySelectorAll(<span class="token-str">'.toggle-track, .toggle-thumb'</span>).forEach(el =&gt; {
+    el.style.transition = <span class="token-str">'none'</span>;
+  });
+}</pre>
+    </div>
+
+    <!-- CSS tokens -->
+    <p style="font-size:13px;font-weight:600;color:var(--primary-700);margin-bottom:8px;margin-top:20px;">CSS custom property tokens</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-comment">/* Toggle design tokens */</span>
+:root {
+  <span class="token-attr">--toggle-off-bg</span>:   <span class="token-str">rgba(0, 0, 0, 0.09)</span>;
+  <span class="token-attr">--toggle-on-bg</span>:    <span class="token-str">#12b76a</span>;   <span class="token-comment">/* success-600 */</span>
+  <span class="token-attr">--toggle-thumb-bg</span>: <span class="token-str">#ffffff</span>;
+  <span class="token-attr">--toggle-shadow</span>:   <span class="token-str">0 1px 4px rgba(0,0,0,.25), 0 0 1px rgba(0,0,0,.1)</span>;
+  <span class="token-attr">--toggle-inset</span>:    <span class="token-str">inset 0 1px 3px rgba(0,0,0,.15)</span>;
+  <span class="token-attr">--toggle-duration</span>: <span class="token-str">0.2s ease</span>;
+
+  <span class="token-comment">/* sm */</span>
+  <span class="token-attr">--toggle-sm-track-w</span>:  <span class="token-str">28px</span>;
+  <span class="token-attr">--toggle-sm-track-h</span>:  <span class="token-str">16px</span>;
+  <span class="token-attr">--toggle-sm-thumb-d</span>:  <span class="token-str">12px</span>;
+  <span class="token-attr">--toggle-sm-travel</span>:   <span class="token-str">12px</span>;
+
+  <span class="token-comment">/* md (default) */</span>
+  <span class="token-attr">--toggle-md-track-w</span>:  <span class="token-str">36px</span>;
+  <span class="token-attr">--toggle-md-track-h</span>:  <span class="token-str">20px</span>;
+  <span class="token-attr">--toggle-md-thumb-d</span>:  <span class="token-str">16px</span>;
+  <span class="token-attr">--toggle-md-travel</span>:   <span class="token-str">16px</span>;
+
+  <span class="token-comment">/* lg */</span>
+  <span class="token-attr">--toggle-lg-track-w</span>:  <span class="token-str">44px</span>;
+  <span class="token-attr">--toggle-lg-track-h</span>:  <span class="token-str">24px</span>;
+  <span class="token-attr">--toggle-lg-thumb-d</span>:  <span class="token-str">20px</span>;
+  <span class="token-attr">--toggle-lg-travel</span>:   <span class="token-str">20px</span>;
+}</pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── FOR DESIGNERS / DEVELOPERS ─────────── -->
+  <div class="section">
+    <h2 class="section-title">Implementation Notes</h2>
+
+    <div class="for-grid">
+      <div class="for-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" fill="#7f56d9"/><rect x="9" y="2" width="5" height="5" rx="1" fill="#b692f6"/><rect x="2" y="9" width="5" height="5" rx="1" fill="#d6bbfb"/><rect x="9" y="9" width="5" height="5" rx="1" fill="#f4ebff"/></svg>
+          For Designers
+        </h4>
+        <ul>
+          <li>Figma component node: <strong>975-2864</strong></li>
+          <li>Use the <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">Size</code> prop: sm / md / lg</li>
+          <li>Use the <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">State</code> prop: Default / Disabled</li>
+          <li>On state uses the <strong>success-600</strong> token (#12b76a) — do not swap for a different green</li>
+          <li>The thumb shadow is fixed — do not remove it in low-fidelity mocks</li>
+          <li>Track inset shadow gives depth — preserve in all contexts</li>
+          <li>Never use the toggle in a submit-form context — document this constraint in your handoff notes</li>
+          <li>Keep 16px minimum gap between the toggle and label in horizontal layouts</li>
+        </ul>
+      </div>
+      <div class="for-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="#7f56d9" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2l-2 12" stroke="#b692f6" stroke-width="1.4" stroke-linecap="round"/></svg>
+          For Developers
+        </h4>
+        <ul>
+          <li>Use <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;button role="switch"&gt;</code> — not a <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;div&gt;</code> or custom element</li>
+          <li>Always update <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">aria-checked</code> on every state change</li>
+          <li>Use <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">aria-disabled="true"</code> instead of the <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">disabled</code> attribute on <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;button&gt;</code> (disabled removes it from focus order)</li>
+          <li>Apply <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">prefers-reduced-motion</code> media query to remove CSS transitions</li>
+          <li>In React, drive state via <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">useState</code> — pass <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">checked</code> and <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">onChange</code> as controlled props</li>
+          <li>Travel formula: <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">translateX(trackW - thumbD - 4px)</code> where 4px = 2×2px inset</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── Interactive toggle ──
+document.querySelectorAll('.toggle.interactive-toggle').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (this.classList.contains('is-disabled')) return;
+    const isOn = this.classList.toggle('is-on');
+    this.setAttribute('aria-checked', String(isOn));
+  });
+
+  // Keyboard: Space or Enter
+  btn.addEventListener('keydown', function(e) {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      if (this.classList.contains('is-disabled')) return;
+      const isOn = this.classList.toggle('is-on');
+      this.setAttribute('aria-checked', String(isOn));
+    }
+  });
+});
+
+// Also make toggle-wrap labels interactive (clicking label triggers toggle)
+document.querySelectorAll('.toggle-wrap').forEach(wrap => {
+  wrap.addEventListener('click', function(e) {
+    const toggle = this.querySelector('.toggle.interactive-toggle');
+    if (toggle && !toggle.contains(e.target)) {
+      if (toggle.classList.contains('is-disabled')) return;
+      const isOn = toggle.classList.toggle('is-on');
+      toggle.setAttribute('aria-checked', String(isOn));
+    }
+  });
+});
+
+// ── Reduced motion ──
+const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+function applyReducedMotion() {
+  if (mq.matches) {
+    document.querySelectorAll('.toggle-track, .toggle-thumb').forEach(el => {
+      el.style.transition = 'none';
+    });
+  }
+}
+applyReducedMotion();
+mq.addEventListener('change', applyReducedMotion);
+
+// ── Copy button ──
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  const text = pre.innerText || pre.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

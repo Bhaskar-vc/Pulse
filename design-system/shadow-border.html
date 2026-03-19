@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shadow & Border – Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; font-size: 14px; color: #1d2939; background: #f8f9fb; min-height: 100vh; display: flex; }
+
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #eaeaed; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #eaeaed; margin-bottom: 16px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #29294c; }
+.sidebar-logo sub { font-size: 10px; color: #9d9dad; font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+.main { margin-left: 240px; flex: 1; }
+.content { max-width: 1100px; padding: 48px 56px; }
+
+.page-header { margin-bottom: 44px; }
+.breadcrumb { font-size: 12px; color: #98a2b3; margin-bottom: 10px; }
+.breadcrumb span { color: #6941c6; }
+.page-title { font-size: 30px; font-weight: 700; color: #101828; letter-spacing: -.4px; line-height: 1.2; }
+.page-desc { margin-top: 8px; font-size: 15px; color: #475467; line-height: 1.6; max-width: 640px; }
+.tag-row { display: flex; gap: 8px; margin-top: 14px; }
+.page-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.tag-figma { color: #6941c6; background: #f4f0fd; border-color: #d6bbfb; }
+
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 700; color: #101828; padding-bottom: 12px; border-bottom: 1px solid #e4e7ec; margin-bottom: 20px; }
+.section-desc { font-size: 14px; color: #475467; line-height: 1.7; margin-bottom: 20px; }
+.divider { border: none; border-top: 1px solid #e4e7ec; margin: 0 0 56px; }
+.variant-label { font-size: 12px; font-weight: 600; color: #98a2b3; text-transform: uppercase; letter-spacing: .06em; margin: 24px 0 12px; }
+
+.demo-box { background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 40px 32px; margin-bottom: 12px; }
+
+code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: #f2f4f7; color: #29294c; padding: 2px 6px; border-radius: 4px; }
+
+/* Token grid */
+.token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+.token-card { display: flex; flex-direction: column; gap: 12px; }
+.token-swatch {
+  width: 100%; height: 80px; border-radius: 10px;
+  background: #fff; display: flex; align-items: center; justify-content: center;
+}
+.token-info { display: flex; flex-direction: column; gap: 3px; }
+.token-name { font-size: 13px; font-weight: 600; color: #344054; }
+.token-value { font-size: 11px; color: #98a2b3; font-family: 'JetBrains Mono', monospace; }
+
+/* Shadow swatches */
+.shadow-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 32px 24px; }
+.shadow-card { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.shadow-swatch {
+  width: 100%; height: 88px; background: #fff; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.shadow-info { display: flex; flex-direction: column; gap: 4px; }
+.shadow-name { font-size: 13px; font-weight: 600; color: #344054; }
+.shadow-css { font-size: 11px; color: #98a2b3; font-family: 'JetBrains Mono', monospace; line-height: 1.6; }
+
+/* Border radius grid */
+.radius-grid { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-end; }
+.radius-card { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.radius-swatch {
+  width: 80px; height: 80px; background: #f0eeff; border: 2px solid #9e77ed;
+}
+.radius-label { font-size: 12px; font-weight: 600; color: #344054; text-align: center; }
+.radius-value { font-size: 11px; color: #98a2b3; font-family: 'JetBrains Mono', monospace; }
+
+/* Border color grid */
+.border-grid { display: flex; gap: 20px; flex-wrap: wrap; }
+.border-card { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.border-swatch {
+  width: 160px; height: 60px; background: #fff; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Focus ring demos */
+.focus-grid { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+.focus-demo { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.focus-el { width: 120px; height: 40px; border-radius: 8px; background: #fff; border: 1.5px solid; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><span>Pulse DS</span><sub>v1.0.0 · Design System</sub></div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link active">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</aside>
+
+<main class="main">
+<div class="content">
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Purple document gradient -->
+        <linearGradient id="doc-shadow" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#b8a0ff"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <!-- Folder dark gradient -->
+        <linearGradient id="fld-shadow" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2d2d50"/>
+          <stop offset="100%" stop-color="#12122a"/>
+        </linearGradient>
+        <!-- Purple inner glow -->
+        <radialGradient id="glow-shadow" cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
+          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Top shine -->
+        <linearGradient id="shine-shadow" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- Folder drop shadow -->
+        <filter id="fs-shadow" x="-18%" y="-12%" width="136%" height="136%">
+          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
+        </filter>
+        <!-- Text glow -->
+        <filter id="tg-shadow" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="2.8" result="blur"/>
+          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
+          <feComposite in="c" in2="blur" operator="in" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── Purple document peeking behind folder ── -->
+      <g transform="rotate(12, 141, 46)" opacity="0.97">
+        <!-- Document body -->
+        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-shadow)"/>
+        <!-- Folded corner (lighter) -->
+        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
+        <!-- Folded corner (shadow) -->
+        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
+      </g>
+
+      <!-- ── Dark glass folder ── -->
+      <!-- Single path: full folder shape (tab + body as one outline) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#fld-shadow)"
+            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            filter="url(#fs-shadow)"/>
+
+      <!-- Purple glow inside (same path, no stroke/shadow) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#glow-shadow)"/>
+
+      <!-- Top glass shine strip -->
+      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-shadow)"/>
+
+      <!-- Component name text -->
+      <text x="100" y="132"
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.93)"
+            font-family="Inter, system-ui, -apple-system, sans-serif"
+            font-size="16" font-weight="800"
+            letter-spacing="1.6"
+            textLength="76" lengthAdjust="spacingAndGlyphs"
+            filter="url(#tg-shadow)">SHADOW</text>
+
+      <!-- Subtle underline below name -->
+      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
+    </svg>
+  </div>
+    <div class="breadcrumb">Tokens › <span>Shadow &amp; Border</span></div>
+    <h1 class="page-title">Shadow &amp; Border</h1>
+    <p class="page-desc">Elevation shadows, border colors, border-radius values, and focus rings — the foundational tokens that define depth, containment, and interactive states across the system.</p>
+    <div class="tag-row">
+      <span class="page-tag tag-stable">Stable</span>
+      <span class="page-tag tag-figma">Figma Ready</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Shadows -->
+  <div class="section">
+    <h2 class="section-title">Shadows</h2>
+    <p class="section-desc">Shadows convey elevation. Use lighter shadows for cards and tooltips, heavier ones for modals and floating panels. All shadows use <code>#10182808</code> / <code>#10182814</code> (black at 3% / 8% opacity) for a neutral tone that works on any background.</p>
+
+    <div class="demo-box" style="background:#f4f4f6;">
+      <div class="shadow-grid">
+
+        <div class="shadow-card">
+          <div class="shadow-swatch" style="box-shadow: none; border: 1px solid #e4e7ec;">
+            <span style="font-size:11px;color:#98a2b3;">No shadow</span>
+          </div>
+          <div class="shadow-info">
+            <span class="shadow-name">None</span>
+            <span class="shadow-css">box-shadow: none</span>
+          </div>
+        </div>
+
+        <div class="shadow-card">
+          <div class="shadow-swatch" style="box-shadow: 0 1px 2px rgba(16,24,40,0.05);">
+            <span style="font-size:11px;color:#98a2b3;">XS</span>
+          </div>
+          <div class="shadow-info">
+            <span class="shadow-name">Shadow / XS</span>
+            <span class="shadow-css">0 1px 2px rgba(16,24,40,.05)</span>
+          </div>
+        </div>
+
+        <div class="shadow-card">
+          <div class="shadow-swatch" style="box-shadow: 0 1px 3px rgba(16,24,40,0.1), 0 1px 2px rgba(16,24,40,0.06);">
+            <span style="font-size:11px;color:#98a2b3;">SM</span>
+          </div>
+          <div class="shadow-info">
+            <span class="shadow-name">Shadow / SM</span>
+            <span class="shadow-css">0 1px 3px rgba(16,24,40,.1),<br>0 1px 2px rgba(16,24,40,.06)</span>
+          </div>
+        </div>
+
+        <div class="shadow-card">
+          <div class="shadow-swatch" style="box-shadow: 0 4px 8px -2px rgba(16,24,40,0.1), 0 2px 4px -2px rgba(16,24,40,0.06);">
+            <span style="font-size:11px;color:#98a2b3;">MD</span>
+          </div>
+          <div class="shadow-info">
+            <span class="shadow-name">Shadow / MD</span>
+            <span class="shadow-css">0 4px 8px -2px rgba(16,24,40,.1),<br>0 2px 4px -2px rgba(16,24,40,.06)</span>
+          </div>
+        </div>
+
+        <div class="shadow-card">
+          <div class="shadow-swatch" style="box-shadow: 0 12px 16px -4px rgba(16,24,40,0.08), 0 4px 6px -2px rgba(16,24,40,0.03);">
+            <span style="font-size:11px;color:#98a2b3;">LG</span>
+          </div>
+          <div class="shadow-info">
+            <span class="shadow-name">Shadow / LG</span>
+            <span class="shadow-css">0 12px 16px -4px rgba(16,24,40,.08),<br>0 4px 6px -2px rgba(16,24,40,.03)</span>
+          </div>
+        </div>
+
+        <div class="shadow-card">
+          <div class="shadow-swatch" style="box-shadow: 0 20px 24px -4px rgba(16,24,40,0.08), 0 8px 8px -4px rgba(16,24,40,0.03);">
+            <span style="font-size:11px;color:#98a2b3;">XL</span>
+          </div>
+          <div class="shadow-info">
+            <span class="shadow-name">Shadow / XL</span>
+            <span class="shadow-css">0 20px 24px -4px rgba(16,24,40,.08),<br>0 8px 8px -4px rgba(16,24,40,.03)</span>
+          </div>
+        </div>
+
+        <div class="shadow-card">
+          <div class="shadow-swatch" style="box-shadow: 0 24px 48px -12px rgba(16,24,40,0.18);">
+            <span style="font-size:11px;color:#98a2b3;">2XL</span>
+          </div>
+          <div class="shadow-info">
+            <span class="shadow-name">Shadow / 2XL</span>
+            <span class="shadow-css">0 24px 48px -12px rgba(16,24,40,.18)</span>
+          </div>
+        </div>
+
+        <div class="shadow-card">
+          <div class="shadow-swatch" style="box-shadow: 0 32px 64px -12px rgba(16,24,40,0.2);">
+            <span style="font-size:11px;color:#98a2b3;">3XL</span>
+          </div>
+          <div class="shadow-info">
+            <span class="shadow-name">Shadow / 3XL</span>
+            <span class="shadow-css">0 32px 64px -12px rgba(16,24,40,.2)</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="variant-label">Usage in components</div>
+    <div class="demo-box">
+      <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+          <div style="font-size:11px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.06em;">Input / Button</div>
+          <div style="width:180px;height:40px;background:#fff;border-radius:8px;border:1.5px solid #d0d5dd;box-shadow:0 1px 2px rgba(16,24,40,0.05);display:flex;align-items:center;padding:0 12px;font-size:13px;color:#98a2b3;">Placeholder text</div>
+          <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">Shadow/XS</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+          <div style="font-size:11px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.06em;">Card / Panel</div>
+          <div style="width:180px;height:80px;background:#fff;border-radius:12px;border:1px solid #eaeaed;box-shadow:0 4px 8px -2px rgba(16,24,40,0.1), 0 2px 4px -2px rgba(16,24,40,0.06);"></div>
+          <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">Shadow/MD</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+          <div style="font-size:11px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.06em;">Dropdown / Popover</div>
+          <div style="width:180px;height:80px;background:#fff;border-radius:8px;border:1px solid #eaeaed;box-shadow:0 12px 16px -4px rgba(16,24,40,0.08), 0 4px 6px -2px rgba(16,24,40,0.03);"></div>
+          <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">Shadow/LG</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+          <div style="font-size:11px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.06em;">Modal / Drawer</div>
+          <div style="width:180px;height:80px;background:#fff;border-radius:12px;box-shadow:0 20px 24px -4px rgba(16,24,40,0.08), 0 8px 8px -4px rgba(16,24,40,0.03);"></div>
+          <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">Shadow/XL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Border Radius -->
+  <div class="section">
+    <h2 class="section-title">Border Radius</h2>
+    <p class="section-desc">A consistent radius scale ensures visual harmony. Use smaller radii for compact elements (badges, inputs) and larger ones for cards and modals.</p>
+
+    <div class="demo-box">
+      <div class="radius-grid">
+        <div class="radius-card">
+          <div class="radius-swatch" style="border-radius:0;"></div>
+          <span class="radius-label">None</span>
+          <span class="radius-value">0px</span>
+        </div>
+        <div class="radius-card">
+          <div class="radius-swatch" style="border-radius:2px;"></div>
+          <span class="radius-label">XS</span>
+          <span class="radius-value">2px</span>
+        </div>
+        <div class="radius-card">
+          <div class="radius-swatch" style="border-radius:4px;"></div>
+          <span class="radius-label">SM</span>
+          <span class="radius-value">4px</span>
+        </div>
+        <div class="radius-card">
+          <div class="radius-swatch" style="border-radius:6px;"></div>
+          <span class="radius-label">MD</span>
+          <span class="radius-value">6px</span>
+        </div>
+        <div class="radius-card">
+          <div class="radius-swatch" style="border-radius:8px;"></div>
+          <span class="radius-label">LG</span>
+          <span class="radius-value">8px</span>
+        </div>
+        <div class="radius-card">
+          <div class="radius-swatch" style="border-radius:10px;"></div>
+          <span class="radius-label">XL</span>
+          <span class="radius-value">10px</span>
+        </div>
+        <div class="radius-card">
+          <div class="radius-swatch" style="border-radius:12px;"></div>
+          <span class="radius-label">2XL</span>
+          <span class="radius-value">12px</span>
+        </div>
+        <div class="radius-card">
+          <div class="radius-swatch" style="border-radius:16px;"></div>
+          <span class="radius-label">3XL</span>
+          <span class="radius-value">16px</span>
+        </div>
+        <div class="radius-card">
+          <div class="radius-swatch" style="border-radius:9999px; width:80px; height:40px;"></div>
+          <span class="radius-label">Full</span>
+          <span class="radius-value">9999px</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Component usage</div>
+    <div class="demo-box">
+      <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div style="padding:2px 8px;background:#f2f4f7;border-radius:4px;font-size:12px;font-weight:500;color:#344054;">Badge</div>
+          <span style="font-size:11px;color:#98a2b3;">SM (4px)</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div style="width:120px;height:36px;background:#29294c;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#fff;">Button</div>
+          <span style="font-size:11px;color:#98a2b3;">LG (8px)</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div style="width:140px;height:40px;background:#fff;border:1px solid #d0d5dd;border-radius:8px;"></div>
+          <span style="font-size:11px;color:#98a2b3;">Input LG (8px)</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div style="width:120px;height:70px;background:#fff;border:1px solid #eaeaed;border-radius:12px;box-shadow:0 4px 8px -2px rgba(16,24,40,0.1),0 2px 4px -2px rgba(16,24,40,0.06);"></div>
+          <span style="font-size:11px;color:#98a2b3;">Card 2XL (12px)</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div style="padding:3px 12px;background:#ecfdf3;border:1px solid #a6f4c5;border-radius:9999px;font-size:11px;font-weight:600;color:#027a48;">Active</div>
+          <span style="font-size:11px;color:#98a2b3;">Tag Full</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Border Colors -->
+  <div class="section">
+    <h2 class="section-title">Border Colors</h2>
+    <p class="section-desc">Border tokens cover default, strong, and intent-specific variants. Use <code>--border-default</code> for most surfaces and <code>--border-strong</code> for emphasized separation.</p>
+
+    <div class="demo-box">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;">
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="height:60px;border-radius:10px;background:#fff;border:1px solid #eaeaed;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:12px;color:#98a2b3;">border-default</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#344054;">Default</div>
+            <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">--border-default · #eaeaed</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="height:60px;border-radius:10px;background:#fff;border:1px solid #bdbdc8;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:12px;color:#98a2b3;">border-strong</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#344054;">Strong</div>
+            <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">--border-strong · #bdbdc8</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="height:60px;border-radius:10px;background:#fff;border:1.5px solid #7f56d9;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:12px;color:#7f56d9;">border-focus</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#344054;">Focus / Active</div>
+            <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">#7f56d9</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="height:60px;border-radius:10px;background:#ecfdf3;border:1px solid #a6f4c5;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:12px;color:#027a48;">border-success</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#344054;">Success</div>
+            <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">#a6f4c5</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="height:60px;border-radius:10px;background:#fffaeb;border:1px solid #fec84b;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:12px;color:#b54708;">border-warning</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#344054;">Warning</div>
+            <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">#fec84b</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="height:60px;border-radius:10px;background:#fef3f2;border:1px solid #fecdca;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:12px;color:#b42318;">border-error</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#344054;">Error</div>
+            <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">#fecdca</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="height:60px;border-radius:10px;background:#e0f2fe;border:1px solid #b9e6fe;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:12px;color:#026aa2;">border-info</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#344054;">Info</div>
+            <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">#b9e6fe</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="height:60px;border-radius:10px;background:#fff;border:1px dashed #d0d5dd;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:12px;color:#98a2b3;">border-dashed</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#344054;">Dashed</div>
+            <div style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">border-style: dashed</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Focus Rings -->
+  <div class="section">
+    <h2 class="section-title">Focus Rings</h2>
+    <p class="section-desc">Focus rings provide keyboard accessibility. They use <code>box-shadow</code> to avoid layout shifts. Each intent has its own ring color at 12–28% opacity.</p>
+
+    <div class="demo-box">
+      <div class="focus-grid">
+
+        <div class="focus-demo">
+          <div class="focus-el" style="border-color:#7f56d9;box-shadow:0 0 0 3px rgba(127,86,217,0.2);color:#29294c;">Primary</div>
+          <span style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">rgba(127,86,217,.2)</span>
+        </div>
+
+        <div class="focus-demo">
+          <div class="focus-el" style="border-color:#039855;box-shadow:0 0 0 3px rgba(3,152,85,0.2);color:#344054;">Success</div>
+          <span style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">rgba(3,152,85,.2)</span>
+        </div>
+
+        <div class="focus-demo">
+          <div class="focus-el" style="border-color:#f79009;box-shadow:0 0 0 3px rgba(247,144,9,0.2);color:#344054;">Warning</div>
+          <span style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">rgba(247,144,9,.2)</span>
+        </div>
+
+        <div class="focus-demo">
+          <div class="focus-el" style="border-color:#f04438;box-shadow:0 0 0 3px rgba(240,68,56,0.2);color:#344054;">Error</div>
+          <span style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">rgba(240,68,56,.2)</span>
+        </div>
+
+        <div class="focus-demo">
+          <div class="focus-el" style="border-color:#0ba5ec;box-shadow:0 0 0 3px rgba(11,165,236,0.2);color:#344054;">Info</div>
+          <span style="font-size:11px;color:#98a2b3;font-family:'JetBrains Mono',monospace;">rgba(11,165,236,.2)</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colors — Pulse Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary-900: #101828;
+    --primary-800: #252545;
+    --primary-700: #29294c;
+    --primary-600: #545470;
+    --primary-500: #707087;
+    --primary-400: #9d9dad;
+    --primary-300: #bdbdc8;
+    --primary-200: #eaeaed;
+    --primary-100: #f4f4f6;
+    --primary-50:  #f9fafb;
+
+    --secondary-900: #29294c;
+    --secondary-800: #3e1d96;
+    --secondary-700: #6941c6;
+    --secondary-600: #7f56d9;
+    --secondary-500: #9e77ed;
+    --secondary-400: #b692f6;
+    --secondary-300: #d6bbfb;
+    --secondary-200: #e9d7fe;
+    --secondary-100: #f4ebff;
+    --secondary-50:  #f9f5ff;
+
+    --success-900: #027a48;
+    --success-800: #027a48;
+    --success-700: #039855;
+    --success-600: #12b76a;
+    --success-500: #32d583;
+    --success-400: #6ce9a6;
+    --success-300: #a6f4c5;
+    --success-200: #d1fadf;
+    --success-100: #ecfdf3;
+    --success-50:  #f6fef9;
+
+    --warning-900: #b54708;
+    --warning-800: #b54708;
+    --warning-700: #dc6803;
+    --warning-600: #f79009;
+    --warning-500: #fdb022;
+    --warning-400: #fec84b;
+    --warning-300: #fedf89;
+    --warning-200: #fef0c7;
+    --warning-100: #fffcf5;
+    --warning-50:  #fffaeb;
+
+    --error-900: #7a271a;
+    --error-800: #b42318;
+    --error-700: #d92d20;
+    --error-600: #f04438;
+    --error-500: #f97066;
+    --error-400: #fda29b;
+    --error-300: #fecdca;
+    --error-200: #fee4e2;
+    --error-100: #fef3f2;
+    --error-50:  #fffbfa;
+
+    --info-900: #026aa2;
+    --info-800: #026aa2;
+    --info-700: #0086c9;
+    --info-600: #0ba5ec;
+    --info-500: #36bffa;
+    --info-400: #7cd4fd;
+    --info-300: #b9e6fe;
+    --info-200: #e0f2fe;
+    --info-100: #f0f9ff;
+    --info-50:  #f5fbff;
+
+    --text-primary: #29294c;
+    --text-secondary: #707087;
+    --text-tertiary: #9d9dad;
+    --text-link: #6941c6;
+    --border-default: #eaeaed;
+    --border-strong: #bdbdc8;
+    --bg-page: #f9fafb;
+    --white: #ffffff;
+
+    --sidebar-w: 240px;
+    --font: 'Inter', sans-serif;
+  }
+
+  body {
+    font-family: var(--font);
+    color: var(--text-primary);
+    background: var(--bg-page);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    background: #ffffff;
+    border-right: 1px solid var(--border-default);
+    padding: 24px 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border-default);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo span {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--primary-700);
+  }
+  .sidebar-logo sub {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+  }
+  .sidebar-section { margin-bottom: 8px; }
+  .sidebar-section-title {
+    padding: 6px 20px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+  }
+  .sidebar-link {
+    display: block;
+    padding: 7px 20px;
+    font-size: 13px;
+    color: #4a4a68;
+    text-decoration: none;
+    border-radius: 0;
+    transition: background 0.15s, color 0.15s;
+  }
+  .sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+  .sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+  /* Main content */
+  .main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 48px 56px;
+  max-width: 1100px;
+}
+
+  /* Breadcrumb */
+  .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+  .breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--text-primary); }
+  .breadcrumb-sep { opacity: 0.4; }
+
+  /* Page header */
+  .page-header { margin-bottom: 40px; }
+  .page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+  .page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 600px; }
+  .page-tags { display: flex; gap: 8px; margin-top: 16px; }
+  .tag {
+    font-size: 11px; font-weight: 500; padding: 3px 10px;
+    border-radius: 99px; border: 1px solid;
+  }
+  .tag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+  .tag-figma { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+
+  /* Section */
+  .section { margin-bottom: 56px; }
+  .section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; }
+  .section-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid var(--border-default); margin: 48px 0; }
+
+  /* Color palette grid */
+  .palette-group { margin-bottom: 40px; }
+  .palette-group-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+  .palette-group-name { font-size: 14px; font-weight: 600; color: var(--primary-700); }
+  .palette-group-desc { font-size: 12px; color: var(--text-tertiary); }
+
+  .color-row {
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-default);
+  }
+  .color-swatch { flex: 1; min-width: 0; }
+  .color-swatch-inner { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 8px 10px; background: #fff; border-top: 1px solid var(--border-default); }
+  .color-swatch-step { font-size: 11px; font-weight: 600; color: var(--primary-700); }
+  .color-swatch-hex { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text-secondary); margin-top: 1px; }
+  .color-swatch + .color-swatch { border-left: 1px solid var(--border-default); }
+
+  /* Semantic tokens table */
+  .tokens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .token-card {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+  }
+  .token-swatch { width: 52px; min-width: 52px; flex-shrink: 0; }
+  .token-info { padding: 12px 14px; min-width: 0; }
+  .token-name { font-size: 12px; font-weight: 600; color: var(--primary-700); margin-bottom: 2px; font-family: 'JetBrains Mono', monospace; }
+  .token-value { font-size: 11px; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+  .token-desc { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; }
+
+  /* Usage table */
+  .usage-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .usage-table th {
+    text-align: left; padding: 10px 14px;
+    background: var(--primary-50); color: var(--text-secondary);
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border-default);
+  }
+  .usage-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; }
+  .usage-table tr:last-child td { border-bottom: none; }
+  .usage-table tbody tr:hover td { background: var(--primary-50); }
+  .dot {
+    display: inline-block; width: 12px; height: 12px;
+    border-radius: 50%; margin-right: 6px; vertical-align: middle;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; background: var(--primary-50);
+    padding: 2px 6px; border-radius: 4px; color: var(--secondary-700);
+  }
+
+  /* Do / Don't */
+  .do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .do-card, .dont-card {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--border-default);
+  }
+  .do-card .card-header { background: #ecfdf3; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #039855; display: flex; align-items: center; gap: 6px; }
+  .dont-card .card-header { background: #fef3f2; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #d92d20; display: flex; align-items: center; gap: 6px; }
+  .card-body { padding: 20px; background: #fff; }
+  .card-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* Color combo accessibility table */
+  .combo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .combo-card {
+    border-radius: 10px; overflow: hidden; border: 1px solid var(--border-default);
+  }
+  .combo-preview {
+    padding: 16px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .combo-preview-label { font-size: 13px; font-weight: 500; }
+  .combo-preview-sub { font-size: 11px; opacity: 0.8; }
+  .combo-meta { padding: 10px 12px; background: #fff; border-top: 1px solid var(--border-default); }
+  .combo-meta-title { font-size: 11px; font-weight: 600; color: var(--primary-700); margin-bottom: 2px; }
+  .combo-ratio { font-size: 10px; font-family: 'JetBrains Mono', monospace; }
+  .pass { color: #039855; }
+  .fail { color: #d92d20; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link active">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Foundations</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Colors</span>
+  </div>
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Purple document gradient -->
+        <linearGradient id="doc-colors" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#b8a0ff"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <!-- Folder dark gradient -->
+        <linearGradient id="fld-colors" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2d2d50"/>
+          <stop offset="100%" stop-color="#12122a"/>
+        </linearGradient>
+        <!-- Purple inner glow -->
+        <radialGradient id="glow-colors" cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
+          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Top shine -->
+        <linearGradient id="shine-colors" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- Folder drop shadow -->
+        <filter id="fs-colors" x="-18%" y="-12%" width="136%" height="136%">
+          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
+        </filter>
+        <!-- Text glow -->
+        <filter id="tg-colors" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="2.8" result="blur"/>
+          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
+          <feComposite in="c" in2="blur" operator="in" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── Purple document peeking behind folder ── -->
+      <g transform="rotate(12, 141, 46)" opacity="0.97">
+        <!-- Document body -->
+        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-colors)"/>
+        <!-- Folded corner (lighter) -->
+        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
+        <!-- Folded corner (shadow) -->
+        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
+      </g>
+
+      <!-- ── Dark glass folder ── -->
+      <!-- Single path: full folder shape (tab + body as one outline) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#fld-colors)"
+            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            filter="url(#fs-colors)"/>
+
+      <!-- Purple glow inside (same path, no stroke/shadow) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#glow-colors)"/>
+
+      <!-- Top glass shine strip -->
+      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-colors)"/>
+
+      <!-- Component name text -->
+      <text x="100" y="132"
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.93)"
+            font-family="Inter, system-ui, -apple-system, sans-serif"
+            font-size="16" font-weight="800"
+            letter-spacing="1.6"
+            textLength="76" lengthAdjust="spacingAndGlyphs"
+            filter="url(#tg-colors)">COLORS</text>
+
+      <!-- Subtle underline below name -->
+      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
+    </svg>
+  </div>
+    <h1 class="page-title">Colors</h1>
+    <p class="page-subtitle">The Pulse color system is built on a structured palette with semantic tokens. Use the semantic layer — not raw hex values — in components to ensure consistency and support for future theming.</p>
+    <div class="page-tags">
+      <span class="tag tag-stable">Stable</span>
+      <span class="tag tag-figma">Figma Tokens</span>
+    </div>
+  </div>
+
+  <!-- Brand Palette -->
+  <div class="section">
+    <h2 class="section-title">Brand Colors</h2>
+    <p class="section-desc">The core brand swatches. These are the source-of-truth raw values; use semantic tokens in code.</p>
+
+    <!-- Primary / Navy -->
+    <div class="palette-group">
+      <div class="palette-group-header">
+        <span class="palette-group-name">Primary — Navy</span>
+        <span class="palette-group-desc">Foundation neutral, used for text and backgrounds</span>
+      </div>
+      <div class="color-row">
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#101828"></div><div class="color-swatch-info"><div class="color-swatch-step">900</div><div class="color-swatch-hex">#101828</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#252545"></div><div class="color-swatch-info"><div class="color-swatch-step">800</div><div class="color-swatch-hex">#252545</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#29294c"></div><div class="color-swatch-info"><div class="color-swatch-step">700</div><div class="color-swatch-hex">#29294c</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#545470"></div><div class="color-swatch-info"><div class="color-swatch-step">600</div><div class="color-swatch-hex">#545470</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#707087"></div><div class="color-swatch-info"><div class="color-swatch-step">500</div><div class="color-swatch-hex">#707087</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#9d9dad"></div><div class="color-swatch-info"><div class="color-swatch-step">400</div><div class="color-swatch-hex">#9d9dad</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#bdbdc8"></div><div class="color-swatch-info"><div class="color-swatch-step">300</div><div class="color-swatch-hex">#bdbdc8</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#eaeaed"></div><div class="color-swatch-info"><div class="color-swatch-step">200</div><div class="color-swatch-hex">#eaeaed</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#f4f4f6"></div><div class="color-swatch-info"><div class="color-swatch-step">100</div><div class="color-swatch-hex">#f4f4f6</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#f9fafb; border-bottom: 1px solid #eaeaed;"></div><div class="color-swatch-info"><div class="color-swatch-step">50</div><div class="color-swatch-hex">#f9fafb</div></div></div>
+      </div>
+    </div>
+
+    <!-- Secondary / Purple -->
+    <div class="palette-group">
+      <div class="palette-group-header">
+        <span class="palette-group-name">Secondary — Purple</span>
+        <span class="palette-group-desc">Accent and interactive states</span>
+      </div>
+      <div class="color-row">
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#3e1d96"></div><div class="color-swatch-info"><div class="color-swatch-step">800</div><div class="color-swatch-hex">#3e1d96</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#6941c6"></div><div class="color-swatch-info"><div class="color-swatch-step">700</div><div class="color-swatch-hex">#6941c6</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#7f56d9"></div><div class="color-swatch-info"><div class="color-swatch-step">600</div><div class="color-swatch-hex">#7f56d9</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#9e77ed"></div><div class="color-swatch-info"><div class="color-swatch-step">500</div><div class="color-swatch-hex">#9e77ed</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#b692f6"></div><div class="color-swatch-info"><div class="color-swatch-step">400</div><div class="color-swatch-hex">#b692f6</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#d6bbfb"></div><div class="color-swatch-info"><div class="color-swatch-step">300</div><div class="color-swatch-hex">#d6bbfb</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#e9d7fe"></div><div class="color-swatch-info"><div class="color-swatch-step">200</div><div class="color-swatch-hex">#e9d7fe</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#f4ebff"></div><div class="color-swatch-info"><div class="color-swatch-step">100</div><div class="color-swatch-hex">#f4ebff</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#f9f5ff; border-bottom: 1px solid #eaeaed;"></div><div class="color-swatch-info"><div class="color-swatch-step">50</div><div class="color-swatch-hex">#f9f5ff</div></div></div>
+      </div>
+    </div>
+
+    <!-- Success -->
+    <div class="palette-group">
+      <div class="palette-group-header">
+        <span class="palette-group-name">Success — Green</span>
+        <span class="palette-group-desc">Positive outcomes, completed states</span>
+      </div>
+      <div class="color-row">
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#027a48"></div><div class="color-swatch-info"><div class="color-swatch-step">800</div><div class="color-swatch-hex">#027a48</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#039855"></div><div class="color-swatch-info"><div class="color-swatch-step">700</div><div class="color-swatch-hex">#039855</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#12b76a"></div><div class="color-swatch-info"><div class="color-swatch-step">600</div><div class="color-swatch-hex">#12b76a</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#32d583"></div><div class="color-swatch-info"><div class="color-swatch-step">500</div><div class="color-swatch-hex">#32d583</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#6ce9a6"></div><div class="color-swatch-info"><div class="color-swatch-step">400</div><div class="color-swatch-hex">#6ce9a6</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#a6f4c5"></div><div class="color-swatch-info"><div class="color-swatch-step">300</div><div class="color-swatch-hex">#a6f4c5</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#d1fadf"></div><div class="color-swatch-info"><div class="color-swatch-step">200</div><div class="color-swatch-hex">#d1fadf</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#ecfdf3"></div><div class="color-swatch-info"><div class="color-swatch-step">100</div><div class="color-swatch-hex">#ecfdf3</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#f6fef9; border-bottom: 1px solid #eaeaed;"></div><div class="color-swatch-info"><div class="color-swatch-step">50</div><div class="color-swatch-hex">#f6fef9</div></div></div>
+      </div>
+    </div>
+
+    <!-- Warning -->
+    <div class="palette-group">
+      <div class="palette-group-header">
+        <span class="palette-group-name">Warning — Amber</span>
+        <span class="palette-group-desc">Caution, pending states, alerts</span>
+      </div>
+      <div class="color-row">
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#b54708"></div><div class="color-swatch-info"><div class="color-swatch-step">800</div><div class="color-swatch-hex">#b54708</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#dc6803"></div><div class="color-swatch-info"><div class="color-swatch-step">700</div><div class="color-swatch-hex">#dc6803</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#f79009"></div><div class="color-swatch-info"><div class="color-swatch-step">600</div><div class="color-swatch-hex">#f79009</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fdb022"></div><div class="color-swatch-info"><div class="color-swatch-step">500</div><div class="color-swatch-hex">#fdb022</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fec84b"></div><div class="color-swatch-info"><div class="color-swatch-step">400</div><div class="color-swatch-hex">#fec84b</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fedf89"></div><div class="color-swatch-info"><div class="color-swatch-step">300</div><div class="color-swatch-hex">#fedf89</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fef0c7"></div><div class="color-swatch-info"><div class="color-swatch-step">200</div><div class="color-swatch-hex">#fef0c7</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fffcf5"></div><div class="color-swatch-info"><div class="color-swatch-step">100</div><div class="color-swatch-hex">#fffcf5</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fffaeb; border-bottom: 1px solid #eaeaed;"></div><div class="color-swatch-info"><div class="color-swatch-step">50</div><div class="color-swatch-hex">#fffaeb</div></div></div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="palette-group">
+      <div class="palette-group-header">
+        <span class="palette-group-name">Error — Red</span>
+        <span class="palette-group-desc">Destructive actions, validation errors</span>
+      </div>
+      <div class="color-row">
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#b42318"></div><div class="color-swatch-info"><div class="color-swatch-step">800</div><div class="color-swatch-hex">#b42318</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#d92d20"></div><div class="color-swatch-info"><div class="color-swatch-step">700</div><div class="color-swatch-hex">#d92d20</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#f04438"></div><div class="color-swatch-info"><div class="color-swatch-step">600</div><div class="color-swatch-hex">#f04438</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#f97066"></div><div class="color-swatch-info"><div class="color-swatch-step">500</div><div class="color-swatch-hex">#f97066</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fda29b"></div><div class="color-swatch-info"><div class="color-swatch-step">400</div><div class="color-swatch-hex">#fda29b</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fecdca"></div><div class="color-swatch-info"><div class="color-swatch-step">300</div><div class="color-swatch-hex">#fecdca</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fee4e2"></div><div class="color-swatch-info"><div class="color-swatch-step">200</div><div class="color-swatch-hex">#fee4e2</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fef3f2"></div><div class="color-swatch-info"><div class="color-swatch-step">100</div><div class="color-swatch-hex">#fef3f2</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#fffbfa; border-bottom: 1px solid #eaeaed;"></div><div class="color-swatch-info"><div class="color-swatch-step">50</div><div class="color-swatch-hex">#fffbfa</div></div></div>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="palette-group">
+      <div class="palette-group-header">
+        <span class="palette-group-name">Info — Blue</span>
+        <span class="palette-group-desc">Informational states, links</span>
+      </div>
+      <div class="color-row">
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#026aa2"></div><div class="color-swatch-info"><div class="color-swatch-step">800</div><div class="color-swatch-hex">#026aa2</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#0086c9"></div><div class="color-swatch-info"><div class="color-swatch-step">700</div><div class="color-swatch-hex">#0086c9</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#0ba5ec"></div><div class="color-swatch-info"><div class="color-swatch-step">600</div><div class="color-swatch-hex">#0ba5ec</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#36bffa"></div><div class="color-swatch-info"><div class="color-swatch-step">500</div><div class="color-swatch-hex">#36bffa</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#7cd4fd"></div><div class="color-swatch-info"><div class="color-swatch-step">400</div><div class="color-swatch-hex">#7cd4fd</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#b9e6fe"></div><div class="color-swatch-info"><div class="color-swatch-step">300</div><div class="color-swatch-hex">#b9e6fe</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#e0f2fe"></div><div class="color-swatch-info"><div class="color-swatch-step">200</div><div class="color-swatch-hex">#e0f2fe</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#f0f9ff"></div><div class="color-swatch-info"><div class="color-swatch-step">100</div><div class="color-swatch-hex">#f0f9ff</div></div></div>
+        <div class="color-swatch"><div class="color-swatch-inner" style="background:#f5fbff; border-bottom: 1px solid #eaeaed;"></div><div class="color-swatch-info"><div class="color-swatch-step">50</div><div class="color-swatch-hex">#f5fbff</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Semantic Tokens -->
+  <div class="section">
+    <h2 class="section-title">Semantic Tokens</h2>
+    <p class="section-desc">These tokens map to intent rather than a specific color. Always use these in components instead of raw hex values — they enable future dark mode and theme support.</p>
+
+    <h3 style="font-size:13px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Text</h3>
+    <div class="tokens-grid" style="margin-bottom:24px;">
+      <div class="token-card"><div class="token-swatch" style="background:#29294c"></div><div class="token-info"><div class="token-name">--text-primary</div><div class="token-value">#29294c · primary-700</div><div class="token-desc">Headings, high-emphasis body</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#707087"></div><div class="token-info"><div class="token-name">--text-secondary</div><div class="token-value">#707087 · primary-500</div><div class="token-desc">Secondary body, labels</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#9d9dad"></div><div class="token-info"><div class="token-name">--text-tertiary</div><div class="token-value">#9d9dad · primary-400</div><div class="token-desc">Placeholders, captions</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#6941c6"></div><div class="token-info"><div class="token-name">--text-link</div><div class="token-value">#6941c6 · secondary-700</div><div class="token-desc">Hyperlinks, interactive text</div></div></div>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Background</h3>
+    <div class="tokens-grid" style="margin-bottom:24px;">
+      <div class="token-card"><div class="token-swatch" style="background:#ffffff; border-right:1px solid #eaeaed;"></div><div class="token-info"><div class="token-name">--bg-surface</div><div class="token-value">#ffffff</div><div class="token-desc">Cards, modals, panels</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#f9fafb"></div><div class="token-info"><div class="token-name">--bg-page</div><div class="token-value">#f9fafb · primary-50</div><div class="token-desc">Page background</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#f4f4f6"></div><div class="token-info"><div class="token-name">--bg-subtle</div><div class="token-value">#f4f4f6 · primary-100</div><div class="token-desc">Hover states, code blocks</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#29294c"></div><div class="token-info"><div class="token-name">--bg-inverse</div><div class="token-value">#29294c · primary-700</div><div class="token-desc">Dark backgrounds, tooltips</div></div></div>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Border</h3>
+    <div class="tokens-grid" style="margin-bottom:24px;">
+      <div class="token-card"><div class="token-swatch" style="background:#eaeaed"></div><div class="token-info"><div class="token-name">--border-default</div><div class="token-value">#eaeaed · primary-200</div><div class="token-desc">Dividers, card outlines</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#bdbdc8"></div><div class="token-info"><div class="token-name">--border-strong</div><div class="token-value">#bdbdc8 · primary-300</div><div class="token-desc">Input focus, strong outlines</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#7f56d9"></div><div class="token-info"><div class="token-name">--border-focus</div><div class="token-value">#7f56d9 · secondary-600</div><div class="token-desc">Focused interactive elements</div></div></div>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Semantic States</h3>
+    <div class="tokens-grid">
+      <div class="token-card"><div class="token-swatch" style="background:#039855"></div><div class="token-info"><div class="token-name">--color-success</div><div class="token-value">#039855 · success-700</div><div class="token-desc">Success icons, text</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#ecfdf3"></div><div class="token-info"><div class="token-name">--color-success-bg</div><div class="token-value">#ecfdf3 · success-100</div><div class="token-desc">Success badge backgrounds</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#f79009"></div><div class="token-info"><div class="token-name">--color-warning</div><div class="token-value">#f79009 · warning-600</div><div class="token-desc">Warning icons, text</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#fffaeb"></div><div class="token-info"><div class="token-name">--color-warning-bg</div><div class="token-value">#fffaeb · warning-50</div><div class="token-desc">Warning badge backgrounds</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#d92d20"></div><div class="token-info"><div class="token-name">--color-error</div><div class="token-value">#d92d20 · error-700</div><div class="token-desc">Error icons, text</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#fef3f2"></div><div class="token-info"><div class="token-name">--color-error-bg</div><div class="token-value">#fef3f2 · error-100</div><div class="token-desc">Error badge backgrounds</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#0ba5ec"></div><div class="token-info"><div class="token-name">--color-info</div><div class="token-value">#0ba5ec · info-600</div><div class="token-desc">Info icons, text</div></div></div>
+      <div class="token-card"><div class="token-swatch" style="background:#f0f9ff"></div><div class="token-info"><div class="token-name">--color-info-bg</div><div class="token-value">#f0f9ff · info-100</div><div class="token-desc">Info badge backgrounds</div></div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Accessibility -->
+  <div class="section">
+    <h2 class="section-title">Accessibility</h2>
+    <p class="section-desc">Approved color combinations that meet WCAG 2.1 AA (4.5:1 minimum for body text, 3:1 for large text and UI elements).</p>
+
+    <div class="combo-grid">
+      <div class="combo-card">
+        <div class="combo-preview" style="background:#29294c;">
+          <span class="combo-preview-label" style="color:#ffffff;">White on Navy</span>
+          <span class="combo-preview-sub" style="color:rgba(255,255,255,0.7);">Body text</span>
+        </div>
+        <div class="combo-meta"><div class="combo-meta-title">White / Primary-700</div><span class="combo-ratio pass">✓ 12.6:1 — AAA</span></div>
+      </div>
+      <div class="combo-card">
+        <div class="combo-preview" style="background:#7f56d9;">
+          <span class="combo-preview-label" style="color:#ffffff;">White on Purple</span>
+          <span class="combo-preview-sub" style="color:rgba(255,255,255,0.8);">Button label</span>
+        </div>
+        <div class="combo-meta"><div class="combo-meta-title">White / Secondary-600</div><span class="combo-ratio pass">✓ 4.6:1 — AA</span></div>
+      </div>
+      <div class="combo-card">
+        <div class="combo-preview" style="background:#f9f5ff;">
+          <span class="combo-preview-label" style="color:#6941c6;">Purple on Tint</span>
+          <span class="combo-preview-sub" style="color:#9e77ed;">Badge, chip</span>
+        </div>
+        <div class="combo-meta"><div class="combo-meta-title">Secondary-700 / Secondary-50</div><span class="combo-ratio pass">✓ 5.9:1 — AA</span></div>
+      </div>
+      <div class="combo-card">
+        <div class="combo-preview" style="background:#ecfdf3;">
+          <span class="combo-preview-label" style="color:#027a48;">Green on Tint</span>
+          <span class="combo-preview-sub" style="color:#039855;">Success badge</span>
+        </div>
+        <div class="combo-meta"><div class="combo-meta-title">Success-800 / Success-100</div><span class="combo-ratio pass">✓ 5.1:1 — AA</span></div>
+      </div>
+      <div class="combo-card">
+        <div class="combo-preview" style="background:#fef3f2;">
+          <span class="combo-preview-label" style="color:#b42318;">Red on Tint</span>
+          <span class="combo-preview-sub" style="color:#d92d20;">Error badge</span>
+        </div>
+        <div class="combo-meta"><div class="combo-meta-title">Error-800 / Error-100</div><span class="combo-ratio pass">✓ 4.8:1 — AA</span></div>
+      </div>
+      <div class="combo-card">
+        <div class="combo-preview" style="background:#f9fafb;">
+          <span class="combo-preview-label" style="color:#707087;">Gray on White</span>
+          <span class="combo-preview-sub" style="color:#9d9dad;">Caption text</span>
+        </div>
+        <div class="combo-meta"><div class="combo-meta-title">Primary-500 / Primary-50</div><span class="combo-ratio pass">✓ 4.5:1 — AA</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Do / Don't -->
+  <div class="section">
+    <h2 class="section-title">Do's & Don'ts</h2>
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Do
+        </div>
+        <div class="card-body">
+          <p>Use semantic tokens (<code>--text-primary</code>, <code>--color-error</code>) in component code so colors update automatically when the theme changes.</p>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="#d92d20" stroke-width="2" stroke-linecap="round"/></svg>
+          Don't
+        </div>
+        <div class="card-body">
+          <p>Don't hard-code raw hex values like <code>#29294c</code> directly in component styles. Use the CSS variable equivalent instead.</p>
+        </div>
+      </div>
+      <div class="do-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Do
+        </div>
+        <div class="card-body">
+          <p>Test color pairings with WCAG contrast checkers before shipping. Aim for at least 4.5:1 for normal text, 3:1 for large text and UI components.</p>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="#d92d20" stroke-width="2" stroke-linecap="round"/></svg>
+          Don't
+        </div>
+        <div class="card-body">
+          <p>Don't use color alone to convey meaning. Always pair color with an icon, label, or pattern for users with color-vision deficiencies.</p>
+        </div>
+      </div>
+      <div class="do-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Do
+        </div>
+        <div class="card-body">
+          <p>Use the <em>tint</em> (50–100 step) for backgrounds and the 600–800 step for text on those backgrounds — keeping the same hue at both steps.</p>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="#d92d20" stroke-width="2" stroke-linecap="round"/></svg>
+          Don't
+        </div>
+        <div class="card-body">
+          <p>Don't mix semantic colors arbitrarily — e.g. a success-green icon inside an error-red card. Keep the semantic intent consistent within a component.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- For Designers -->
+  <div class="section">
+    <h2 class="section-title">For Designers</h2>
+    <table class="usage-table">
+      <thead><tr><th>Task</th><th>Where to find it</th></tr></thead>
+      <tbody>
+        <tr><td>Apply a color to an element</td><td>Use the <strong>Local variables</strong> panel → Color Tokens group. Never pick from the "Document colors" raw swatches.</td></tr>
+        <tr><td>Check contrast ratio</td><td>Select text layer → right panel → Contrast Ratio badge (with Figma's built-in checker or the <em>Contrast</em> plugin).</td></tr>
+        <tr><td>Add a new color</td><td>Propose it in the <code>#design-system</code> Slack channel first — new tokens require team sign-off before being added to the library.</td></tr>
+        <tr><td>Dark mode</td><td>Variable modes are defined in the library file. Switch via the right panel → Layer → click the mode toggle.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- For Developers -->
+  <div class="section">
+    <h2 class="section-title">For Developers</h2>
+    <table class="usage-table">
+      <thead><tr><th>Scenario</th><th>Recommended approach</th></tr></thead>
+      <tbody>
+        <tr><td>Text color</td><td><code>color: var(--text-primary)</code> for headings, <code>var(--text-secondary)</code> for body, <code>var(--text-tertiary)</code> for captions</td></tr>
+        <tr><td>Background</td><td><code>background: var(--bg-surface)</code> for cards, <code>var(--bg-page)</code> for layouts, <code>var(--bg-subtle)</code> for hover</td></tr>
+        <tr><td>Borders</td><td><code>border: 1px solid var(--border-default)</code> for most cases; <code>var(--border-focus)</code> on focus ring</td></tr>
+        <tr><td>Semantic states</td><td>Use <code>var(--color-success)</code>, <code>var(--color-error)</code> etc. for icon colors; pair with <code>var(--color-success-bg)</code> for the container</td></tr>
+        <tr><td>Raw palette access</td><td>Use CSS custom properties defined at <code>:root</code> e.g. <code>var(--secondary-600)</code> — never hardcode hex values</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

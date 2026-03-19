@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avatar — Pulse Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary-700: #29294c;
+  --primary-600: #545470;
+  --primary-500: #707087;
+  --primary-400: #9d9dad;
+  --primary-300: #bdbdc8;
+  --primary-200: #eaeaed;
+  --primary-100: #f4f4f6;
+  --primary-50:  #f9fafb;
+  --secondary-700: #6941c6;
+  --secondary-600: #7f56d9;
+  --secondary-500: #9e77ed;
+  --secondary-400: #b692f6;
+  --secondary-300: #d6bbfb;
+  --secondary-200: #e9d7fe;
+  --secondary-100: #f4ebff;
+  --secondary-50:  #f9f5ff;
+  --error-700: #d92d20;
+  --error-600: #f04438;
+  --error-100: #fef3f2;
+  --success-700: #039855;
+  --success-600: #12b76a;
+  --success-100: #ecfdf3;
+  --text-primary: #29294c;
+  --text-secondary: #707087;
+  --text-tertiary: #9d9dad;
+  --text-placeholder: #bdbdc8;
+  --text-link: #6941c6;
+  --border-default: #eaeaed;
+  --border-focus: #7f56d9;
+  --bg-page: #f9fafb;
+  --sidebar-w: 240px;
+  --font: 'Inter', sans-serif;
+}
+
+body { font-family: var(--font); color: var(--text-primary); background: var(--bg-page); display: flex; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar { width: var(--sidebar-w); min-width: var(--sidebar-w); background: #fff; border-right: 1px solid var(--border-default); padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid var(--border-default); margin-bottom: 16px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: var(--primary-700); }
+.sidebar-logo sub { font-size: 10px; color: var(--text-tertiary); font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main { margin-left: var(--sidebar-w); flex: 1; padding: 48px 56px; max-width: 1100px; }
+
+/* ── Page header ── */
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text-primary); }
+.breadcrumb-sep { opacity: .4; }
+.page-header { margin-bottom: 40px; }
+.page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+.page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 640px; }
+.page-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+.tag-figma  { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+.tag-wcag   { background: #eff8ff; color: #026aa2; border-color: #b9e6fe; }
+
+/* ── Sections ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; }
+.section-desc  { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+.divider { border: none; border-top: 1px solid var(--border-default); margin: 48px 0; }
+
+/* ── Demo canvas ── */
+.demo-canvas {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 32px;
+}
+.demo-canvas + .demo-canvas { margin-top: 16px; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+.demo-row + .demo-row { margin-top: 24px; }
+.demo-col { display: flex; flex-direction: column; gap: 16px; min-width: 120px; }
+.demo-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text-tertiary); margin-bottom: 8px; }
+
+/* ── Code block ── */
+.code-block { position: relative; background: #1e1e2e; border-radius: 10px; padding: 20px; overflow-x: auto; margin-top: 16px; }
+.code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; color: #cdd6f4; }
+.code-block .token-tag    { color: #89dceb; }
+.code-block .token-attr   { color: #89b4fa; }
+.code-block .token-str    { color: #a6e3a1; }
+.code-block .token-comment { color: #6c7086; font-style: italic; }
+.copy-btn {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  color: #cdd6f4; font-size: 11px; font-family: var(--font); font-weight: 500;
+  padding: 5px 12px; border-radius: 6px; cursor: pointer;
+  transition: background .15s;
+}
+.copy-btn:hover { background: rgba(255,255,255,.15); }
+.copy-btn.copied { color: #a6e3a1; border-color: #a6e3a1; }
+
+/* ── Props table ── */
+.props-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid var(--border-default); border-radius: 10px; overflow: hidden; }
+.props-table th { text-align: left; padding: 10px 14px; background: var(--primary-50); color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border-default); }
+.props-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; line-height: 1.5; }
+.props-table tr:last-child td { border-bottom: none; }
+.props-table code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--primary-100); color: var(--secondary-700); padding: 2px 6px; border-radius: 4px; }
+
+/* ══════════════════════════════════
+   AVATAR COMPONENT STYLES
+   Source: Figma 543-26979 / 543-27160
+   ══════════════════════════════════ */
+
+/* ── Base avatar ── */
+.av {
+  position: relative;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  font-family: var(--font);
+  font-weight: 500;
+  vertical-align: middle;
+}
+.av img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; border-radius: 50%; }
+
+/* ── Sizes ── */
+.av-2xs { width: 20px; height: 20px; font-size: 8px; }
+.av-xs  { width: 24px; height: 24px; font-size: 10px; }
+.av-sm  { width: 32px; height: 32px; font-size: 12px; }
+.av-md  { width: 40px; height: 40px; font-size: 14px; }
+.av-lg  { width: 48px; height: 48px; font-size: 16px; }
+.av-xl  { width: 56px; height: 56px; font-size: 18px; }
+.av-2xl { width: 64px; height: 64px; font-size: 20px; }
+
+/* ── Color palettes for initial avatars ── */
+.av-purple { background: #f4ebff; color: #7f56d9; }
+.av-blue   { background: #eff8ff; color: #026aa2; }
+.av-green  { background: #ecfdf3; color: #027a48; }
+.av-orange { background: #fff4ed; color: #b93815; }
+.av-teal   { background: #f0fdf4; color: #15803d; }
+.av-pink   { background: #fdf4ff; color: #7e22ce; }
+.av-gray   { background: #f2f4f7; color: #344054; }
+
+/* ── Placeholder (no photo) ── */
+.av-placeholder { background: #fcfaff; color: #7f56d9; }
+.av-placeholder svg { width: 55%; height: 55%; }
+
+/* ── Status indicator wrapper ── */
+.av-wrap {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* Online indicator */
+.av-online {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #12b76a;
+  border: 1.5px solid #fff;
+  border-radius: 4px;
+}
+.av-xs  + .av-online,
+.av-wrap.av-xs .av-online  { width: 8px;  height: 8px;  border-radius: 3px; bottom: 0; right: 0; }
+.av-wrap.av-sm .av-online  { width: 8px;  height: 8px;  border-radius: 3px; }
+.av-wrap.av-md .av-online  { width: 10px; height: 10px; border-radius: 4px; }
+.av-wrap.av-lg .av-online  { width: 12px; height: 12px; border-radius: 5px; }
+.av-wrap.av-xl .av-online  { width: 14px; height: 14px; border-radius: 6px; }
+.av-wrap.av-2xl .av-online { width: 16px; height: 16px; border-radius: 6px; }
+
+/* Company icon badge */
+.av-company {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: #fff;
+  border: 1.5px solid #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.av-wrap.av-xs .av-company  { width: 10px; height: 10px; border-radius: 3px; }
+.av-wrap.av-sm .av-company  { width: 12px; height: 12px; border-radius: 4px; }
+.av-wrap.av-md .av-company  { width: 14px; height: 14px; border-radius: 4px; }
+.av-wrap.av-lg .av-company  { width: 16px; height: 16px; border-radius: 5px; }
+.av-wrap.av-xl .av-company  { width: 18px; height: 18px; border-radius: 6px; }
+.av-wrap.av-2xl .av-company { width: 20px; height: 20px; border-radius: 6px; }
+.av-company img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+/* Default company placeholder */
+.av-company-inner { width: 100%; height: 100%; background: linear-gradient(135deg, #7f56d9 0%, #9e77ed 100%); }
+
+/* ── Focus / Hover ring ── */
+.av-ring .av { border: 4px solid #f4ebff; }
+.av-ring.av-xs .av  { border-width: 3px; }
+.av-ring.av-sm .av  { border-width: 3px; }
+
+/* ── Profile photo (large, bordered, shadowed) ── */
+.av-profile {
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #fff;
+  box-shadow: 0 12px 16px -4px rgba(16,24,40,.08), 0 4px 6px -2px rgba(16,24,40,.03);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.av-profile.av-profile-md { width: 96px;  height: 96px;  font-size: 36px; font-weight: 500; }
+.av-profile.av-profile-lg { width: 160px; height: 160px; font-size: 60px; font-weight: 500; }
+.av-profile img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.av-profile-placeholder { background: #fcfaff; color: #7f56d9; }
+.av-profile-placeholder svg { width: 45%; height: 45%; }
+
+/* ── Avatar Group ── */
+.av-group {
+  display: inline-flex;
+  align-items: center;
+}
+.av-group .av-wrap,
+.av-group .av {
+  border: 1.5px solid #fff;
+}
+/* Overlap spacing by size */
+.av-group.av-xs  .av-wrap + .av-wrap,
+.av-group.av-xs  .av + .av  { margin-left: -8px; }
+.av-group.av-sm  .av-wrap + .av-wrap,
+.av-group.av-sm  .av + .av  { margin-left: -10px; }
+.av-group.av-md  .av-wrap + .av-wrap,
+.av-group.av-md  .av + .av  { margin-left: -12px; }
+
+/* +N more avatar */
+.av-more {
+  background: #fcfaff;
+  color: #7f56d9;
+  font-weight: 500;
+  font-family: var(--font);
+}
+
+/* Add user button */
+.av-add {
+  background: #fff;
+  border: 1px dashed #d0d5dd;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #98a2b3;
+  transition: background .15s, border-color .15s;
+}
+.av-add:hover { background: #f9fafb; border-color: #98a2b3; color: #667085; }
+.av-add svg { flex-shrink: 0; }
+.av-group .av-add { margin-left: 8px; border-radius: 50%; }
+.av-add.av-xs  { width: 24px; height: 24px; }
+.av-add.av-sm  { width: 32px; height: 32px; }
+.av-add.av-md  { width: 40px; height: 40px; }
+
+/* ── Label Group ── */
+.av-label-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.av-label-group.av-sm  { gap: 10px; }
+.av-label-group.av-xl  { gap: 16px; }
+.av-label-group-text { display: flex; flex-direction: column; gap: 1px; }
+.av-label-name { font-size: 14px; font-weight: 500; color: #29294c; line-height: 1.5; white-space: nowrap; }
+.av-label-email { font-size: 12px; color: #707087; line-height: 1.4; white-space: nowrap; }
+
+/* Size variants for label text */
+.av-label-group.size-sm .av-label-name { font-size: 14px; }
+.av-label-group.size-md .av-label-name { font-size: 14px; }
+.av-label-group.size-lg .av-label-name { font-size: 16px; }
+.av-label-group.size-xl .av-label-name { font-size: 16px; }
+
+/* ── States grid ── */
+.states-grid { display: flex; flex-wrap: wrap; gap: 16px; }
+.state-cell { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 20px 24px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.state-cell-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-tertiary); }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link active">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+    <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Components</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Avatar</span>
+  </div>
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Purple document gradient -->
+        <linearGradient id="doc-avatar" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#b8a0ff"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <!-- Folder dark gradient -->
+        <linearGradient id="fld-avatar" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2d2d50"/>
+          <stop offset="100%" stop-color="#12122a"/>
+        </linearGradient>
+        <!-- Purple inner glow -->
+        <radialGradient id="glow-avatar" cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
+          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Top shine -->
+        <linearGradient id="shine-avatar" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- Folder drop shadow -->
+        <filter id="fs-avatar" x="-18%" y="-12%" width="136%" height="136%">
+          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
+        </filter>
+        <!-- Text glow -->
+        <filter id="tg-avatar" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="2.8" result="blur"/>
+          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
+          <feComposite in="c" in2="blur" operator="in" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── Purple document peeking behind folder ── -->
+      <g transform="rotate(12, 141, 46)" opacity="0.97">
+        <!-- Document body -->
+        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-avatar)"/>
+        <!-- Folded corner (lighter) -->
+        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
+        <!-- Folded corner (shadow) -->
+        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
+      </g>
+
+      <!-- ── Dark glass folder ── -->
+      <!-- Single path: full folder shape (tab + body as one outline) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#fld-avatar)"
+            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            filter="url(#fs-avatar)"/>
+
+      <!-- Purple glow inside (same path, no stroke/shadow) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#glow-avatar)"/>
+
+      <!-- Top glass shine strip -->
+      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-avatar)"/>
+
+      <!-- Component name text -->
+      <text x="100" y="132"
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.93)"
+            font-family="Inter, system-ui, -apple-system, sans-serif"
+            font-size="16" font-weight="800"
+            letter-spacing="1.6"
+            textLength="76" lengthAdjust="spacingAndGlyphs"
+            filter="url(#tg-avatar)">AVATAR</text>
+
+      <!-- Subtle underline below name -->
+      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
+    </svg>
+  </div>
+    <h1 class="page-title">Avatar</h1>
+    <p class="page-subtitle">Avatars represent users or entities with a photo, initials, or placeholder icon. Available in six sizes with optional status indicators (online, company), group stacking, and label groups.</p>
+    <div class="page-tags">
+      <span class="tag tag-stable">Stable</span>
+      <span class="tag tag-wcag">WCAG AA</span>
+      <span class="tag tag-figma">Figma · 543-26979</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── OVERVIEW ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">Avatars scale across 7 sizes and support photos, initials, and placeholder icons. They can carry status indicators and stack into groups.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="align-items:center; gap:24px;">
+        <!-- 2xs -->
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label" style="margin-bottom:0; text-align:center;">2xs</div>
+          <span class="av av-2xs av-purple">OR</span>
+        </div>
+        <!-- xs -->
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label" style="margin-bottom:0; text-align:center;">xs</div>
+          <span class="av av-xs av-purple">OR</span>
+        </div>
+        <!-- sm -->
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label" style="margin-bottom:0; text-align:center;">sm</div>
+          <span class="av av-sm av-blue">PB</span>
+        </div>
+        <!-- md -->
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label" style="margin-bottom:0; text-align:center;">md</div>
+          <span class="av av-md av-green">LS</span>
+        </div>
+        <!-- lg -->
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label" style="margin-bottom:0; text-align:center;">lg</div>
+          <span class="av av-lg av-orange">CW</span>
+        </div>
+        <!-- xl -->
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label" style="margin-bottom:0; text-align:center;">xl</div>
+          <span class="av av-xl av-teal">DW</span>
+        </div>
+        <!-- 2xl -->
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label" style="margin-bottom:0; text-align:center;">2xl</div>
+          <span class="av av-2xl av-pink">NC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SIZES ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">Seven size options from 2xs (20 px) to 2xl (64 px). Choose based on context — smaller sizes for dense lists, larger for profile pages.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="align-items:flex-end; gap:28px;">
+        <div class="demo-col" style="align-items:center; gap:10px;">
+          <span class="av av-2xs av-purple">OR</span>
+          <div style="font-size:11px;color:#9d9dad;font-weight:600;">2xs · 20px</div>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:10px;">
+          <span class="av av-xs av-blue">PB</span>
+          <div style="font-size:11px;color:#9d9dad;font-weight:600;">xs · 24px</div>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:10px;">
+          <span class="av av-sm av-green">LS</span>
+          <div style="font-size:11px;color:#9d9dad;font-weight:600;">sm · 32px</div>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:10px;">
+          <span class="av av-md av-orange">CW</span>
+          <div style="font-size:11px;color:#9d9dad;font-weight:600;">md · 40px</div>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:10px;">
+          <span class="av av-lg av-teal">DW</span>
+          <div style="font-size:11px;color:#9d9dad;font-weight:600;">lg · 48px</div>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:10px;">
+          <span class="av av-xl av-pink">NC</span>
+          <div style="font-size:11px;color:#9d9dad;font-weight:600;">xl · 56px</div>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:10px;">
+          <span class="av av-2xl av-gray">AL</span>
+          <div style="font-size:11px;color:#9d9dad;font-weight:600;">2xl · 64px</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PLACEHOLDER VARIANTS ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Placeholder Variants</h2>
+    <p class="section-desc">When a photo isn't available, use an initials or icon placeholder. Initials show the user's first and last initial; the icon placeholder works when no name is known.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="gap:40px;">
+        <!-- Photo -->
+        <div class="demo-col" style="align-items:flex-start; gap:12px;">
+          <div class="demo-label">Photo</div>
+          <div style="display:flex; gap:16px; align-items:center;">
+            <span class="av av-sm av-purple"><img src="https://www.figma.com/api/mcp/asset/b479eb5b-9286-4f3d-8c15-bb42306fe9e3" alt="Olivia Rhye"/></span>
+            <span class="av av-md av-purple"><img src="https://www.figma.com/api/mcp/asset/b479eb5b-9286-4f3d-8c15-bb42306fe9e3" alt="Olivia Rhye"/></span>
+            <span class="av av-lg av-purple"><img src="https://www.figma.com/api/mcp/asset/b479eb5b-9286-4f3d-8c15-bb42306fe9e3" alt="Olivia Rhye"/></span>
+            <span class="av av-xl av-purple"><img src="https://www.figma.com/api/mcp/asset/b479eb5b-9286-4f3d-8c15-bb42306fe9e3" alt="Olivia Rhye"/></span>
+          </div>
+        </div>
+        <!-- Initials -->
+        <div class="demo-col" style="align-items:flex-start; gap:12px;">
+          <div class="demo-label">Initials</div>
+          <div style="display:flex; gap:16px; align-items:center;">
+            <span class="av av-sm av-purple">OR</span>
+            <span class="av av-md av-blue">PB</span>
+            <span class="av av-lg av-green">LS</span>
+            <span class="av av-xl av-orange">CW</span>
+          </div>
+        </div>
+        <!-- Icon placeholder -->
+        <div class="demo-col" style="align-items:flex-start; gap:12px;">
+          <div class="demo-label">Icon placeholder</div>
+          <div style="display:flex; gap:16px; align-items:center;">
+            <span class="av av-sm av-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 21C20 19.6044 20 18.9067 19.8278 18.3389C19.44 17.0605 18.4395 16.06 17.1611 15.6722C16.5933 15.5 15.8956 15.5 14.5 15.5H9.5C8.10444 15.5 7.40665 15.5 6.83886 15.6722C5.56045 16.06 4.56004 17.0605 4.17224 18.3389C4 18.9067 4 19.6044 4 21M16.5 7.5C16.5 9.98528 14.4853 12 12 12C9.51472 12 7.5 9.98528 7.5 7.5C7.5 5.01472 9.51472 3 12 3C14.4853 3 16.5 5.01472 16.5 7.5Z" stroke="#7f56d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="av av-md av-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 21C20 19.6044 20 18.9067 19.8278 18.3389C19.44 17.0605 18.4395 16.06 17.1611 15.6722C16.5933 15.5 15.8956 15.5 14.5 15.5H9.5C8.10444 15.5 7.40665 15.5 6.83886 15.6722C5.56045 16.06 4.56004 17.0605 4.17224 18.3389C4 18.9067 4 19.6044 4 21M16.5 7.5C16.5 9.98528 14.4853 12 12 12C9.51472 12 7.5 9.98528 7.5 7.5C7.5 5.01472 9.51472 3 12 3C14.4853 3 16.5 5.01472 16.5 7.5Z" stroke="#7f56d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="av av-lg av-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 21C20 19.6044 20 18.9067 19.8278 18.3389C19.44 17.0605 18.4395 16.06 17.1611 15.6722C16.5933 15.5 15.8956 15.5 14.5 15.5H9.5C8.10444 15.5 7.40665 15.5 6.83886 15.6722C5.56045 16.06 4.56004 17.0605 4.17224 18.3389C4 18.9067 4 19.6044 4 21M16.5 7.5C16.5 9.98528 14.4853 12 12 12C9.51472 12 7.5 9.98528 7.5 7.5C7.5 5.01472 9.51472 3 12 3C14.4853 3 16.5 5.01472 16.5 7.5Z" stroke="#7f56d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="av av-xl av-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 21C20 19.6044 20 18.9067 19.8278 18.3389C19.44 17.0605 18.4395 16.06 17.1611 15.6722C16.5933 15.5 15.8956 15.5 14.5 15.5H9.5C8.10444 15.5 7.40665 15.5 6.83886 15.6722C5.56045 16.06 4.56004 17.0605 4.17224 18.3389C4 18.9067 4 19.6044 4 21M16.5 7.5C16.5 9.98528 14.4853 12 12 12C9.51472 12 7.5 9.98528 7.5 7.5C7.5 5.01472 9.51472 3 12 3C14.4853 3 16.5 5.01472 16.5 7.5Z" stroke="#7f56d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STATUS INDICATORS ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Status Indicators</h2>
+    <p class="section-desc">Attach an online indicator (green dot) or a company icon badge to the bottom-right corner. The indicator scales with the avatar size.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="gap:48px;">
+
+        <!-- No badge -->
+        <div class="demo-col" style="gap:8px;">
+          <div class="demo-label">No indicator</div>
+          <div style="display:flex; gap:16px; align-items:center;">
+            <span class="av av-sm av-purple">OR</span>
+            <span class="av av-md av-purple">OR</span>
+            <span class="av av-lg av-purple">OR</span>
+            <span class="av av-xl av-purple">OR</span>
+          </div>
+        </div>
+
+        <!-- Online indicator -->
+        <div class="demo-col" style="gap:8px;">
+          <div class="demo-label">Online indicator</div>
+          <div style="display:flex; gap:16px; align-items:center;">
+            <span class="av-wrap av-sm">
+              <span class="av av-sm av-purple">OR</span>
+              <span class="av-online"></span>
+            </span>
+            <span class="av-wrap av-md">
+              <span class="av av-md av-purple">OR</span>
+              <span class="av-online"></span>
+            </span>
+            <span class="av-wrap av-lg">
+              <span class="av av-lg av-purple">OR</span>
+              <span class="av-online"></span>
+            </span>
+            <span class="av-wrap av-xl">
+              <span class="av av-xl av-purple">OR</span>
+              <span class="av-online"></span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Company icon -->
+        <div class="demo-col" style="gap:8px;">
+          <div class="demo-label">Company icon</div>
+          <div style="display:flex; gap:16px; align-items:center;">
+            <span class="av-wrap av-sm">
+              <span class="av av-sm av-blue">PB</span>
+              <span class="av-company"><span class="av-company-inner"></span></span>
+            </span>
+            <span class="av-wrap av-md">
+              <span class="av av-md av-blue">PB</span>
+              <span class="av-company"><span class="av-company-inner"></span></span>
+            </span>
+            <span class="av-wrap av-lg">
+              <span class="av av-lg av-blue">PB</span>
+              <span class="av-company"><span class="av-company-inner"></span></span>
+            </span>
+            <span class="av-wrap av-xl">
+              <span class="av av-xl av-blue">PB</span>
+              <span class="av-company"><span class="av-company-inner"></span></span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HOVER & FOCUS STATES ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">States</h2>
+    <p class="section-desc">Hover and focus states add a light purple ring around the avatar, making keyboard and pointer navigation clear and accessible.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="gap:40px; align-items:flex-start;">
+        <div class="state-cell">
+          <div class="state-cell-label">Default</div>
+          <div style="display:flex;gap:16px;align-items:center;">
+            <span class="av av-sm av-purple">OR</span>
+            <span class="av av-md av-purple">OR</span>
+            <span class="av av-lg av-purple">OR</span>
+          </div>
+        </div>
+        <div class="state-cell">
+          <div class="state-cell-label">Hover</div>
+          <div style="display:flex;gap:20px;align-items:center;">
+            <span class="av-ring av-sm" style="display:inline-flex;"><span class="av av-sm av-purple">OR</span></span>
+            <span class="av-ring av-md" style="display:inline-flex;"><span class="av av-md av-purple">OR</span></span>
+            <span class="av-ring av-lg" style="display:inline-flex;"><span class="av av-lg av-purple">OR</span></span>
+          </div>
+        </div>
+        <div class="state-cell">
+          <div class="state-cell-label">Focus</div>
+          <div style="display:flex;gap:20px;align-items:center;">
+            <span class="av-ring av-sm" style="display:inline-flex;"><span class="av av-sm av-blue">PB</span></span>
+            <span class="av-ring av-md" style="display:inline-flex;"><span class="av av-md av-blue">PB</span></span>
+            <span class="av-ring av-lg" style="display:inline-flex;"><span class="av av-lg av-blue">PB</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AVATAR GROUP ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Avatar Group</h2>
+    <p class="section-desc">Stack multiple avatars with overlap to represent a team or participant list. A "+N" avatar shows overflow count. An optional "Add" button invites adding more users.</p>
+
+    <div class="demo-canvas">
+      <div style="display:flex; flex-direction:column; gap:28px;">
+
+        <!-- xs group -->
+        <div>
+          <div class="demo-label" style="margin-bottom:12px;">xs group</div>
+          <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+            <div class="av-group av-xs">
+              <span class="av av-xs av-purple">OR</span>
+              <span class="av av-xs av-blue">PB</span>
+              <span class="av av-xs av-green">LS</span>
+              <span class="av av-xs av-orange">CW</span>
+              <span class="av av-xs av-teal">DW</span>
+              <span class="av av-xs av-pink">NC</span>
+              <span class="av av-xs av-gray">AL</span>
+              <span class="av av-xs av-purple">KM</span>
+              <span class="av av-xs av-blue">AW</span>
+              <span class="av av-xs av-green" style="background:#ecfdf3;color:#027a48;">EL</span>
+              <span class="av av-xs av-more">+5</span>
+            </div>
+            <button class="av-add av-xs" title="Add user">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- sm group -->
+        <div>
+          <div class="demo-label" style="margin-bottom:12px;">sm group</div>
+          <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+            <div class="av-group av-sm">
+              <span class="av av-sm av-purple">OR</span>
+              <span class="av av-sm av-blue">PB</span>
+              <span class="av av-sm av-green">LS</span>
+              <span class="av av-sm av-orange">CW</span>
+              <span class="av av-sm av-teal">DW</span>
+              <span class="av av-sm av-pink">NC</span>
+              <span class="av av-sm av-gray">AL</span>
+              <span class="av av-sm av-purple">KM</span>
+              <span class="av av-sm av-blue">AW</span>
+              <span class="av av-sm av-green">EL</span>
+              <span class="av av-sm av-more">+5</span>
+            </div>
+            <button class="av-add av-sm" title="Add user">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- md group -->
+        <div>
+          <div class="demo-label" style="margin-bottom:12px;">md group</div>
+          <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+            <div class="av-group av-md">
+              <span class="av av-md av-purple">OR</span>
+              <span class="av av-md av-blue">PB</span>
+              <span class="av av-md av-green">LS</span>
+              <span class="av av-md av-orange">CW</span>
+              <span class="av av-md av-teal">DW</span>
+              <span class="av av-md av-pink">NC</span>
+              <span class="av av-md av-gray">AL</span>
+              <span class="av av-md av-purple">KM</span>
+              <span class="av av-md av-blue">AW</span>
+              <span class="av av-md av-green">EL</span>
+              <span class="av av-md av-more">+5</span>
+            </div>
+            <button class="av-add av-md" title="Add user">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LABEL GROUP ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Label Group</h2>
+    <p class="section-desc">Pair an avatar with a name and email address for use in lists, menus, and profile rows. Supports all sizes and status indicator variants.</p>
+
+    <div class="demo-canvas">
+      <div style="display:flex; flex-direction:column; gap:20px;">
+
+        <!-- sm -->
+        <div>
+          <div class="demo-label" style="margin-bottom:12px;">sm — default / online / company</div>
+          <div style="display:flex; gap:40px; flex-wrap:wrap; align-items:center;">
+            <div class="av-label-group size-sm">
+              <span class="av av-sm av-purple">OR</span>
+              <div class="av-label-group-text">
+                <span class="av-label-name">Olivia Rhye</span>
+                <span class="av-label-email">olivia@untitledui.com</span>
+              </div>
+            </div>
+            <div class="av-label-group size-sm">
+              <span class="av-wrap av-sm">
+                <span class="av av-sm av-blue">PB</span>
+                <span class="av-online"></span>
+              </span>
+              <div class="av-label-group-text">
+                <span class="av-label-name">Phoenix Baker</span>
+                <span class="av-label-email">phoenix@untitledui.com</span>
+              </div>
+            </div>
+            <div class="av-label-group size-sm">
+              <span class="av-wrap av-sm">
+                <span class="av av-sm av-green">LS</span>
+                <span class="av-company"><span class="av-company-inner"></span></span>
+              </span>
+              <div class="av-label-group-text">
+                <span class="av-label-name">Lana Steiner</span>
+                <span class="av-label-email">lana@untitledui.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- md -->
+        <div>
+          <div class="demo-label" style="margin-bottom:12px;">md — default / online / company</div>
+          <div style="display:flex; gap:40px; flex-wrap:wrap; align-items:center;">
+            <div class="av-label-group size-md">
+              <span class="av av-md av-orange">CW</span>
+              <div class="av-label-group-text">
+                <span class="av-label-name">Candice Wu</span>
+                <span class="av-label-email">candice@untitledui.com</span>
+              </div>
+            </div>
+            <div class="av-label-group size-md">
+              <span class="av-wrap av-md">
+                <span class="av av-md av-teal">DW</span>
+                <span class="av-online"></span>
+              </span>
+              <div class="av-label-group-text">
+                <span class="av-label-name">Demi Wilkinson</span>
+                <span class="av-label-email">demi@untitledui.com</span>
+              </div>
+            </div>
+            <div class="av-label-group size-md">
+              <span class="av-wrap av-md">
+                <span class="av av-md av-pink">NC</span>
+                <span class="av-company"><span class="av-company-inner"></span></span>
+              </span>
+              <div class="av-label-group-text">
+                <span class="av-label-name">Natali Craig</span>
+                <span class="av-label-email">natali@untitledui.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- lg / xl -->
+        <div>
+          <div class="demo-label" style="margin-bottom:12px;">lg & xl</div>
+          <div style="display:flex; gap:40px; flex-wrap:wrap; align-items:center;">
+            <div class="av-label-group size-lg" style="gap:14px;">
+              <span class="av av-lg av-gray">AL</span>
+              <div class="av-label-group-text">
+                <span class="av-label-name" style="font-size:16px;">Andi Lane</span>
+                <span class="av-label-email">andi@untitledui.com</span>
+              </div>
+            </div>
+            <div class="av-label-group size-xl" style="gap:16px;">
+              <span class="av-wrap av-xl">
+                <span class="av av-xl av-purple">KM</span>
+                <span class="av-online"></span>
+              </span>
+              <div class="av-label-group-text">
+                <span class="av-label-name" style="font-size:16px;">Kate Morrison</span>
+                <span class="av-label-email">kate@untitledui.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROFILE PHOTO ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Profile Photo</h2>
+    <p class="section-desc">Large-format profile photo used on profile pages and modals. Features a thick white border and elevation shadow. Comes in md (96 px) and lg (160 px) with photo, icon, or initials variants.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="gap:48px; align-items:flex-end; flex-wrap:wrap;">
+
+        <!-- md with photo -->
+        <div class="demo-col" style="align-items:center; gap:12px;">
+          <div class="demo-label">md · Photo</div>
+          <div class="av-profile av-profile-md">
+            <img src="https://www.figma.com/api/mcp/asset/b479eb5b-9286-4f3d-8c15-bb42306fe9e3" alt="Profile photo"/>
+          </div>
+        </div>
+
+        <!-- md with initials -->
+        <div class="demo-col" style="align-items:center; gap:12px;">
+          <div class="demo-label">md · Initials</div>
+          <div class="av-profile av-profile-md av-purple" style="background:#f4ebff; color:#7f56d9; font-size:36px; font-weight:500;">OR</div>
+        </div>
+
+        <!-- md placeholder icon -->
+        <div class="demo-col" style="align-items:center; gap:12px;">
+          <div class="demo-label">md · Placeholder</div>
+          <div class="av-profile av-profile-md av-profile-placeholder" style="display:flex;align-items:center;justify-content:center;">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none"><path d="M20 21C20 19.6044 20 18.9067 19.8278 18.3389C19.44 17.0605 18.4395 16.06 17.1611 15.6722C16.5933 15.5 15.8956 15.5 14.5 15.5H9.5C8.10444 15.5 7.40665 15.5 6.83886 15.6722C5.56045 16.06 4.56004 17.0605 4.17224 18.3389C4 18.9067 4 19.6044 4 21M16.5 7.5C16.5 9.98528 14.4853 12 12 12C9.51472 12 7.5 9.98528 7.5 7.5C7.5 5.01472 9.51472 3 12 3C14.4853 3 16.5 5.01472 16.5 7.5Z" stroke="#7f56d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <!-- lg with photo -->
+        <div class="demo-col" style="align-items:center; gap:12px;">
+          <div class="demo-label">lg · Photo</div>
+          <div class="av-profile av-profile-lg">
+            <img src="https://www.figma.com/api/mcp/asset/b479eb5b-9286-4f3d-8c15-bb42306fe9e3" alt="Profile photo large"/>
+          </div>
+        </div>
+
+        <!-- lg with initials -->
+        <div class="demo-col" style="align-items:center; gap:12px;">
+          <div class="demo-label">lg · Initials</div>
+          <div class="av-profile av-profile-lg" style="background:#f4ebff; color:#7f56d9; font-size:60px; font-weight:500; letter-spacing:-1.2px; display:flex;align-items:center;justify-content:center;overflow:hidden;">OR</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ADD BUTTON ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Add User Button</h2>
+    <p class="section-desc">A dashed-border button used at the end of avatar groups to invite adding a new member. Available in xs, sm, and md sizes with hover and focus states.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="gap:32px; align-items:center;">
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label">xs</div>
+          <button class="av-add av-xs" title="Add user">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label">sm</div>
+          <button class="av-add av-sm" title="Add user">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label">md</div>
+          <button class="av-add av-md" title="Add user">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label">hover (sm)</div>
+          <button class="av-add av-sm" title="Add user" style="background:#f9fafb; border-color:#98a2b3; color:#667085;">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label">focus (sm)</div>
+          <button class="av-add av-sm" title="Add user" style="box-shadow:0 0 0 4px #f2f4f7; outline:none;">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="demo-col" style="align-items:center; gap:8px;">
+          <div class="demo-label">disabled</div>
+          <button class="av-add av-sm" title="Add user" disabled style="background:#f9fafb; border-color:#eaecf0; color:#d0d5dd; cursor:not-allowed;">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROPS TABLE ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Props / API</h2>
+    <p class="section-desc">HTML/CSS class-based API. Compose classes to build any avatar variant.</p>
+
+    <table class="props-table">
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th>Values</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>.av</code></td>
+          <td>base class</td>
+          <td>Required on every avatar element. Sets circular shape and flex layout.</td>
+        </tr>
+        <tr>
+          <td>Size modifier</td>
+          <td><code>.av-2xs</code> <code>.av-xs</code> <code>.av-sm</code> <code>.av-md</code> <code>.av-lg</code> <code>.av-xl</code> <code>.av-2xl</code></td>
+          <td>Sets width/height to 20 / 24 / 32 / 40 / 48 / 56 / 64 px respectively.</td>
+        </tr>
+        <tr>
+          <td>Color palette</td>
+          <td><code>.av-purple</code> <code>.av-blue</code> <code>.av-green</code> <code>.av-orange</code> <code>.av-teal</code> <code>.av-pink</code> <code>.av-gray</code></td>
+          <td>Background + text color for initial-based avatars. Use when no photo is available.</td>
+        </tr>
+        <tr>
+          <td><code>.av-placeholder</code></td>
+          <td>modifier</td>
+          <td>Light purple background for icon placeholder. Place an SVG icon inside.</td>
+        </tr>
+        <tr>
+          <td><code>.av-wrap</code></td>
+          <td>container</td>
+          <td>Wraps <code>.av</code> to enable absolute-positioned status badges. Add a size class (e.g. <code>.av-wrap.av-md</code>) to size the badge correctly.</td>
+        </tr>
+        <tr>
+          <td><code>.av-online</code></td>
+          <td>badge (inside .av-wrap)</td>
+          <td>Green online status indicator, bottom-right corner. Scales with the size class on the parent <code>.av-wrap</code>.</td>
+        </tr>
+        <tr>
+          <td><code>.av-company</code></td>
+          <td>badge (inside .av-wrap)</td>
+          <td>Company logo icon badge, bottom-right corner. Place an <code>&lt;img&gt;</code> or <code>.av-company-inner</code> inside.</td>
+        </tr>
+        <tr>
+          <td><code>.av-ring</code></td>
+          <td>wrapper modifier</td>
+          <td>Adds a light purple focus/hover ring by setting a <code>border: 4px solid #f4ebff</code> on the inner <code>.av</code>.</td>
+        </tr>
+        <tr>
+          <td><code>.av-group</code></td>
+          <td>container</td>
+          <td>Stacks avatars with overlap via negative left margin. Add a size class (<code>.av-xs</code>/<code>.av-sm</code>/<code>.av-md</code>) to control gap.</td>
+        </tr>
+        <tr>
+          <td><code>.av-more</code></td>
+          <td>child of .av-group</td>
+          <td>Overflow counter avatar. Also needs a size class. Shows "+N" in brand purple on a light background.</td>
+        </tr>
+        <tr>
+          <td><code>.av-add</code></td>
+          <td>standalone or child of .av-group</td>
+          <td>Dashed-border "Add user" button. Combine with a size class (<code>.av-xs</code>/<code>.av-sm</code>/<code>.av-md</code>).</td>
+        </tr>
+        <tr>
+          <td><code>.av-label-group</code></td>
+          <td>container</td>
+          <td>Horizontal flex row combining an avatar with a name/email text block. Add <code>.size-sm</code>/<code>.size-md</code>/<code>.size-lg</code>/<code>.size-xl</code> for spacing.</td>
+        </tr>
+        <tr>
+          <td><code>.av-profile</code></td>
+          <td>standalone</td>
+          <td>Large profile photo variant with 4px white border and drop shadow. Use with <code>.av-profile-md</code> (96 px) or <code>.av-profile-lg</code> (160 px).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── CODE EXAMPLE ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Usage</h2>
+    <div class="code-block">
+      <button class="copy-btn" onclick="this.textContent='Copied!';this.classList.add('copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('copied')},2000)">Copy</button>
+      <pre><span class="token-comment">&lt;!-- Basic initials avatar --&gt;</span>
+<span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av av-md av-purple"</span><span class="token-tag">&gt;</span>OR<span class="token-tag">&lt;/span&gt;</span>
+
+<span class="token-comment">&lt;!-- Avatar with photo --&gt;</span>
+<span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av av-md"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;img</span> <span class="token-attr">src</span>=<span class="token-str">"olivia.jpg"</span> <span class="token-attr">alt</span>=<span class="token-str">"Olivia Rhye"</span><span class="token-tag">/&gt;</span>
+<span class="token-tag">&lt;/span&gt;</span>
+
+<span class="token-comment">&lt;!-- With online indicator --&gt;</span>
+<span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av-wrap av-md"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av av-md av-purple"</span><span class="token-tag">&gt;</span>OR<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av-online"</span><span class="token-tag">&gt;&lt;/span&gt;</span>
+<span class="token-tag">&lt;/span&gt;</span>
+
+<span class="token-comment">&lt;!-- Avatar group with overflow + add button --&gt;</span>
+<span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"av-group av-sm"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av av-sm av-purple"</span><span class="token-tag">&gt;</span>OR<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av av-sm av-blue"</span><span class="token-tag">&gt;</span>PB<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av av-sm av-more"</span><span class="token-tag">&gt;</span>+3<span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span>
+<span class="token-tag">&lt;button</span> <span class="token-attr">class</span>=<span class="token-str">"av-add av-sm"</span><span class="token-tag">&gt;</span>+<span class="token-tag">&lt;/button&gt;</span>
+
+<span class="token-comment">&lt;!-- Label group --&gt;</span>
+<span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"av-label-group size-md"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av av-md av-purple"</span><span class="token-tag">&gt;</span>OR<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"av-label-group-text"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av-label-name"</span><span class="token-tag">&gt;</span>Olivia Rhye<span class="token-tag">&lt;/span&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"av-label-email"</span><span class="token-tag">&gt;</span>olivia@untitledui.com<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;/div&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></pre>
+    </div>
+  </div>
+
+</main>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

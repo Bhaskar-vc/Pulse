@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Label — Pulse Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary-700: #29294c;
+  --primary-600: #545470;
+  --primary-500: #707087;
+  --primary-400: #9d9dad;
+  --primary-300: #bdbdc8;
+  --primary-200: #eaeaed;
+  --primary-100: #f4f4f6;
+  --primary-50:  #f9fafb;
+  --secondary-700: #6941c6;
+  --secondary-600: #7f56d9;
+  --secondary-500: #9e77ed;
+  --secondary-400: #b692f6;
+  --secondary-300: #d6bbfb;
+  --secondary-200: #e9d7fe;
+  --secondary-100: #f4ebff;
+  --secondary-50:  #f9f5ff;
+  --error-600: #d92d20;
+  --text-primary: #29294c;
+  --text-secondary: #707087;
+  --text-tertiary: #9d9dad;
+  --border-default: #eaeaed;
+  --bg-page: #f9fafb;
+  --sidebar-w: 240px;
+  --font: 'Inter', sans-serif;
+}
+
+body { font-family: var(--font); color: var(--text-primary); background: var(--bg-page); display: flex; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar { width: var(--sidebar-w); min-width: var(--sidebar-w); background: #fff; border-right: 1px solid var(--border-default); padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid var(--border-default); margin-bottom: 16px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: var(--primary-700); }
+.sidebar-logo sub { font-size: 10px; color: var(--text-tertiary); font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main { margin-left: var(--sidebar-w); flex: 1; padding: 48px 56px; max-width: 1100px; }
+
+/* ── Page header ── */
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text-primary); }
+.breadcrumb-sep { opacity: .4; }
+.page-header { margin-bottom: 40px; }
+.page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+.page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 640px; }
+.page-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+.tag-figma  { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+.tag-wcag   { background: #eff8ff; color: #026aa2; border-color: #b9e6fe; }
+
+/* ── Sections ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; }
+.section-desc  { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+.divider { border: none; border-top: 1px solid var(--border-default); margin: 48px 0; }
+
+/* ── Demo canvas ── */
+.demo-canvas {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 32px;
+}
+.demo-canvas + .demo-canvas { margin-top: 16px; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start; }
+.demo-row + .demo-row { margin-top: 32px; }
+.demo-col { display: flex; flex-direction: column; gap: 16px; }
+.demo-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text-tertiary); margin-bottom: 4px; }
+
+/* ── Code block ── */
+.code-block { position: relative; background: #1e1e2e; border-radius: 10px; padding: 20px; overflow-x: auto; margin-top: 16px; }
+.code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; color: #cdd6f4; }
+.code-block .token-tag    { color: #89dceb; }
+.code-block .token-attr   { color: #89b4fa; }
+.code-block .token-str    { color: #a6e3a1; }
+.code-block .token-comment { color: #6c7086; font-style: italic; }
+.copy-btn { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #cdd6f4; font-size: 11px; font-family: var(--font); font-weight: 500; padding: 5px 12px; border-radius: 6px; cursor: pointer; transition: background .15s; }
+.copy-btn:hover { background: rgba(255,255,255,.15); }
+.copy-btn.copied { color: #a6e3a1; border-color: #a6e3a1; }
+
+/* ── Props table ── */
+.props-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid var(--border-default); border-radius: 10px; overflow: hidden; }
+.props-table th { text-align: left; padding: 10px 14px; background: var(--primary-50); color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border-default); }
+.props-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; line-height: 1.5; }
+.props-table tr:last-child td { border-bottom: none; }
+.props-table code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--primary-100); color: var(--secondary-700); padding: 2px 6px; border-radius: 4px; }
+
+/* ── Combination grid ── */
+.combo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.combo-cell {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.combo-cell-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-tertiary);
+}
+
+/* ══════════════════════════════════
+   LABEL COMPONENT STYLES
+   Source: Figma 1270-41013
+   ══════════════════════════════════ */
+
+.lbl {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 20px;
+  white-space: nowrap;
+}
+
+/* ── Types ── */
+
+/* default — 12px regular, #545470 */
+.lbl-text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.03px;
+  color: #545470;
+}
+
+/* large — 14px medium, #29294c */
+.lbl-text.lbl-large {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #29294c;
+}
+
+/* ── Required asterisk ── */
+.lbl-required {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #d92d20;
+  flex-shrink: 0;
+}
+
+/* ── Optional text ── */
+.lbl-optional {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.03px;
+  color: #707087;
+  flex-shrink: 0;
+}
+
+/* ── Tooltip info icon ── */
+.lbl-tooltip {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  color: #9d9dad;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: default;
+}
+.lbl-tooltip svg { display: block; }
+.lbl-tooltip:hover { color: #545470; }
+
+/* Tooltip popup on hover */
+.lbl-tooltip-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #101828;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  z-index: 100;
+  pointer-events: none;
+  box-shadow: 0 4px 6px -2px rgba(16,24,40,.08), 0 12px 16px -4px rgba(16,24,40,.12);
+}
+.lbl-tooltip-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #101828;
+}
+.lbl-tooltip:hover .lbl-tooltip-popup { display: block; }
+
+/* ── Inline form example ── */
+.lbl-field-example {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lbl-input-mock {
+  height: 40px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-family: var(--font);
+  font-size: 14px;
+  color: #344054;
+  outline: none;
+  width: 240px;
+  background: #fff;
+  transition: border-color .15s, box-shadow .15s;
+}
+.lbl-input-mock:focus {
+  border-color: #7f56d9;
+  box-shadow: 0 0 0 3px rgba(127,86,217,.12);
+}
+.lbl-input-mock::placeholder { color: #bdbdc8; }
+</style>
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+    <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="label.html" class="sidebar-link active">Label</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+  <!-- Theme toggle -->
+  <div style="position:sticky; bottom:0; background:inherit; padding:12px 0 8px; border-top:1px solid #eaeaed; margin-top:8px;">
+    <button class="theme-toggle" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()">
+      <span class="theme-toggle-icon">
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </span>
+      <span class="theme-toggle-label">Dark mode</span>
+    </button>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Components</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Label</span>
+  </div>
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Purple document gradient -->
+        <linearGradient id="doc-label" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#b8a0ff"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <!-- Folder dark gradient -->
+        <linearGradient id="fld-label" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2d2d50"/>
+          <stop offset="100%" stop-color="#12122a"/>
+        </linearGradient>
+        <!-- Purple inner glow -->
+        <radialGradient id="glow-label" cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
+          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Top shine -->
+        <linearGradient id="shine-label" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- Folder drop shadow -->
+        <filter id="fs-label" x="-18%" y="-12%" width="136%" height="136%">
+          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
+        </filter>
+        <!-- Text glow -->
+        <filter id="tg-label" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="2.8" result="blur"/>
+          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
+          <feComposite in="c" in2="blur" operator="in" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── Purple document peeking behind folder ── -->
+      <g transform="rotate(12, 141, 46)" opacity="0.97">
+        <!-- Document body -->
+        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-label)"/>
+        <!-- Folded corner (lighter) -->
+        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
+        <!-- Folded corner (shadow) -->
+        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
+      </g>
+
+      <!-- ── Dark glass folder ── -->
+      <!-- Single path: full folder shape (tab + body as one outline) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#fld-label)"
+            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            filter="url(#fs-label)"/>
+
+      <!-- Purple glow inside (same path, no stroke/shadow) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#glow-label)"/>
+
+      <!-- Top glass shine strip -->
+      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-label)"/>
+
+      <!-- Component name text -->
+      <text x="100" y="132"
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.93)"
+            font-family="Inter, system-ui, -apple-system, sans-serif"
+            font-size="16" font-weight="800"
+            letter-spacing="1.6"
+            textLength="76" lengthAdjust="spacingAndGlyphs"
+            filter="url(#tg-label)">LABEL</text>
+
+      <!-- Subtle underline below name -->
+      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
+    </svg>
+  </div>
+    <h1 class="page-title">Label</h1>
+    <p class="page-subtitle">Form field labels that communicate the purpose of an input. Supports three visual types and three modifiers — required asterisk, optional indicator, and tooltip — that can be combined freely.</p>
+    <div class="page-tags">
+      <span class="tag tag-stable">Stable</span>
+      <span class="tag tag-wcag">WCAG AA</span>
+      <span class="tag tag-figma">Figma · 1270-41013</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── OVERVIEW ── -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">Three types cover most label needs. <strong>Default</strong> and <strong>Light</strong> are visually identical (12 px, muted) and used for standard form fields. <strong>Large</strong> is 14 px medium weight for prominent headings above grouped fields.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">Default</div>
+          <span class="lbl">
+            <span class="lbl-text">Label</span>
+            <span class="lbl-required">*</span>
+          </span>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Light</div>
+          <span class="lbl">
+            <span class="lbl-text">Label</span>
+            <span class="lbl-required">*</span>
+          </span>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Large</div>
+          <span class="lbl">
+            <span class="lbl-text lbl-large">Label</span>
+            <span class="lbl-required">*</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TYPES ── -->
+  <div class="section">
+    <h2 class="section-title">Types</h2>
+    <p class="section-desc">Choose the type based on the form context. Default and Light share the same visual treatment; Large is used when the label needs stronger hierarchy.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+
+        <!-- Default -->
+        <div class="demo-col" style="gap:8px;">
+          <div class="demo-label">Default</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <span class="lbl"><span class="lbl-text">First name</span></span>
+            <span class="lbl"><span class="lbl-text">Email address</span></span>
+            <span class="lbl"><span class="lbl-text">Company</span></span>
+            <span class="lbl"><span class="lbl-text">Bio</span></span>
+          </div>
+          <div style="margin-top:8px;font-size:12px;color:#9d9dad;line-height:1.5;">12 px · Regular · #545470</div>
+        </div>
+
+        <!-- Light (same visual) -->
+        <div class="demo-col" style="gap:8px;">
+          <div class="demo-label">Light</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <span class="lbl"><span class="lbl-text">First name</span></span>
+            <span class="lbl"><span class="lbl-text">Email address</span></span>
+            <span class="lbl"><span class="lbl-text">Company</span></span>
+            <span class="lbl"><span class="lbl-text">Bio</span></span>
+          </div>
+          <div style="margin-top:8px;font-size:12px;color:#9d9dad;line-height:1.5;">12 px · Regular · #545470</div>
+        </div>
+
+        <!-- Large -->
+        <div class="demo-col" style="gap:8px;">
+          <div class="demo-label">Large</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <span class="lbl"><span class="lbl-text lbl-large">First name</span></span>
+            <span class="lbl"><span class="lbl-text lbl-large">Email address</span></span>
+            <span class="lbl"><span class="lbl-text lbl-large">Company</span></span>
+            <span class="lbl"><span class="lbl-text lbl-large">Bio</span></span>
+          </div>
+          <div style="margin-top:8px;font-size:12px;color:#9d9dad;line-height:1.5;">14 px · Medium · #29294c</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODIFIERS ── -->
+  <div class="section">
+    <h2 class="section-title">Modifiers</h2>
+    <p class="section-desc">Three modifiers attach to any label type. They can be used independently or combined — required and optional are mutually exclusive.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+
+        <!-- Required -->
+        <div class="demo-col" style="gap:8px;">
+          <div class="demo-label">Required  <code style="font-family:JetBrains Mono,monospace;font-size:10px;background:#f4f4f6;color:#6941c6;padding:1px 5px;border-radius:3px;">required</code></div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <span class="lbl">
+              <span class="lbl-text">Email address</span>
+              <span class="lbl-required">*</span>
+            </span>
+            <span class="lbl">
+              <span class="lbl-text lbl-large">Email address</span>
+              <span class="lbl-required">*</span>
+            </span>
+          </div>
+          <div style="margin-top:4px;font-size:12px;color:#9d9dad;line-height:1.5;">Red asterisk · 14 px · #d92d20</div>
+        </div>
+
+        <!-- Optional -->
+        <div class="demo-col" style="gap:8px;">
+          <div class="demo-label">Optional  <code style="font-family:JetBrains Mono,monospace;font-size:10px;background:#f4f4f6;color:#6941c6;padding:1px 5px;border-radius:3px;">optional</code></div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <span class="lbl">
+              <span class="lbl-text">Company name</span>
+              <span class="lbl-optional">(optional)</span>
+            </span>
+            <span class="lbl">
+              <span class="lbl-text lbl-large">Company name</span>
+              <span class="lbl-optional">(optional)</span>
+            </span>
+          </div>
+          <div style="margin-top:4px;font-size:12px;color:#9d9dad;line-height:1.5;">Muted text · 12 px · #707087</div>
+        </div>
+
+        <!-- Tooltip -->
+        <div class="demo-col" style="gap:8px;">
+          <div class="demo-label">Tooltip  <code style="font-family:JetBrains Mono,monospace;font-size:10px;background:#f4f4f6;color:#6941c6;padding:1px 5px;border-radius:3px;">tooltip</code></div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <span class="lbl">
+              <span class="lbl-text">VAT number</span>
+              <span class="lbl-tooltip">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.25" stroke="#9d9dad" stroke-width="1.5"/><path d="M6 5.5v3.5" stroke="#9d9dad" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="3.5" r="0.75" fill="#9d9dad"/></svg>
+                <span class="lbl-tooltip-popup">Your VAT registration number</span>
+              </span>
+            </span>
+            <span class="lbl">
+              <span class="lbl-text lbl-large">VAT number</span>
+              <span class="lbl-tooltip">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.25" stroke="#9d9dad" stroke-width="1.5"/><path d="M6 5.5v3.5" stroke="#9d9dad" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="3.5" r="0.75" fill="#9d9dad"/></svg>
+                <span class="lbl-tooltip-popup">Your VAT registration number</span>
+              </span>
+            </span>
+          </div>
+          <div style="margin-top:4px;font-size:12px;color:#9d9dad;line-height:1.5;">Info icon · hover to reveal tooltip</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ALL COMBINATIONS ── -->
+  <div class="section">
+    <h2 class="section-title">All Combinations</h2>
+    <p class="section-desc">Every combination of type × modifier across default, large, required, optional, tooltip, and mixed states.</p>
+
+    <div class="combo-grid">
+
+      <!-- Default · no modifier -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Default</div>
+        <span class="lbl"><span class="lbl-text">Label</span></span>
+      </div>
+
+      <!-- Default · required -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Default · Required</div>
+        <span class="lbl">
+          <span class="lbl-text">Label</span>
+          <span class="lbl-required">*</span>
+        </span>
+      </div>
+
+      <!-- Default · optional -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Default · Optional</div>
+        <span class="lbl">
+          <span class="lbl-text">Label</span>
+          <span class="lbl-optional">(optional)</span>
+        </span>
+      </div>
+
+      <!-- Default · tooltip -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Default · Tooltip</div>
+        <span class="lbl">
+          <span class="lbl-text">Label</span>
+          <span class="lbl-tooltip">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.25" stroke="#9d9dad" stroke-width="1.5"/><path d="M6 5.5v3.5" stroke="#9d9dad" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="3.5" r="0.75" fill="#9d9dad"/></svg>
+            <span class="lbl-tooltip-popup">Helpful hint text</span>
+          </span>
+        </span>
+      </div>
+
+      <!-- Default · required + tooltip -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Default · Required + Tooltip</div>
+        <span class="lbl">
+          <span class="lbl-text">Label</span>
+          <span class="lbl-required">*</span>
+          <span class="lbl-tooltip">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.25" stroke="#9d9dad" stroke-width="1.5"/><path d="M6 5.5v3.5" stroke="#9d9dad" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="3.5" r="0.75" fill="#9d9dad"/></svg>
+            <span class="lbl-tooltip-popup">This field is required</span>
+          </span>
+        </span>
+      </div>
+
+      <!-- Default · optional + tooltip -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Default · Optional + Tooltip</div>
+        <span class="lbl">
+          <span class="lbl-text">Label</span>
+          <span class="lbl-optional">(optional)</span>
+          <span class="lbl-tooltip">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.25" stroke="#9d9dad" stroke-width="1.5"/><path d="M6 5.5v3.5" stroke="#9d9dad" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="3.5" r="0.75" fill="#9d9dad"/></svg>
+            <span class="lbl-tooltip-popup">Helpful hint text</span>
+          </span>
+        </span>
+      </div>
+
+      <!-- Large · no modifier -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Large</div>
+        <span class="lbl"><span class="lbl-text lbl-large">Label</span></span>
+      </div>
+
+      <!-- Large · required -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Large · Required</div>
+        <span class="lbl">
+          <span class="lbl-text lbl-large">Label</span>
+          <span class="lbl-required">*</span>
+        </span>
+      </div>
+
+      <!-- Large · optional -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Large · Optional</div>
+        <span class="lbl">
+          <span class="lbl-text lbl-large">Label</span>
+          <span class="lbl-optional">(optional)</span>
+        </span>
+      </div>
+
+      <!-- Large · tooltip -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Large · Tooltip</div>
+        <span class="lbl">
+          <span class="lbl-text lbl-large">Label</span>
+          <span class="lbl-tooltip">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.25" stroke="#9d9dad" stroke-width="1.5"/><path d="M6 5.5v3.5" stroke="#9d9dad" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="3.5" r="0.75" fill="#9d9dad"/></svg>
+            <span class="lbl-tooltip-popup">Helpful hint text</span>
+          </span>
+        </span>
+      </div>
+
+      <!-- Large · required + tooltip -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Large · Required + Tooltip</div>
+        <span class="lbl">
+          <span class="lbl-text lbl-large">Label</span>
+          <span class="lbl-required">*</span>
+          <span class="lbl-tooltip">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.25" stroke="#9d9dad" stroke-width="1.5"/><path d="M6 5.5v3.5" stroke="#9d9dad" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="3.5" r="0.75" fill="#9d9dad"/></svg>
+            <span class="lbl-tooltip-popup">This field is required</span>
+          </span>
+        </span>
+      </div>
+
+      <!-- Large · optional + tooltip -->
+      <div class="combo-cell">
+        <div class="combo-cell-label">Large · Optional + Tooltip</div>
+        <span class="lbl">
+          <span class="lbl-text lbl-large">Label</span>
+          <span class="lbl-optional">(optional)</span>
+          <span class="lbl-tooltip">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.25" stroke="#9d9dad" stroke-width="1.5"/><path d="M6 5.5v3.5" stroke="#9d9dad" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="3.5" r="0.75" fill="#9d9dad"/></svg>
+            <span class="lbl-tooltip-popup">Helpful hint text</span>
+          </span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── IN-CONTEXT USAGE ── -->
+  <div class="section">
+    <h2 class="section-title">In Context</h2>
+    <p class="section-desc">Labels are placed directly above their associated input with a 6 px gap. Pair with form inputs, textareas, and select controls.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="gap:48px; flex-wrap:wrap;">
+
+        <!-- Required field -->
+        <div class="lbl-field-example">
+          <label class="lbl" for="ex-email">
+            <span class="lbl-text lbl-large">Email address</span>
+            <span class="lbl-required">*</span>
+          </label>
+          <input class="lbl-input-mock" id="ex-email" type="email" placeholder="you@example.com"/>
+        </div>
+
+        <!-- Optional field -->
+        <div class="lbl-field-example">
+          <label class="lbl" for="ex-company">
+            <span class="lbl-text lbl-large">Company</span>
+            <span class="lbl-optional">(optional)</span>
+          </label>
+          <input class="lbl-input-mock" id="ex-company" type="text" placeholder="Acme Inc."/>
+        </div>
+
+        <!-- With tooltip -->
+        <div class="lbl-field-example">
+          <label class="lbl" for="ex-vat">
+            <span class="lbl-text lbl-large">VAT number</span>
+            <span class="lbl-required">*</span>
+            <span class="lbl-tooltip">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.25" stroke="#9d9dad" stroke-width="1.5"/><path d="M6 5.5v3.5" stroke="#9d9dad" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="3.5" r="0.75" fill="#9d9dad"/></svg>
+              <span class="lbl-tooltip-popup">Your EU VAT registration number</span>
+            </span>
+          </label>
+          <input class="lbl-input-mock" id="ex-vat" type="text" placeholder="GB123456789"/>
+        </div>
+
+        <!-- Default size -->
+        <div class="lbl-field-example">
+          <label class="lbl" for="ex-role">
+            <span class="lbl-text">Role</span>
+            <span class="lbl-required">*</span>
+          </label>
+          <input class="lbl-input-mock" id="ex-role" type="text" placeholder="Designer"/>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROPS TABLE ── -->
+  <div class="section">
+    <h2 class="section-title">Props / API</h2>
+    <p class="section-desc">Class-based API. Compose classes to build any label variant.</p>
+
+    <table class="props-table">
+      <thead>
+        <tr>
+          <th>Element / Class</th>
+          <th>Values / Notes</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>.lbl</code></td>
+          <td>Wrapper</td>
+          <td>Required on every label. Inline-flex row, <code>gap:2px</code>, <code>height:20px</code>. Use as a <code>&lt;label&gt;</code> element for accessibility.</td>
+        </tr>
+        <tr>
+          <td><code>.lbl-text</code></td>
+          <td>Type: Default / Light</td>
+          <td>12 px · Regular · <code>#545470</code>. Default and Light types are visually identical.</td>
+        </tr>
+        <tr>
+          <td><code>.lbl-text.lbl-large</code></td>
+          <td>Type: Large</td>
+          <td>14 px · Medium (500) · <code>#29294c</code>. Use for prominent grouped field headings.</td>
+        </tr>
+        <tr>
+          <td><code>.lbl-required</code></td>
+          <td>Modifier</td>
+          <td>Red asterisk <code>*</code>. 14 px · Regular · <code>#d92d20</code>. Place immediately after <code>.lbl-text</code>.</td>
+        </tr>
+        <tr>
+          <td><code>.lbl-optional</code></td>
+          <td>Modifier</td>
+          <td>Muted <code>(optional)</code> text. 12 px · Regular · <code>#707087</code>. Mutually exclusive with <code>.lbl-required</code>.</td>
+        </tr>
+        <tr>
+          <td><code>.lbl-tooltip</code></td>
+          <td>Modifier</td>
+          <td>Info icon wrapper. 12 × 12 px. Hover reveals a dark tooltip popup. Contains a <code>.lbl-tooltip-popup</code> child for the tooltip text.</td>
+        </tr>
+        <tr>
+          <td><code>.lbl-tooltip-popup</code></td>
+          <td>Child of <code>.lbl-tooltip</code></td>
+          <td>Hidden by default, shown on <code>:hover</code>. Renders a dark chip above the icon with an arrow pointer.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── CODE EXAMPLE ── -->
+  <div class="section">
+    <h2 class="section-title">Usage</h2>
+
+    <div class="code-block">
+      <button class="copy-btn" onclick="this.textContent='Copied!';this.classList.add('copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('copied')},2000)">Copy</button>
+      <pre><span class="token-comment">&lt;!-- Default label (plain) --&gt;</span>
+<span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"lbl"</span> <span class="token-attr">for</span>=<span class="token-str">"field-id"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"lbl-text"</span><span class="token-tag">&gt;</span>First name<span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/label&gt;</span>
+
+<span class="token-comment">&lt;!-- Large · required --&gt;</span>
+<span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"lbl"</span> <span class="token-attr">for</span>=<span class="token-str">"email"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"lbl-text lbl-large"</span><span class="token-tag">&gt;</span>Email address<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"lbl-required"</span><span class="token-tag">&gt;</span>*<span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/label&gt;</span>
+
+<span class="token-comment">&lt;!-- Default · optional --&gt;</span>
+<span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"lbl"</span> <span class="token-attr">for</span>=<span class="token-str">"company"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"lbl-text"</span><span class="token-tag">&gt;</span>Company<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"lbl-optional"</span><span class="token-tag">&gt;</span>(optional)<span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/label&gt;</span>
+
+<span class="token-comment">&lt;!-- Large · required + tooltip --&gt;</span>
+<span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"lbl"</span> <span class="token-attr">for</span>=<span class="token-str">"vat"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"lbl-text lbl-large"</span><span class="token-tag">&gt;</span>VAT number<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"lbl-required"</span><span class="token-tag">&gt;</span>*<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"lbl-tooltip"</span><span class="token-tag">&gt;</span>
+    <span class="token-comment">&lt;!-- info SVG icon --&gt;</span>
+    <span class="token-tag">&lt;svg</span> <span class="token-attr">width</span>=<span class="token-str">"12"</span> <span class="token-attr">height</span>=<span class="token-str">"12"</span> <span class="token-attr">viewBox</span>=<span class="token-str">"0 0 12 12"</span> <span class="token-attr">fill</span>=<span class="token-str">"none"</span><span class="token-tag">&gt;</span>
+      <span class="token-tag">&lt;circle</span> <span class="token-attr">cx</span>=<span class="token-str">"6"</span> <span class="token-attr">cy</span>=<span class="token-str">"6"</span> <span class="token-attr">r</span>=<span class="token-str">"5.25"</span> <span class="token-attr">stroke</span>=<span class="token-str">"currentColor"</span> <span class="token-attr">stroke-width</span>=<span class="token-str">"1.5"</span><span class="token-tag">/&gt;</span>
+      <span class="token-tag">&lt;path</span> <span class="token-attr">d</span>=<span class="token-str">"M6 5.5v3.5"</span> <span class="token-attr">stroke</span>=<span class="token-str">"currentColor"</span> <span class="token-attr">stroke-width</span>=<span class="token-str">"1.5"</span> <span class="token-attr">stroke-linecap</span>=<span class="token-str">"round"</span><span class="token-tag">/&gt;</span>
+      <span class="token-tag">&lt;circle</span> <span class="token-attr">cx</span>=<span class="token-str">"6"</span> <span class="token-attr">cy</span>=<span class="token-str">"3.5"</span> <span class="token-attr">r</span>=<span class="token-str">"0.75"</span> <span class="token-attr">fill</span>=<span class="token-str">"currentColor"</span><span class="token-tag">/&gt;</span>
+    <span class="token-tag">&lt;/svg&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"lbl-tooltip-popup"</span><span class="token-tag">&gt;</span>Your EU VAT registration number<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/label&gt;</span></pre>
+    </div>
+  </div>
+
+</main>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

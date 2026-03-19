@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modal — Pulse Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary-700: #29294c;
+  --primary-600: #545470;
+  --primary-500: #707087;
+  --primary-400: #9d9dad;
+  --primary-300: #bdbdc8;
+  --primary-200: #eaeaed;
+  --primary-100: #f4f4f6;
+  --primary-50:  #f9fafb;
+
+  --secondary-700: #6941c6;
+  --secondary-600: #7f56d9;
+  --secondary-500: #9e77ed;
+  --secondary-300: #d6bbfb;
+  --secondary-100: #f4ebff;
+  --secondary-50:  #f9f5ff;
+
+  --success-700: #039855;
+  --success-100: #ecfdf3;
+  --success-25:  #f6fef9;
+  --success-200: #d1fadf;
+
+  --warning-700: #b54708;
+  --warning-100: #fffaeb;
+  --warning-25:  #fffcf5;
+  --warning-200: #fedf89;
+  --warning-300: #fec84b;
+
+  --error-700: #d92d20;
+  --error-100: #fef3f2;
+  --error-25:  #fffbfa;
+  --error-200: #fecdca;
+  --error-300: #fda29b;
+
+  --info-600: #0ba5ec;
+
+  --text-primary: #29294c;
+  --text-secondary: #707087;
+  --text-tertiary: #9d9dad;
+  --border-default: #eaeaed;
+  --border-strong: #d0d5dd;
+  --bg-page: #f9fafb;
+  --white: #ffffff;
+
+  --sidebar-w: 240px;
+  --font: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--text-primary);
+  background: var(--bg-page);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: #fff;
+  border-right: 1px solid var(--border-default);
+  padding: 24px 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid var(--border-default);
+  margin-bottom: 16px;
+}
+.sidebar-logo span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600; font-size: 16px; color: var(--primary-700);
+}
+.sidebar-logo sub {
+  font-size: 10px; color: var(--text-tertiary); font-weight: 400;
+  display: block; margin-top: 2px;
+}
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title {
+  padding: 6px 20px; font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary);
+}
+.sidebar-link {
+  display: block; padding: 7px 20px; font-size: 13px;
+  color: #4a4a68; border-radius: 0;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* Main */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 48px 56px;
+  max-width: 1100px;
+}
+
+/* Breadcrumb */
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text-primary); }
+.breadcrumb-sep { opacity: 0.4; }
+
+/* Page header */
+.page-header { margin-bottom: 40px; }
+.page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+.page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 600px; }
+.page-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+.tag-a11y   { background: #f0f9ff; color: #026aa2; border-color: #b9e6fe; }
+.tag-figma  { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+
+/* Section */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; }
+.section-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
+.divider { border: none; border-top: 1px solid var(--border-default); margin: 48px 0; }
+
+.demo-box {
+  background: var(--white); border: 1px solid var(--border-default);
+  border-radius: 12px; padding: 24px; margin-bottom: 16px;
+}
+.demo-label {
+  font-size: 11px; font-weight: 600; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
+}
+.variant-label {
+  font-size: 13px; font-weight: 600; color: var(--text-primary); margin: 24px 0 10px;
+}
+.variant-label:first-child { margin-top: 0; }
+
+/* ─────────────────────────
+   MODAL OVERLAY
+───────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(52, 64, 84, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.modal-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Modal box */
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 400px;
+  max-width: calc(100vw - 32px);
+  box-shadow: 0 20px 24px -4px rgba(16,24,40,0.08), 0 8px 8px -4px rgba(16,24,40,0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  transform: scale(0.96) translateY(8px);
+  transition: transform 0.2s ease;
+}
+.modal-overlay.is-open .modal {
+  transform: scale(1) translateY(0);
+}
+
+/* Wide modal */
+.modal--wide { width: 560px; }
+
+/* Centered layout */
+.modal--centered .modal-content { align-items: center; text-align: center; }
+.modal--centered .modal-icon-row { justify-content: center; }
+
+/* Modal content */
+.modal-content { display: flex; flex-direction: column; gap: 20px; }
+.modal-icon-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.modal-icon-row.no-close { justify-content: flex-start; }
+
+/* Featured icon */
+.modal-feat-icon {
+  width: 48px; height: 48px; border-radius: 28px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  border: 8px solid;
+}
+.modal-feat-icon--success { background: var(--success-200); border-color: var(--success-25); }
+.modal-feat-icon--warning { background: var(--warning-200); border-color: var(--warning-25); }
+.modal-feat-icon--error   { background: var(--error-200);   border-color: var(--error-25); }
+.modal-feat-icon--info    { background: #bae8ff; border-color: #f0f9ff; }
+.modal-feat-icon--neutral { background: var(--primary-100); border-color: var(--primary-50); }
+
+/* Close button */
+.modal-close {
+  width: 24px; height: 24px; flex-shrink: 0;
+  background: none; border: none; cursor: pointer; padding: 0;
+  color: var(--text-tertiary); display: flex; align-items: center; justify-content: center;
+  border-radius: 4px; transition: color 0.15s, background 0.15s;
+}
+.modal-close:hover { color: var(--text-primary); background: var(--primary-100); }
+
+/* Text */
+.modal-text { display: flex; flex-direction: column; gap: 8px; }
+.modal-title { font-size: 16px; font-weight: 600; color: var(--primary-700); line-height: 1.5; letter-spacing: 0.024px; }
+.modal-body { font-size: 14px; color: var(--text-secondary); line-height: 1.4; }
+
+/* Divider inside modal */
+.modal-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+/* Modal actions */
+.modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.modal-actions--right { justify-content: flex-end; }
+.modal-actions--centered { justify-content: center; }
+.modal-actions--stacked { flex-direction: column; }
+.modal-actions--stacked .btn { width: 100%; }
+
+/* ── Button component (from button.html) ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; height: 36px; padding: 4px 16px; min-width: 64px;
+  border-radius: 8px; font-family: var(--font); font-size: 14px;
+  font-weight: 500; line-height: 20px; white-space: nowrap;
+  cursor: pointer; border: 1.5px solid transparent;
+  transition: background .15s, border-color .15s, box-shadow .15s;
+  text-decoration: none;
+}
+.btn:disabled { background: #f2f4f7 !important; color: #98a2b3 !important; border-color: transparent !important; cursor: not-allowed !important; }
+.btn-solid-primary   { background: #29294c; color: #fff; border-color: #29294c; }
+.btn-solid-primary:not(:disabled):hover   { background: #1e1e38; border-color: #1e1e38; }
+.btn-solid-primary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px #b9aee9; outline: none; }
+.btn-solid-error     { background: #f04438; color: #fff; border-color: #f04438; }
+.btn-solid-error:not(:disabled):hover     { background: #d92d20; border-color: #d92d20; }
+.btn-solid-error:not(:disabled):focus-visible { box-shadow: 0 0 0 3px #fecdca; outline: none; }
+.btn-solid-warning   { background: #f79009; color: #fff; border-color: #f79009; }
+.btn-solid-warning:not(:disabled):hover   { background: #dc7a05; border-color: #dc7a05; }
+.btn-solid-warning:not(:disabled):focus-visible { box-shadow: 0 0 0 3px #fedf89; outline: none; }
+.btn-outlined-primary { background: transparent; color: #29294c; border-color: #d0d5dd; }
+.btn-outlined-primary:not(:disabled):hover { background: #f4f4f6; }
+.btn-outlined-primary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px #b9aee9; outline: none; }
+
+/* Button group */
+.btn-group { display: flex; gap: 12px; align-items: center; }
+
+/* ── Checkbox component (from checkbox.html) ── */
+.cb-wrap {
+  display: inline-flex; align-items: flex-start; gap: 10px;
+  cursor: pointer; user-select: none; position: relative;
+}
+.cb-wrap input[type="checkbox"] {
+  position: absolute; opacity: 0; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0,0,0,0); pointer-events: none;
+}
+.cb-control {
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  background: #fff; border: 1px solid #d0d5dd;
+  transition: border-color .15s, background .15s, box-shadow .15s; position: relative;
+}
+.cb-control.is-checkbox.size-sm { border-radius: 4px; width: 16px; height: 16px; }
+.cb-control.is-checkbox.size-md { border-radius: 6px; width: 20px; height: 20px; }
+.cb-wrap:hover:not(.is-disabled) .cb-control:not(.is-checked) { border-color: #9e77ed; background: #fcfaff; }
+.cb-wrap:focus-within .cb-control { border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12); }
+.cb-control.is-checked { background: #7f56d9; border-color: #7f56d9; }
+.cb-wrap:hover:not(.is-disabled) .cb-control.is-checked { background: #6941c6; border-color: #6941c6; }
+.cb-check-svg, .cb-dash-svg { display: none; }
+.cb-control.is-checked .cb-check-svg { display: block; }
+.cb-label-wrap { display: flex; flex-direction: column; gap: 2px; padding-top: 1px; }
+.cb-label { font-size: 14px; font-weight: 500; color: var(--text-primary); line-height: 1.4; }
+.cb-label.weight-light { font-weight: 400; }
+
+/* ── Input / Field component (from input.html) ── */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label { font-size: 14px; font-weight: 500; color: var(--primary-700); }
+.input-wrap {
+  display: flex; align-items: center; background: #fff;
+  border: 1px solid var(--border-default); border-radius: 8px;
+  height: 40px; padding: 0 12px; gap: 8px;
+  transition: border-color .15s, box-shadow .15s; cursor: text;
+}
+.input-wrap:focus-within {
+  border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12); outline: none;
+}
+.input-wrap input {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-family: var(--font); font-size: 14px; color: var(--text-primary); min-width: 0;
+}
+.input-wrap input::placeholder { color: var(--text-tertiary); }
+
+/* Demo trigger grid */
+.trigger-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Inline (static) modal preview */
+.modal-preview {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -2px rgba(16,24,40,0.03), 0 12px 16px -4px rgba(16,24,40,0.08);
+  border: 1px solid var(--border-default);
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+/* ── Drawer (right-side panel) ── */
+.modal-overlay--drawer {
+  align-items: stretch;
+  justify-content: flex-end;
+}
+.modal-overlay--drawer .modal--drawer {
+  width: 453px;
+  max-width: 100%;
+  min-height: 100vh;
+  border-radius: 12px 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 24px -4px rgba(16,24,40,.08), 0 8px 8px -4px rgba(16,24,40,.03);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  animation: none;
+  background: #f9fafb;
+}
+.modal-overlay--drawer.is-open .modal--drawer {
+  transform: translateX(0);
+  animation: none;
+}
+.modal-overlay--drawer.is-open {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(52,64,84,0.7);
+}
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.drawer-title { font-size: 16px; font-weight: 600; color: var(--primary-700); line-height: 1.5; }
+.drawer-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Variants grid */
+.variants-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.variant-preview { position: relative; }
+
+/* Props table */
+.props-table-wrap { border: 1px solid var(--border-default); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.props-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.props-table thead { background: var(--primary-50); }
+.props-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border-default); }
+.props-table td { padding: 12px 16px; border-bottom: 1px solid var(--border-default); color: var(--text-secondary); vertical-align: top; }
+.props-table tr:last-child td { border-bottom: none; }
+.props-table tbody tr:hover td { background: var(--primary-50); }
+.prop-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--secondary-700); font-weight: 500; }
+.prop-type { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--info-600); }
+.prop-default { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-tertiary); }
+
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; background: var(--primary-100);
+  padding: 2px 6px; border-radius: 4px; color: var(--secondary-700);
+}
+
+/* Do / Don't */
+.do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.do-card, .dont-card { border-radius: 12px; overflow: hidden; border: 1px solid var(--border-default); }
+.do-card .card-header { background: #ecfdf3; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #039855; display: flex; align-items: center; gap: 6px; }
+.dont-card .card-header { background: #fef3f2; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #d92d20; display: flex; align-items: center; gap: 6px; }
+.card-body { padding: 20px; background: #fff; }
+.card-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+/* A11y */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.a11y-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 600; color: var(--primary-700); margin-bottom: 8px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 4px; }
+
+/* Code block */
+.code-block { background: #0f172a; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.code-block-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155; }
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.copy-btn { font-size: 11px; font-weight: 600; color: #94a3b8; background: none; border: 1px solid #334155; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: var(--font); transition: background 0.15s, color 0.15s; }
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; }
+.c-tag     { color: #7dd3fc; }
+.c-attr    { color: #a5b4fc; }
+.c-val     { color: #86efac; }
+.c-str     { color: #fde68a; }
+
+/* Spec chips */
+.spec-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.spec-chip { font-size: 12px; font-weight: 500; color: var(--text-primary); background: var(--white); border: 1px solid var(--border-default); border-radius: 6px; padding: 4px 10px; display: flex; align-items: center; gap: 6px; }
+.spec-chip-label { color: var(--text-tertiary); font-size: 11px; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link active">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Components</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Modal</span>
+  </div>
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Purple document gradient -->
+        <linearGradient id="doc-modal" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#b8a0ff"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <!-- Folder dark gradient -->
+        <linearGradient id="fld-modal" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2d2d50"/>
+          <stop offset="100%" stop-color="#12122a"/>
+        </linearGradient>
+        <!-- Purple inner glow -->
+        <radialGradient id="glow-modal" cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
+          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Top shine -->
+        <linearGradient id="shine-modal" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- Folder drop shadow -->
+        <filter id="fs-modal" x="-18%" y="-12%" width="136%" height="136%">
+          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
+        </filter>
+        <!-- Text glow -->
+        <filter id="tg-modal" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="2.8" result="blur"/>
+          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
+          <feComposite in="c" in2="blur" operator="in" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── Purple document peeking behind folder ── -->
+      <g transform="rotate(12, 141, 46)" opacity="0.97">
+        <!-- Document body -->
+        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-modal)"/>
+        <!-- Folded corner (lighter) -->
+        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
+        <!-- Folded corner (shadow) -->
+        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
+      </g>
+
+      <!-- ── Dark glass folder ── -->
+      <!-- Single path: full folder shape (tab + body as one outline) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#fld-modal)"
+            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            filter="url(#fs-modal)"/>
+
+      <!-- Purple glow inside (same path, no stroke/shadow) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#glow-modal)"/>
+
+      <!-- Top glass shine strip -->
+      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-modal)"/>
+
+      <!-- Component name text -->
+      <text x="100" y="132"
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.93)"
+            font-family="Inter, system-ui, -apple-system, sans-serif"
+            font-size="16" font-weight="800"
+            letter-spacing="1.6"
+            textLength="76" lengthAdjust="spacingAndGlyphs"
+            filter="url(#tg-modal)">MODAL</text>
+
+      <!-- Subtle underline below name -->
+      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
+    </svg>
+  </div>
+    <h1 class="page-title">Modal</h1>
+    <p class="page-subtitle">Modals focus user attention on a task or critical information by overlaying the page with a dialog. Use them for confirmations, forms, alerts, and content that requires user action before continuing.</p>
+    <div class="page-tags">
+      <span class="tag tag-stable">Stable</span>
+      <span class="tag tag-a11y">WCAG AA</span>
+      <span class="tag tag-figma">Figma 382-141238</span>
+    </div>
+  </div>
+
+  <div class="spec-row">
+    <div class="spec-chip"><span class="spec-chip-label">Default width</span> 400px</div>
+    <div class="spec-chip"><span class="spec-chip-label">Padding</span> 24px</div>
+    <div class="spec-chip"><span class="spec-chip-label">Border radius</span> 12px</div>
+    <div class="spec-chip"><span class="spec-chip-label">Button height</span> 36px</div>
+    <div class="spec-chip"><span class="spec-chip-label">Backdrop</span> rgba(52,64,84,0.7) + blur</div>
+  </div>
+
+  <!-- ── 1. Overview ── -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">Click a button to open the live modal. Press <kbd style="font-size:12px;padding:2px 6px;border:1px solid #d0d5dd;border-radius:4px;background:#f9fafb;">Esc</kbd> or click outside the modal to dismiss it.</p>
+    <div class="demo-box">
+      <div class="demo-label">Interactive demo</div>
+      <div class="trigger-grid">
+        <button class="btn btn-solid-primary" onclick="openModal('modal-default')">Open default modal</button>
+        <button class="btn btn-outlined-primary" onclick="openModal('modal-centered')">Centered layout</button>
+        <button class="btn btn-solid-error" onclick="openModal('modal-destructive')">Destructive action</button>
+        <button class="btn btn-outlined-primary" onclick="openModal('modal-form')">Form modal</button>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 2. Variants ── -->
+  <div class="section">
+    <h2 class="section-title">Variants</h2>
+    <p class="section-desc">Modals come in several intent variants: Default, Warning, and Destructive. Layout can be stacked-left (default), stacked-centered, or horizontal.</p>
+
+    <div class="variant-label">Default — stacked left aligned (success icon)</div>
+    <div class="demo-box" style="background:#f4f4f6; display:flex; align-items:center; justify-content:center; padding:40px 24px;">
+      <!-- Static preview of default modal -->
+      <div class="modal-preview">
+        <div class="modal-content">
+          <div class="modal-icon-row">
+            <div class="modal-feat-icon modal-feat-icon--success" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <button class="modal-close" aria-label="Close">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="modal-text">
+            <p class="modal-title">Blog post published</p>
+            <p class="modal-body">This blog post has been published. Team members will be able to edit this post and republish changes.</p>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <label class="cb-wrap" onclick="toggleCb(this)">
+            <input type="checkbox">
+            <span class="cb-control is-checkbox size-sm">
+              <svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="cb-label-wrap">
+              <span class="cb-label weight-light">Don't show again</span>
+            </span>
+          </label>
+          <div class="btn-group">
+            <button class="btn btn-outlined-primary">Deny</button>
+            <button class="btn btn-solid-primary">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Warning — caution icon with amber action button</div>
+    <div class="demo-box" style="background:#f4f4f6; display:flex; align-items:center; justify-content:center; padding:40px 24px;">
+      <div class="modal-preview">
+        <div class="modal-content">
+          <div class="modal-icon-row">
+            <div class="modal-feat-icon modal-feat-icon--warning" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#b54708" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <button class="modal-close" aria-label="Close">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="modal-text">
+            <p class="modal-title">Are you sure you want to leave?</p>
+            <p class="modal-body">You have unsaved changes. If you leave now, your changes will be lost and cannot be recovered.</p>
+          </div>
+        </div>
+        <div class="modal-actions modal-actions--right">
+          <div class="btn-group">
+            <button class="btn btn-outlined-primary">Stay on page</button>
+            <button class="btn btn-solid-warning">Leave anyway</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Destructive — error icon with red action button</div>
+    <div class="demo-box" style="background:#f4f4f6; display:flex; align-items:center; justify-content:center; padding:40px 24px;">
+      <div class="modal-preview">
+        <div class="modal-content">
+          <div class="modal-icon-row">
+            <div class="modal-feat-icon modal-feat-icon--error" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#d92d20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <button class="modal-close" aria-label="Close">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="modal-text">
+            <p class="modal-title">Delete account</p>
+            <p class="modal-body">Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.</p>
+          </div>
+        </div>
+        <div class="modal-actions modal-actions--right">
+          <div class="btn-group">
+            <button class="btn btn-outlined-primary">Cancel</button>
+            <button class="btn btn-solid-error">Delete account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Centered — icon and text centered, stacked action buttons</div>
+    <div class="demo-box" style="background:#f4f4f6; display:flex; align-items:center; justify-content:center; padding:40px 24px;">
+      <div class="modal-preview" style="text-align:center; align-items:center;">
+        <div class="modal-content" style="align-items:center; text-align:center;">
+          <div class="modal-feat-icon modal-feat-icon--success" aria-hidden="true" style="margin:0 auto;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="modal-text">
+            <p class="modal-title">Payment successful!</p>
+            <p class="modal-body">Your payment of $120.00 has been processed. A receipt has been sent to your email address.</p>
+          </div>
+        </div>
+        <div class="modal-actions modal-actions--stacked">
+          <button class="btn btn-solid-primary" style="width:100%;">View receipt</button>
+          <button class="btn btn-outlined-primary" style="width:100%;">Back to dashboard</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Horizontal — icon and text in a row, actions alongside</div>
+    <div class="demo-box" style="background:#f4f4f6; display:flex; align-items:center; justify-content:center; padding:40px 24px;">
+      <div class="modal-preview" style="max-width:560px; width:100%;">
+        <div style="display:flex; gap:16px; align-items:flex-start;">
+          <div class="modal-feat-icon modal-feat-icon--success" aria-hidden="true" style="flex-shrink:0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div style="flex:1;">
+            <p class="modal-title" style="margin-bottom:4px;">Changes saved</p>
+            <p class="modal-body">Your profile has been updated successfully. Changes are now visible to your team.</p>
+          </div>
+          <button class="modal-close" aria-label="Close" style="margin-top:2px;">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <hr class="modal-divider">
+        <div class="modal-actions modal-actions--right" style="padding-top:0;">
+          <div class="btn-group">
+            <button class="btn btn-outlined-primary">Cancel</button>
+            <button class="btn btn-solid-primary">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 3. With Form ── -->
+  <div class="section">
+    <h2 class="section-title">With Form</h2>
+    <p class="section-desc">Modals can contain form inputs for in-context data collection. Keep forms short — use a full page if more than 5 fields are needed.</p>
+    <div class="demo-box" style="background:#f4f4f6; display:flex; align-items:center; justify-content:center; padding:40px 24px;">
+      <div class="modal-preview" style="gap:24px;">
+        <div class="modal-content" style="gap:16px;">
+          <div class="modal-icon-row">
+            <div class="modal-text">
+              <p class="modal-title">Edit profile</p>
+              <p class="modal-body">Update your display name and email address.</p>
+            </div>
+            <button class="modal-close" aria-label="Close">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div class="field">
+              <label class="field-label">Full name</label>
+              <div class="input-wrap"><input type="text" placeholder="Jordan Lee" value="Jordan Lee"></div>
+            </div>
+            <div class="field">
+              <label class="field-label">Email address</label>
+              <div class="input-wrap"><input type="email" placeholder="jordan@company.com" value="jordan@company.com"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-actions modal-actions--right">
+          <div class="btn-group">
+            <button class="btn btn-outlined-primary">Cancel</button>
+            <button class="btn btn-solid-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── Drawer / Side Panel ── -->
+  <div class="section">
+    <h2 class="section-title">Drawer / Side Panel</h2>
+    <p class="section-desc">The drawer slides in from the right edge of the viewport. Use it for supplementary tasks — sending emails, quick settings, detail views — where the user doesn't lose context of the page behind.</p>
+
+    <div class="variant-label">Right-side drawer — "Send a test email"</div>
+    <div class="demo-box" style="display:flex; align-items:center; justify-content:center; padding:32px 24px; gap:16px;">
+      <button class="btn btn-outlined-primary" onclick="openModal('modal-drawer')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="margin-right:2px;"><path d="M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-4M9 3l6 6M9 3v6h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Open Drawer
+      </button>
+    </div>
+
+    <!-- Static preview of drawer -->
+    <div class="variant-label">Preview</div>
+    <div class="demo-box" style="background:#f4f4f6; display:flex; align-items:stretch; justify-content:flex-end; padding:0; overflow:hidden; min-height:260px; border-radius:12px;">
+      <div style="flex:1; background:rgba(52,64,84,0.25); backdrop-filter:blur(4px);"></div>
+      <div style="width:340px; background:#f9fafb; display:flex; flex-direction:column; gap:20px; padding:24px; border-radius:12px 0 0 12px; box-shadow: 0 20px 24px -4px rgba(16,24,40,.08);">
+        <div class="drawer-header">
+          <span class="drawer-title">Send a test email</span>
+          <button class="modal-close" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="drawer-card">
+          <div class="field">
+            <label class="field-label">Emails</label>
+            <div class="input-wrap"><input type="email" placeholder="Add emails address here..."></div>
+          </div>
+          <button class="btn btn-solid-secondary" style="background:#7f56d9;border-color:#7f56d9;color:#fff;width:fit-content;">Send Mail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 4. Sizes ── -->
+  <div class="section">
+    <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">Two widths: default (400px) for short confirmations and dialogs, wide (560px) for forms or content-heavy modals.</p>
+    <div class="props-table-wrap">
+      <table class="props-table">
+        <thead>
+          <tr><th>Size</th><th>Width</th><th>Class</th><th>Use case</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Default</td><td>400px</td><td>—</td><td>Confirmations, alerts, simple prompts</td></tr>
+          <tr><td>Wide</td><td>560px</td><td><code>modal--wide</code></td><td>Forms, detail views, rich content</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 5. Usage guidelines ── -->
+  <div class="section">
+    <h2 class="section-title">Usage guidelines</h2>
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <div class="card-header">✓ Do</div>
+        <div class="card-body">
+          <p>Use modals for actions that require user confirmation or brief data entry. Keep content concise and give users a clear way to dismiss. Always include a close button and allow Esc to dismiss.</p>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="card-header">✕ Don't</div>
+        <div class="card-body">
+          <p>Don't open a modal from inside another modal (avoid modal chains). Don't use modals for complex workflows or large amounts of content. Don't remove the ability to dismiss the modal.</p>
+        </div>
+      </div>
+      <div class="do-card">
+        <div class="card-header">✓ Do</div>
+        <div class="card-body">
+          <p>Use intent-specific icon colors: green for success, amber for warnings, red for destructive actions. Match the primary button color to the intent.</p>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="card-header">✕ Don't</div>
+        <div class="card-body">
+          <p>Don't use modals for non-critical information that could appear inline. Don't trigger modals without user intent (e.g. on page load). Keep modal titles short — one line is ideal.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 6. Props ── -->
+  <div class="section">
+    <h2 class="section-title">Props</h2>
+    <p class="section-desc">Modifier classes and ARIA attributes for the Modal component.</p>
+    <div class="props-table-wrap">
+      <table class="props-table">
+        <thead>
+          <tr><th>Prop / Class</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="prop-name">modal-overlay.is-open</td>
+            <td class="prop-type">modifier class</td>
+            <td class="prop-default">—</td>
+            <td>Shows the overlay and animates the modal in</td>
+          </tr>
+          <tr>
+            <td class="prop-name">modal--wide</td>
+            <td class="prop-type">modifier class</td>
+            <td class="prop-default">—</td>
+            <td>Sets modal width to 560px</td>
+          </tr>
+          <tr>
+            <td class="prop-name">modal--centered</td>
+            <td class="prop-type">modifier class</td>
+            <td class="prop-default">—</td>
+            <td>Centers icon and text content</td>
+          </tr>
+          <tr>
+            <td class="prop-name">modal-actions--right</td>
+            <td class="prop-type">modifier class</td>
+            <td class="prop-default">—</td>
+            <td>Aligns action buttons to the right</td>
+          </tr>
+          <tr>
+            <td class="prop-name">modal-actions--stacked</td>
+            <td class="prop-type">modifier class</td>
+            <td class="prop-default">—</td>
+            <td>Stacks action buttons vertically, full width</td>
+          </tr>
+          <tr>
+            <td class="prop-name">modal-feat-icon--success/warning/error/info</td>
+            <td class="prop-type">modifier class</td>
+            <td class="prop-default">—</td>
+            <td>Sets the featured icon's color intent</td>
+          </tr>
+          <tr>
+            <td class="prop-name">modal-btn--primary/secondary/danger/warning</td>
+            <td class="prop-type">modifier class</td>
+            <td class="prop-default">—</td>
+            <td>Button color variant</td>
+          </tr>
+          <tr>
+            <td class="prop-name">role="dialog"</td>
+            <td class="prop-type">ARIA</td>
+            <td class="prop-default">dialog</td>
+            <td>Required on the <code>.modal</code> element</td>
+          </tr>
+          <tr>
+            <td class="prop-name">aria-modal="true"</td>
+            <td class="prop-type">ARIA</td>
+            <td class="prop-default">true</td>
+            <td>Tells assistive tech the dialog is modal</td>
+          </tr>
+          <tr>
+            <td class="prop-name">aria-labelledby</td>
+            <td class="prop-type">ARIA</td>
+            <td class="prop-default">—</td>
+            <td>Points to the modal title element ID</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 7. Accessibility ── -->
+  <div class="section">
+    <h2 class="section-title">Accessibility</h2>
+    <p class="section-desc">Modals follow the ARIA dialog pattern and require specific focus management behaviors.</p>
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>Focus management</h4>
+        <ul>
+          <li>When the modal opens, focus moves to the first focusable element inside</li>
+          <li>Tab cycles through focusable elements within the modal only (focus trap)</li>
+          <li>When the modal closes, focus returns to the trigger that opened it</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>Keyboard interaction</h4>
+        <ul>
+          <li><strong>Tab / Shift+Tab</strong> — cycle focusable elements inside modal</li>
+          <li><strong>Esc</strong> — closes the modal</li>
+          <li><strong>Enter / Space</strong> — activates focused button</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>ARIA requirements</h4>
+        <ul>
+          <li>Modal element needs <code>role="dialog"</code> and <code>aria-modal="true"</code></li>
+          <li>Use <code>aria-labelledby</code> pointing to the title</li>
+          <li>Use <code>aria-describedby</code> for the body text</li>
+          <li>Close button needs <code>aria-label="Close"</code></li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>Background scroll lock</h4>
+        <ul>
+          <li>Set <code>document.body.style.overflow = 'hidden'</code> when open</li>
+          <li>Restore overflow on close</li>
+          <li>Screen reader users should not be able to reach content behind the overlay</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 8. Code ── -->
+  <div class="section">
+    <h2 class="section-title">Code</h2>
+    <p class="section-desc">HTML structure for the default modal with overlay and focus trap.</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">modal.html</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body">
+<pre><span class="c-comment">&lt;!-- Modal overlay --&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-str">"modal-overlay"</span>
+     <span class="c-attr">id=</span><span class="c-str">"modal-1"</span>
+     <span class="c-attr">role=</span><span class="c-str">"dialog"</span>
+     <span class="c-attr">aria-modal=</span><span class="c-str">"true"</span>
+     <span class="c-attr">aria-labelledby=</span><span class="c-str">"modal-1-title"</span><span class="c-tag">&gt;</span>
+
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-str">"modal"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-str">"modal-content"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-str">"modal-icon-row"</span><span class="c-tag">&gt;</span>
+        <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-str">"modal-feat-icon modal-feat-icon--success"</span><span class="c-tag">&gt;</span>
+          <span class="c-comment">&lt;!-- icon svg --&gt;</span>
+        <span class="c-tag">&lt;/div&gt;</span>
+        <span class="c-tag">&lt;button</span> <span class="c-attr">class=</span><span class="c-str">"modal-close"</span> <span class="c-attr">aria-label=</span><span class="c-str">"Close"</span><span class="c-tag">&gt;</span>...<span class="c-tag">&lt;/button&gt;</span>
+      <span class="c-tag">&lt;/div&gt;</span>
+      <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-str">"modal-text"</span><span class="c-tag">&gt;</span>
+        <span class="c-tag">&lt;p</span> <span class="c-attr">class=</span><span class="c-str">"modal-title"</span> <span class="c-attr">id=</span><span class="c-str">"modal-1-title"</span><span class="c-tag">&gt;</span>Title<span class="c-tag">&lt;/p&gt;</span>
+        <span class="c-tag">&lt;p</span> <span class="c-attr">class=</span><span class="c-str">"modal-body"</span><span class="c-tag">&gt;</span>Description text.<span class="c-tag">&lt;/p&gt;</span>
+      <span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-str">"modal-actions modal-actions--right"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-str">"modal-btn-group"</span><span class="c-tag">&gt;</span>
+        <span class="c-tag">&lt;button</span> <span class="c-attr">class=</span><span class="c-str">"modal-btn modal-btn--secondary"</span><span class="c-tag">&gt;</span>Cancel<span class="c-tag">&lt;/button&gt;</span>
+        <span class="c-tag">&lt;button</span> <span class="c-attr">class=</span><span class="c-str">"modal-btn modal-btn--primary"</span><span class="c-tag">&gt;</span>Confirm<span class="c-tag">&lt;/button&gt;</span>
+      <span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+
+<span class="c-tag">&lt;/div&gt;</span></pre>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">modal.js — open / close / focus trap</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body">
+<pre><span class="c-attr">function</span> openModal(id) {
+  const overlay = document.getElementById(id);
+  overlay.classList.add(<span class="c-str">'is-open'</span>);
+  document.body.style.overflow = <span class="c-str">'hidden'</span>;
+  <span class="c-comment">// Move focus to first focusable element</span>
+  const first = overlay.querySelector(
+    <span class="c-str">'button, input, select, textarea, [tabindex]:not([tabindex="-1"])'</span>
+  );
+  if (first) first.focus();
+}
+
+<span class="c-attr">function</span> closeModal(id) {
+  const overlay = document.getElementById(id);
+  overlay.classList.remove(<span class="c-str">'is-open'</span>);
+  document.body.style.overflow = <span class="c-str">''</span>;
+}
+
+<span class="c-comment">// Close on backdrop click or Esc</span>
+document.querySelectorAll(<span class="c-str">'.modal-overlay'</span>).forEach(overlay => {
+  overlay.addEventListener(<span class="c-str">'click'</span>, e => {
+    if (e.target === overlay) closeModal(overlay.id);
+  });
+});
+document.addEventListener(<span class="c-str">'keydown'</span>, e => {
+  if (e.key === <span class="c-str">'Escape'</span>) {
+    document.querySelectorAll(<span class="c-str">'.modal-overlay.is-open'</span>)
+      .forEach(o => closeModal(o.id));
+  }
+});</pre>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── Live modals ── -->
+
+<!-- Default modal -->
+<div class="modal-overlay" id="modal-default" role="dialog" aria-modal="true" aria-labelledby="md-title">
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-icon-row">
+        <div class="modal-feat-icon modal-feat-icon--success" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <button class="modal-close" aria-label="Close" onclick="closeModal('modal-default')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="modal-text">
+        <p class="modal-title" id="md-title">Blog post published</p>
+        <p class="modal-body">This blog post has been published. Team members will be able to edit this post and republish changes.</p>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <label class="cb-wrap" onclick="toggleCb(this)">
+        <input type="checkbox">
+        <span class="cb-control is-checkbox size-sm">
+          <svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="cb-label-wrap"><span class="cb-label weight-light">Don't show again</span></span>
+      </label>
+      <div class="btn-group">
+        <button class="btn btn-outlined-primary" onclick="closeModal('modal-default')">Deny</button>
+        <button class="btn btn-solid-primary" onclick="closeModal('modal-default')">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Centered modal -->
+<div class="modal-overlay" id="modal-centered" role="dialog" aria-modal="true" aria-labelledby="mc-title">
+  <div class="modal modal--centered">
+    <div class="modal-content" style="align-items:center; text-align:center;">
+      <div class="modal-feat-icon modal-feat-icon--success" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="modal-text">
+        <p class="modal-title" id="mc-title">Payment successful!</p>
+        <p class="modal-body">Your payment of $120.00 has been processed. A receipt has been sent to your email address.</p>
+      </div>
+    </div>
+    <div class="modal-actions modal-actions--stacked">
+      <button class="btn btn-solid-primary" onclick="closeModal('modal-centered')">View receipt</button>
+      <button class="btn btn-outlined-primary" onclick="closeModal('modal-centered')">Back to dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- Destructive modal -->
+<div class="modal-overlay" id="modal-destructive" role="dialog" aria-modal="true" aria-labelledby="mde-title">
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-icon-row">
+        <div class="modal-feat-icon modal-feat-icon--error" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#d92d20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <button class="modal-close" aria-label="Close" onclick="closeModal('modal-destructive')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="modal-text">
+        <p class="modal-title" id="mde-title">Delete account</p>
+        <p class="modal-body">Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.</p>
+      </div>
+    </div>
+    <div class="modal-actions modal-actions--right">
+      <div class="btn-group">
+        <button class="btn btn-outlined-primary" onclick="closeModal('modal-destructive')">Cancel</button>
+        <button class="btn btn-solid-error" onclick="closeModal('modal-destructive')">Delete account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Form modal -->
+<div class="modal-overlay" id="modal-form" role="dialog" aria-modal="true" aria-labelledby="mf-title">
+  <div class="modal modal--wide">
+    <div class="modal-content" style="gap:16px;">
+      <div class="modal-icon-row">
+        <div class="modal-text">
+          <p class="modal-title" id="mf-title">Edit profile</p>
+          <p class="modal-body">Update your display name and email address.</p>
+        </div>
+        <button class="modal-close" aria-label="Close" onclick="closeModal('modal-form')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="field">
+          <label class="field-label" for="mf-name">Full name</label>
+          <div class="input-wrap"><input id="mf-name" type="text" placeholder="Jordan Lee" value="Jordan Lee"></div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="mf-email">Email address</label>
+          <div class="input-wrap"><input id="mf-email" type="email" placeholder="jordan@company.com" value="jordan@company.com"></div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="mf-role">Job title</label>
+          <div class="input-wrap"><input id="mf-role" type="text" placeholder="Product Designer"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions modal-actions--right">
+      <div class="btn-group">
+        <button class="btn btn-outlined-primary" onclick="closeModal('modal-form')">Cancel</button>
+        <button class="btn btn-solid-primary" onclick="closeModal('modal-form')">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Drawer modal -->
+<div class="modal-overlay modal-overlay--drawer" id="modal-drawer" role="dialog" aria-modal="true" aria-labelledby="mdrawer-title">
+  <div class="modal--drawer">
+    <div class="drawer-header">
+      <p class="drawer-title" id="mdrawer-title">Send a test email</p>
+      <button class="modal-close" aria-label="Close" onclick="closeModal('modal-drawer')">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="drawer-card">
+      <div class="field">
+        <label class="field-label" for="drawer-email">Emails</label>
+        <div class="input-wrap"><input id="drawer-email" type="email" placeholder="Add emails address here..."></div>
+      </div>
+      <div>
+        <button class="btn" style="background:#7f56d9;border-color:#7f56d9;color:#fff;" onclick="closeModal('modal-drawer')">Send Mail</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(id) {
+  const overlay = document.getElementById(id);
+  if (!overlay) return;
+  overlay._opener = document.activeElement;
+  overlay.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+  // Focus first focusable element
+  requestAnimationFrame(() => {
+    const first = overlay.querySelector('button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (first) first.focus();
+  });
+}
+
+function closeModal(id) {
+  const overlay = document.getElementById(id);
+  if (!overlay) return;
+  overlay.classList.remove('is-open');
+  document.body.style.overflow = '';
+  if (overlay._opener) overlay._opener.focus();
+}
+
+// Close on backdrop click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeModal(overlay.id);
+  });
+
+  // Focus trap
+  overlay.addEventListener('keydown', e => {
+    if (!overlay.classList.contains('is-open')) return;
+    const focusable = [...overlay.querySelectorAll('button, input, select, textarea, [tabindex]:not([tabindex="-1"])')].filter(el => !el.disabled);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
+  });
+});
+
+// Esc closes
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.is-open').forEach(o => closeModal(o.id));
+  }
+});
+
+// Copy button
+// Checkbox toggle
+function toggleCb(wrap) {
+  const ctrl = wrap.querySelector('.cb-control');
+  ctrl.classList.toggle('is-checked');
+}
+
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

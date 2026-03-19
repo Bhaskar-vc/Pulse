@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Empty State – Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; font-size: 14px; color: #1d2939; background: #f8f9fb; min-height: 100vh; display: flex; }
+
+/* ── Sidebar ── */
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #eaeaed; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #eaeaed; margin-bottom: 16px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #29294c; }
+.sidebar-logo sub { font-size: 10px; color: #9d9dad; font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main { margin-left: 240px; flex: 1; min-width: 0; overflow-x: hidden; }
+.content { max-width: 1100px; padding: 48px 56px; }
+
+/* ── Page Header ── */
+.page-header { margin-bottom: 44px; }
+.breadcrumb { font-size: 12px; color: #98a2b3; margin-bottom: 10px; }
+.breadcrumb span { color: #6941c6; }
+.page-title { font-size: 30px; font-weight: 700; color: #101828; letter-spacing: -.4px; line-height: 1.2; }
+.page-desc { margin-top: 8px; font-size: 15px; color: #475467; line-height: 1.6; max-width: 640px; }
+.tag-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.page-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.tag-a11y   { color: #026aa2; background: #e0f2fe; border-color: #b9e6fe; }
+.tag-figma  { color: #6941c6; background: #f4f0fd; border-color: #d6bbfb; }
+
+/* ── Sections ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 700; color: #101828; padding-bottom: 12px; border-bottom: 1px solid #e4e7ec; margin-bottom: 20px; }
+.section-desc { font-size: 14px; color: #475467; line-height: 1.7; margin-bottom: 20px; }
+.divider { border: none; border-top: 1px solid #e4e7ec; margin: 0 0 56px; }
+.variant-label { font-size: 12px; font-weight: 600; color: #98a2b3; text-transform: uppercase; letter-spacing: .06em; margin: 20px 0 8px; }
+
+/* ── Demo Box ── */
+.demo-box { background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 40px 32px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; }
+.demo-box-grey { background: #f4f4f6; border: 1px solid #e4e7ec; border-radius: 12px; padding: 40px 32px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; }
+.demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #e4e7ec; border: 1px solid #e4e7ec; border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+.demo-grid-cell { background: #fff; padding: 40px 24px; display: flex; align-items: center; justify-content: center; }
+.demo-grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+/* ── Props Table ── */
+.ds-table-wrap { border: 1px solid #e4e7ec; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-table thead { background: #f9fafb; }
+.ds-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .05em; }
+.ds-table td { padding: 11px 16px; border-top: 1px solid #f2f4f7; color: #344054; }
+.ds-table tr:hover td { background: #fafbff; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: #f2f4f7; color: #29294c; padding: 2px 6px; border-radius: 4px; }
+
+/* ── Code Block ── */
+.code-block { background: #0f172a; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.code-block-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155; }
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.copy-btn { font-size: 11px; font-weight: 600; color: #94a3b8; background: none; border: 1px solid #334155; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s, color .15s; }
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; }
+.c-tag { color: #7dd3fc; }
+.c-attr { color: #a5b4fc; }
+.c-val { color: #86efac; }
+
+/* ── A11y ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid #e4e7ec; border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: #101828; margin-bottom: 8px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: #475467; line-height: 1.7; }
+
+/* ════════════════════════════════
+   EMPTY STATE COMPONENT
+   ════════════════════════════════ */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+/* Illustration container */
+.empty-img { flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+
+/* Text block */
+.empty-body { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.empty-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #29294c;
+  line-height: 1.4;
+}
+.empty-desc {
+  font-size: 13px;
+  color: #98a2b3;
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+/* Action area */
+.empty-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: center; }
+
+/* Sizes */
+.empty--sm .empty-title { font-size: 13px; }
+.empty--sm .empty-desc  { font-size: 12px; }
+
+.empty--lg .empty-title { font-size: 16px; font-weight: 700; }
+.empty--lg .empty-desc  { font-size: 14px; max-width: 340px; }
+
+/* Container variant — inside a bordered box */
+.empty-container {
+  background: #fff;
+  border: 1px dashed #d0d5dd;
+  border-radius: 12px;
+  padding: 48px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Buttons (reuse) */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 4px 16px; min-width: 64px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; border: 1.5px solid transparent; cursor: pointer; text-decoration: none; transition: background .15s, border-color .15s; }
+.btn-sm { height: 30px; font-size: 13px; padding: 4px 12px; }
+.btn-solid-primary { background: #29294c; color: #fff; border-color: #29294c; }
+.btn-solid-primary:hover { background: #1e1e38; border-color: #1e1e38; }
+.btn-outlined-primary { background: transparent; color: #29294c; border-color: #d0d5dd; }
+.btn-outlined-primary:hover { background: #f4f4f6; }
+.btn-solid-purple { background: #7f56d9; color: #fff; border-color: #7f56d9; }
+.btn-solid-purple:hover { background: #6941c6; border-color: #6941c6; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span>Pulse DS</span>
+    <sub>v1.0.0 · Design System</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link active">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+<div class="content">
+
+  <!-- Header -->
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Purple document gradient -->
+        <linearGradient id="doc-empty" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#b8a0ff"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <!-- Folder dark gradient -->
+        <linearGradient id="fld-empty" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2d2d50"/>
+          <stop offset="100%" stop-color="#12122a"/>
+        </linearGradient>
+        <!-- Purple inner glow -->
+        <radialGradient id="glow-empty" cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
+          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Top shine -->
+        <linearGradient id="shine-empty" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- Folder drop shadow -->
+        <filter id="fs-empty" x="-18%" y="-12%" width="136%" height="136%">
+          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
+        </filter>
+        <!-- Text glow -->
+        <filter id="tg-empty" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="2.8" result="blur"/>
+          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
+          <feComposite in="c" in2="blur" operator="in" result="glow"/>
+          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── Purple document peeking behind folder ── -->
+      <g transform="rotate(12, 141, 46)" opacity="0.97">
+        <!-- Document body -->
+        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-empty)"/>
+        <!-- Folded corner (lighter) -->
+        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
+        <!-- Folded corner (shadow) -->
+        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
+      </g>
+
+      <!-- ── Dark glass folder ── -->
+      <!-- Single path: full folder shape (tab + body as one outline) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#fld-empty)"
+            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            filter="url(#fs-empty)"/>
+
+      <!-- Purple glow inside (same path, no stroke/shadow) -->
+      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
+            fill="url(#glow-empty)"/>
+
+      <!-- Top glass shine strip -->
+      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-empty)"/>
+
+      <!-- Component name text -->
+      <text x="100" y="132"
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.93)"
+            font-family="Inter, system-ui, -apple-system, sans-serif"
+            font-size="16" font-weight="800"
+            letter-spacing="1.6"
+            textLength="76" lengthAdjust="spacingAndGlyphs"
+            filter="url(#tg-empty)">EMPTY</text>
+
+      <!-- Subtle underline below name -->
+      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
+    </svg>
+  </div>
+    <div class="breadcrumb">Components › <span>Empty State</span></div>
+    <h1 class="page-title">Empty State</h1>
+    <p class="page-desc">Empty states communicate that no content is available — due to no data, a failed search, or a first-time experience. They guide users with a clear illustration, message, and optional action.</p>
+    <div class="tag-row">
+      <span class="page-tag tag-stable">Stable</span>
+      <span class="page-tag tag-a11y">Accessible</span>
+      <span class="page-tag tag-figma">Figma Ready</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 1. Overview -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">The default empty state uses a neutral illustrated box, a short title, and optional description. It matches the Figma "Empty/Basic" component exactly.</p>
+
+    <div class="demo-box">
+      <div class="empty">
+        <div class="empty-img">
+          <!-- Box / inbox illustration (matches Figma) -->
+          <svg width="121" height="99" viewBox="0 0 121 99" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Tray / box body -->
+            <rect x="14" y="52" width="78" height="40" rx="4" fill="#e9eaec"/>
+            <rect x="14" y="52" width="78" height="40" rx="4" stroke="#c8cad0" stroke-width="1.5"/>
+            <!-- Box front flap shadow -->
+            <rect x="14" y="68" width="78" height="24" rx="0" ry="0" fill="#d8dadf"/>
+            <rect x="14" y="68" width="78" height="24" rx="0" fill="#d8dadf"/>
+            <!-- Box opening arc -->
+            <path d="M14 68 Q53 56 92 68" stroke="#c8cad0" stroke-width="1.5" fill="none"/>
+            <!-- Document floating above box -->
+            <rect x="36" y="18" width="48" height="58" rx="4" fill="#fff" stroke="#d0d3dc" stroke-width="1.5"/>
+            <!-- Dog-ear fold top-right -->
+            <path d="M73 18 L84 29 L73 29 Z" fill="#e9eaec" stroke="#d0d3dc" stroke-width="1"/>
+            <!-- Document lines -->
+            <line x1="44" y1="37" x2="76" y2="37" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+            <line x1="44" y1="44" x2="76" y2="44" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+            <line x1="44" y1="51" x2="68" y2="51" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+            <line x1="44" y1="58" x2="72" y2="58" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+            <!-- Chat bubble -->
+            <rect x="72" y="4" width="38" height="26" rx="10" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.2"/>
+            <!-- Bubble tail -->
+            <path d="M80 30 L75 38 L87 30 Z" fill="#e9eaec"/>
+            <!-- Dots inside bubble -->
+            <circle cx="82" cy="17" r="2.5" fill="#b0b4bf"/>
+            <circle cx="91" cy="17" r="2.5" fill="#b0b4bf"/>
+            <circle cx="100" cy="17" r="2.5" fill="#b0b4bf"/>
+          </svg>
+        </div>
+        <div class="empty-body">
+          <span class="empty-title">No Data</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 2. Variants -->
+  <div class="section">
+    <h2 class="section-title">Variants</h2>
+    <p class="section-desc">Four contextual illustrations cover the most common empty state scenarios: no data, no search results, no notifications, and no connection.</p>
+
+    <div class="demo-grid">
+
+      <!-- No Data (default) -->
+      <div class="demo-grid-cell">
+        <div class="empty">
+          <div class="empty-img">
+            <svg width="100" height="82" viewBox="0 0 121 99" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="14" y="52" width="78" height="40" rx="4" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.5"/>
+              <rect x="14" y="68" width="78" height="24" fill="#d8dadf"/>
+              <path d="M14 68 Q53 56 92 68" stroke="#c8cad0" stroke-width="1.5" fill="none"/>
+              <rect x="36" y="18" width="48" height="58" rx="4" fill="#fff" stroke="#d0d3dc" stroke-width="1.5"/>
+              <path d="M73 18 L84 29 L73 29 Z" fill="#e9eaec" stroke="#d0d3dc" stroke-width="1"/>
+              <line x1="44" y1="37" x2="76" y2="37" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <line x1="44" y1="44" x2="76" y2="44" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <line x1="44" y1="51" x2="68" y2="51" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <line x1="44" y1="58" x2="72" y2="58" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <rect x="72" y="4" width="38" height="26" rx="10" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.2"/>
+              <path d="M80 30 L75 38 L87 30 Z" fill="#e9eaec"/>
+              <circle cx="82" cy="17" r="2.5" fill="#b0b4bf"/>
+              <circle cx="91" cy="17" r="2.5" fill="#b0b4bf"/>
+              <circle cx="100" cy="17" r="2.5" fill="#b0b4bf"/>
+            </svg>
+          </div>
+          <div class="empty-body">
+            <span class="empty-title">No Data</span>
+            <span class="empty-desc">There's nothing here yet. Add your first item to get started.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Search Results -->
+      <div class="demo-grid-cell">
+        <div class="empty">
+          <div class="empty-img">
+            <svg width="100" height="82" viewBox="0 0 100 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Magnifier glass -->
+              <circle cx="40" cy="36" r="24" fill="#f4f4f6" stroke="#d0d3dc" stroke-width="2"/>
+              <circle cx="40" cy="36" r="16" fill="#fff" stroke="#e4e7ec" stroke-width="1.5"/>
+              <!-- X inside magnifier -->
+              <line x1="34" y1="30" x2="46" y2="42" stroke="#c8cad0" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="46" y1="30" x2="34" y2="42" stroke="#c8cad0" stroke-width="2.5" stroke-linecap="round"/>
+              <!-- Handle -->
+              <line x1="57" y1="54" x2="72" y2="69" stroke="#d0d3dc" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="empty-body">
+            <span class="empty-title">No Results Found</span>
+            <span class="empty-desc">We couldn't find anything matching your search. Try different keywords.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Notifications -->
+      <div class="demo-grid-cell">
+        <div class="empty">
+          <div class="empty-img">
+            <svg width="100" height="82" viewBox="0 0 100 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Bell body -->
+              <path d="M50 12 C36 12 28 22 28 36 L28 52 L20 60 L80 60 L72 52 L72 36 C72 22 64 12 50 12Z" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.5" stroke-linejoin="round"/>
+              <!-- Bell clapper -->
+              <path d="M44 60 C44 63.3 46.7 66 50 66 C53.3 66 56 63.3 56 60" stroke="#c8cad0" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Top dot (notification stem) -->
+              <circle cx="50" cy="10" r="4" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.5"/>
+              <!-- Zzz lines (silent) -->
+              <line x1="62" y1="18" x2="72" y2="18" stroke="#d8dadf" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="72" y1="18" x2="64" y2="26" stroke="#d8dadf" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="64" y1="26" x2="76" y2="26" stroke="#d8dadf" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="empty-body">
+            <span class="empty-title">All Caught Up</span>
+            <span class="empty-desc">You have no new notifications. Check back later.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Connection -->
+      <div class="demo-grid-cell">
+        <div class="empty">
+          <div class="empty-img">
+            <svg width="100" height="82" viewBox="0 0 100 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Cloud outline with slash -->
+              <path d="M68 50 C76 50 82 44 82 36 C82 28 76 22 68 22 C67 16 62 12 56 12 C47 12 40 19 40 28 C34 28 28 34 28 40 C28 46 34 52 40 52 L68 52 Z" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.5"/>
+              <!-- Diagonal slash -->
+              <line x1="30" y1="16" x2="78" y2="64" stroke="#f04438" stroke-width="2.5" stroke-linecap="round"/>
+              <!-- Wifi bars (faded) -->
+              <path d="M42 66 C46 62 54 62 58 66" stroke="#d8dadf" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <circle cx="50" cy="70" r="2" fill="#d8dadf"/>
+            </svg>
+          </div>
+          <div class="empty-body">
+            <span class="empty-title">No Connection</span>
+            <span class="empty-desc">Check your internet connection and try again.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Files -->
+      <div class="demo-grid-cell">
+        <div class="empty">
+          <div class="empty-img">
+            <svg width="100" height="82" viewBox="0 0 100 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Folder body -->
+              <path d="M16 30 L16 68 C16 70.2 17.8 72 20 72 L80 72 C82.2 72 84 70.2 84 68 L84 34 C84 31.8 82.2 30 80 30 Z" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.5"/>
+              <!-- Folder tab -->
+              <path d="M16 30 L16 24 C16 21.8 17.8 20 20 20 L42 20 L48 28 L80 28 C82.2 28 84 29.8 84 32 L84 30 Z" fill="#d8dadf" stroke="#c8cad0" stroke-width="1.5"/>
+              <!-- Plus icon inside folder -->
+              <line x1="50" y1="44" x2="50" y2="60" stroke="#b0b4bf" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="42" y1="52" x2="58" y2="52" stroke="#b0b4bf" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="empty-body">
+            <span class="empty-title">No Files Yet</span>
+            <span class="empty-desc">Upload your first file to this folder.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error / Not Found -->
+      <div class="demo-grid-cell">
+        <div class="empty">
+          <div class="empty-img">
+            <svg width="100" height="82" viewBox="0 0 100 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Page -->
+              <rect x="24" y="8" width="52" height="66" rx="4" fill="#fff" stroke="#d0d3dc" stroke-width="1.5"/>
+              <!-- Dog-ear -->
+              <path d="M62 8 L76 22 L62 22 Z" fill="#e9eaec" stroke="#d0d3dc" stroke-width="1"/>
+              <!-- 404 text representation -->
+              <text x="50" y="42" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#d0d3dc">404</text>
+              <!-- Sad face lines under number -->
+              <!-- Eyes -->
+              <circle cx="40" cy="52" r="2" fill="#d8dadf"/>
+              <circle cx="60" cy="52" r="2" fill="#d8dadf"/>
+              <!-- Frown mouth -->
+              <path d="M40 61 C44 57 56 57 60 61" stroke="#d8dadf" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="empty-body">
+            <span class="empty-title">Page Not Found</span>
+            <span class="empty-desc">The page you're looking for doesn't exist or has been moved.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 3. With Actions -->
+  <div class="section">
+    <h2 class="section-title">With Actions</h2>
+    <p class="section-desc">Pair the empty state with a primary CTA to guide users toward the next step. Use a secondary link for alternative paths.</p>
+
+    <div class="variant-label">Single action</div>
+    <div class="demo-box">
+      <div class="empty">
+        <div class="empty-img">
+          <svg width="100" height="82" viewBox="0 0 121 99" fill="none">
+            <rect x="14" y="52" width="78" height="40" rx="4" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.5"/>
+            <rect x="14" y="68" width="78" height="24" fill="#d8dadf"/>
+            <path d="M14 68 Q53 56 92 68" stroke="#c8cad0" stroke-width="1.5" fill="none"/>
+            <rect x="36" y="18" width="48" height="58" rx="4" fill="#fff" stroke="#d0d3dc" stroke-width="1.5"/>
+            <path d="M73 18 L84 29 L73 29 Z" fill="#e9eaec" stroke="#d0d3dc" stroke-width="1"/>
+            <line x1="44" y1="37" x2="76" y2="37" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+            <line x1="44" y1="44" x2="76" y2="44" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+            <line x1="44" y1="51" x2="68" y2="51" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+            <rect x="72" y="4" width="38" height="26" rx="10" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.2"/>
+            <path d="M80 30 L75 38 L87 30 Z" fill="#e9eaec"/>
+            <circle cx="82" cy="17" r="2.5" fill="#b0b4bf"/>
+            <circle cx="91" cy="17" r="2.5" fill="#b0b4bf"/>
+            <circle cx="100" cy="17" r="2.5" fill="#b0b4bf"/>
+          </svg>
+        </div>
+        <div class="empty-body">
+          <span class="empty-title">No Projects Yet</span>
+          <span class="empty-desc">Get started by creating your first project. It only takes a minute.</span>
+        </div>
+        <div class="empty-actions">
+          <button class="btn btn-solid-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            New Project
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Primary + secondary action</div>
+    <div class="demo-box">
+      <div class="empty">
+        <div class="empty-img">
+          <svg width="100" height="82" viewBox="0 0 100 82" fill="none">
+            <circle cx="40" cy="36" r="24" fill="#f4f4f6" stroke="#d0d3dc" stroke-width="2"/>
+            <circle cx="40" cy="36" r="16" fill="#fff" stroke="#e4e7ec" stroke-width="1.5"/>
+            <line x1="34" y1="30" x2="46" y2="42" stroke="#c8cad0" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="46" y1="30" x2="34" y2="42" stroke="#c8cad0" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="57" y1="54" x2="72" y2="69" stroke="#d0d3dc" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="empty-body">
+          <span class="empty-title">No Results Found</span>
+          <span class="empty-desc">We couldn't find anything for "dashboard components". Try adjusting your search or browse all categories.</span>
+        </div>
+        <div class="empty-actions">
+          <button class="btn btn-solid-primary">Browse All</button>
+          <button class="btn btn-outlined-primary">Clear Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 4. Sizes -->
+  <div class="section">
+    <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">Use <code>empty--sm</code> for compact table/card contexts and <code>empty--lg</code> for full-page empty states.</p>
+
+    <div class="demo-grid demo-grid-2" style="grid-template-columns: 1fr 1fr 1fr;">
+
+      <div class="demo-grid-cell" style="flex-direction:column; gap:8px;">
+        <span style="font-size:11px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Small</span>
+        <div class="empty empty--sm">
+          <div class="empty-img">
+            <svg width="64" height="52" viewBox="0 0 121 99" fill="none">
+              <rect x="14" y="52" width="78" height="40" rx="4" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.5"/>
+              <rect x="14" y="68" width="78" height="24" fill="#d8dadf"/>
+              <path d="M14 68 Q53 56 92 68" stroke="#c8cad0" stroke-width="1.5" fill="none"/>
+              <rect x="36" y="18" width="48" height="58" rx="4" fill="#fff" stroke="#d0d3dc" stroke-width="1.5"/>
+              <path d="M73 18 L84 29 L73 29 Z" fill="#e9eaec" stroke="#d0d3dc" stroke-width="1"/>
+              <line x1="44" y1="37" x2="76" y2="37" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <line x1="44" y1="44" x2="76" y2="44" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <rect x="72" y="4" width="38" height="26" rx="10" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.2"/>
+              <path d="M80 30 L75 38 L87 30 Z" fill="#e9eaec"/>
+              <circle cx="82" cy="17" r="2.5" fill="#b0b4bf"/>
+              <circle cx="91" cy="17" r="2.5" fill="#b0b4bf"/>
+              <circle cx="100" cy="17" r="2.5" fill="#b0b4bf"/>
+            </svg>
+          </div>
+          <div class="empty-body">
+            <span class="empty-title">No Data</span>
+            <span class="empty-desc">Nothing to display here.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-grid-cell" style="flex-direction:column; gap:8px;">
+        <span style="font-size:11px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Medium (default)</span>
+        <div class="empty">
+          <div class="empty-img">
+            <svg width="100" height="82" viewBox="0 0 121 99" fill="none">
+              <rect x="14" y="52" width="78" height="40" rx="4" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.5"/>
+              <rect x="14" y="68" width="78" height="24" fill="#d8dadf"/>
+              <path d="M14 68 Q53 56 92 68" stroke="#c8cad0" stroke-width="1.5" fill="none"/>
+              <rect x="36" y="18" width="48" height="58" rx="4" fill="#fff" stroke="#d0d3dc" stroke-width="1.5"/>
+              <path d="M73 18 L84 29 L73 29 Z" fill="#e9eaec" stroke="#d0d3dc" stroke-width="1"/>
+              <line x1="44" y1="37" x2="76" y2="37" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <line x1="44" y1="44" x2="76" y2="44" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <line x1="44" y1="51" x2="68" y2="51" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <rect x="72" y="4" width="38" height="26" rx="10" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.2"/>
+              <path d="M80 30 L75 38 L87 30 Z" fill="#e9eaec"/>
+              <circle cx="82" cy="17" r="2.5" fill="#b0b4bf"/>
+              <circle cx="91" cy="17" r="2.5" fill="#b0b4bf"/>
+              <circle cx="100" cy="17" r="2.5" fill="#b0b4bf"/>
+            </svg>
+          </div>
+          <div class="empty-body">
+            <span class="empty-title">No Data</span>
+            <span class="empty-desc">There's nothing here yet.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-grid-cell" style="flex-direction:column; gap:8px;">
+        <span style="font-size:11px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Large</span>
+        <div class="empty empty--lg">
+          <div class="empty-img">
+            <svg width="140" height="114" viewBox="0 0 121 99" fill="none">
+              <rect x="14" y="52" width="78" height="40" rx="4" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.5"/>
+              <rect x="14" y="68" width="78" height="24" fill="#d8dadf"/>
+              <path d="M14 68 Q53 56 92 68" stroke="#c8cad0" stroke-width="1.5" fill="none"/>
+              <rect x="36" y="18" width="48" height="58" rx="4" fill="#fff" stroke="#d0d3dc" stroke-width="1.5"/>
+              <path d="M73 18 L84 29 L73 29 Z" fill="#e9eaec" stroke="#d0d3dc" stroke-width="1"/>
+              <line x1="44" y1="37" x2="76" y2="37" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <line x1="44" y1="44" x2="76" y2="44" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <line x1="44" y1="51" x2="68" y2="51" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <line x1="44" y1="58" x2="72" y2="58" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <rect x="72" y="4" width="38" height="26" rx="10" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.2"/>
+              <path d="M80 30 L75 38 L87 30 Z" fill="#e9eaec"/>
+              <circle cx="82" cy="17" r="2.5" fill="#b0b4bf"/>
+              <circle cx="91" cy="17" r="2.5" fill="#b0b4bf"/>
+              <circle cx="100" cy="17" r="2.5" fill="#b0b4bf"/>
+            </svg>
+          </div>
+          <div class="empty-body">
+            <span class="empty-title">No Data Available</span>
+            <span class="empty-desc">There's nothing here yet. Start by adding your first item to populate this view.</span>
+          </div>
+          <div class="empty-actions">
+            <button class="btn btn-solid-primary">Get Started</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 5. In Context -->
+  <div class="section">
+    <h2 class="section-title">In Context</h2>
+    <p class="section-desc">Empty states appear inside tables, panels, cards, and full-page layouts. Use a dashed border container when the empty state replaces a data region.</p>
+
+    <div class="variant-label">Inside a table</div>
+    <div class="demo-box" style="padding: 0; display:block; overflow:hidden;">
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+          <tr style="background:#f9fafb; border-bottom:1px solid #e4e7ec;">
+            <th style="padding:10px 16px; text-align:left; color:#667085; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;">Name</th>
+            <th style="padding:10px 16px; text-align:left; color:#667085; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;">Status</th>
+            <th style="padding:10px 16px; text-align:left; color:#667085; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;">Date</th>
+            <th style="padding:10px 16px; text-align:left; color:#667085; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4" style="padding: 48px 16px; text-align:center;">
+              <div class="empty empty--sm" style="display:inline-flex;">
+                <div class="empty-img">
+                  <svg width="64" height="52" viewBox="0 0 121 99" fill="none">
+                    <rect x="14" y="52" width="78" height="40" rx="4" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.5"/>
+                    <rect x="14" y="68" width="78" height="24" fill="#d8dadf"/>
+                    <path d="M14 68 Q53 56 92 68" stroke="#c8cad0" stroke-width="1.5" fill="none"/>
+                    <rect x="36" y="18" width="48" height="58" rx="4" fill="#fff" stroke="#d0d3dc" stroke-width="1.5"/>
+                    <path d="M73 18 L84 29 L73 29 Z" fill="#e9eaec" stroke="#d0d3dc" stroke-width="1"/>
+                    <line x1="44" y1="37" x2="76" y2="37" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="44" y1="44" x2="76" y2="44" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+                    <rect x="72" y="4" width="38" height="26" rx="10" fill="#e9eaec" stroke="#c8cad0" stroke-width="1.2"/>
+                    <path d="M80 30 L75 38 L87 30 Z" fill="#e9eaec"/>
+                    <circle cx="82" cy="17" r="2.5" fill="#b0b4bf"/>
+                    <circle cx="91" cy="17" r="2.5" fill="#b0b4bf"/>
+                    <circle cx="100" cy="17" r="2.5" fill="#b0b4bf"/>
+                  </svg>
+                </div>
+                <div class="empty-body">
+                  <span class="empty-title">No Records</span>
+                  <span class="empty-desc">No entries match your current filters.</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="variant-label">Dashed container (drop zone / placeholder area)</div>
+    <div class="demo-box" style="display:block;">
+      <div class="empty-container">
+        <div class="empty">
+          <div class="empty-img">
+            <svg width="100" height="82" viewBox="0 0 100 82" fill="none">
+              <rect x="24" y="8" width="52" height="66" rx="4" fill="#f4f4f6" stroke="#d0d3dc" stroke-width="1.5"/>
+              <path d="M62 8 L76 22 L62 22 Z" fill="#e9eaec" stroke="#d0d3dc" stroke-width="1"/>
+              <line x1="38" y1="40" x2="62" y2="40" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+              <line x1="50" y1="32" x2="50" y2="48" stroke="#d8dadf" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="empty-body">
+            <span class="empty-title">Drop files here</span>
+            <span class="empty-desc">Drag and drop your files, or click to browse.</span>
+          </div>
+          <div class="empty-actions">
+            <button class="btn btn-outlined-primary">Browse Files</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 6. CSS Classes -->
+  <div class="section">
+    <h2 class="section-title">CSS Classes</h2>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead>
+          <tr><th>Class</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>.empty</code></td><td>Base container — column flex, centered, 16px gap</td></tr>
+          <tr><td><code>.empty--sm</code></td><td>Smaller text (13px title, 12px desc)</td></tr>
+          <tr><td><code>.empty--lg</code></td><td>Larger text (16px title, 14px desc)</td></tr>
+          <tr><td><code>.empty-img</code></td><td>Illustration wrapper — centers the SVG</td></tr>
+          <tr><td><code>.empty-body</code></td><td>Text column — title + description, centered, 6px gap</td></tr>
+          <tr><td><code>.empty-title</code></td><td>Primary message — 14px / semibold / #29294c</td></tr>
+          <tr><td><code>.empty-desc</code></td><td>Supporting text — 13px / #98a2b3, max-width 280px</td></tr>
+          <tr><td><code>.empty-actions</code></td><td>Centered button row — flex, 8px gap, wrap</td></tr>
+          <tr><td><code>.empty-container</code></td><td>Dashed border wrapper for drop zones or placeholder regions</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 7. Code -->
+  <div class="section">
+    <h2 class="section-title">Code</h2>
+
+    <div class="variant-label">Basic (No Data)</div>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">empty-state.html</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"empty"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"empty-img"</span><span class="c-tag">&gt;</span>
+    <span class="c-comment">&lt;!-- SVG illustration --&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"empty-body"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"empty-title"</span><span class="c-tag">&gt;</span>No Data<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"empty-desc"</span><span class="c-tag">&gt;</span>There's nothing here yet.<span class="c-tag">&lt;/span&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+    </div>
+
+    <div class="variant-label">With action button</div>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">empty-state-action.html</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"empty"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"empty-img"</span><span class="c-tag">&gt;</span>
+    <span class="c-comment">&lt;!-- SVG illustration --&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"empty-body"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"empty-title"</span><span class="c-tag">&gt;</span>No Projects Yet<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"empty-desc"</span><span class="c-tag">&gt;</span>Get started by creating your first project.<span class="c-tag">&lt;/span&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"empty-actions"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">class=</span><span class="c-val">"btn btn-solid-primary"</span><span class="c-tag">&gt;</span>New Project<span class="c-tag">&lt;/button&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">class=</span><span class="c-val">"btn btn-outlined-primary"</span><span class="c-tag">&gt;</span>Learn More<span class="c-tag">&lt;/button&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 8. Accessibility -->
+  <div class="section">
+    <h2 class="section-title">Accessibility</h2>
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>Illustration</h4>
+        <ul>
+          <li>Decorative SVGs should have <code>aria-hidden="true"</code></li>
+          <li>Never use the illustration alone to convey meaning — always pair with text</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>Region</h4>
+        <ul>
+          <li>Wrap in <code>role="status"</code> or <code>aria-live="polite"</code> when the empty state appears dynamically after a user action (e.g., clearing filters)</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>Heading hierarchy</h4>
+        <ul>
+          <li>Use a semantic heading tag if the empty state is the primary content of the page: <code>&lt;h1&gt;</code> for full-page, <code>&lt;h2&gt;</code> / <code>&lt;h3&gt;</code> inside panels</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>Focus</h4>
+        <ul>
+          <li>When the empty state replaces content after a filter or search action, move focus to the empty state container or its heading so screen reader users are aware of the change</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>
