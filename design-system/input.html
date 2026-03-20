@@ -31,9 +31,9 @@
   --text-primary: #29294c;
   --text-secondary: #707087;
   --text-tertiary: #9d9dad;
-  --text-placeholder: #bdbdc8;
+  --text-placeholder: #98a2b3;
   --text-link: #6941c6;
-  --border-default: #eaeaed;
+  --border-default: #e1e5ea;
   --border-focus: #7f56d9;
   --bg-page: #f9fafb;
   --sidebar-w: 240px;
@@ -100,7 +100,7 @@ body { font-family: var(--font); color: var(--text-primary); background: var(--b
 /* Field wrapper */
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field-label {
-  font-size: 14px; font-weight: 500; color: var(--primary-700);
+  font-size: 12px; font-weight: 400; color: #707087;
   display: flex; align-items: center; gap: 4px;
 }
 .field-hint {
@@ -114,8 +114,8 @@ body { font-family: var(--font); color: var(--text-primary); background: var(--b
   display: flex; align-items: center;
   background: #fff;
   border: 1px solid var(--border-default);
-  border-radius: 8px;
-  height: 40px;
+  border-radius: 6px;
+  height: 36px;
   padding: 0 12px;
   gap: 8px;
   transition: border-color .15s, box-shadow .15s;
@@ -126,18 +126,18 @@ body { font-family: var(--font); color: var(--text-primary); background: var(--b
   box-shadow: 0 0 0 3px rgba(127, 86, 217, 0.12);
   outline: none;
 }
-.input-wrap.state-filled { border-color: var(--primary-300); }
+.input-wrap.state-filled { border-color: #d0d5dd; }
 .input-wrap.state-disabled {
   background: var(--primary-100);
   border-color: var(--border-default);
   cursor: not-allowed;
 }
 .input-wrap.state-error {
-  border-color: var(--error-600);
+  border-color: #fda29b;
 }
 .input-wrap.state-error:focus-within {
-  border-color: var(--error-600);
-  box-shadow: 0 0 0 3px rgba(240, 68, 56, .12);
+  border-color: #fda29b;
+  box-shadow: 0 0 0 3px rgba(253, 162, 155, .2);
 }
 
 .input-wrap input {
@@ -204,7 +204,7 @@ body { font-family: var(--font); color: var(--text-primary); background: var(--b
   border-right: 1px solid var(--border-default);
   padding: 0 10px;
   margin: -1px 8px -1px -13px;
-  border-radius: 8px 0 0 8px;
+  border-radius: 6px 0 0 6px;
   height: calc(100% + 2px);
   font-size: 12px; font-weight: 600; color: var(--text-secondary);
   flex-shrink: 0;
@@ -216,7 +216,7 @@ body { font-family: var(--font); color: var(--text-primary); background: var(--b
   border-left: 1px solid var(--border-default);
   padding: 0 10px;
   margin: -1px -13px -1px 8px;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 6px 6px 0;
   height: calc(100% + 2px);
   font-size: 12px; font-weight: 600; color: var(--text-secondary);
   flex-shrink: 0;
@@ -483,7 +483,7 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: va
           <!-- The actual labelled input -->
           <div class="field">
             <div style="display:flex;align-items:center;gap:4px;">
-              <label class="field-label" style="font-size:13px;">Label</label>
+              <label class="field-label">Label</label>
               <span class="help-icon" title="Help text">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#9d9dad" stroke-width="1.2"/><path d="M7 6.5v4" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round"/><circle cx="7" cy="4.5" r=".75" fill="#9d9dad"/></svg>
               </span>
@@ -519,15 +519,15 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: va
         </div>
         <div class="anatomy-item">
           <div class="anatomy-num">②</div>
-          <div><strong>Input container</strong> — 40px tall by default, 8px border-radius. Contains the leading icon, input element, and trailing actions.</div>
+          <div><strong>Input container</strong> — 36px tall by default, 6px border-radius. Contains the leading icon, input element, and trailing actions.</div>
         </div>
         <div class="anatomy-item">
           <div class="anatomy-num">③</div>
-          <div><strong>Leading icon</strong> — Optional 16×16 icon reinforcing the input purpose (email, search, phone, etc.).</div>
+          <div><strong>Leading icon</strong> — Optional 20×20 icon reinforcing the input purpose (email, search, phone, etc.).</div>
         </div>
         <div class="anatomy-item">
           <div class="anatomy-num">④</div>
-          <div><strong>Placeholder / value</strong> — Placeholder text is `--text-placeholder` (#bdbdc8). Filled value is `--text-primary`.</div>
+          <div><strong>Placeholder / value</strong> — Placeholder text is `--text-placeholder` (#98a2b3). Filled value is `--text-primary`.</div>
         </div>
         <div class="anatomy-item">
           <div class="anatomy-num">⑤</div>
@@ -575,7 +575,7 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: va
               <input type="email" placeholder="you@company.com">
             </div>
           </div>
-          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Adds a 16px icon at the left edge. Reinforces input type — use for email, search, URL, phone.</p>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Adds a 20px icon at the left edge. Reinforces input type — use for email, search, URL, phone.</p>
         </div>
 
         <!-- Payment input -->
@@ -653,20 +653,20 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: va
       <div class="state-card">
         <div class="state-card-label">Placeholder</div>
         <div class="field">
-          <label class="field-label" style="font-size:13px;">Email</label>
+          <label class="field-label">Email</label>
           <div class="input-wrap">
             <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#9d9dad" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#9d9dad" stroke-width="1.2"/></svg></span>
             <input type="email" placeholder="you@company.com" readonly>
           </div>
         </div>
-        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#eaeaed</code><br>Placeholder: <code>#bdbdc8</code></p>
+        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#e1e5ea</code><br>Placeholder: <code>#98a2b3</code></p>
       </div>
 
       <!-- Focused -->
       <div class="state-card">
         <div class="state-card-label">Focused</div>
         <div class="field">
-          <label class="field-label" style="font-size:13px;">Email</label>
+          <label class="field-label">Email</label>
           <div class="input-wrap" style="border-color:var(--border-focus);box-shadow:0 0 0 3px rgba(127,86,217,.12);">
             <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#7f56d9" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#7f56d9" stroke-width="1.2"/></svg></span>
             <input type="email" placeholder="you@company.com" readonly>
@@ -679,7 +679,7 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: va
       <div class="state-card">
         <div class="state-card-label">Filled</div>
         <div class="field">
-          <label class="field-label" style="font-size:13px;">Email</label>
+          <label class="field-label">Email</label>
           <div class="input-wrap state-filled">
             <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#bdbdc8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#bdbdc8" stroke-width="1.2"/></svg></span>
             <input type="email" value="jane@pulse.io" readonly>
@@ -688,14 +688,14 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: va
             </span>
           </div>
         </div>
-        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#bdbdc8</code><br>Value: <code>#29294c</code></p>
+        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#e1e5ea</code><br>Value: <code>#29294c</code></p>
       </div>
 
       <!-- Disabled -->
       <div class="state-card">
         <div class="state-card-label">Disabled</div>
         <div class="field">
-          <label class="field-label" style="font-size:13px;color:var(--text-tertiary);">Email</label>
+          <label class="field-label" style="color:var(--text-tertiary);">Email</label>
           <div class="input-wrap state-disabled">
             <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#bdbdc8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#bdbdc8" stroke-width="1.2"/></svg></span>
             <input type="email" placeholder="you@company.com" disabled>
@@ -708,7 +708,7 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: va
       <div class="state-card">
         <div class="state-card-label">Destructive (Error)</div>
         <div class="field">
-          <label class="field-label" style="font-size:13px;">Email</label>
+          <label class="field-label">Email</label>
           <div class="input-wrap state-error">
             <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#f04438" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#f04438" stroke-width="1.2"/></svg></span>
             <input type="email" value="not-an-email" readonly>
@@ -718,14 +718,14 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: va
             This doesn't look like a valid email.
           </span>
         </div>
-        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#f04438</code><br>Hint: <code>#d92d20</code></p>
+        <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.4;">Border: <code>#fda29b</code><br>Hint: <code>#d92d20</code></p>
       </div>
 
       <!-- Success -->
       <div class="state-card">
         <div class="state-card-label">Validated</div>
         <div class="field">
-          <label class="field-label" style="font-size:13px;">Email</label>
+          <label class="field-label">Email</label>
           <div class="input-wrap" style="border-color:#039855;">
             <span class="input-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1.5 4.5l6.5 4 6.5-4" stroke="#039855" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#039855" stroke-width="1.2"/></svg></span>
             <input type="email" value="jane@pulse.io" readonly>
@@ -860,7 +860,7 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: va
           <td><code>leadingIcon</code></td>
           <td><span class="badge badge-bool">boolean</span></td>
           <td><code>false</code></td>
-          <td>Shows a 16px icon at the left edge of the input container.</td>
+          <td>Shows a 20px icon at the left edge of the input container.</td>
           <td><span class="badge badge-optional">Optional</span></td>
         </tr>
         <tr>
@@ -953,7 +953,7 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: va
           <p>Show inline error messages <em>immediately below</em> the field that caused them. Include the error icon alongside the text.</p>
           <div class="card-example">
             <div class="field">
-              <label class="field-label" style="font-size:13px;">Email</label>
+              <label class="field-label">Email</label>
               <div class="input-wrap state-error">
                 <input type="email" value="not-valid" readonly>
               </div>

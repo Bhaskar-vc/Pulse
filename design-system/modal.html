@@ -205,16 +205,21 @@ body {
 
 /* Featured icon */
 .modal-feat-icon {
-  width: 48px; height: 48px; border-radius: 28px;
+  width: 48px; height: 48px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   border: 8px solid;
 }
-.modal-feat-icon--success { background: var(--success-200); border-color: var(--success-25); }
-.modal-feat-icon--warning { background: var(--warning-200); border-color: var(--warning-25); }
-.modal-feat-icon--error   { background: var(--error-200);   border-color: var(--error-25); }
-.modal-feat-icon--info    { background: #bae8ff; border-color: #f0f9ff; }
-.modal-feat-icon--neutral { background: var(--primary-100); border-color: var(--primary-50); }
+.modal-feat-icon svg {
+  display: block;
+  flex-shrink: 0;
+}
+.modal-feat-icon--success { background: none; border: none; box-shadow: none; width: 56px; height: 56px; }
+.modal-feat-icon--info    { background: #bae8ff; border-color: #f0f9ff; box-shadow: 0 0 0 4px rgba(2,122,255,.06); }
+.modal-feat-icon--neutral { background: var(--primary-100); border-color: var(--primary-50); box-shadow: 0 0 0 4px rgba(127,86,217,.06); }
+/* error + warning use self-contained SVGs — no container bg/border needed */
+.modal-feat-icon--warning,
+.modal-feat-icon--error { background: none; border: none; box-shadow: none; width: 56px; height: 56px; }
 
 /* Close button */
 .modal-close {
@@ -564,7 +569,7 @@ code {
         <div class="modal-content">
           <div class="modal-icon-row">
             <div class="modal-feat-icon modal-feat-icon--success" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#D1FADF"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#F6FEF9" stroke-width="8"/><path d="M38 27.0799V27.9999C37.9988 30.1563 37.3005 32.2545 36.0093 33.9817C34.7182 35.7088 32.9033 36.9723 30.8354 37.5838C28.7674 38.1952 26.5573 38.1218 24.5345 37.3744C22.5117 36.6271 20.7847 35.246 19.611 33.4369C18.4373 31.6279 17.8798 29.4879 18.0217 27.3362C18.1636 25.1844 18.9972 23.1362 20.3983 21.4969C21.7994 19.8577 23.6928 18.7152 25.7962 18.24C27.8996 17.7648 30.1003 17.9822 32.07 18.8599M38 19.9999L28 30.0099L25 27.0099" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <button class="modal-close" aria-label="Close">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -599,7 +604,7 @@ code {
         <div class="modal-content">
           <div class="modal-icon-row">
             <div class="modal-feat-icon modal-feat-icon--warning" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#b54708" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#FEF0C7"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#FFFCF5" stroke-width="8"/><path d="M28 24V28M28 32H28.01M38 28C38 33.5228 33.5228 38 28 38C22.4772 38 18 33.5228 18 28C18 22.4772 22.4772 18 28 18C33.5228 18 38 22.4772 38 28Z" stroke="#DC6803" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <button class="modal-close" aria-label="Close">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -625,7 +630,7 @@ code {
         <div class="modal-content">
           <div class="modal-icon-row">
             <div class="modal-feat-icon modal-feat-icon--error" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#d92d20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#FEE4E2"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#FFFBFA" stroke-width="8"/><path d="M28 24V28M28 32H28.01M38 28C38 33.5228 33.5228 38 28 38C22.4772 38 18 33.5228 18 28C18 22.4772 22.4772 18 28 18C33.5228 18 38 22.4772 38 28Z" stroke="#D92D20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <button class="modal-close" aria-label="Close">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -650,7 +655,7 @@ code {
       <div class="modal-preview" style="text-align:center; align-items:center;">
         <div class="modal-content" style="align-items:center; text-align:center;">
           <div class="modal-feat-icon modal-feat-icon--success" aria-hidden="true" style="margin:0 auto;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#D1FADF"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#F6FEF9" stroke-width="8"/><path d="M38 27.0799V27.9999C37.9988 30.1563 37.3005 32.2545 36.0093 33.9817C34.7182 35.7088 32.9033 36.9723 30.8354 37.5838C28.7674 38.1952 26.5573 38.1218 24.5345 37.3744C22.5117 36.6271 20.7847 35.246 19.611 33.4369C18.4373 31.6279 17.8798 29.4879 18.0217 27.3362C18.1636 25.1844 18.9972 23.1362 20.3983 21.4969C21.7994 19.8577 23.6928 18.7152 25.7962 18.24C27.8996 17.7648 30.1003 17.9822 32.07 18.8599M38 19.9999L28 30.0099L25 27.0099" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="modal-text">
             <p class="modal-title">Payment successful!</p>
@@ -669,7 +674,7 @@ code {
       <div class="modal-preview" style="max-width:560px; width:100%;">
         <div style="display:flex; gap:16px; align-items:flex-start;">
           <div class="modal-feat-icon modal-feat-icon--success" aria-hidden="true" style="flex-shrink:0;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#D1FADF"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#F6FEF9" stroke-width="8"/><path d="M38 27.0799V27.9999C37.9988 30.1563 37.3005 32.2545 36.0093 33.9817C34.7182 35.7088 32.9033 36.9723 30.8354 37.5838C28.7674 38.1952 26.5573 38.1218 24.5345 37.3744C22.5117 36.6271 20.7847 35.246 19.611 33.4369C18.4373 31.6279 17.8798 29.4879 18.0217 27.3362C18.1636 25.1844 18.9972 23.1362 20.3983 21.4969C21.7994 19.8577 23.6928 18.7152 25.7962 18.24C27.8996 17.7648 30.1003 17.9822 32.07 18.8599M38 19.9999L28 30.0099L25 27.0099" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div style="flex:1;">
             <p class="modal-title" style="margin-bottom:4px;">Changes saved</p>
@@ -1032,7 +1037,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => {
     <div class="modal-content">
       <div class="modal-icon-row">
         <div class="modal-feat-icon modal-feat-icon--success" aria-hidden="true">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#D1FADF"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#F6FEF9" stroke-width="8"/><path d="M38 27.0799V27.9999C37.9988 30.1563 37.3005 32.2545 36.0093 33.9817C34.7182 35.7088 32.9033 36.9723 30.8354 37.5838C28.7674 38.1952 26.5573 38.1218 24.5345 37.3744C22.5117 36.6271 20.7847 35.246 19.611 33.4369C18.4373 31.6279 17.8798 29.4879 18.0217 27.3362C18.1636 25.1844 18.9972 23.1362 20.3983 21.4969C21.7994 19.8577 23.6928 18.7152 25.7962 18.24C27.8996 17.7648 30.1003 17.9822 32.07 18.8599M38 19.9999L28 30.0099L25 27.0099" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <button class="modal-close" aria-label="Close" onclick="closeModal('modal-default')">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -1064,7 +1069,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => {
   <div class="modal modal--centered">
     <div class="modal-content" style="align-items:center; text-align:center;">
       <div class="modal-feat-icon modal-feat-icon--success" aria-hidden="true">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#D1FADF"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#F6FEF9" stroke-width="8"/><path d="M38 27.0799V27.9999C37.9988 30.1563 37.3005 32.2545 36.0093 33.9817C34.7182 35.7088 32.9033 36.9723 30.8354 37.5838C28.7674 38.1952 26.5573 38.1218 24.5345 37.3744C22.5117 36.6271 20.7847 35.246 19.611 33.4369C18.4373 31.6279 17.8798 29.4879 18.0217 27.3362C18.1636 25.1844 18.9972 23.1362 20.3983 21.4969C21.7994 19.8577 23.6928 18.7152 25.7962 18.24C27.8996 17.7648 30.1003 17.9822 32.07 18.8599M38 19.9999L28 30.0099L25 27.0099" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div class="modal-text">
         <p class="modal-title" id="mc-title">Payment successful!</p>
@@ -1084,7 +1089,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => {
     <div class="modal-content">
       <div class="modal-icon-row">
         <div class="modal-feat-icon modal-feat-icon--error" aria-hidden="true">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#d92d20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#FEE4E2"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#FFFBFA" stroke-width="8"/><path d="M28 24V28M28 32H28.01M38 28C38 33.5228 33.5228 38 28 38C22.4772 38 18 33.5228 18 28C18 22.4772 22.4772 18 28 18C33.5228 18 38 22.4772 38 28Z" stroke="#D92D20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <button class="modal-close" aria-label="Close" onclick="closeModal('modal-destructive')">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
