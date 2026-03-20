@@ -336,6 +336,8 @@ code {
 }
   .anatomy-list { grid-template-columns: 1fr; }
 }
+#search-input:hover { border-color: #9e77ed !important; }
+#search-input:focus { border-color: #7f56d9 !important; box-shadow: 0 0 0 3px rgba(127,86,217,.12) !important; }
 </style>
 <link rel="stylesheet" href="tokens.css">
 <script src="theme.js"></script>
@@ -433,12 +435,12 @@ code {
         <div style="display:flex; align-items:center; gap:8px;">
           <div style="position:relative;">
             <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#9d9dad;pointer-events:none;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input id="search-input" type="text" placeholder="Search users…" style="padding:7px 12px 7px 32px;font-size:13px;font-family:Inter,sans-serif;border:1px solid #eaeaed;border-radius:7px;outline:none;width:220px;color:#29294c;" oninput="filterTable()"/>
+            <input id="search-input" type="text" placeholder="Search users…" style="padding:7px 12px 7px 32px;font-size:13px;font-family:Inter,sans-serif;border:1px solid #e1e5ea;border-radius:6px;outline:none;-webkit-appearance:none;appearance:none;width:220px;color:#29294c;height:36px;transition:border-color .15s,box-shadow .15s;" oninput="filterTable()"/>
           </div>
         </div>
         <div style="display:flex; gap:6px; align-items:center;">
           <span id="selected-count" style="font-size:12px;color:#707087;display:none;"></span>
-          <select id="variant-select" onchange="applyVariant()" style="font-size:12px;font-family:Inter,sans-serif;padding:6px 10px;border:1px solid #eaeaed;border-radius:7px;color:#29294c;background:#fff;cursor:pointer;">
+          <select id="variant-select" onchange="applyVariant()" style="font-size:12px;font-family:Inter,sans-serif;padding:6px 10px;border:1px solid #e1e5ea;border-radius:6px;color:#29294c;background:#fff;cursor:pointer;outline:none;height:36px;">
             <option value="striped">Striped</option>
             <option value="bordered">Bordered</option>
             <option value="minimal">Minimal</option>

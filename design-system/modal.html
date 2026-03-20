@@ -303,23 +303,35 @@ body {
 .cb-label { font-size: 14px; font-weight: 500; color: var(--text-primary); line-height: 1.4; }
 .cb-label.weight-light { font-weight: 400; }
 
-/* ── Input / Field component (from input.html) ── */
+/* ── Input / Field component (matches input.html) ── */
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field-label { font-size: 14px; font-weight: 500; color: var(--primary-700); }
 .input-wrap {
   display: flex; align-items: center; background: #fff;
-  border: 1px solid var(--border-default); border-radius: 8px;
-  height: 40px; padding: 0 12px; gap: 8px;
+  border: 1px solid #e1e5ea; border-radius: 6px;
+  height: 36px; padding: 0 12px; gap: 8px; width: 100%;
   transition: border-color .15s, box-shadow .15s; cursor: text;
+  overflow: hidden;
 }
-.input-wrap:focus-within {
-  border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12); outline: none;
+.input-wrap:hover:not(.is-disabled):not(.is-error) {
+  border-color: #9e77ed;
 }
+.input-wrap:focus-within:not(.is-error) {
+  border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12);
+}
+.input-wrap.is-error { border-color: #fda29b; }
+.input-wrap.is-error:focus-within { border-color: #f04438; box-shadow: 0 0 0 3px rgba(240,68,56,.12); }
+.input-wrap.is-disabled { background: #f2f4f7; border-color: #d0d5dd; cursor: not-allowed; }
 .input-wrap input {
-  flex: 1; border: none; outline: none; background: transparent;
-  font-family: var(--font); font-size: 14px; color: var(--text-primary); min-width: 0;
+  flex: 1; border: none; outline: none;
+  -webkit-appearance: none; appearance: none;
+  background: transparent;
+  font-family: var(--font); font-size: 14px; color: #29294c; min-width: 0;
 }
-.input-wrap input::placeholder { color: var(--text-tertiary); }
+.input-wrap input:focus,
+.input-wrap input:focus-visible { outline: none; box-shadow: none; border: none; }
+.input-wrap input::placeholder { color: #98a2b3; }
+.input-wrap input:disabled { cursor: not-allowed; color: #98a2b3; }
 
 /* Demo trigger grid */
 .trigger-grid { display: flex; flex-wrap: wrap; gap: 12px; }

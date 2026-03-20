@@ -234,23 +234,27 @@ body { font-family: var(--font); color: var(--text-primary); background: var(--b
   gap: 6px;
 }
 .lbl-input-mock {
-  height: 40px;
-  border: 1px solid #d0d5dd;
-  border-radius: 8px;
+  height: 36px;
+  border: 1px solid #e1e5ea;
+  border-radius: 6px;
   padding: 0 12px;
   font-family: var(--font);
   font-size: 14px;
-  color: #344054;
+  color: #29294c;
   outline: none;
+  -webkit-appearance: none;
+  appearance: none;
   width: 240px;
   background: #fff;
   transition: border-color .15s, box-shadow .15s;
 }
+.lbl-input-mock:hover { border-color: #9e77ed; }
 .lbl-input-mock:focus {
   border-color: #7f56d9;
   box-shadow: 0 0 0 3px rgba(127,86,217,.12);
 }
-.lbl-input-mock::placeholder { color: #bdbdc8; }
+.lbl-input-mock:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(127,86,217,.12); border-color: #7f56d9; }
+.lbl-input-mock::placeholder { color: #98a2b3; }
 </style>
 <link rel="stylesheet" href="responsive.css">
 <link rel="stylesheet" href="polish.css">
