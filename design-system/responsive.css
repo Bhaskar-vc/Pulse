@@ -112,10 +112,24 @@ html[data-theme="dark"] .sidebar-ham {
   .page-header {
     gap: 0 16px !important;
   }
-  .ph-folder-icon svg {
-    width: 56px !important;
-    height: auto !important;
+  .ph-folder-wrap {
+    width: 72px !important;
+    height: 62px !important;
   }
+  .ph-folder-img {
+    width: 72px !important;
+  }
+  .ph-folder-label {
+    font-size: 6.5px !important;
+    bottom: 9px !important;
+  }
+  .ph-paper {
+    width: 29px !important;
+    height: 36px !important;
+  }
+  .ph-paper-1 { left: 7px !important; }
+  .ph-paper-2 { left: 16px !important; }
+  .ph-paper-3 { left: 26px !important; }
 
   /* Show hamburger */
   .sidebar-ham { display: flex; }

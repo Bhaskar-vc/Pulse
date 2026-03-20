@@ -342,6 +342,31 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
 
 
 /* ════════════════════════════════════════════
+   FOLDER ICON — glass & animation overrides
+   ════════════════════════════════════════════ */
+/* Stronger drop shadow in light mode */
+.ph-folder-img {
+  filter: drop-shadow(0 8px 20px rgba(20,10,120,.32)) !important;
+}
+/* Dark mode: purple-tinted glow */
+html[data-theme="dark"] .ph-folder-img {
+  filter: drop-shadow(0 8px 20px rgba(100,60,220,.45)) !important;
+}
+html[data-theme="dark"] .ph-folder-icon:hover .ph-folder-wrap {
+  filter: drop-shadow(0 16px 32px rgba(140,100,255,.5)) !important;
+}
+/* Glass label — slightly more opaque in dark mode */
+html[data-theme="dark"] .ph-folder-label {
+  background: rgba(10,5,40,0.38) !important;
+  border-color: rgba(167,139,250,0.22) !important;
+}
+/* Paper docs — slight transparency in dark mode */
+html[data-theme="dark"] .ph-paper {
+  background: rgba(230,230,255,0.88) !important;
+}
+
+
+/* ════════════════════════════════════════════
    SELECTION color
    ════════════════════════════════════════════ */
 ::selection {

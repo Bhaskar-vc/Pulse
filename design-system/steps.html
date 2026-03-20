@@ -44,6 +44,8 @@ body { font-family: 'Inter', sans-serif; font-size: 14px; color: #1d2939; backgr
 
 .demo-box { background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 40px 32px; margin-bottom: 12px; }
 .demo-box-grey { background: #f4f4f6; border: 1px solid #e4e7ec; border-radius: 12px; padding: 40px 32px; margin-bottom: 12px; }
+.demo-box-dark  { background: #f8f9fa !important; border-color: #e4e7ec !important; border-radius: 12px; padding: 40px 32px; margin-bottom: 12px; }
+.demo-box-light { background: #ffffff !important; border-color: #e4e7ec !important; border-radius: 12px; padding: 40px 32px; margin-bottom: 12px; }
 
 .ds-table-wrap { border: 1px solid #e4e7ec; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
 .ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -91,10 +93,10 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
   left: 50%;
   width: 100%;
   height: 2px;
-  background: #eaeaed;
+  background: #e4e7ec;
   z-index: 0;
 }
-.step.is-done:not(:last-child)::after { background: #7f56d9; }
+.step.is-done:not(:last-child)::after { background: #3d4a5c; }
 
 /* Step node */
 .step-node {
@@ -102,7 +104,7 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 13px; font-weight: 700;
-  border: 2px solid #eaeaed;
+  border: 2px solid #e4e7ec;
   background: #fff;
   color: #98a2b3;
   position: relative;
@@ -113,15 +115,15 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
 
 /* States */
 .step.is-done .step-node {
-  background: #7f56d9;
-  border-color: #7f56d9;
+  background: #12b76a;
+  border-color: #12b76a;
   color: #fff;
 }
 .step.is-active .step-node {
   background: #fff;
-  border-color: #7f56d9;
-  color: #7f56d9;
-  box-shadow: 0 0 0 4px rgba(127,86,217,0.12);
+  border-color: #12b76a;
+  color: #12b76a;
+  box-shadow: 0 0 0 4px rgba(18,183,106,0.12);
 }
 .step.is-error .step-node {
   background: #fef3f2;
@@ -135,7 +137,7 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
 .step-title { font-size: 13px; font-weight: 600; color: #344054; }
 .step-desc  { font-size: 12px; color: #98a2b3; }
 
-.step.is-active .step-title { color: #6941c6; }
+.step.is-active .step-title { color: #059669; }
 .step.is-done .step-title { color: #29294c; }
 .step.is-error .step-title { color: #f04438; }
 
@@ -158,8 +160,8 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
 }
 .steps--dot .step-node::after { display: none; }
 .steps--dot .step::after { top: 6px; height: 2px; }
-.steps--dot .step.is-done .step-node { background: #7f56d9; border-color: #7f56d9; }
-.steps--dot .step.is-active .step-node { background: #fff; border-color: #7f56d9; box-shadow: 0 0 0 4px rgba(127,86,217,0.15); }
+.steps--dot .step.is-done .step-node { background: #12b76a; border-color: #12b76a; }
+.steps--dot .step.is-active .step-node { background: #fff; border-color: #12b76a; box-shadow: 0 0 0 4px rgba(18,183,106,0.15); }
 
 /* ── Vertical steps ── */
 .steps--vertical {
@@ -184,7 +186,7 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
   height: calc(100% - 20px);
   background: #eaeaed;
 }
-.steps--vertical .step.is-done:not(:last-child)::after { background: #7f56d9; }
+.steps--vertical .step.is-done:not(:last-child)::after { background: #3d4a5c; }
 .steps--vertical .step-text { align-items: flex-start; text-align: left; margin-top: 6px; }
 
 /* ══════════════════════════════════
@@ -205,44 +207,63 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
   gap: 8px;
 }
 
-/* The pill circle */
+/* The pill circle — default is compact (24 px) */
 .steps-check-pill {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 50px;
   background: #f2f4f7;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background 0.2s;
+  transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
+.steps-check-pill svg { width: 10px; height: 10px; }
+
 .steps-check-item.is-done .steps-check-pill {
-  background: #d1fadf;
+  background: #dcfce7;
+}
+
+/* Active state */
+.steps-check-item.is-active .steps-check-pill {
+  background: #fff;
+  border: 2px solid #12b76a;
+  box-shadow: 0 0 0 3px rgba(18,183,106,0.12);
 }
 
 /* Checkmark SVG colors */
 .steps-check-pill .check-svg { color: #98a2b3; }
-.steps-check-item.is-done .steps-check-pill .check-svg { color: #039855; }
+.steps-check-item.is-done .steps-check-pill .check-svg { color: #12b76a; }
+
+/* Number inside pill for non-done steps */
+.steps-check-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: #98a2b3;
+  line-height: 1;
+}
+.steps-check-item.is-active .steps-check-num { color: #12b76a; }
 
 /* Label */
 .steps-check-label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: #d0d5dd;
   white-space: nowrap;
 }
-.steps-check-item.is-done .steps-check-label {
-  color: #29294c;
-}
+.steps-check-item.is-done .steps-check-label { color: #29294c; }
+.steps-check-item.is-active .steps-check-label { color: #059669; font-weight: 600; }
 
 /* ── Line connector ── */
 .steps-check-line {
-  height: 1.5px;
-  background: #e4e7ec;
-  min-width: 48px;
-  flex: 0 0 48px;
+  height: 2px;
+  background: #3d4a5c;
+  min-width: 40px;
+  flex: 0 0 40px;
   margin: 0 4px;
+  border-radius: 2px;
+  opacity: 0.28;
 }
 
 /* ── Arrow connector ── */
@@ -254,12 +275,68 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
 }
 
 /* ── Small size ── */
-.steps-check--sm .steps-check-pill {
-  width: 24px;
-  height: 24px;
+.steps-check--sm .steps-check-pill { width: 20px; height: 20px; }
+.steps-check--sm .steps-check-pill svg { width: 8px; height: 8px; }
+.steps-check--sm .steps-check-num { font-size: 9px; }
+.steps-check--sm .steps-check-label { font-size: 12px; }
+.steps-check--sm .steps-check-line { min-width: 28px; flex-basis: 28px; }
+
+/* ── Large size ── */
+.steps-check--lg .steps-check-pill { width: 36px; height: 36px; }
+.steps-check--lg .steps-check-pill svg { width: 15px; height: 15px; }
+.steps-check--lg .steps-check-num { font-size: 13px; }
+.steps-check--lg .steps-check-label { font-size: 14px; font-weight: 500; }
+.steps-check--lg .steps-check-line { min-width: 56px; flex-basis: 56px; }
+.steps-check--lg .steps-check-item.is-active .steps-check-pill {
+  box-shadow: 0 0 0 4px rgba(18,183,106,0.12);
 }
-.steps-check--sm .steps-check-label { font-size: 13px; }
-.steps-check--sm .steps-check-line { min-width: 36px; flex-basis: 36px; }
+
+/* ══════════════════════════════════════
+   LIGHT variant — pastel pills, white bg
+   (matches screenshot reference)
+   ══════════════════════════════════════ */
+.steps-check--light .steps-check-pill {
+  background: #f3f4f6;
+  border: none;
+}
+.steps-check--light .steps-check-item.is-done .steps-check-pill {
+  background: #dcfce7;
+}
+.steps-check--light .steps-check-item.is-done .steps-check-pill .check-svg { color: #16a34a; }
+.steps-check--light .steps-check-item.is-active .steps-check-pill {
+  background: #fff;
+  border: 2px solid #12b76a;
+  box-shadow: 0 0 0 4px rgba(18,183,106,0.12);
+}
+.steps-check--light .steps-check-num { color: #9ca3af; }
+.steps-check--light .steps-check-item.is-active .steps-check-num { color: #059669; font-weight: 700; }
+.steps-check--light .steps-check-label { color: #9ca3af; }
+.steps-check--light .steps-check-item.is-done .steps-check-label { color: #111827; font-weight: 600; }
+.steps-check--light .steps-check-item.is-active .steps-check-label { color: #059669; font-weight: 700; }
+.steps-check--light .steps-check-line { background: #d1d5db; opacity: 1; height: 1.5px; }
+
+/* ══════════════════════════════════════
+   DARK variant — solid dark circles, same neutral bg
+   ══════════════════════════════════════ */
+.steps-check--dark .steps-check-pill {
+  background: #d1d5db;
+}
+.steps-check--dark .steps-check-item.is-done .steps-check-pill {
+  background: #12b76a;
+  box-shadow: none;
+}
+.steps-check--dark .steps-check-item.is-done .steps-check-pill .check-svg { color: #fff; }
+.steps-check--dark .steps-check-item.is-active .steps-check-pill {
+  background: #e5e7eb;
+  border: 2px solid #12b76a;
+  box-shadow: 0 0 0 4px rgba(18,183,106,0.14);
+}
+.steps-check--dark .steps-check-num { color: #6b7280 !important; }
+.steps-check--dark .steps-check-item.is-active .steps-check-num { color: #059669 !important; font-weight: 700; }
+.steps-check--dark .steps-check-label { color: #9ca3af !important; }
+.steps-check--dark .steps-check-item.is-done .steps-check-label { color: #111827 !important; font-weight: 600; }
+.steps-check--dark .steps-check-item.is-active .steps-check-label { color: #059669 !important; font-weight: 700; }
+.steps-check--dark .steps-check-line { background: #9ca3af !important; opacity: 0.5 !important; height: 1.5px !important; }
 
 /* ── Interactive stepper ── */
 .stepper-nav { display: flex; gap: 10px; margin-top: 28px; justify-content: flex-end; }
@@ -340,81 +417,15 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
 
   <div class="page-header">
   <div class="ph-folder-icon">
-    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <!-- Purple document gradient -->
-        <linearGradient id="doc-steps" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#b8a0ff"/>
-          <stop offset="100%" stop-color="#7c3aed"/>
-        </linearGradient>
-        <!-- Folder dark gradient -->
-        <linearGradient id="fld-steps" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#2d2d50"/>
-          <stop offset="100%" stop-color="#12122a"/>
-        </linearGradient>
-        <!-- Purple inner glow -->
-        <radialGradient id="glow-steps" cx="50%" cy="58%" r="55%">
-          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
-          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
-          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
-        </radialGradient>
-        <!-- Top shine -->
-        <linearGradient id="shine-steps" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
-          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-        </linearGradient>
-        <!-- Folder drop shadow -->
-        <filter id="fs-steps" x="-18%" y="-12%" width="136%" height="136%">
-          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
-        </filter>
-        <!-- Text glow -->
-        <filter id="tg-steps" color-interpolation-filters="sRGB">
-          <feGaussianBlur stdDeviation="2.8" result="blur"/>
-          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
-          <feComposite in="c" in2="blur" operator="in" result="glow"/>
-          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-
-      <!-- ── Purple document peeking behind folder ── -->
-      <g transform="rotate(12, 141, 46)" opacity="0.97">
-        <!-- Document body -->
-        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-steps)"/>
-        <!-- Folded corner (lighter) -->
-        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
-        <!-- Folded corner (shadow) -->
-        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
-      </g>
-
-      <!-- ── Dark glass folder ── -->
-      <!-- Single path: full folder shape (tab + body as one outline) -->
-      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
-            fill="url(#fld-steps)"
-            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
-            filter="url(#fs-steps)"/>
-
-      <!-- Purple glow inside (same path, no stroke/shadow) -->
-      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
-            fill="url(#glow-steps)"/>
-
-      <!-- Top glass shine strip -->
-      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-steps)"/>
-
-      <!-- Component name text -->
-      <text x="100" y="132"
-            text-anchor="middle"
-            fill="rgba(255,255,255,0.93)"
-            font-family="Inter, system-ui, -apple-system, sans-serif"
-            font-size="16" font-weight="800"
-            letter-spacing="1.6"
-            textLength="76" lengthAdjust="spacingAndGlyphs"
-            filter="url(#tg-steps)">STEPS</text>
-
-      <!-- Subtle underline below name -->
-      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
-    </svg>
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">STEPS</span>
+    </div>
   </div>
-    <div class="breadcrumb">Components › <span>Steps</span></div>
+    
     <h1 class="page-title">Steps / Progress</h1>
     <p class="page-desc">Step indicators guide users through multi-step workflows — onboarding, checkout, setup wizards. Each step shows completion state: done, active, or upcoming.</p>
     <div class="tag-row">
@@ -429,41 +440,32 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
   <!-- Overview -->
   <div class="section">
     <h2 class="section-title">Overview</h2>
-    <p class="section-desc">The default steps component shows numbered nodes connected by a line. Completed steps use a checkmark, the active step has a purple ring, and upcoming steps are grey.</p>
+    <p class="section-desc">The default steps component uses the check-pill style — compact green pills connected by a dark line. Completed steps show a green checkmark, the active step has a green ring, and upcoming steps are grey.</p>
 
     <div class="demo-box">
-      <div class="steps" role="list" aria-label="Checkout progress">
-        <div class="step is-done" role="listitem">
-          <div class="step-node" aria-label="Step 1: Account — completed">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="steps-check" role="list" aria-label="Checkout progress">
+        <div class="steps-check-item is-done" role="listitem">
+          <div class="steps-check-pill">
+            <svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="step-text">
-            <span class="step-title">Account</span>
-            <span class="step-desc">Details saved</span>
-          </div>
+          <span class="steps-check-label">Account</span>
         </div>
-        <div class="step is-done" role="listitem">
-          <div class="step-node" aria-label="Step 2: Delivery — completed">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-done" role="listitem">
+          <div class="steps-check-pill">
+            <svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="step-text">
-            <span class="step-title">Delivery</span>
-            <span class="step-desc">Address confirmed</span>
-          </div>
+          <span class="steps-check-label">Delivery</span>
         </div>
-        <div class="step is-active" role="listitem" aria-current="step">
-          <div class="step-node" aria-label="Step 3: Payment — current">3</div>
-          <div class="step-text">
-            <span class="step-title">Payment</span>
-            <span class="step-desc">Enter card details</span>
-          </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-active" role="listitem" aria-current="step">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Payment</span>
         </div>
-        <div class="step" role="listitem">
-          <div class="step-node" aria-label="Step 4: Review — upcoming">4</div>
-          <div class="step-text">
-            <span class="step-title">Review</span>
-            <span class="step-desc">Confirm order</span>
-          </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item" role="listitem">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Review</span>
         </div>
       </div>
     </div>
@@ -477,22 +479,25 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
     <p class="section-desc">Use the buttons to move through the steps and see state transitions.</p>
 
     <div class="demo-box">
-      <div class="steps" id="interactive-steps" role="list">
-        <div class="step is-active" role="listitem" id="istep-1">
-          <div class="step-node">1</div>
-          <div class="step-text"><span class="step-title">Personal Info</span></div>
+      <div class="steps-check steps-check--lg" id="interactive-steps" role="list">
+        <div class="steps-check-item is-active" role="listitem" id="istep-1" aria-current="step">
+          <div class="steps-check-pill"><span class="steps-check-num">1</span></div>
+          <span class="steps-check-label">Personal Info</span>
         </div>
-        <div class="step" role="listitem" id="istep-2">
-          <div class="step-node">2</div>
-          <div class="step-text"><span class="step-title">Organisation</span></div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item" role="listitem" id="istep-2">
+          <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+          <span class="steps-check-label">Organisation</span>
         </div>
-        <div class="step" role="listitem" id="istep-3">
-          <div class="step-node">3</div>
-          <div class="step-text"><span class="step-title">Preferences</span></div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item" role="listitem" id="istep-3">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Preferences</span>
         </div>
-        <div class="step" role="listitem" id="istep-4">
-          <div class="step-node">4</div>
-          <div class="step-text"><span class="step-title">Review</span></div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item" role="listitem" id="istep-4">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Review</span>
         </div>
       </div>
 
@@ -528,16 +533,214 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
   <div class="section">
     <h2 class="section-title">Variants</h2>
 
+    <div class="variant-label">Check-pill — light · Default</div>
+    <div class="demo-box-light">
+      <div class="steps-check steps-check--light">
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Personal Info</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-active">
+          <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+          <span class="steps-check-label">Organisation</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Preferences</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Review</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Check-pill — dark · Default</div>
+    <div class="demo-box-dark">
+      <div class="steps-check steps-check--dark">
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Personal Info</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-active">
+          <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+          <span class="steps-check-label">Organisation</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Preferences</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Review</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Check-pill — light · Large</div>
+    <div class="demo-box-light">
+      <div class="steps-check steps-check--light steps-check--lg">
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Personal Info</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-active">
+          <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+          <span class="steps-check-label">Organisation</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Preferences</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Review</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Check-pill — dark · Large</div>
+    <div class="demo-box-dark">
+      <div class="steps-check steps-check--dark steps-check--lg">
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Personal Info</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-active">
+          <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+          <span class="steps-check-label">Organisation</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Preferences</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Review</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">All steps complete</div>
+    <div class="demo-box-light">
+      <div class="steps-check steps-check--light">
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Personal Info</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Organisation</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Preferences</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Review</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">All steps inactive</div>
+    <div class="demo-box-light">
+      <div class="steps-check steps-check--light">
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">1</span></div>
+          <span class="steps-check-label">Personal Info</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+          <span class="steps-check-label">Organisation</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Preferences</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Review</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Check-pill — arrow connector (active)</div>
+    <div class="demo-box">
+      <div class="steps-check">
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Step 1</span>
+        </div>
+        <span class="steps-check-sep">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#039855" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Step 2</span>
+        </div>
+        <span class="steps-check-sep">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#039855" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Step 3</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Check-pill — arrow connector (inactive)</div>
+    <div class="demo-box">
+      <div class="steps-check">
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">1</span></div>
+          <span class="steps-check-label">Step 1</span>
+        </div>
+        <span class="steps-check-sep">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#d0d5dd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+          <span class="steps-check-label">Step 2</span>
+        </div>
+        <span class="steps-check-sep">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#d0d5dd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Step 3</span>
+        </div>
+      </div>
+    </div>
+
     <div class="variant-label">With error state</div>
     <div class="demo-box">
-      <div class="steps">
+      <div class="steps steps--sm">
         <div class="step is-done">
-          <div class="step-node"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="step-node"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="step-text"><span class="step-title">Identity</span></div>
         </div>
         <div class="step is-error">
           <div class="step-node">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="12" cy="16" r="1.2" fill="currentColor"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="12" cy="16" r="1.2" fill="currentColor"/></svg>
           </div>
           <div class="step-text"><span class="step-title">Verification</span><span class="step-desc">ID check failed</span></div>
         </div>
@@ -610,168 +813,6 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
             <span class="step-title">Go live</span>
             <span class="step-desc">Publish your workspace to your team.</span>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="variant-label">Check-pill — line connector (active)</div>
-    <div class="demo-box">
-      <div class="steps-check">
-        <div class="steps-check-item is-done">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 1</span>
-        </div>
-        <div class="steps-check-line"></div>
-        <div class="steps-check-item is-done">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 2</span>
-        </div>
-        <div class="steps-check-line"></div>
-        <div class="steps-check-item is-done">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 3</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="variant-label">Check-pill — line connector (inactive)</div>
-    <div class="demo-box">
-      <div class="steps-check">
-        <div class="steps-check-item">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 1</span>
-        </div>
-        <div class="steps-check-line"></div>
-        <div class="steps-check-item">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 2</span>
-        </div>
-        <div class="steps-check-line"></div>
-        <div class="steps-check-item">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 3</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="variant-label">Check-pill — small size</div>
-    <div class="demo-box" style="flex-direction:column; align-items:flex-start; gap:16px;">
-      <!-- sm active -->
-      <div class="steps-check steps-check--sm">
-        <div class="steps-check-item is-done">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 1</span>
-        </div>
-        <div class="steps-check-line"></div>
-        <div class="steps-check-item is-done">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 2</span>
-        </div>
-        <div class="steps-check-line"></div>
-        <div class="steps-check-item is-done">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 3</span>
-        </div>
-      </div>
-      <!-- sm inactive -->
-      <div class="steps-check steps-check--sm">
-        <div class="steps-check-item">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 1</span>
-        </div>
-        <div class="steps-check-line"></div>
-        <div class="steps-check-item">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 2</span>
-        </div>
-        <div class="steps-check-line"></div>
-        <div class="steps-check-item">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 3</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="variant-label">Check-pill — arrow connector (active)</div>
-    <div class="demo-box">
-      <div class="steps-check">
-        <div class="steps-check-item is-done">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 1</span>
-        </div>
-        <span class="steps-check-sep">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#039855" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <div class="steps-check-item is-done">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 2</span>
-        </div>
-        <span class="steps-check-sep">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#039855" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <div class="steps-check-item is-done">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 3</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="variant-label">Check-pill — arrow connector (inactive)</div>
-    <div class="demo-box">
-      <div class="steps-check">
-        <div class="steps-check-item">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 1</span>
-        </div>
-        <span class="steps-check-sep">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#d0d5dd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <div class="steps-check-item">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 2</span>
-        </div>
-        <span class="steps-check-sep">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#d0d5dd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <div class="steps-check-item">
-          <div class="steps-check-pill">
-            <svg class="check-svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="steps-check-label">Step 3</span>
         </div>
       </div>
     </div>
@@ -860,12 +901,12 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: 
 // Interactive stepper
 let currentStep = 1;
 const totalSteps = 4;
-const checkSVG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const checkSVG = `<svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 function updateSteps() {
   for (let i = 1; i <= totalSteps; i++) {
     const step = document.getElementById('istep-' + i);
-    const node = step.querySelector('.step-node');
+    const pill = step.querySelector('.steps-check-pill');
     const panel = document.getElementById('ipanel-' + i);
 
     step.classList.remove('is-done', 'is-active');
@@ -873,15 +914,15 @@ function updateSteps() {
 
     if (i < currentStep) {
       step.classList.add('is-done');
-      node.innerHTML = checkSVG;
-      step.setAttribute('aria-current', '');
+      pill.innerHTML = checkSVG;
+      step.removeAttribute('aria-current');
     } else if (i === currentStep) {
       step.classList.add('is-active');
-      node.textContent = i;
+      pill.innerHTML = `<span class="steps-check-num">${i}</span>`;
       step.setAttribute('aria-current', 'step');
       if (panel) panel.classList.add('is-active');
     } else {
-      node.textContent = i;
+      pill.innerHTML = `<span class="steps-check-num">${i}</span>`;
       step.removeAttribute('aria-current');
     }
   }

@@ -368,80 +368,15 @@ body { font-family: var(--font); color: var(--text-primary); background: var(--b
 
   <div class="page-header">
   <div class="ph-folder-icon">
-    <svg width="120" height="110" viewBox="0 0 200 183" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <!-- Purple document gradient -->
-        <linearGradient id="doc-avatar" x1="108" y1="3" x2="176" y2="85" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#b8a0ff"/>
-          <stop offset="100%" stop-color="#7c3aed"/>
-        </linearGradient>
-        <!-- Folder dark gradient -->
-        <linearGradient id="fld-avatar" x1="100" y1="38" x2="100" y2="180" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#2d2d50"/>
-          <stop offset="100%" stop-color="#12122a"/>
-        </linearGradient>
-        <!-- Purple inner glow -->
-        <radialGradient id="glow-avatar" cx="50%" cy="58%" r="55%">
-          <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.68"/>
-          <stop offset="52%" stop-color="#7c3aed" stop-opacity="0.30"/>
-          <stop offset="100%" stop-color="#5b21b6" stop-opacity="0"/>
-        </radialGradient>
-        <!-- Top shine -->
-        <linearGradient id="shine-avatar" x1="100" y1="58" x2="100" y2="90" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
-          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-        </linearGradient>
-        <!-- Folder drop shadow -->
-        <filter id="fs-avatar" x="-18%" y="-12%" width="136%" height="136%">
-          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0a0820" flood-opacity="0.55"/>
-        </filter>
-        <!-- Text glow -->
-        <filter id="tg-avatar" color-interpolation-filters="sRGB">
-          <feGaussianBlur stdDeviation="2.8" result="blur"/>
-          <feFlood flood-color="#c4b5fd" flood-opacity="0.55" result="c"/>
-          <feComposite in="c" in2="blur" operator="in" result="glow"/>
-          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-
-      <!-- ── Purple document peeking behind folder ── -->
-      <g transform="rotate(12, 141, 46)" opacity="0.97">
-        <!-- Document body -->
-        <rect x="108" y="3" width="66" height="86" rx="7" fill="url(#doc-avatar)"/>
-        <!-- Folded corner (lighter) -->
-        <path d="M152 3 L174 3 L174 26 Z" fill="rgba(210,190,255,0.45)"/>
-        <!-- Folded corner (shadow) -->
-        <path d="M152 3 L174 26 L152 26 Z" fill="rgba(90,20,180,0.65)"/>
-      </g>
-
-      <!-- ── Dark glass folder ── -->
-      <!-- Single path: full folder shape (tab + body as one outline) -->
-      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
-            fill="url(#fld-avatar)"
-            stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
-            filter="url(#fs-avatar)"/>
-
-      <!-- Purple glow inside (same path, no stroke/shadow) -->
-      <path d="M 6 170 Q 6 180 16 180 L 184 180 Q 194 180 194 170 L 194 68 Q 194 58 184 58 L 97 58 Q 97 38 84 36 L 18 36 Q 6 36 6 48 L 6 170 Z"
-            fill="url(#glow-avatar)"/>
-
-      <!-- Top glass shine strip -->
-      <rect x="6" y="55" width="188" height="28" rx="10" fill="url(#shine-avatar)"/>
-
-      <!-- Component name text -->
-      <text x="100" y="132"
-            text-anchor="middle"
-            fill="rgba(255,255,255,0.93)"
-            font-family="Inter, system-ui, -apple-system, sans-serif"
-            font-size="16" font-weight="800"
-            letter-spacing="1.6"
-            textLength="76" lengthAdjust="spacingAndGlyphs"
-            filter="url(#tg-avatar)">AVATAR</text>
-
-      <!-- Subtle underline below name -->
-      <rect x="62" y="140" width="76" height="1.8" rx="0.9" fill="rgba(196,181,253,0.35)"/>
-    </svg>
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">AVATAR</span>
+    </div>
   </div>
+    
     <h1 class="page-title">Avatar</h1>
     <p class="page-subtitle">Avatars represent users or entities with a photo, initials, or placeholder icon. Available in six sizes with optional status indicators (online, company), group stacking, and label groups.</p>
     <div class="page-tags">
