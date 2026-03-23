@@ -12,6 +12,7 @@ Usage:  python3 server.py
 import json
 import os
 import re
+import shutil
 import sys
 import time
 import urllib.parse
@@ -254,12 +255,19 @@ class Handler(SimpleHTTPRequestHandler):
 
         if resource == "projects":
             projects = load_file(PROJECTS_FILE, [])
-            before   = len(projects)
-            projects = [p for p in projects if p["id"] != rid]
-            if len(projects) == before:
+            target   = next((p for p in projects if p["id"] == rid), None)
+            if target is None:
                 self._error(404, "Project not found")
                 return
+            projects = [p for p in projects if p["id"] != rid]
             save_file(PROJECTS_FILE, projects)
+            # Physically remove the project folder if it exists
+            folder = target.get("folder", "")
+            if folder:
+                proj_dir = os.path.join(ROOT, folder)
+                if os.path.isdir(proj_dir):
+                    shutil.rmtree(proj_dir)
+                    print(f"  \033[31m[DEL]\033[0m  Removed: {proj_dir}")
             self._json({"ok": True})
 
         elif resource == "comments":

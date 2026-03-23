@@ -37,49 +37,60 @@ body {
 
 /* ── Sidebar redesign ── */
 .sidebar {
-  background: var(--surface-card);
-  border-right: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-xs);
+  background: #fff;
+  border-right: 1px solid #eaeaed;
+  box-shadow: none;
+  padding: 0;
 }
 .sidebar::before {
   display: none;
 }
 .sidebar-logo {
-  padding: 20px 20px 18px;
+  padding: 20px 20px 24px;
+  border-bottom: 1px solid #eaeaed;
+  margin-bottom: 16px;
+}
+.sidebar-logo a img {
+  margin-bottom: 8px;
 }
 .sidebar-logo span {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -.3px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #29294c;
+  letter-spacing: 0;
 }
 .sidebar-logo sub {
-  color: var(--text-tertiary);
+  color: #9d9dad;
   font-size: 10px;
-  margin-top: 3px;
+  font-weight: 400;
+  margin-top: 2px;
+  display: block;
 }
 .sidebar-section-title {
-  color: var(--text-tertiary);
-  font-size: 9.5px;
-  letter-spacing: .1em;
-  padding: 8px 18px 4px;
+  color: #9d9dad;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 20px;
 }
 .sidebar-link {
-  padding: 6px 12px 6px 18px;
+  padding: 7px 20px;
   font-size: 13px;
-  color: var(--text-secondary);
+  color: #4a4a68;
   border-radius: 0;
-  transition: background .12s, color .12s;
+  transition: background .15s, color .15s;
 }
 .sidebar-link:hover {
-  background: var(--brand-50);
-  color: var(--brand-600);
+  background: #f4f4f8;
+  color: #29294c;
 }
 .sidebar-link.active {
-  background: var(--brand-50);
-  color: var(--brand-600);
-  font-weight: 600;
-  border-right: 2.5px solid var(--brand-500);
+  background: #f0f0ff;
+  color: #5c5ce0;
+  font-weight: 500;
+  border-right: 2px solid #5c5ce0;
 }
 
 /* ── Main content area ── */

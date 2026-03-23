@@ -257,6 +257,7 @@ body {
   border-radius: 8px; font-family: var(--font); font-size: 14px;
   font-weight: 500; line-height: 20px; white-space: nowrap;
   cursor: pointer; border: 1.5px solid transparent;
+  -webkit-appearance: none; appearance: none;
   transition: background .15s, border-color .15s, box-shadow .15s;
   text-decoration: none;
 }
@@ -273,6 +274,8 @@ body {
 .btn-outlined-primary { background: transparent; color: #29294c; border-color: #d0d5dd; }
 .btn-outlined-primary:not(:disabled):hover { background: #f4f4f6; }
 .btn-outlined-primary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px #b9aee9; outline: none; }
+.btn:not(:disabled):active { transition: none; }
+.btn:focus:not(:focus-visible) { box-shadow: none; outline: none; }
 
 /* Button group */
 .btn-group { display: flex; gap: 12px; align-items: center; }
@@ -1254,5 +1257,17 @@ function copyCode(btn) {
   <span class="theme-toggle-label">Dark mode</span>
 </button>
 <div class="sidebar-overlay"></div>
+<script>
+document.addEventListener('mousedown', e => {
+  const btn = e.target.closest('.btn');
+  if (!btn || btn.disabled) return;
+  btn.style.transition = 'none';
+  const restore = () => {
+    requestAnimationFrame(() => requestAnimationFrame(() => { btn.style.transition = ''; }));
+    document.removeEventListener('mouseup', restore);
+  };
+  document.addEventListener('mouseup', restore);
+});
+</script>
 </body>
 </html>

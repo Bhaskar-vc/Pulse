@@ -147,7 +147,18 @@ html[data-theme="dark"] .col-count { background: #222238; color: #50507a; }
 html[data-theme="dark"] .col-add-btn:hover { background: #202038; color: #8080b0; }
 .col-add-btn svg { width: 14px; height: 14px; }
 
-.task-card-wrap { margin-bottom: 8px; }
+.task-card-wrap { margin-bottom: 8px; position: relative; }
+.card-remove-btn {
+  position: absolute; top: 8px; right: 8px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #d0d5dd; opacity: 0; transition: opacity .15s, background .15s, color .15s;
+  z-index: 2;
+}
+.task-card-wrap:hover .card-remove-btn { opacity: 1; }
+.card-remove-btn:hover { background: #fef3f2; color: #f04438; }
+html[data-theme="dark"] .card-remove-btn:hover { background: #2d1b1b; color: #f97066; }
 .task-card {
   background: #fff; border: 1px solid #eaecf0; border-radius: 10px;
   padding: 14px; cursor: pointer; text-decoration: none;
@@ -653,6 +664,23 @@ html[data-theme="dark"] .icon-sun  { display: flex; }
     </div>
   </div>
 
+  <!-- Confirm delete dialog -->
+  <div class="modal-overlay" id="confirm-overlay">
+    <div class="modal" style="max-width:380px;">
+      <div class="modal-header">
+        <span class="modal-title" style="color:#b42318;">Remove project?</span>
+        <button class="modal-close" onclick="cancelRemove()">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <p id="confirm-msg" style="font-size:13.5px;color:#475467;line-height:1.6;"></p>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="cancelRemove()">Cancel</button>
+        <button class="btn-add" id="confirm-ok" style="background:#f04438;border-color:#f04438;" onclick="confirmRemove()">Remove</button>
+      </div>
+    </div>
+  </div>
+
   <!-- View tabs -->
   <div class="view-tabs">
     <button class="view-tab" onclick="switchView('list', this)">
@@ -834,6 +862,10 @@ function renderKanban() {
     document.getElementById('count-' + col).textContent = cols[col].length;
     el.innerHTML = cols[col].map(t => `
       <div class="task-card-wrap">
+        ${t.status === 'todo' ? `
+        <button class="card-remove-btn" onclick="removeTask(event,${t.id})" title="Remove">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>` : ''}
         <a href="${t.href}" class="task-card">
           <div class="task-title">${t.title}</div>
           <div class="task-project">in <span>${t.project}</span></div>
@@ -929,6 +961,46 @@ function renderAll() {
   renderKanban();
   renderList();
   renderCalendar();
+}
+
+/* ── Remove task ── */
+let _pendingRemoveId = null;
+
+function removeTask(e, id) {
+  e.preventDefault(); e.stopPropagation();
+  const task = TASKS.find(t => t.id === id);
+  if (!task) return;
+  _pendingRemoveId = id;
+  document.getElementById('confirm-msg').textContent =
+    `"${task.title}" will be permanently removed from the board${task.folder ? ' and its folder deleted from disk' : ''}.`;
+  document.getElementById('confirm-overlay').classList.add('is-open');
+}
+
+function cancelRemove() {
+  _pendingRemoveId = null;
+  document.getElementById('confirm-overlay').classList.remove('is-open');
+}
+
+async function confirmRemove() {
+  const id = _pendingRemoveId;
+  if (id === null) return;
+  cancelRemove();
+
+  const task = TASKS.find(t => t.id === id);
+  if (!task) return;
+
+  // For API-created projects (large timestamp IDs), call the server
+  if (task.id > 1000) {
+    try { await fetch(`/api/projects/${task.id}`, { method: 'DELETE' }); } catch {}
+  } else {
+    // For hardcoded static tasks, persist deletion in localStorage
+    const deleted = JSON.parse(localStorage.getItem('deletedTaskIds') || '[]');
+    if (!deleted.includes(id)) { deleted.push(id); localStorage.setItem('deletedTaskIds', JSON.stringify(deleted)); }
+  }
+
+  const idx = TASKS.findIndex(t => t.id === id);
+  if (idx !== -1) { TASKS.splice(idx, 1); renderAll(); }
+  showToast(`"${task.title}" removed`);
 }
 
 /* ── Filters ── */
@@ -1068,11 +1140,16 @@ async function addProject() {
 }
 
 async function loadSavedProjects() {
+  // Filter hardcoded static tasks deleted by user
+  const deletedIds = JSON.parse(localStorage.getItem('deletedTaskIds') || '[]');
+  for (let i = TASKS.length - 1; i >= 0; i--) {
+    if (deletedIds.includes(TASKS[i].id)) TASKS.splice(i, 1);
+  }
+
   try {
     const res  = await fetch('/api/projects');
     const data = await res.json();
     if (Array.isArray(data) && data.length) {
-      // Avoid duplicates if any hardcoded id collides
       const existing = new Set(TASKS.map(t => t.id));
       data.forEach(p => { if (!existing.has(p.id)) TASKS.push(p); });
       renderAll();
@@ -1082,7 +1159,7 @@ async function loadSavedProjects() {
   }
 }
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeProjCmts(); }
+  if (e.key === 'Escape') { closeModal(); closeProjCmts(); cancelRemove(); }
 });
 
 /* ── Project Comments Drawer ── */
