@@ -72,17 +72,19 @@ a{text-decoration:none;color:inherit}
 .back-btn svg{width:20px;height:20px;color:#545470;flex-shrink:0}
 
 /* Stepper */
-.stepper{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:0}
-.step-group{display:flex;align-items:center;gap:8px}
-.step-line{width:54px;height:1px;background:#e4e7ec;flex-shrink:0;margin:0 0}
-.step-circle{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.step-circle.done{background:#d1fadf}
-.step-circle.done img{width:14px;height:14px}
-.step-circle.inactive{background:#f2f4f7}
-.step-circle.inactive img{width:14px;height:14px;opacity:.45}
-.step-label{font-size:14px;font-weight:400;line-height:1.4;white-space:nowrap}
-.step-label.active{color:#29294c}
-.step-label.inactive{color:#d0d5dd}
+.steps-check{position:absolute;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center}
+.steps-check-item{display:inline-flex;align-items:center;gap:8px}
+.steps-check-pill{width:24px;height:24px;border-radius:50px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,box-shadow .2s}
+.steps-check-pill svg{width:10px;height:10px}
+.steps-check-num{font-size:10px;font-weight:700;color:#9ca3af;line-height:1}
+.steps-check-label{font-size:13px;font-weight:400;color:#9ca3af;white-space:nowrap}
+.steps-check-line{height:1.5px;background:#d1d5db;min-width:40px;flex:0 0 40px;margin:0 4px;border-radius:2px}
+.steps-check-item.is-done .steps-check-pill{background:#dcfce7}
+.steps-check-item.is-done .steps-check-pill .check-svg{color:#16a34a}
+.steps-check-item.is-done .steps-check-label{color:#111827;font-weight:600}
+.steps-check-item.is-active .steps-check-pill{background:#fff;border:2px solid #12b76a;box-shadow:0 0 0 4px rgba(18,183,106,.12)}
+.steps-check-item.is-active .steps-check-num{color:#059669;font-weight:700}
+.steps-check-item.is-active .steps-check-label{color:#059669;font-weight:700}
 
 /* ── CONTENT AREA ────────────────────────────────────────── */
 .content-area{flex:1;display:flex;flex-direction:column;overflow-y:auto;min-height:0;padding:0 60px}
@@ -209,7 +211,7 @@ a{text-decoration:none;color:inherit}
       </div>
     </div>
     <div class="nav-avatar">
-      <img src="https://www.figma.com/api/mcp/asset/2ebf6b0e-7b49-4c89-b291-e2f6a7aa4028" alt="avatar" onerror="this.style.display='none'"/>
+      <img src="../assets/avatar.png" alt="Bhaskar" style="width:32px;height:32px;border-radius:50%;object-fit:cover;"/>
     </div>
   </div>
 </nav>
@@ -335,47 +337,25 @@ a{text-decoration:none;color:inherit}
         Back
       </button>
 
-      <!-- Stepper centered -->
-      <div class="stepper">
-        <!-- Step 1: Get Started (active/done) -->
-        <div class="step-group">
-          <div class="step-circle done">
-            <img src="https://www.figma.com/api/mcp/asset/5f1feeff-fc83-4d9d-a50d-00da8e58fb64" alt="done"/>
-          </div>
-          <span class="step-label active">Get Started</span>
+      <div class="steps-check">
+        <div class="steps-check-item is-active">
+          <div class="steps-check-pill"><span class="steps-check-num">1</span></div>
+          <span class="steps-check-label">Get Started</span>
         </div>
-
-        <!-- Line -->
-        <div class="step-line"></div>
-
-        <!-- Step 2: Select Questions -->
-        <div class="step-group">
-          <div class="step-circle inactive">
-            <img src="https://www.figma.com/api/mcp/asset/c2c605a4-d7de-492a-8310-649b3d21864b" alt="inactive"/>
-          </div>
-          <span class="step-label inactive">Select Questions</span>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+          <span class="steps-check-label">Select Questions</span>
         </div>
-
-        <!-- Line -->
-        <div class="step-line"></div>
-
-        <!-- Step 3: Configure -->
-        <div class="step-group">
-          <div class="step-circle inactive">
-            <img src="https://www.figma.com/api/mcp/asset/c2c605a4-d7de-492a-8310-649b3d21864b" alt="inactive"/>
-          </div>
-          <span class="step-label inactive">Configure</span>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Configure</span>
         </div>
-
-        <!-- Line -->
-        <div class="step-line"></div>
-
-        <!-- Step 4: Preview & Launch -->
-        <div class="step-group">
-          <div class="step-circle inactive">
-            <img src="https://www.figma.com/api/mcp/asset/c2c605a4-d7de-492a-8310-649b3d21864b" alt="inactive"/>
-          </div>
-          <span class="step-label inactive">Preview &amp; Launch</span>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Preview &amp; Launch</span>
         </div>
       </div>
     </div>
@@ -621,5 +601,6 @@ function toggleSidebar(){
   if(main)main.style.marginLeft=c?'64px':'252px';
 }
 </script>
+<script src="../assets/pulse-comments.js" data-project="create-survey" data-screen="get-started"></script>
 </body>
 </html>

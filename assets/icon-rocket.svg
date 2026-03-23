@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="rocket-01">
+<path id="Vector" d="M31.4701 17.3053L35.4317 13.3438C39.8923 8.8832 45.732 7.03299 51.9123 6.73064C54.3163 6.61304 55.5181 6.55424 56.4819 7.51808C57.4459 8.48189 57.3869 9.68381 57.2693 12.0877C56.9669 18.268 55.1168 24.1078 50.6563 28.5683L46.6947 32.5299C43.4323 35.7923 42.5048 36.72 43.1896 40.2587C43.8656 42.9619 44.5197 45.5795 42.5541 47.5451C40.1699 49.9293 37.9949 49.9293 35.6107 47.5451L16.4549 28.3893C14.0706 26.005 14.0706 23.8301 16.4549 21.4458C18.4205 19.4802 21.0381 20.1345 23.7413 20.8104C27.28 21.4953 28.2077 20.5677 31.4701 17.3053Z" stroke="var(--stroke-0, #7F56D9)" stroke-width="2.4" stroke-linejoin="round"/>
+<path id="Vector_2" d="M45.3224 18.6667H45.3464" stroke="var(--stroke-0, #7F56D9)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M6.66667 57.3333L20 44" stroke="var(--stroke-0, #7F56D9)" stroke-width="2.4" stroke-linecap="round"/>
+<path id="Vector_4" d="M22.6667 57.3333L28 52" stroke="var(--stroke-0, #7F56D9)" stroke-width="2.4" stroke-linecap="round"/>
+<path id="Vector_5" d="M6.66667 41.3333L12 36" stroke="var(--stroke-0, #7F56D9)" stroke-width="2.4" stroke-linecap="round"/>
+</g>
+</svg>

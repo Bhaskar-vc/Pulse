@@ -67,18 +67,19 @@ a{text-decoration:none;color:inherit}
 .back-btn{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:500;color:#29294c;padding:6px 8px;border-radius:8px;cursor:pointer;border:none;background:none;transition:background .15s;flex-shrink:0}
 .back-btn:hover{background:#f9fafb}
 .back-btn svg{width:20px;height:20px;color:#545470;flex-shrink:0}
-.stepper{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:0}
-.step-group{display:flex;align-items:center;gap:8px}
-.step-line{width:54px;height:1px;background:#e4e7ec;flex-shrink:0}
-.step-line.done{background:#12b76a}
-.step-circle{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.step-circle.done{background:#d1fadf}
-.step-circle.current{background:#7f56d9}
-.step-circle.inactive{background:#f2f4f7}
-.step-label{font-size:14px;font-weight:400;line-height:1.4;white-space:nowrap}
-.step-label.done-lbl{color:#29294c}
-.step-label.current-lbl{color:#6941c6;font-weight:500}
-.step-label.inactive-lbl{color:#d0d5dd}
+.steps-check{position:absolute;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center}
+.steps-check-item{display:inline-flex;align-items:center;gap:8px}
+.steps-check-pill{width:24px;height:24px;border-radius:50px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,box-shadow .2s}
+.steps-check-pill svg{width:10px;height:10px}
+.steps-check-num{font-size:10px;font-weight:700;color:#9ca3af;line-height:1}
+.steps-check-label{font-size:13px;font-weight:400;color:#9ca3af;white-space:nowrap}
+.steps-check-line{height:1.5px;background:#d1d5db;min-width:40px;flex:0 0 40px;margin:0 4px;border-radius:2px}
+.steps-check-item.is-done .steps-check-pill{background:#dcfce7}
+.steps-check-item.is-done .steps-check-pill .check-svg{color:#16a34a}
+.steps-check-item.is-done .steps-check-label{color:#111827;font-weight:600}
+.steps-check-item.is-active .steps-check-pill{background:#fff;border:2px solid #12b76a;box-shadow:0 0 0 4px rgba(18,183,106,.12)}
+.steps-check-item.is-active .steps-check-num{color:#059669;font-weight:700}
+.steps-check-item.is-active .steps-check-label{color:#059669;font-weight:700}
 
 /* ── CONTENT AREA ────────────────────────────────────────── */
 .content-area{flex:1;overflow-y:auto;min-height:0;padding:28px 40px 32px;position:relative}
@@ -263,7 +264,7 @@ a{text-decoration:none;color:inherit}
       <div class="nav-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2h11C18.88 2 20 3.12 20 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-11C5.12 22 4 20.88 4 19.5v-15C4 3.12 5.12 2 6.5 2z"/><circle cx="12" cy="17" r="1"/></svg></div>
       <div class="nav-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
     </div>
-    <div class="nav-avatar"><img src="https://www.figma.com/api/mcp/asset/2ebf6b0e-7b49-4c89-b291-e2f6a7aa4028" alt="avatar" onerror="this.style.display='none'"/></div>
+    <div class="nav-avatar"><img src="../assets/avatar.png" alt="Bhaskar" style="width:32px;height:32px;border-radius:50%;object-fit:cover;"/></div>
   </div>
 </nav>
 
@@ -300,25 +301,25 @@ a{text-decoration:none;color:inherit}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
         Back
       </button>
-      <div class="stepper">
-        <div class="step-group">
-          <div class="step-circle done"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="step-label done-lbl">Get Started</span>
+      <div class="steps-check">
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Get Started</span>
         </div>
-        <div class="step-line done"></div>
-        <div class="step-group">
-          <div class="step-circle done"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="step-label done-lbl">Select Questions</span>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Select Questions</span>
         </div>
-        <div class="step-line done"></div>
-        <div class="step-group">
-          <div class="step-circle current"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="step-label current-lbl">Configure</span>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-active">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Configure</span>
         </div>
-        <div class="step-line"></div>
-        <div class="step-group">
-          <div class="step-circle inactive"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#d0d5dd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="step-label inactive-lbl">Preview &amp; Launch</span>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Preview &amp; Launch</span>
         </div>
       </div>
     </div>
@@ -859,5 +860,6 @@ function toggleSidebar() {
   if (main) main.style.marginLeft = c ? '64px' : '252px';
 }
 </script>
+<script src="../assets/pulse-comments.js" data-project="create-survey" data-screen="configure"></script>
 </body>
 </html>
