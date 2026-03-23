@@ -75,6 +75,7 @@ a{text-decoration:none;color:inherit}
 .card-header{padding:20px 30px;border-bottom:1px solid #e1e5ea;display:flex;align-items:center}
 .card-header h1{font-size:16px;font-weight:600;color:#29294c;letter-spacing:.024px;line-height:1.5}
 
+
 .card-body{padding:24px 30px 40px;flex:1;overflow-y:auto;min-height:0}
 
 /* ── OPTION CARDS ────────────────────────────────────────── */
@@ -306,12 +307,7 @@ a{text-decoration:none;color:inherit}
         <div class="option-card card-purple" onclick="localStorage.setItem('sidebarCollapsed','true');window.location.href='get-started.html'">
           <div class="option-card-title">Start from scratch</div>
           <div class="option-icon-wrap purple">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="12" y="40" width="40" height="4" rx="2" stroke="#6941c6" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M20 36L42 14l8 8L28 44H20V36Z" stroke="#6941c6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="#ede9fe"/>
-              <path d="M42 14l4 4" stroke="#6941c6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M20 36l8 8" stroke="#6941c6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <img src="../assets/icon-rocket.svg" alt="Start from scratch" width="64" height="64"/>
           </div>
           <p class="option-card-desc">Write your own questions and customize everything</p>
           <button class="option-card-btn" onclick="event.stopPropagation();localStorage.setItem('sidebarCollapsed','true');window.location.href='get-started.html'">Create Custom Survey</button>
@@ -321,16 +317,7 @@ a{text-decoration:none;color:inherit}
         <div class="option-card card-green" onclick="">
           <div class="option-card-title">Use ready-made templates</div>
           <div class="option-icon-wrap green">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="10" y="10" width="20" height="20" rx="4" stroke="#027a48" stroke-width="2.5" fill="#dcfce7"/>
-              <rect x="34" y="10" width="20" height="20" rx="4" stroke="#027a48" stroke-width="2.5" fill="#dcfce7"/>
-              <rect x="10" y="34" width="20" height="20" rx="4" stroke="#027a48" stroke-width="2.5" fill="#dcfce7"/>
-              <rect x="34" y="34" width="20" height="20" rx="4" stroke="#027a48" stroke-width="2.5" fill="#dcfce7"/>
-              <line x1="16" y1="21" x2="24" y2="21" stroke="#027a48" stroke-width="2" stroke-linecap="round"/>
-              <line x1="40" y1="21" x2="48" y2="21" stroke="#027a48" stroke-width="2" stroke-linecap="round"/>
-              <line x1="16" y1="45" x2="24" y2="45" stroke="#027a48" stroke-width="2" stroke-linecap="round"/>
-              <line x1="40" y1="45" x2="48" y2="45" stroke="#027a48" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            <img src="../assets/icon-artboard.svg" alt="Use ready-made templates" width="64" height="64"/>
           </div>
           <p class="option-card-desc">Quick start with proven questions from HR experts</p>
           <button class="option-card-btn" onclick="event.stopPropagation()">Browse Templates</button>
@@ -340,9 +327,7 @@ a{text-decoration:none;color:inherit}
         <div class="option-card card-blue" onclick="">
           <div class="option-card-title">Automated surveys</div>
           <div class="option-icon-wrap blue">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M36 8L20 36h16L28 56l20-28H32L36 8Z" stroke="#0369a1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="#bae6fd"/>
-            </svg>
+            <img src="../assets/icon-ai-scheduling.svg" alt="Automated surveys" width="64" height="64"/>
           </div>
           <p class="option-card-desc">Perfect for onboarding and work anniversaries</p>
           <button class="option-card-btn" onclick="event.stopPropagation()">Set Up Automation</button>
@@ -366,11 +351,7 @@ a{text-decoration:none;color:inherit}
             <span>12 mins</span>
           </div>
           <div class="template-card-img">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="36" r="16" stroke="#6941c6" stroke-width="2.5" fill="#ede9fe"/>
-              <path d="M20 80c0-16.569 13.431-30 30-30s30 13.431 30 30" stroke="#6941c6" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M68 44l4 4 10-10" stroke="#027a48" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <img src="../assets/tpl-onboarding.png" alt="Onboarding"/>
           </div>
           <div class="template-card-actions">
             <button class="template-btn-select">Select</button>
@@ -387,10 +368,7 @@ a{text-decoration:none;color:inherit}
             <span>5 mins</span>
           </div>
           <div class="template-card-img">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M50 75C50 75 18 56 18 34c0-10 8-18 18-18 6 0 11 3 14 7 3-4 8-7 14-7 10 0 18 8 18 18 0 22-32 41-32 41Z" stroke="#6941c6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="#ede9fe"/>
-              <path d="M38 50c3 4 7 8 12 10" stroke="#6941c6" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-            </svg>
+            <img src="../assets/tpl-psychosocial-health.png" alt="Psychosocial Health"/>
           </div>
           <div class="template-card-actions">
             <button class="template-btn-select">Select</button>
@@ -407,13 +385,7 @@ a{text-decoration:none;color:inherit}
             <span>2 mins</span>
           </div>
           <div class="template-card-img">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="20" y="40" width="60" height="44" rx="4" stroke="#6941c6" stroke-width="2.5" fill="#ede9fe"/>
-              <path d="M14 44L50 16l36 28" stroke="#6941c6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="38" y="60" width="24" height="24" rx="2" stroke="#6941c6" stroke-width="2" fill="#fff"/>
-              <rect x="30" y="52" width="14" height="12" rx="2" stroke="#6941c6" stroke-width="1.8" fill="#fff"/>
-              <rect x="56" y="52" width="14" height="12" rx="2" stroke="#6941c6" stroke-width="1.8" fill="#fff"/>
-            </svg>
+            <img src="../assets/tpl-back-to-office.png" alt="Back to office"/>
           </div>
           <div class="template-card-actions">
             <button class="template-btn-select">Select</button>
@@ -430,10 +402,7 @@ a{text-decoration:none;color:inherit}
             <span>3 mins</span>
           </div>
           <div class="template-card-img">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M50 15l8.5 17.5 19 2.8-13.7 13.4 3.2 18.9L50 59l-17 8.9 3.2-18.9L22.5 35.3l19-2.8L50 15Z" stroke="#f79009" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="#fef3c7"/>
-              <text x="50" y="90" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#6941c6">5 Years</text>
-            </svg>
+            <img src="../assets/tpl-work-anniversary.png" alt="5 Years Work Anniversary"/>
           </div>
           <div class="template-card-actions">
             <button class="template-btn-select">Select</button>
@@ -489,6 +458,6 @@ function dismissAlert(){
   setTimeout(function(){if(el&&el.parentNode)el.parentNode.removeChild(el);},260);
 }
 </script>
-<script src="../assets/pulse-comments.js" data-project="create-survey" data-screen="home"></script>
+<script src="../assets/pulse-comments.js" data-project="create-survey" data-screen="create-survey"></script>
 </body>
 </html>
