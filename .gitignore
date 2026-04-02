@@ -1,0 +1,5 @@
+pulse-dashboard/node_modules/
+pulse-dashboard/dist/
+pulse-dashboard/.angular/
+.DS_Store
+.vscode/
