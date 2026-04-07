@@ -1,0 +1,578 @@
+<!-- Shadow rectangles -->
+<div class="shadow-rect shadow-rect-1"></div>
+<div class="shadow-rect shadow-rect-2"></div>
+
+<!-- Main white card -->
+<div class="main-card">
+
+  <!-- Welcome Bar -->
+  <div class="welcome-bar">
+    <div class="welcome-text">
+      <h1>Welcome, Kristin Williams</h1>
+      <p>You are now viewing the summarized data from all conducted surveys.</p>
+    </div>
+    <div class="survey-controls">
+      <div class="survey-dd-wrap">
+        <div class="survey-dropdown" [class.is-open]="surveyDropdownOpen" (click)="toggleSurveyDropdown($event)">
+          <span class="survey-name">{{ selectedSurvey.name }}</span>
+          <div class="live-badge" *ngIf="selectedSurvey.active">
+            <span class="live-dot"></span>
+            <span class="live-text">Live</span>
+          </div>
+          <span class="survey-date">{{ selectedSurvey.dateRange }}</span>
+          <div class="survey-chevron">
+            <svg viewBox="0 0 20 20" fill="none" stroke="#667085" stroke-width="1.8"><polyline points="5 8 10 13 15 8"/></svg>
+          </div>
+        </div>
+        <div class="survey-dd-menu" [class.is-open]="surveyDropdownOpen">
+          <div class="survey-dd-item"
+               *ngFor="let survey of surveyOptions"
+               [class.is-selected]="survey.id === selectedSurvey.id"
+               (click)="selectSurvey(survey)">
+            <div class="survey-dd-item-info">
+              <span class="survey-dd-item-name">{{ survey.name }}</span>
+              <span class="survey-dd-item-date">{{ survey.dateRange }}</span>
+            </div>
+            <div class="live-badge small" *ngIf="survey.active">
+              <span class="live-dot"></span>
+              <span class="live-text">Live</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="more-btn">
+        <svg viewBox="0 0 20 20" fill="#667085"><circle cx="10" cy="4" r="1.5"/><circle cx="10" cy="10" r="1.5"/><circle cx="10" cy="16" r="1.5"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Content Row -->
+  <div class="content-row">
+
+    <!-- Scrollable content -->
+    <div class="page-scroll">
+
+      <!-- 3 Metric Cards -->
+      <div class="cards-row">
+
+        <!-- eNPS -->
+        <div class="metric-card mc-enps" #enpsCard>
+          <pixel-canvas data-gap="6" data-speed="30" data-colors="#e0e7ff,#c7d2fe,#a5b4fc" data-variant="default" data-no-focus style="position:absolute;inset:0;pointer-events:none;width:100%;height:100%;z-index:0"></pixel-canvas>
+          <div class="mc-header" style="position:relative;z-index:1">
+            <span class="mc-title">eNPS</span>
+            <div class="mc-info"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="5.5" x2="8" y2="8"/><circle cx="8" cy="10.5" r="0.6" fill="currentColor" stroke="none"/></svg></div>
+          </div>
+          <div class="enps-body">
+            <div class="enps-pct-col">
+              <div class="enps-pct-box green">{{ selectedSurvey.enps.promoter }}%</div>
+              <div class="enps-pct-box warning">{{ selectedSurvey.enps.passive }}%</div>
+              <div class="enps-pct-box red">{{ selectedSurvey.enps.detractor }}%</div>
+            </div>
+            <div class="mc-score-row">
+              <span class="mc-score">{{ selectedSurvey.enps.score }}</span>
+              <div [class]="selectedSurvey.enps.delta >= 0 ? 'tag-green' : 'tag-red'" style="margin-top:12px;">
+                <svg *ngIf="selectedSurvey.enps.delta >= 0" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="10 8 6 4 2 8"/></svg>
+                <svg *ngIf="selectedSurvey.enps.delta < 0" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2 4 6 8 10 4"/></svg>
+                {{ selectedSurvey.enps.delta > 0 ? selectedSurvey.enps.delta : -selectedSurvey.enps.delta }} points
+              </div>
+            </div>
+            <div class="mc-vs">vs previous survey</div>
+            <div class="benchmark-row">
+              {{ selectedSurvey.enps.benchmarkGap }} points below benchmark
+              <span class="benchmark-badge">{{ selectedSurvey.enps.benchmark }}</span>
+            </div>
+            <div class="tag-favorable">Favorable</div>
+          </div>
+        </div>
+
+        <!-- Participation Rate -->
+        <div class="metric-card mc-part" #partCard>
+          <pixel-canvas data-gap="6" data-speed="30" data-colors="#ede9fe,#ddd6fe,#c4b5fd" data-variant="default" data-no-focus style="position:absolute;inset:0;pointer-events:none;width:100%;height:100%;z-index:0"></pixel-canvas>
+          <div class="mc-header" style="position:relative;z-index:1">
+            <span class="mc-title">Participation Rate</span>
+            <div class="mc-info"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="5.5" x2="8" y2="8"/><circle cx="8" cy="10.5" r="0.6" fill="currentColor" stroke="none"/></svg></div>
+          </div>
+          <div class="mc-score-row" style="margin-bottom:4px;position:relative;z-index:1">
+            <span class="mc-score">{{ selectedSurvey.participation.rate }}%</span>
+            <div [class]="selectedSurvey.participation.delta.startsWith('+') ? 'tag-green' : selectedSurvey.participation.delta.startsWith('-') ? 'tag-red' : 'tag-neutral'">{{ selectedSurvey.participation.delta }}</div>
+          </div>
+          <div class="mc-vs" style="margin-bottom:4px;position:relative;z-index:1">{{ selectedSurvey.participation.vs }}</div>
+          <div class="mc-meta">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 11v-1a4 4 0 00-4-4H5a4 4 0 00-4 4v1"/><circle cx="6" cy="3" r="2.5"/></svg>
+            {{ selectedSurvey.participation.responded }} of {{ selectedSurvey.participation.total }} employees responded
+          </div>
+          <div class="tag-low-part">Low Participation</div>
+        </div>
+
+        <!-- Engagement Score -->
+        <expandable-card
+          title="Segment Score Trend"
+          description="Performance across segments"
+          class="mc-eng-expandable"
+          #segmentCard
+          (opened)="onSegmentCardOpened($event)"
+          (closed)="onSegmentCardClosed()"
+        >
+          <div collapsed class="metric-card mc-eng" #engCard>
+            <div class="mc-header">
+              <span class="mc-title">Segment Score Trend</span>
+              <div class="mc-info"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="5.5" x2="8" y2="8"/><circle cx="8" cy="10.5" r="0.6" fill="currentColor" stroke="none"/></svg></div>
+            </div>
+            <div class="eng-chart-wrap">
+              <canvas #engChart></canvas>
+              <div class="eng-band-label eng-needs">Needs Attention ›</div>
+              <div class="eng-band-label eng-top">Top Performers ›</div>
+            </div>
+          </div>
+
+          <ng-template #expandedHeader>
+            <div class="ec-chart-header">
+              <canvas id="engChartExpanded"></canvas>
+              <div class="eng-band-label eng-needs">Needs Attention ›</div>
+              <div class="eng-band-label eng-top">Top Performers ›</div>
+            </div>
+          </ng-template>
+
+          <ng-template #expandedContent>
+          <div class="expanded-segments">
+            <h4>Needs Attention</h4>
+            <p>These segments have shown declining engagement scores over the past quarter and require focused intervention strategies.</p>
+            <div class="exp-segment-grid">
+              <div class="exp-segment-row">
+                <div class="exp-seg-info">
+                  <span class="exp-seg-name">Work-Life Balance</span>
+                  <span class="exp-seg-score">85%</span>
+                </div>
+                <div class="exp-seg-bar">
+                  <div class="exp-seg-fill needs" style="width: 85%"></div>
+                </div>
+                <span class="exp-seg-delta neg">-3 pts</span>
+              </div>
+              <div class="exp-segment-row">
+                <div class="exp-seg-info">
+                  <span class="exp-seg-name">Leadership</span>
+                  <span class="exp-seg-score">65%</span>
+                </div>
+                <div class="exp-seg-bar">
+                  <div class="exp-seg-fill needs" style="width: 65%"></div>
+                </div>
+                <span class="exp-seg-delta neg">-4 pts</span>
+              </div>
+              <div class="exp-segment-row">
+                <div class="exp-seg-info">
+                  <span class="exp-seg-name">Communication</span>
+                  <span class="exp-seg-score">52%</span>
+                </div>
+                <div class="exp-seg-bar">
+                  <div class="exp-seg-fill needs" style="width: 52%"></div>
+                </div>
+                <span class="exp-seg-delta neg">-1 pt</span>
+              </div>
+            </div>
+
+            <h4>Top Performers</h4>
+            <p>These segments are excelling and can serve as models for improvement strategies in other areas.</p>
+            <div class="exp-segment-grid">
+              <div class="exp-segment-row">
+                <div class="exp-seg-info">
+                  <span class="exp-seg-name">Cybersecurity</span>
+                  <span class="exp-seg-score">85%</span>
+                </div>
+                <div class="exp-seg-bar">
+                  <div class="exp-seg-fill top" style="width: 85%"></div>
+                </div>
+                <span class="exp-seg-delta pos">+5 pts</span>
+              </div>
+              <div class="exp-segment-row">
+                <div class="exp-seg-info">
+                  <span class="exp-seg-name">Leadership</span>
+                  <span class="exp-seg-score">65%</span>
+                </div>
+                <div class="exp-seg-bar">
+                  <div class="exp-seg-fill top" style="width: 65%"></div>
+                </div>
+                <span class="exp-seg-delta pos">+4 pts</span>
+              </div>
+              <div class="exp-segment-row">
+                <div class="exp-seg-info">
+                  <span class="exp-seg-name">Communication</span>
+                  <span class="exp-seg-score">52%</span>
+                </div>
+                <div class="exp-seg-bar">
+                  <div class="exp-seg-fill top" style="width: 52%"></div>
+                </div>
+                <span class="exp-seg-delta pos">+1 pt</span>
+              </div>
+            </div>
+
+            <h4>Trend Analysis</h4>
+            <p>
+              Over the past 6 months, top-performing segments have maintained a steady upward trajectory
+              with an average improvement of 3.3 points per quarter. Segments needing attention have shown
+              a 2.7 point average decline, primarily driven by organizational restructuring and increased
+              workload during Q1. Targeted action plans are recommended for Communication and Leadership
+              segments to reverse these trends before the next survey cycle.
+            </p>
+          </div>
+          </ng-template>
+        </expandable-card>
+
+      </div><!-- /cards-row -->
+
+      <!-- Engagement Over Time -->
+      <div class="chart-card">
+        <div class="chart-top-row">
+          <div class="chart-heading">
+            Engagement Over Time
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="5.5" x2="8" y2="8"/><circle cx="8" cy="10.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <button class="btn-view-more">
+            View more
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg>
+          </button>
+        </div>
+        <canvas #lineChart height="100"></canvas>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#5b9bd5;"></div>Engagement</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#9b72cf;"></div>eNPS</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#1f2937;"></div>Participants</div>
+        </div>
+      </div>
+
+      <!-- What Employees Are Saying -->
+      <div class="saying-card">
+        <div class="saying-header">
+          <div class="saying-title">What Employees Are Saying</div>
+          <div class="saying-nav">
+            <button class="saying-nav-btn" (click)="scrollFeedback(-1)"><svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="11 13 6 8.5 11 4"/></svg></button>
+            <button class="saying-nav-btn" (click)="scrollFeedback(1)"><svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="6 4 11 8.5 6 13"/></svg></button>
+          </div>
+        </div>
+        <div class="saying-body">
+          <div class="saying-stats">
+            <div class="saying-totals">
+              <div class="saying-count">1.7K</div>
+              <div class="saying-label">Total Comments</div>
+              <div class="saying-sub">8% of participants commented</div>
+              <a class="view-all">
+                view all
+                <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="2" y1="5" x2="8" y2="5"/><polyline points="6 3 8 5 6 7"/></svg>
+              </a>
+            </div>
+            <div class="saying-divider"></div>
+            <div class="sentiment-col">
+              <div class="sentiment-item">
+                <div class="sentiment-bar-track">
+                  <div class="sentiment-bar-fill sfill-pos" style="width:46px;"><span>18%</span></div>
+                </div>
+                <div class="sentiment-meta"><span class="s-label">Positive</span><span class="s-count">212</span></div>
+              </div>
+              <div class="sentiment-item">
+                <div class="sentiment-bar-track">
+                  <div class="sentiment-bar-fill sfill-neu" style="width:73px;"><span>61%</span></div>
+                </div>
+                <div class="sentiment-meta"><span class="s-label">Neutral</span><span class="s-count">1.2K</span></div>
+              </div>
+              <div class="sentiment-item">
+                <div class="sentiment-bar-track">
+                  <div class="sentiment-bar-fill sfill-neg" style="width:27px;"><span style="font-size:11px;">6%</span></div>
+                </div>
+                <div class="sentiment-meta"><span class="s-label">Negative</span><span class="s-count">36</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="feedback-cards" #feedbackCards>
+            <div class="fb-card">
+              <div class="fb-card-top">
+                <div class="fb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 17l3-3h12"/></svg></div>
+                <span class="fb-tag pos">POSITIVE</span>
+              </div>
+              <p class="fb-text">Communication between teams could be improved. Sometimes we're working on similar things without knowing it.</p>
+              <span class="fb-time">4 hr ago</span>
+            </div>
+            <div class="fb-card">
+              <div class="fb-card-top">
+                <div class="fb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 17l3-3h12"/></svg></div>
+                <span class="fb-tag neg">NEGATIVE</span>
+              </div>
+              <p class="fb-text">The workload has increased significantly without additional resources. This is unsustainable long-term.</p>
+              <span class="fb-time">1 day ago</span>
+            </div>
+            <div class="fb-card">
+              <div class="fb-card-top">
+                <div class="fb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 17l3-3h12"/></svg></div>
+                <span class="fb-tag pos">POSITIVE</span>
+              </div>
+              <p class="fb-text">Great team culture and supportive managers. I feel heard and my contributions are truly valued.</p>
+              <span class="fb-time">1 day ago</span>
+            </div>
+            <div class="fb-card">
+              <div class="fb-card-top">
+                <div class="fb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 17l3-3h12"/></svg></div>
+                <span class="fb-tag pos">POSITIVE</span>
+              </div>
+              <p class="fb-text">The new collaboration tools have made cross-functional projects much smoother and more efficient.</p>
+              <span class="fb-time">2 days ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- What's Working Well / Your Opportunities -->
+      <div class="wwwell-section">
+
+        <div class="wwwell-card">
+          <div class="wwwell-header">
+            <div class="wwwell-titles">
+              <div class="wwwell-title green">Whats Working Well</div>
+              <div class="wwwell-subtitle">Your highest performing questions</div>
+            </div>
+            <button class="wwwell-viewmore">View more<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg></button>
+          </div>
+          <div class="wwwell-divider"></div>
+          <div class="wwwell-col-header">
+            <div class="wwwell-col-q">Questions</div>
+            <div class="wwwell-col-enps">eNPS Distribution</div>
+            <div class="wwwell-col-score">Engagement Score</div>
+          </div>
+          <div class="wwwell-rows wwwell-card-bottom">
+            <div class="wwwell-row">
+              <div class="wwwell-q-col">
+                <div class="wwwell-q-text">Describe a time when leadership made a decision that positively impacted your work.</div>
+                <span class="wwwell-q-tag">Relationship With Peers</span>
+              </div>
+              <div class="wwwell-enps-col">
+                <span class="wwwell-detractor">12</span>
+                <div class="wwwell-bars">
+                  <div class="wwwell-bar green" style="width:88%"></div>
+                  <div class="wwwell-bar orange" style="width:72%"></div>
+                  <div class="wwwell-bar red" style="width:44%"></div>
+                </div>
+              </div>
+              <div class="wwwell-score-col"><span class="wwwell-score-pill good">76</span></div>
+            </div>
+            <div class="wwwell-row">
+              <div class="wwwell-q-col">
+                <div class="wwwell-q-text">If I do great work, I know that it will be recognised.</div>
+                <span class="wwwell-q-tag">Feedback &amp; Recognition</span>
+              </div>
+              <div class="wwwell-enps-col">
+                <span class="wwwell-detractor">8</span>
+                <div class="wwwell-bars">
+                  <div class="wwwell-bar green" style="width:91%"></div>
+                  <div class="wwwell-bar orange" style="width:64%"></div>
+                  <div class="wwwell-bar red" style="width:32%"></div>
+                </div>
+              </div>
+              <div class="wwwell-score-col"><span class="wwwell-score-pill good">83</span></div>
+            </div>
+            <div class="wwwell-row">
+              <div class="wwwell-q-col">
+                <div class="wwwell-q-text">My organization's values are aligned with values I consider important in life.</div>
+                <span class="wwwell-q-tag">Alignment</span>
+              </div>
+              <div class="wwwell-enps-col">
+                <span class="wwwell-detractor">15</span>
+                <div class="wwwell-bars">
+                  <div class="wwwell-bar green" style="width:85%"></div>
+                  <div class="wwwell-bar orange" style="width:78%"></div>
+                  <div class="wwwell-bar red" style="width:52%"></div>
+                </div>
+              </div>
+              <div class="wwwell-score-col"><span class="wwwell-score-pill good">68</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wwwell-card">
+          <div class="wwwell-header">
+            <div class="wwwell-titles">
+              <div class="wwwell-title red">Your Opportunities</div>
+              <div class="wwwell-subtitle">Questions with potential for improvement</div>
+            </div>
+            <button class="wwwell-viewmore">View more<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg></button>
+          </div>
+          <div class="wwwell-divider"></div>
+          <div class="wwwell-col-header">
+            <div class="wwwell-col-q">Questions</div>
+            <div class="wwwell-col-enps">eNPS Distribution</div>
+            <div class="wwwell-col-score">Engagement Score</div>
+          </div>
+          <div class="wwwell-rows wwwell-card-bottom">
+            <div class="wwwell-row">
+              <div class="wwwell-q-col">
+                <div class="wwwell-q-text">I can count on my coworkers to help out when needed.</div>
+                <span class="wwwell-q-tag">Relationship With Peers</span>
+              </div>
+              <div class="wwwell-enps-col">
+                <span class="wwwell-detractor">42</span>
+                <div class="wwwell-bars">
+                  <div class="wwwell-bar red" style="width:100%"></div>
+                  <div class="wwwell-bar orange" style="width:72%"></div>
+                  <div class="wwwell-bar green" style="width:34%"></div>
+                </div>
+              </div>
+              <div class="wwwell-score-col"><span class="wwwell-score-pill bad">28</span></div>
+            </div>
+            <div class="wwwell-row">
+              <div class="wwwell-q-col">
+                <div class="wwwell-q-text">If I do great work, I know that it will be recognised.</div>
+                <span class="wwwell-q-tag">Feedback &amp; Recognition</span>
+              </div>
+              <div class="wwwell-enps-col">
+                <span class="wwwell-detractor">38</span>
+                <div class="wwwell-bars">
+                  <div class="wwwell-bar red" style="width:94%"></div>
+                  <div class="wwwell-bar orange" style="width:65%"></div>
+                  <div class="wwwell-bar green" style="width:28%"></div>
+                </div>
+              </div>
+              <div class="wwwell-score-col"><span class="wwwell-score-pill bad">22</span></div>
+            </div>
+            <div class="wwwell-row">
+              <div class="wwwell-q-col">
+                <div class="wwwell-q-text">My organization's values are aligned with values I consider important in life.</div>
+                <span class="wwwell-q-tag">Alignment</span>
+              </div>
+              <div class="wwwell-enps-col">
+                <span class="wwwell-detractor">45</span>
+                <div class="wwwell-bars">
+                  <div class="wwwell-bar red" style="width:100%"></div>
+                  <div class="wwwell-bar orange" style="width:80%"></div>
+                  <div class="wwwell-bar green" style="width:22%"></div>
+                </div>
+              </div>
+              <div class="wwwell-score-col"><span class="wwwell-score-pill bad">18</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /wwwell-section -->
+
+    </div><!-- /page-scroll -->
+
+    <!-- Right Panel -->
+    <aside class="right-panel">
+      <div class="rp-title">
+        Engagement Index
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="5.5" x2="8" y2="8"/><circle cx="8" cy="10.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+      </div>
+
+      <div class="donut-wrap">
+        <svg class="donut-svg" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="arc-grad" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3b82f6"/>
+              <stop offset="100%" stop-color="#7c3aed"/>
+            </linearGradient>
+          </defs>
+          <g opacity="0.35">
+            <circle cx="140" cy="18" r="2.5" fill="#9ca3af"/>
+            <circle cx="209.5" cy="35.5" r="2.5" fill="#9ca3af"/>
+            <circle cx="258" cy="100" r="2.5" fill="#9ca3af"/>
+            <circle cx="262" cy="140" r="2.5" fill="#9ca3af"/>
+            <circle cx="258" cy="180" r="2.5" fill="#9ca3af"/>
+            <circle cx="209.5" cy="244.5" r="2.5" fill="#9ca3af"/>
+            <circle cx="140" cy="262" r="2.5" fill="#9ca3af"/>
+            <circle cx="70.5" cy="244.5" r="2.5" fill="#9ca3af"/>
+            <circle cx="22" cy="180" r="2.5" fill="#9ca3af"/>
+            <circle cx="18" cy="140" r="2.5" fill="#9ca3af"/>
+            <circle cx="22" cy="100" r="2.5" fill="#9ca3af"/>
+            <circle cx="70.5" cy="35.5" r="2.5" fill="#9ca3af"/>
+          </g>
+          <circle cx="140" cy="140" r="105" stroke="#e5e7eb" stroke-width="14" fill="none" stroke-linecap="round"/>
+          <circle class="donut-arc" cx="140" cy="140" r="105" stroke="url(#arc-grad)" stroke-width="14" fill="none" stroke-linecap="round"
+            [attr.stroke-dasharray]="donutDasharray" transform="rotate(-90 140 140)"
+            filter="drop-shadow(0px 9px 30px rgba(100,70,210,0.25))"
+            style="transition: stroke-dasharray 0.6s ease"/>
+          <circle cx="140" cy="140" r="89" fill="white"/>
+        </svg>
+        <div class="donut-center">
+          <span class="donut-score">{{ selectedSurvey.engagement.score }}</span>
+          <div [class]="selectedSurvey.engagement.delta >= 0 ? 'donut-delta-tag' : 'donut-delta-tag neg'">
+            <svg *ngIf="selectedSurvey.engagement.delta >= 0" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 9 6.5 4.5 2 9"/></svg>
+            <svg *ngIf="selectedSurvey.engagement.delta < 0" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2 4 6.5 8.5 11 4"/></svg>
+            {{ selectedSurvey.engagement.delta > 0 ? selectedSurvey.engagement.delta : -selectedSurvey.engagement.delta }}
+          </div>
+          <span class="donut-sub">Overall Engagement Score</span>
+        </div>
+      </div>
+
+      <!-- Segment tabs card -->
+      <div class="rp-list-card" #perfTabCard style="display:none">
+        <div class="rp-seg-tabs">
+          <div class="rp-seg-indicator"></div>
+          <div class="rp-seg-glow"></div>
+          <button class="rp-seg-btn" [class.active]="activeSeg === 'top'" (click)="switchSeg('top')">Top Performer</button>
+          <button class="rp-seg-btn" [class.active]="activeSeg === 'needs'" (click)="switchSeg('needs')">Needs Attention</button>
+        </div>
+        <div class="rp-seg-panel" [class.active]="activeSeg === 'top'">
+          <div class="rp-row">
+            <div class="rp-row-info"><span>Work-Life Balance</span><span>85%</span></div>
+            <div class="rp-tag pos">+5</div>
+          </div>
+          <div class="rp-row">
+            <div class="rp-row-info"><span>Leadership</span><span>65%</span></div>
+            <div class="rp-tag pos">+4</div>
+          </div>
+          <div class="rp-row">
+            <div class="rp-row-info"><span>Communication</span><span>52%</span></div>
+            <div class="rp-tag pos">+1</div>
+          </div>
+        </div>
+        <div class="rp-seg-panel" [class.active]="activeSeg === 'needs'">
+          <div class="rp-row">
+            <div class="rp-row-info"><span>Cybersecurity</span><span>85%</span></div>
+            <div class="rp-tag neg">-1</div>
+          </div>
+          <div class="rp-row">
+            <div class="rp-row-info"><span>Leadership</span><span>65%</span></div>
+            <div class="rp-tag neg">-4</div>
+          </div>
+          <div class="rp-row">
+            <div class="rp-row-info"><span>Communication</span><span>52%</span></div>
+            <div class="rp-tag neg">-1</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Running Surveys -->
+      <survey-carousel [surveys]="surveys"></survey-carousel>
+
+      <!-- Illustration -->
+      <div class="rp-illustration">
+        <img src="https://www.figma.com/api/mcp/asset/db5d5e75-1045-4dac-b482-d2a065c015f2" alt="Team illustration"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+        <svg style="display:none;" width="177" height="121" viewBox="0 0 177 121" fill="none">
+          <ellipse cx="88.5" cy="110" rx="70" ry="8" fill="#e1d4f4" opacity="0.5"/>
+          <circle cx="28" cy="62" r="10" fill="#fde68a"/>
+          <rect x="18" y="72" width="20" height="38" rx="4" fill="#14b8a6"/>
+          <ellipse cx="28" cy="53" rx="10" ry="5" fill="#92400e"/>
+          <circle cx="58" cy="64" r="10" fill="#d97706"/>
+          <rect x="48" y="74" width="20" height="36" rx="4" fill="#7c3aed"/>
+          <path d="M48 64 Q58 53 68 64 Q68 76 58 76 Q48 76 48 64Z" fill="#f97316" opacity="0.9"/>
+          <circle cx="88" cy="58" r="11" fill="#fbbf24"/>
+          <rect x="77" y="69" width="22" height="41" rx="4" fill="#4f46e5"/>
+          <ellipse cx="88" cy="49" rx="11" ry="6" fill="#1e1b4b"/>
+          <circle cx="118" cy="64" r="10" fill="#fde68a"/>
+          <rect x="108" y="74" width="20" height="36" rx="4" fill="#e11d48"/>
+          <path d="M108 60 Q118 50 128 60" stroke="#92400e" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <circle cx="148" cy="62" r="10" fill="#d97706"/>
+          <rect x="138" y="72" width="20" height="38" rx="4" fill="#16a34a"/>
+          <ellipse cx="148" cy="53" rx="10" ry="5" fill="#1e3a5f"/>
+          <rect x="120" y="20" width="44" height="26" rx="8" fill="#ede9fe"/>
+          <path d="M132 46 L128 54 L140 46Z" fill="#ede9fe"/>
+          <circle cx="134" cy="34" r="3" fill="#7c3aed" opacity="0.5"/>
+          <circle cx="142" cy="34" r="3" fill="#7c3aed" opacity="0.5"/>
+          <circle cx="150" cy="34" r="3" fill="#7c3aed" opacity="0.5"/>
+          <rect x="14" y="26" width="38" height="20" rx="7" fill="#fce7f3"/>
+          <path d="M44 46 L40 54 L50 46Z" fill="#fce7f3"/>
+          <rect x="20" y="33" width="24" height="3" rx="1.5" fill="#ec4899" opacity="0.4"/>
+          <rect x="20" y="39" width="16" height="3" rx="1.5" fill="#ec4899" opacity="0.25"/>
+        </svg>
+      </div>
+
+    </aside>
+
+  </div><!-- /content-row -->
+</div><!-- /main-card -->

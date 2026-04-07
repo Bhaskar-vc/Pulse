@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1512"/>
+<title>Get Started – Create Survey – Vantage Pulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;overflow:hidden;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
+button,input,textarea{font-family:inherit}
+a{text-decoration:none;color:inherit}
+
+/* ── NAVBAR ─────────────────────────────────────────────── */
+.navbar{position:fixed;top:0;left:0;right:0;height:64px;background:transparent;border-bottom:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:200}
+.navbar-left{display:flex;align-items:center;gap:12px}
+.vc-logo-group{display:flex;align-items:center;gap:10px}
+.vc-logo{display:flex;align-items:center;gap:8px}
+.vc-logo-text{font-size:13px;font-weight:700;color:#1d2939;letter-spacing:.3px}
+.sidebar-toggle{display:flex;align-items:center;justify-content:center;padding:4px;border:none;background:none;cursor:pointer;border-radius:6px;flex-shrink:0}
+.sidebar-toggle:hover{background:rgba(92,108,124,.12)}
+.nav-divider{width:1px;height:28px;background:#e4e7ec;margin:0 4px}
+.vp-brand{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:#6941c6;padding:6px 16px 6px 10px;border-radius:50px}
+.vp-brand svg{width:20px;height:20px;color:#6941c6}
+.navbar-right{display:flex;align-items:center;gap:16px}
+.nav-icons{display:flex;align-items:center;gap:16px}
+.nav-icon-btn{width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#667085;cursor:pointer}
+.nav-icon-btn svg{width:22px;height:22px}
+.nav-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;background:#e9d7fe;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#6941c6;flex-shrink:0}
+.nav-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar{position:fixed;top:64px;left:0;width:252px;height:calc(100vh - 64px);background:transparent;border-right:none;display:flex;flex-direction:column;padding:0 12px 24px;z-index:100;overflow-y:auto;transition:width .22s ease}
+.sidebar-create-btn{display:flex;align-items:center;gap:8px;background:#7f56d9;color:#fff;font-size:14px;font-weight:500;padding:8px 16px 8px 12px;border-radius:8px;cursor:pointer;width:100%;margin-bottom:8px;transition:background .15s;border:none;overflow:hidden;white-space:nowrap}
+.sidebar-create-btn:hover{background:#6941c6}
+.sidebar-create-btn svg{width:20px;height:20px;flex-shrink:0}
+.sidebar.collapsed{width:64px;padding:0 8px;align-items:center}
+.sidebar.collapsed .sidebar-create-btn{padding:8px;width:40px;min-width:unset;border-radius:10px;justify-content:center;margin-bottom:16px}
+.sidebar.collapsed .sidebar-create-btn .btn-text{display:none}
+.sidebar.collapsed .nav-item{justify-content:center;padding:10px 0;gap:0}
+.sidebar.collapsed .nav-item-text,.sidebar.collapsed .nav-item-chevron,.sidebar.collapsed .nav-sub,.sidebar.collapsed .nav-pro-badge{display:none}
+.sidebar.collapsed .nav-item-icon{width:20px;height:20px}
+.sidebar.collapsed .nav-item-icon svg{width:20px;height:20px}
+.sidebar-nav{display:flex;flex-direction:column;gap:2px;width:100%}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;width:100%;transition:background .15s;font-size:12px;font-weight:500;color:#545470}
+.nav-item:hover{background:#f9fafb}
+.nav-item.active{color:#6941c6}
+.nav-item-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-item-icon svg{width:20px;height:20px}
+.nav-item-text{flex:1;font-size:12px;font-weight:500}
+.nav-item-chevron{width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:#98a2b3;flex-shrink:0}
+.nav-item-chevron svg{width:16px;height:16px}
+.nav-item-chevron.open svg{transform:rotate(90deg)}
+.nav-sub{display:flex;flex-direction:column;gap:0;position:relative;margin-left:13px}
+.nav-sub::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:#e4e7ec}
+.nav-sub-item{display:flex;align-items:center;padding:8px 10px 8px 18px;font-size:12px;font-weight:500;color:#545470;cursor:pointer;border-radius:8px;transition:background .15s}
+.nav-sub-item:hover{background:#f9fafb}
+.nav-sub-item.active{color:#6941c6}
+.nav-pro-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:400;color:#fff;background:linear-gradient(150deg,#dc6803 7%,#7f56d9 71%);line-height:16px}
+
+/* ── MAIN ────────────────────────────────────────────────── */
+.main{margin-top:64px;margin-left:252px;padding:0 16px 16px 0;height:calc(100vh - 64px);overflow:hidden;display:flex;flex-direction:column;transition:margin-left .22s ease}
+.main-card{background:#fff;border-radius:18px;box-shadow:0 4px 8px -2px rgba(16,24,40,.1),0 2px 4px -2px rgba(16,24,40,.06);flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+
+/* ── TOP BAR (Back + Stepper) ────────────────────────────── */
+.top-bar{display:flex;align-items:center;padding:18px 30px;border-bottom:1px solid #f2f4f7;flex-shrink:0;position:relative;min-height:64px}
+.back-btn{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:500;color:#29294c;padding:6px 8px;border-radius:8px;cursor:pointer;border:none;background:none;transition:background .15s;flex-shrink:0}
+.back-btn:hover{background:#f9fafb}
+.back-btn svg{width:20px;height:20px;color:#545470;flex-shrink:0}
+
+/* Stepper */
+.steps-check{position:absolute;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center}
+.steps-check-item{display:inline-flex;align-items:center;gap:8px}
+.steps-check-pill{width:24px;height:24px;border-radius:50px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,box-shadow .2s}
+.steps-check-pill svg{width:10px;height:10px}
+.steps-check-num{font-size:10px;font-weight:700;color:#9ca3af;line-height:1}
+.steps-check-label{font-size:13px;font-weight:400;color:#9ca3af;white-space:nowrap}
+.steps-check-line{height:1.5px;background:#d1d5db;min-width:40px;flex:0 0 40px;margin:0 4px;border-radius:2px}
+.steps-check-item.is-done .steps-check-pill{background:#dcfce7}
+.steps-check-item.is-done .steps-check-pill .check-svg{color:#16a34a}
+.steps-check-item.is-done .steps-check-label{color:#111827;font-weight:600}
+.steps-check-item.is-active .steps-check-pill{background:#fff;border:2px solid #12b76a;box-shadow:0 0 0 4px rgba(18,183,106,.12)}
+.steps-check-item.is-active .steps-check-num{color:#059669;font-weight:700}
+.steps-check-item.is-active .steps-check-label{color:#059669;font-weight:700}
+
+/* ── CONTENT AREA ────────────────────────────────────────── */
+.content-area{flex:1;display:flex;flex-direction:column;overflow-y:auto;min-height:0;padding:0 60px}
+.content-inner{display:flex;align-items:center;justify-content:center;width:100%;max-width:1240px;margin:auto;padding:24px 0}
+
+/* Unified card */
+.content-card{display:flex;flex-direction:column;gap:0;background:#f9fafb;border-radius:16px;padding:40px;width:75%}
+.content-card-row{display:flex;align-items:center;gap:40px}
+
+/* Illustration */
+.illustration-col{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:340px}
+.illustration-col img{width:100%;height:auto;object-fit:contain}
+
+/* Form side */
+.form-col{display:flex;flex-direction:column;gap:12px;flex:1;min-width:0}
+.form-heading{font-size:16px;font-weight:600;color:#29294c;letter-spacing:.024px;line-height:1.5}
+.form-subheading{font-size:12px;font-weight:400;color:#707087;letter-spacing:.03px;line-height:1.4;margin-top:2px}
+
+.form-box{display:flex;flex-direction:column;gap:10px}
+
+/* Input field */
+.field{display:flex;flex-direction:column;gap:6px}
+.field-label{display:flex;align-items:center;gap:2px;font-size:12px;font-weight:400;color:#545470;letter-spacing:.03px;line-height:1.4}
+.field-label .required{font-size:14px;color:#d92d20;line-height:1}
+.field-label .optional{color:#707087}
+.field input,.field textarea{width:100%;border:1px solid #e1e5ea;border-radius:6px;padding:8px 16px;font-size:14px;font-weight:400;color:#29294c;background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;resize:none}
+.field input{height:36px}
+.field textarea{height:102px}
+.field input::placeholder,.field textarea::placeholder{color:#98a2b3}
+.field input:focus,.field textarea:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+
+/* QR toggle row */
+.toggle-row{border-radius:8px;padding:12px;display:flex;align-items:center;gap:8px}
+.toggle-row-text{flex:1;display:flex;flex-direction:column;gap:0}
+.toggle-row-title{font-size:14px;font-weight:500;color:#29294c;line-height:20px}
+.toggle-row-sub{font-size:12px;font-weight:400;color:#707087;letter-spacing:.03px;line-height:1.4}
+
+/* Toggle switch */
+.check-btn{display:none}
+.check-label{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid #d0d5dd;border-radius:6px;background:#fff;cursor:pointer;flex-shrink:0;transition:border-color .2s,background .2s,box-shadow .2s;padding:2px}
+.check-btn:checked+.check-label{background:#6941c6;border-color:#6941c6;box-shadow:0 0 0 3px rgba(105,65,198,.15)}
+.check-label svg{width:11px;height:11px;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;fill:none;opacity:0;transform:scale(.5);transition:opacity .18s,transform .18s}
+.check-btn:checked+.check-label svg{opacity:1;transform:scale(1)}
+
+/* Footer */
+.page-footer{height:62px;border-top:1px solid #f2f4f7;display:flex;align-items:center;justify-content:space-between;padding:0 30px;flex-shrink:0}
+.btn-cancel{background:#f4f4f6;color:#29294c;font-size:14px;font-weight:500;height:36px;padding:0 20px;border-radius:8px;border:none;cursor:pointer;transition:background .15s}
+.btn-cancel:hover{background:#e9e9ed}
+.btn-proceed{display:flex;align-items:center;gap:8px;background:#29294c;color:#fff;font-size:14px;font-weight:500;height:36px;padding:0 20px;border-radius:8px;border:none;cursor:pointer;transition:background .15s}
+.btn-proceed:hover{background:#1d2030}
+.btn-proceed svg{width:16px;height:16px;flex-shrink:0}
+
+/* Error state */
+.field input.error{border-color:#f04438;box-shadow:0 0 0 3px rgba(240,68,56,.1)}
+.field-error{font-size:12px;color:#f04438;margin-top:4px;display:none;align-items:center;gap:4px}
+.field-error.show{display:flex}
+.field-error svg{width:12px;height:12px;flex-shrink:0}
+
+/* ── PAGE LOAD ANIMATIONS ─────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes clipboardIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes pillPop{0%{opacity:0;transform:scale(.6)}70%{transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes progressFill{from{width:0}to{width:95px}}
+@keyframes checkDraw{from{stroke-dashoffset:20}to{stroke-dashoffset:0}}
+
+.main-card{animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both}
+.form-heading{animation:slideInLeft .5s .1s cubic-bezier(.22,1,.36,1) both}
+.form-subheading{animation:slideInLeft .5s .18s cubic-bezier(.22,1,.36,1) both}
+.form-box{animation:fadeUp .5s .22s cubic-bezier(.22,1,.36,1) both}
+.toggle-row{animation:fadeUp .5s .3s cubic-bezier(.22,1,.36,1) both}
+.page-footer{animation:fadeIn .4s .35s both}
+
+/* Illustration animations */
+.illustration-col{animation:slideInRight .6s .1s cubic-bezier(.22,1,.36,1) both}
+.illustration-col svg{animation:floatY 4s ease-in-out 1s infinite}
+.illu-clipboard{animation:clipboardIn .6s .3s cubic-bezier(.22,1,.36,1) both}
+.illu-pill-1{animation:pillPop .4s .6s both}
+.illu-pill-2{animation:pillPop .4s .72s both}
+.illu-pill-3{animation:pillPop .4s .84s both}
+.illu-pill-4{animation:pillPop .4s .96s both}
+.illu-pill-5{animation:pillPop .4s 1.08s both}
+.illu-progress{animation:progressFill .8s .9s cubic-bezier(.22,1,.36,1) both}
+.illu-check{stroke-dasharray:20;stroke-dashoffset:20;animation:checkDraw .4s .65s ease forwards}
+.illu-check2{stroke-dasharray:20;stroke-dashoffset:20;animation:checkDraw .4s .95s ease forwards}
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <div class="vc-logo-group">
+      <a href="../index.html" class="vc-logo">
+        <img src="vc-logo.svg" height="22" alt="VantageCircle"/>
+      </a>
+      <button class="sidebar-toggle" title="Toggle sidebar" onclick="toggleSidebar()">
+        <svg width="18" viewBox="0 0 19 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.75 13.5C0.75 10.4257 0.75 8.88858 1.42818 7.79898C1.67908 7.39585 1.99076 7.04522 2.34909 6.76295C3.31763 6 4.68397 6 7.41667 6H10.75C13.4827 6 14.849 6 15.8176 6.76295C16.1759 7.04522 16.4876 7.39585 16.7385 7.79898C17.4167 8.88858 17.4167 10.4257 17.4167 13.5C17.4167 16.5742 17.4167 18.1114 16.7385 19.201C16.4876 19.6042 16.1759 19.9547 15.8176 20.2371C14.849 21 13.4827 21 10.75 21H7.41667C4.68397 21 3.31763 21 2.34909 20.2371C1.99076 19.9547 1.67908 19.6042 1.42818 19.201C0.75 18.1114 0.75 16.5742 0.75 13.5Z" stroke="#5C6C7C" stroke-width="1.3"/>
+          <path d="M7.72656 6L7.72656 21" stroke="#5C6C7C" stroke-width="1.3" stroke-linejoin="round"/>
+          <path d="M3.9668 8.875H4.66124M3.9668 12.25H4.66124" stroke="#5C6C7C" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="vp-brand">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="currentColor"/></svg>
+      Vantage Pulse
+    </div>
+  </div>
+  <div class="navbar-right">
+    <div class="nav-icons">
+      <div class="nav-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11c1.657 0 3-1.343 3-3s-1.343-3-3-3"/><path d="M18 21c0-3.314-2.686-6-6-6s-6 2.686-6 6"/><circle cx="10" cy="8" r="3"/><path d="M21 15h-2m-1 0v-2m0 2v2"/></svg>
+      </div>
+      <div class="nav-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2h11C18.88 2 20 3.12 20 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-11C5.12 22 4 20.88 4 19.5v-15C4 3.12 5.12 2 6.5 2z"/><circle cx="12" cy="17" r="1"/></svg>
+      </div>
+      <div class="nav-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </div>
+    </div>
+    <div class="nav-avatar">
+      <img src="../assets/avatar.png" alt="Bhaskar" style="width:32px;height:32px;border-radius:50%;object-fit:cover;"/>
+    </div>
+  </div>
+</nav>
+
+<!-- ── SIDEBAR ─────────────────────────────────────────────── -->
+<aside class="sidebar">
+
+  <!-- Create Survey button -->
+  <button class="sidebar-create-btn" onclick="window.location.href='create-survey.html'">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10" cy="10" r="8.5"/><line x1="10" y1="6.5" x2="10" y2="13.5"/><line x1="6.5" y1="10" x2="13.5" y2="10"/>
+    </svg>
+    <span class="btn-text">Create Survey</span>
+  </button>
+
+  <nav class="sidebar-nav">
+
+    <!-- Overview -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1.5" y="1.5" width="5" height="5" rx="1"/><rect x="9.5" y="1.5" width="5" height="5" rx="1"/>
+          <rect x="1.5" y="9.5" width="5" height="5" rx="1"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Overview</span>
+    </div>
+
+    <!-- Insights -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12V8m4 4V5m4 7V7m4 5V3"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Insights</span>
+      <div class="nav-item-chevron">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Surveys (expanded) -->
+    <div class="nav-item active">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1.5" y="1.5" width="13" height="13" rx="2"/><line x1="4.5" y1="5.5" x2="11.5" y2="5.5"/><line x1="4.5" y1="8" x2="11.5" y2="8"/><line x1="4.5" y1="10.5" x2="8.5" y2="10.5"/>
+        </svg>
+      </div>
+      <span class="nav-item-text" style="color:#6941c6">Surveys</span>
+      <div class="nav-item-chevron open">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Surveys sub-items -->
+    <div class="nav-sub">
+      <div class="nav-sub-item active" onclick="window.location.href='create-survey.html'" style="cursor:pointer">Create</div>
+      <div class="nav-sub-item">Manage</div>
+      <div class="nav-sub-item">Question</div>
+      <div class="nav-sub-item">Templates</div>
+    </div>
+
+    <!-- Action Planing -->
+    <div class="nav-item" style="margin-top:4px">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5l2.5 1.5"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Action Planing</span>
+      <div class="nav-item-chevron">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Configuration -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="8" r="2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Configuration</span>
+      <div class="nav-item-chevron">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Reports -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.5 1.5H3a1.5 1.5 0 00-1.5 1.5v10A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V3A1.5 1.5 0 0013 1.5h-1.5"/><rect x="5" y="1" width="6" height="3" rx="1"/><line x1="5" y1="7" x2="11" y2="7"/><line x1="5" y1="10" x2="11" y2="10"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Reports</span>
+    </div>
+
+    <!-- AI Hub -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 2l1.5 3.5L13 7l-3.5 1.5L8 12l-1.5-3.5L3 7l3.5-1.5z"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">AI Hub</span>
+      <span class="nav-pro-badge">Pro</span>
+    </div>
+
+  </nav>
+</aside>
+
+<!-- ── MAIN ────────────────────────────────────────────────── -->
+<main class="main">
+  <div class="main-card">
+
+    <!-- Top bar: Back + Stepper -->
+    <div class="top-bar">
+      <button class="back-btn" onclick="window.location.href='create-survey.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M5 12l7 7M5 12l7-7"/>
+        </svg>
+        Back
+      </button>
+
+      <div class="steps-check">
+        <div class="steps-check-item is-active">
+          <div class="steps-check-pill"><span class="steps-check-num">1</span></div>
+          <span class="steps-check-label">Get Started</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+          <span class="steps-check-label">Select Questions</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Configure</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Preview &amp; Launch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-area">
+      <div class="content-inner">
+        <div class="content-card">
+
+          <div>
+            <div class="form-heading">Create your Pulse Survey</div>
+            <div class="form-subheading">Follow these simple steps to create and launch your employee pulse survey</div>
+          </div>
+
+          <div class="content-card-row">
+
+        <!-- Survey Illustration -->
+        <div class="illustration-col" style="order:2">
+          <svg viewBox="0 0 340 400" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
+            <!-- Soft background blob -->
+            <ellipse cx="170" cy="200" rx="145" ry="160" fill="#ede9fe" opacity=".35"/>
+
+            <!-- ── MAIN CLIPBOARD ── -->
+            <rect class="illu-clipboard" x="60" y="48" width="180" height="232" rx="16" fill="#fff" stroke="#e4e7ec" stroke-width="1.3" filter="url(#shadow)"/>
+            <defs>
+              <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#7f56d9" flood-opacity=".1"/>
+              </filter>
+            </defs>
+
+            <!-- Clip tab -->
+            <rect x="120" y="38" width="60" height="24" rx="7" fill="#7f56d9"/>
+            <rect x="132" y="43" width="36" height="14" rx="5" fill="#6941c6"/>
+            <circle cx="150" cy="50" r="4" fill="#fff" opacity=".4"/>
+
+            <!-- Header band -->
+            <rect x="60" y="62" width="180" height="36" rx="0" fill="#f9f5ff"/>
+            <rect x="76" y="73" width="60" height="7" rx="3.5" fill="#7f56d9" opacity=".7"/>
+            <rect x="144" y="75" width="36" height="5" rx="2.5" fill="#c4b5fd"/>
+
+            <!-- Divider -->
+            <line x1="76" y1="105" x2="224" y2="105" stroke="#f2f4f7" stroke-width="1"/>
+
+            <!-- Question 1 -->
+            <rect x="76" y="114" width="148" height="6" rx="3" fill="#344054" opacity=".7"/>
+            <rect x="76" y="124" width="110" height="5" rx="2.5" fill="#d0d5dd"/>
+            <!-- Rating pills -->
+            <rect class="illu-pill-1" x="76" y="135" width="22" height="18" rx="5" fill="#f4f3ff" stroke="#7f56d9" stroke-width="1.2"/>
+            <rect class="illu-pill-1" x="76" y="137" width="22" height="14" rx="4" fill="#7f56d9"/>
+            <rect class="illu-pill-2" x="102" y="135" width="22" height="18" rx="5" fill="#f9fafb" stroke="#e4e7ec" stroke-width="1"/>
+            <rect class="illu-pill-3" x="128" y="135" width="22" height="18" rx="5" fill="#f9fafb" stroke="#e4e7ec" stroke-width="1"/>
+            <rect class="illu-pill-4" x="154" y="135" width="22" height="18" rx="5" fill="#f9fafb" stroke="#e4e7ec" stroke-width="1"/>
+            <rect class="illu-pill-5" x="180" y="135" width="22" height="18" rx="5" fill="#f9fafb" stroke="#e4e7ec" stroke-width="1"/>
+
+            <!-- Divider -->
+            <line x1="76" y1="162" x2="224" y2="162" stroke="#f2f4f7" stroke-width="1"/>
+
+            <!-- Question 2 - checkbox list -->
+            <rect x="76" y="170" width="120" height="6" rx="3" fill="#344054" opacity=".7"/>
+            <!-- cb row 1 -->
+            <rect x="76" y="182" width="13" height="13" rx="3" fill="#e9d7fe" stroke="#7f56d9" stroke-width="1.2"/>
+            <path class="illu-check" d="M78.5 188.5l3 3 5-5" stroke="#7f56d9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="95" y="185" width="72" height="5" rx="2.5" fill="#d0d5dd"/>
+            <!-- cb row 2 -->
+            <rect x="76" y="200" width="13" height="13" rx="3" fill="#fff" stroke="#d0d5dd" stroke-width="1.2"/>
+            <rect x="95" y="203" width="88" height="5" rx="2.5" fill="#d0d5dd"/>
+            <!-- cb row 3 -->
+            <rect x="76" y="218" width="13" height="13" rx="3" fill="#e9d7fe" stroke="#7f56d9" stroke-width="1.2"/>
+            <path class="illu-check2" d="M78.5 224.5l3 3 5-5" stroke="#7f56d9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="95" y="221" width="60" height="5" rx="2.5" fill="#d0d5dd"/>
+
+            <!-- Divider -->
+            <line x1="76" y1="238" x2="224" y2="238" stroke="#f2f4f7" stroke-width="1"/>
+
+            <!-- Progress bar -->
+            <rect x="76" y="246" width="148" height="8" rx="4" fill="#f2f4f7"/>
+            <rect class="illu-progress" x="76" y="246" width="95" height="8" rx="4" fill="url(#prog)"/>
+            <defs>
+              <linearGradient id="prog" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#7f56d9"/>
+                <stop offset="100%" stop-color="#a78bfa"/>
+              </linearGradient>
+            </defs>
+            <rect x="76" y="258" width="30" height="5" rx="2.5" fill="#7f56d9" opacity=".5"/>
+            <rect x="194" y="258" width="30" height="5" rx="2.5" fill="#d0d5dd"/>
+
+            <!-- ── FLOATING RESPONSE CARD (top-right) ── -->
+            <rect x="208" y="72" width="112" height="68" rx="10" fill="#fff" stroke="#e4e7ec" stroke-width="1" filter="url(#shadow2)"/>
+            <defs>
+              <filter id="shadow2" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity=".08"/>
+              </filter>
+            </defs>
+            <circle cx="223" cy="90" r="10" fill="#e9d7fe"/>
+            <circle cx="223" cy="88" r="4" fill="#7f56d9"/>
+            <path d="M218 94c0-2.76 2.24-5 5-5s5 2.24 5 5" fill="#7f56d9" opacity=".5"/>
+            <rect x="238" y="83" width="48" height="6" rx="3" fill="#344054" opacity=".6"/>
+            <rect x="238" y="93" width="36" height="5" rx="2.5" fill="#d0d5dd"/>
+            <!-- mini stars -->
+            <path d="M223 102l1 2.5h2.5l-2 1.5.8 2.5-2.3-1.5-2.3 1.5.8-2.5-2-1.5H222z" fill="#f79009"/>
+            <path d="M230 102l1 2.5h2.5l-2 1.5.8 2.5-2.3-1.5-2.3 1.5.8-2.5-2-1.5H229z" fill="#f79009"/>
+            <path d="M237 102l1 2.5h2.5l-2 1.5.8 2.5-2.3-1.5-2.3 1.5.8-2.5-2-1.5H236z" fill="#f79009"/>
+            <path d="M244 102l1 2.5h2.5l-2 1.5.8 2.5-2.3-1.5-2.3 1.5.8-2.5-2-1.5H243z" fill="#d0d5dd"/>
+            <path d="M251 102l1 2.5h2.5l-2 1.5.8 2.5-2.3-1.5-2.3 1.5.8-2.5-2-1.5H250z" fill="#d0d5dd"/>
+
+            <!-- ── FLOATING ANALYTICS CARD (bottom-left) ── -->
+            <rect x="10" y="272" width="110" height="80" rx="10" fill="#fff" stroke="#e4e7ec" stroke-width="1" filter="url(#shadow2)"/>
+            <rect x="22" y="284" width="50" height="6" rx="3" fill="#344054" opacity=".6"/>
+            <rect x="22" y="294" width="35" height="5" rx="2.5" fill="#d0d5dd"/>
+            <!-- bar chart -->
+            <rect x="22" y="322" width="10" height="20" rx="2" fill="#c4b5fd"/>
+            <rect x="36" y="312" width="10" height="30" rx="2" fill="#7f56d9"/>
+            <rect x="50" y="318" width="10" height="24" rx="2" fill="#a78bfa"/>
+            <rect x="64" y="308" width="10" height="34" rx="2" fill="#6941c6"/>
+            <rect x="78" y="315" width="10" height="27" rx="2" fill="#c4b5fd"/>
+            <line x1="18" y1="344" x2="100" y2="344" stroke="#e4e7ec" stroke-width="1"/>
+
+            <!-- ── FLOATING PULSE TAG (bottom-right) ── -->
+            <rect x="222" y="298" width="100" height="36" rx="18" fill="#7f56d9"/>
+            <circle cx="241" cy="316" r="8" fill="#fff" opacity=".2"/>
+            <circle cx="241" cy="316" r="4" fill="#fff"/>
+            <!-- pulse line -->
+            <polyline points="251,316 256,316 259,308 263,324 267,312 271,316 276,316 280,316 283,310 287,322 291,316 298,316 308,316" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+            <!-- Decorative dots -->
+            <circle cx="42" cy="72" r="5" fill="#7f56d9" opacity=".2"/>
+            <circle cx="30" cy="88" r="3" fill="#a78bfa" opacity=".3"/>
+            <circle cx="295" cy="200" r="7" fill="#7f56d9" opacity=".15"/>
+            <circle cx="308" cy="218" r="4" fill="#a78bfa" opacity=".25"/>
+            <circle cx="20" cy="200" r="5" fill="#6941c6" opacity=".15"/>
+
+            <!-- Sparkle top-left -->
+            <path d="M36 130l2 6 2-6-2-6z" fill="#7f56d9" opacity=".4"/>
+            <path d="M30 136h12M36 130v12" stroke="#7f56d9" stroke-width="1" opacity=".3" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Form -->
+        <div class="form-col" style="order:1">
+          <div class="form-box">
+
+            <!-- Survey name -->
+            <div class="field">
+              <div class="field-label">
+                Survey name
+                <span class="required">*</span>
+              </div>
+              <input
+                id="survey-name"
+                type="text"
+                placeholder="Enter survey name"
+                oninput="onNameInput()"
+              />
+              <div class="field-error" id="name-error">
+                <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" stroke="#f04438"/><line x1="6" y1="4" x2="6" y2="6.5" stroke="#f04438" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="8.5" r=".6" fill="#f04438"/></svg>
+                Survey name is required.
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="field">
+              <div class="field-label">
+                Description
+                <span class="optional">(optional)</span>
+              </div>
+              <textarea placeholder="Enter a description..."></textarea>
+            </div>
+
+            <!-- QR Codes toggle -->
+            <div class="toggle-row">
+              <input type="checkbox" id="qr-toggle" class="check-btn"/>
+              <label for="qr-toggle" class="check-label">
+                <svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg>
+              </label>
+              <label for="qr-toggle" class="toggle-row-text" style="cursor:pointer">
+                <div class="toggle-row-title">QR Codes or Kiosks</div>
+                <div class="toggle-row-sub">For deskless employees</div>
+              </label>
+            </div>
+
+          </div>
+
+        </div>
+
+          </div><!-- /.content-card-row -->
+        </div><!-- /.content-card -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="page-footer">
+      <button class="btn-cancel" onclick="window.location.href='create-survey.html'">Cancel</button>
+      <button class="btn-proceed" id="btn-proceed" onclick="proceed()">
+        Save &amp; Proceed
+        <svg viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</main>
+
+<script>
+function onNameInput() {
+  const name = document.getElementById('survey-name').value.trim();
+  const input = document.getElementById('survey-name');
+  const err  = document.getElementById('name-error');
+  if (name.length > 0) {
+    input.classList.remove('error');
+    err.classList.remove('show');
+  }
+}
+
+function proceed() {
+  const name  = document.getElementById('survey-name').value.trim();
+  const input = document.getElementById('survey-name');
+  const err   = document.getElementById('name-error');
+  if (!name) {
+    input.classList.add('error');
+    err.classList.add('show');
+    input.focus();
+    return;
+  }
+  window.location.href = 'pulse-select-questions.html';
+}
+</script>
+<script>
+(function(){
+  var sidebar=document.querySelector('.sidebar');
+  var main=document.querySelector('.main');
+  if(sidebar&&localStorage.getItem('sidebarCollapsed')==='true'){
+    sidebar.classList.add('collapsed');
+    if(main)main.style.marginLeft='64px';
+  }
+})();
+function toggleSidebar(){
+  var sidebar=document.querySelector('.sidebar');
+  var main=document.querySelector('.main');
+  if(!sidebar)return;
+  var c=sidebar.classList.toggle('collapsed');
+  localStorage.setItem('sidebarCollapsed',c?'true':'false');
+  if(main)main.style.marginLeft=c?'64px':'252px';
+}
+</script>
+<script src="../assets/pulse-comments.js" data-project="create-survey" data-screen="get-started"></script>
+</body>
+</html>

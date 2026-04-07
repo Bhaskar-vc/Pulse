@@ -1,0 +1,21 @@
+{
+  "create-survey/get-started": [],
+  "create-survey/home": [
+    {
+      "id": 1774246756079,
+      "author": "Bhaskar",
+      "text": "Need to change the icons",
+      "ts": "2026-03-23T06:19:16Z",
+      "resolved": false
+    }
+  ],
+  "create-survey/preview-launch": [
+    {
+      "id": 1774253359433,
+      "author": "Bhaskar",
+      "text": "VC logo ned to update in the email template preview",
+      "ts": "2026-03-23T08:09:19Z",
+      "resolved": false
+    }
+  ]
+}

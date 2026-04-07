@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Input — Pulse Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Design tokens (Figma exact) ── */
+:root {
+  /* Border */
+  --border-neutral:   #e1e5ea;
+  --border-disabled:  #d0d5dd;
+  --border-error:     #fda29b;
+  --border-focus:     #d0d5dd;
+
+  /* Background */
+  --bg-white:         #ffffff;
+  --bg-disabled:      #f2f4f7;
+  --bg-page:          #f9fafb;
+
+  /* Text */
+  --text-label:       #707087;
+  --text-placeholder: #98a2b3;
+  --text-filled:      #29294c;
+  --text-hint:        #707087;
+  --text-error:       #d92d20;
+  --text-disabled:    #98a2b3;
+
+  /* Focus ring */
+  --focus-ring: 0 1px 2px rgba(16,24,40,.05), 0 0 0 4px #f2f4f7;
+
+  /* Spacing */
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+
+  /* Radius */
+  --radius-sm: 6px;
+
+  /* Sidebar */
+  --sidebar-w: 240px;
+  --font: 'Inter', sans-serif;
+
+  /* Brand */
+  --primary-700: #29294c;
+  --primary-100: #f4f4f6;
+  --primary-50:  #f9fafb;
+  --border-default: #eaeaed;
+  --text-secondary: #707087;
+  --text-tertiary: #9d9dad;
+  --secondary-700: #6941c6;
+}
+
+body { font-family: var(--font); color: var(--primary-700); background: var(--bg-page); display: flex; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar { width: var(--sidebar-w); min-width: var(--sidebar-w); background: #fff; border-right: 1px solid var(--border-default); padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid var(--border-default); margin-bottom: 16px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: var(--primary-700); }
+.sidebar-logo sub { font-size: 10px; color: var(--text-tertiary); font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--text-tertiary); }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main { margin-left: var(--sidebar-w); flex: 1; }
+.content { padding: 48px 56px; max-width: 960px; }
+
+/* ── Breadcrumb ── */
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--primary-700); }
+.breadcrumb-sep { opacity: .4; }
+
+/* ── Page header ── */
+.page-header { display: grid; grid-template-columns: auto 1fr; column-gap: 28px; row-gap: 0; align-items: start; margin-bottom: 48px; }
+.page-header-text { grid-column: 2; }
+.page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+.page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 640px; }
+.tag-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+.tag-figma  { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+.tag-wcag   { background: #eff8ff; color: #026aa2; border-color: #b9e6fe; }
+
+/* ── Section ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; }
+.section-desc  { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+.divider { border: none; border-top: 1px solid var(--border-default); margin: 0 0 56px; }
+
+/* ── Demo canvas ── */
+.demo-canvas {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 32px;
+}
+.demo-canvas + .demo-canvas { margin-top: 16px; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.demo-row + .demo-row { margin-top: 24px; }
+.demo-col { display: flex; flex-direction: column; gap: 20px; min-width: 220px; flex: 1; }
+.demo-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text-tertiary); margin-bottom: 4px; }
+
+/* ════════════════════════════════════════════
+   INPUT COMPONENT — Figma design tokens
+   ════════════════════════════════════════════ */
+
+/* Field wrapper */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+/* Label */
+.field-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-label);         /* #707087 */
+  letter-spacing: 0.03px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.4;
+}
+
+/* Hint / helper text */
+.field-hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-hint);           /* #707087 */
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.field-hint.is-error { color: var(--text-error); }
+
+/* ── Input wrapper ── */
+.input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--bg-white);
+  border: 1px solid var(--border-neutral);
+  border-radius: var(--radius-sm);    /* 6px */
+  height: 36px;
+  padding: 0 var(--spacing-md);      /* 0 12px */
+  gap: 8px;
+  transition: border-color .15s, box-shadow .15s;
+  cursor: text;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Hover */
+.input-wrap:hover:not(.is-disabled):not(.is-error) {
+  border-color: #9e77ed;
+}
+
+/* Focus */
+.input-wrap:focus-within:not(.is-error) {
+  border-color: #7f56d9;
+  box-shadow: 0 0 0 3px rgba(127,86,217,.12);
+}
+
+/* Error */
+.input-wrap.is-error {
+  border-color: var(--border-error);
+}
+.input-wrap.is-error:hover {
+  border-color: #f97066;
+}
+.input-wrap.is-error:focus-within {
+  border-color: #f04438;
+  box-shadow: 0 0 0 3px rgba(240,68,56,.12);
+}
+
+/* Disabled */
+.input-wrap.is-disabled {
+  background: var(--bg-disabled);
+  border-color: var(--border-disabled);
+  cursor: not-allowed;
+}
+
+/* Native input */
+.input-wrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-filled);
+  line-height: 1.4;
+  min-width: 0;
+}
+.input-wrap input::placeholder {
+  color: var(--text-placeholder);   /* #98a2b3 */
+}
+.input-wrap input:focus,
+.input-wrap input:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+.input-wrap input:disabled {
+  cursor: not-allowed;
+  color: var(--text-disabled);
+}
+
+/* Leading icon slot — 20×20 */
+.input-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--text-placeholder);
+}
+.input-wrap.is-error   .input-icon { color: #fda29b; }
+.input-wrap.is-disabled .input-icon { color: var(--border-disabled); }
+
+/* Trailing slot */
+.input-trailing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* Alert icon (error trailing) — 16×16 */
+.input-alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: #f97066;
+}
+
+/* Help icon — 16×16 */
+.help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--text-placeholder);
+  cursor: help;
+}
+
+/* Prefix / suffix badge (payment type) */
+.input-prefix,
+.input-suffix {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  background: #f2f4f7;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-label);
+  flex-shrink: 0;
+  padding: 0 10px;
+  gap: 4px;
+}
+.input-prefix {
+  border-right: 1px solid var(--border-neutral);
+  margin-left: -12px;
+}
+.input-suffix {
+  border-left: 1px solid var(--border-neutral);
+  margin-right: -12px;
+}
+
+/* Textarea variant */
+.input-wrap.is-textarea {
+  height: auto;
+  min-height: 100px;
+  align-items: flex-start;
+  padding: 8px 12px;
+  overflow: visible; /* allow resize handle */
+}
+.input-wrap.is-textarea textarea {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text-filled);
+  resize: vertical;
+  line-height: 1.4;
+  min-width: 0;
+  min-height: 80px;
+  width: 100%;
+}
+.input-wrap.is-textarea textarea:focus,
+.input-wrap.is-textarea textarea:focus-visible { outline: none; box-shadow: none; border: none; }
+.input-wrap.is-textarea textarea::placeholder { color: var(--text-placeholder); }
+.char-count { font-size: 11px; color: var(--text-tertiary); text-align: right; margin-top: 4px; }
+
+/* Textarea states grid */
+.textarea-states-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+/* ── States grid ── */
+.states-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+.state-card {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 20px 16px 16px;
+}
+.state-card-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-tertiary);
+  margin-bottom: 14px;
+}
+.state-note {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 12px;
+  line-height: 1.5;
+}
+.state-note code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  background: var(--primary-50);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--secondary-700);
+}
+
+/* ── Props table ── */
+.props-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.props-table th { text-align: left; padding: 10px 14px; background: var(--primary-50); color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border-default); }
+.props-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; line-height: 1.4; }
+.props-table tr:last-child td { border-bottom: none; }
+.props-table tbody tr:hover td { background: var(--primary-50); }
+.badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 4px; }
+.badge-bool     { background: #ecfdf3; color: #039855; }
+.badge-string   { background: #eff8ff; color: #026aa2; }
+.badge-enum     { background: #f9f5ff; color: #6941c6; }
+.badge-optional { background: var(--primary-100); color: var(--text-secondary); }
+code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--primary-50); padding: 2px 6px; border-radius: 4px; color: var(--secondary-700); }
+
+/* ── Code block ── */
+.code-block { position: relative; background: #1e1e2e; border-radius: 10px; padding: 20px; overflow-x: auto; margin-top: 12px; }
+.code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; color: #cdd6f4; }
+.code-block .token-tag    { color: #89dceb; }
+.code-block .token-attr   { color: #89b4fa; }
+.code-block .token-str    { color: #a6e3a1; }
+.code-block .token-comment { color: #6c7086; font-style: italic; }
+.copy-btn { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #cdd6f4; font-size: 11px; font-family: var(--font); font-weight: 500; padding: 5px 12px; border-radius: 6px; cursor: pointer; transition: background .15s; }
+.copy-btn:hover { background: rgba(255,255,255,.15); }
+
+/* ── Do/Don't ── */
+.do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.do-card, .dont-card { border-radius: 12px; overflow: hidden; border: 1px solid var(--border-default); }
+.do-card .card-header   { background: #ecfdf3; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #039855; display: flex; align-items: center; gap: 6px; }
+.dont-card .card-header { background: #fef3f2; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #d92d20; display: flex; align-items: center; gap: 6px; }
+.card-body { padding: 20px; background: #fff; }
+.card-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px; }
+.card-body p:last-child { margin-bottom: 0; }
+.card-example { margin-top: 16px; padding: 20px; background: var(--primary-50); border-radius: 8px; display: flex; flex-direction: column; gap: 12px; }
+
+/* ── Guide table ── */
+.guide-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.guide-table th { text-align: left; padding: 10px 14px; background: var(--primary-50); color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border-default); }
+.guide-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; line-height: 1.5; }
+.guide-table tr:last-child td { border-bottom: none; }
+
+/* ── SVG icon helpers ── */
+.icon { display: inline-flex; align-items: center; justify-content: center; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+<link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon"><span></span><span></span><span></span></span>
+</button>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle" style="display:block"/></a>
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+    <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link active">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+<div class="content">
+
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Components</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Input</span>
+  </div>
+
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="ph-folder-icon">
+      <div class="ph-folder-wrap">
+        <div class="ph-paper ph-paper-1"></div>
+        <div class="ph-paper ph-paper-2"></div>
+        <div class="ph-paper ph-paper-3"></div>
+        <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+        <span class="ph-folder-label">INPUT</span>
+      </div>
+    </div>
+    <div class="page-header-text">
+      <h1 class="page-title">Input</h1>
+      <p class="page-subtitle">Input fields let users enter and edit text. Supports three types — Default, With leading icon, and Payment — each with label, hint text, help icon, and full state coverage.</p>
+      <div class="tag-row">
+        <span class="tag tag-stable">Stable</span>
+        <span class="tag tag-wcag">WCAG AA</span>
+        <span class="tag tag-figma">Figma · 245-13276</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">The complete input with label, leading icon, and hint text — the most common configuration.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+
+        <!-- Label + icon + hint -->
+        <div style="max-width:320px;width:100%">
+          <div class="field">
+            <label class="field-label">
+              Email address
+              <span class="help-icon" title="We'll never share your email">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 7.5v3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5.5" r=".75" fill="currentColor"/></svg>
+              </span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5l8 5 8-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>
+              </span>
+              <input type="email" placeholder="you@company.com">
+            </div>
+            <span class="field-hint">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/><path d="M7 6.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="7" cy="4.5" r=".65" fill="currentColor"/></svg>
+              This is a hint explaining what to enter.
+            </span>
+          </div>
+        </div>
+
+        <!-- Label + no icon -->
+        <div style="max-width:320px;width:100%">
+          <div class="field">
+            <label class="field-label">Full name</label>
+            <div class="input-wrap">
+              <input type="text" placeholder="Jane Appleseed">
+            </div>
+          </div>
+        </div>
+
+        <!-- Error state with hint -->
+        <div style="max-width:320px;width:100%">
+          <div class="field">
+            <label class="field-label">Email address</label>
+            <div class="input-wrap is-error">
+              <span class="input-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5l8 5 8-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>
+              </span>
+              <input type="email" value="not-an-email" readonly>
+              <span class="input-alert">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#f97066" stroke-width="1.2"/><path d="M8 5v4" stroke="#f97066" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="11" r=".7" fill="#f97066"/></svg>
+              </span>
+            </div>
+            <span class="field-hint is-error">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/><path d="M7 4.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="7" cy="9.5" r=".65" fill="currentColor"/></svg>
+              This doesn't look like a valid email.
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══ STATES ════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">States</h2>
+    <p class="section-desc">All five interactive states. Each is visually distinct and never relies on colour alone.</p>
+
+    <div class="states-grid">
+
+      <!-- Placeholder -->
+      <div class="state-card">
+        <div class="state-card-label">Placeholder</div>
+        <div class="field">
+          <label class="field-label">Email</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5l8 5 8-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>
+            </span>
+            <input type="email" placeholder="olivia@untitledui.com" readonly>
+          </div>
+        </div>
+        <p class="state-note">Border <code>#e1e5ea</code> · Placeholder <code>#98a2b3</code></p>
+      </div>
+
+      <!-- Focused -->
+      <div class="state-card">
+        <div class="state-card-label">Focused</div>
+        <div class="field">
+          <label class="field-label">Email</label>
+          <div class="input-wrap" style="border-color:#7f56d9;box-shadow:0 0 0 3px rgba(127,86,217,.12);">
+            <span class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5l8 5 8-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>
+            </span>
+            <input type="email" value="olivia@untitledui.com" readonly>
+          </div>
+        </div>
+        <p class="state-note">Border <code>#7f56d9</code> · Ring <code>3px rgba(127,86,217,.12)</code></p>
+      </div>
+
+      <!-- Filled -->
+      <div class="state-card">
+        <div class="state-card-label">Filled</div>
+        <div class="field">
+          <label class="field-label">Email</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5l8 5 8-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>
+            </span>
+            <input type="email" value="olivia@untitledui.com" readonly>
+          </div>
+        </div>
+        <p class="state-note">Border <code>#e1e5ea</code> · Text <code>#29294c</code></p>
+      </div>
+
+      <!-- Disabled -->
+      <div class="state-card">
+        <div class="state-card-label">Disabled</div>
+        <div class="field">
+          <label class="field-label" style="opacity:.5">Email</label>
+          <div class="input-wrap is-disabled">
+            <span class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5l8 5 8-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>
+            </span>
+            <input type="email" placeholder="olivia@untitledui.com" disabled>
+          </div>
+        </div>
+        <p class="state-note">BG <code>#f2f4f7</code> · Border <code>#d0d5dd</code></p>
+      </div>
+
+      <!-- Error -->
+      <div class="state-card">
+        <div class="state-card-label">Destructive (Error)</div>
+        <div class="field">
+          <label class="field-label">Email</label>
+          <div class="input-wrap is-error">
+            <span class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5l8 5 8-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>
+            </span>
+            <input type="email" value="not-an-email" readonly>
+            <span class="input-alert">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#f97066" stroke-width="1.2"/><path d="M8 5v4" stroke="#f97066" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="11" r=".7" fill="#f97066"/></svg>
+            </span>
+          </div>
+          <span class="field-hint is-error">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/><path d="M7 4.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="7" cy="9.5" r=".65" fill="currentColor"/></svg>
+            This is an error message.
+          </span>
+        </div>
+        <p class="state-note">Border <code>#fda29b</code> · Hint <code>#d92d20</code></p>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══ TYPES ═════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Types</h2>
+    <p class="section-desc">Three structural types — choose based on context.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+
+        <!-- Default (no icon) -->
+        <div class="demo-col">
+          <div class="demo-label">Default</div>
+          <div class="field">
+            <label class="field-label">Full name</label>
+            <div class="input-wrap">
+              <input type="text" placeholder="Jane Appleseed">
+            </div>
+          </div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Plain field with no leading icon. Use for names, free-form text.</p>
+        </div>
+
+        <!-- With leading icon -->
+        <div class="demo-col">
+          <div class="demo-label">With leading icon</div>
+          <div class="field">
+            <label class="field-label">Email address</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5l8 5 8-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3.5" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>
+              </span>
+              <input type="email" placeholder="olivia@untitledui.com">
+            </div>
+          </div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">20px icon at left edge. Use for email, search, phone, URL.</p>
+        </div>
+
+        <!-- Payment / prefix-suffix -->
+        <div class="demo-col">
+          <div class="demo-label">Payment input</div>
+          <div class="field">
+            <label class="field-label">Card number</label>
+            <div class="input-wrap">
+              <div class="input-prefix" style="background:#fff;border-right-color:#f2f4f7;">
+                <svg width="23" height="16" viewBox="0 0 23 16" fill="none"><rect x=".5" y=".5" width="22" height="15" rx="3.5" fill="#fff" stroke="#f2f4f7"/><circle cx="8.5" cy="8" r="4.5" fill="#eb001b"/><circle cx="14.5" cy="8" r="4.5" fill="#f79e1b"/><path d="M11.5 4.76a4.5 4.5 0 010 6.48A4.5 4.5 0 0111.5 4.76z" fill="#ff5f00"/></svg>
+              </div>
+              <input type="text" placeholder="Card number">
+            </div>
+          </div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Payment badge icon at left. Also supports text prefix/suffix.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Prefix / suffix -->
+    <div class="demo-canvas" style="margin-top:16px;">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">Prefix badge</div>
+          <div class="field">
+            <label class="field-label">Amount</label>
+            <div class="input-wrap">
+              <div class="input-prefix">USD</div>
+              <input type="number" placeholder="1,000.00">
+            </div>
+          </div>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Suffix badge</div>
+          <div class="field">
+            <label class="field-label">Weight</label>
+            <div class="input-wrap">
+              <input type="number" placeholder="0.00">
+              <div class="input-suffix">kg</div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Prefix + suffix</div>
+          <div class="field">
+            <label class="field-label">Budget</label>
+            <div class="input-wrap">
+              <div class="input-prefix">$</div>
+              <input type="number" placeholder="0.00">
+              <div class="input-suffix">USD</div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Phone</div>
+          <div class="field">
+            <label class="field-label">Phone number</label>
+            <div class="input-wrap">
+              <div class="input-prefix">
+                <svg width="16" height="11" viewBox="0 0 16 11" fill="none"><rect width="16" height="11" rx="2" fill="#f0f9ff"/><rect width="6" height="11" rx="2 0 0 2" fill="#0057b7"/><rect x="6" width="10" height="11" fill="#ffd700"/></svg>
+                US
+              </div>
+              <input type="tel" placeholder="+1 (555) 000-0000">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Textarea + search + password -->
+    <div class="demo-canvas" style="margin-top:16px;">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">Textarea</div>
+          <div class="field">
+            <label class="field-label">
+              Description
+              <span style="color:#d92d20;font-size:14px;line-height:1;margin-left:1px;">*</span>
+            </label>
+            <div class="input-wrap is-textarea">
+              <textarea placeholder="Enter a description..." style="min-height:72px;"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Search</div>
+          <div class="field">
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M13.5 13.5l3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              </span>
+              <input type="search" placeholder="Search…">
+            </div>
+          </div>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Password</div>
+          <div class="field">
+            <label class="field-label">Password</label>
+            <div class="input-wrap" id="pw-wrap">
+              <span class="input-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="9" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 9V7a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              </span>
+              <input type="password" id="pw-input" placeholder="Enter password">
+              <span class="input-trailing">
+                <button onclick="togglePw()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;color:var(--text-placeholder);padding:2px;" title="Show/hide">
+                  <svg id="eye-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="8" rx="6" ry="4" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.8" stroke="currentColor" stroke-width="1.2"/></svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══ TEXTAREA ══════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Textarea</h2>
+    <p class="section-desc">Multi-line text input. Shares the same tokens and states as the standard input field.</p>
+
+    <!-- States -->
+    <div class="textarea-states-grid">
+
+      <!-- Placeholder -->
+      <div class="state-card">
+        <div class="state-card-label">Placeholder</div>
+        <div class="field">
+          <label class="field-label">
+            Description
+            <span style="color:#d92d20;font-size:14px;line-height:1;margin-left:1px;">*</span>
+          </label>
+          <div class="input-wrap is-textarea">
+            <textarea placeholder="Enter a description..."></textarea>
+          </div>
+        </div>
+        <p class="state-note">Border <code>#e1e5ea</code> · Placeholder <code>#98a2b3</code></p>
+      </div>
+
+      <!-- Focused -->
+      <div class="state-card">
+        <div class="state-card-label">Focused</div>
+        <div class="field">
+          <label class="field-label">
+            Description
+            <span style="color:#d92d20;font-size:14px;line-height:1;margin-left:1px;">*</span>
+          </label>
+          <div class="input-wrap is-textarea" style="border-color:#7f56d9;box-shadow:0 0 0 3px rgba(127,86,217,.12);">
+            <textarea>A little about the company and the team that you'll be working with.</textarea>
+          </div>
+        </div>
+        <p class="state-note">Border <code>#7f56d9</code> · Ring <code>3px rgba(127,86,217,.12)</code></p>
+      </div>
+
+      <!-- Filled -->
+      <div class="state-card">
+        <div class="state-card-label">Filled</div>
+        <div class="field">
+          <label class="field-label">
+            Description
+            <span style="color:#d92d20;font-size:14px;line-height:1;margin-left:1px;">*</span>
+          </label>
+          <div class="input-wrap is-textarea">
+            <textarea>A little about the company and the team that you'll be working with.</textarea>
+          </div>
+        </div>
+        <p class="state-note">Border <code>#e1e5ea</code> · Text <code>#29294c</code></p>
+      </div>
+
+      <!-- Disabled -->
+      <div class="state-card">
+        <div class="state-card-label">Disabled</div>
+        <div class="field">
+          <label class="field-label" style="opacity:.5">
+            Description
+            <span style="color:#d92d20;font-size:14px;line-height:1;margin-left:1px;">*</span>
+          </label>
+          <div class="input-wrap is-textarea is-disabled">
+            <textarea placeholder="Enter a description..." disabled></textarea>
+          </div>
+        </div>
+        <p class="state-note">BG <code>#f2f4f7</code> · Border <code>#d0d5dd</code></p>
+      </div>
+
+      <!-- Error -->
+      <div class="state-card">
+        <div class="state-card-label">Destructive (Error)</div>
+        <div class="field">
+          <label class="field-label">
+            Description
+            <span style="color:#d92d20;font-size:14px;line-height:1;margin-left:1px;">*</span>
+          </label>
+          <div class="input-wrap is-textarea is-error">
+            <textarea placeholder="Enter a description..."></textarea>
+          </div>
+          <span class="field-hint is-error">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/><path d="M7 4.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="7" cy="9.5" r=".65" fill="currentColor"/></svg>
+            This is an error message.
+          </span>
+        </div>
+        <p class="state-note">Border <code>#fda29b</code> · Hint <code>#d92d20</code></p>
+      </div>
+
+      <!-- With hint + char count -->
+      <div class="state-card">
+        <div class="state-card-label">With hint &amp; char count</div>
+        <div class="field">
+          <label class="field-label">
+            Description
+            <span class="help-icon" title="Tell us a bit about yourself">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 7.5v3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5.5" r=".75" fill="currentColor"/></svg>
+            </span>
+          </label>
+          <div class="input-wrap is-textarea">
+            <textarea id="ta-count" placeholder="Enter a description..." oninput="updateCount(this)" maxlength="500"></textarea>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+            <span class="field-hint">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/><path d="M7 6.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="7" cy="4.5" r=".65" fill="currentColor"/></svg>
+              This is a hint text to help user.
+            </span>
+            <span class="char-count" id="ta-count-display" style="margin-top:0;">0 / 500</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══ LABEL & HINT ══════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Label &amp; Hint Combinations</h2>
+    <p class="section-desc">Label and hint are independently optional. Combine them freely.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+
+        <div style="min-width:200px;flex:1">
+          <div class="demo-label">No label, no hint</div>
+          <div class="field">
+            <div class="input-wrap">
+              <input type="text" placeholder="Placeholder text">
+            </div>
+          </div>
+        </div>
+
+        <div style="min-width:200px;flex:1">
+          <div class="demo-label">Label only</div>
+          <div class="field">
+            <label class="field-label">Field label</label>
+            <div class="input-wrap">
+              <input type="text" placeholder="Placeholder text">
+            </div>
+          </div>
+        </div>
+
+        <div style="min-width:200px;flex:1">
+          <div class="demo-label">Label + help icon + hint</div>
+          <div class="field">
+            <label class="field-label">
+              Field label
+              <span class="help-icon" title="More context">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 7.5v3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5.5" r=".75" fill="currentColor"/></svg>
+              </span>
+            </label>
+            <div class="input-wrap">
+              <input type="text" placeholder="Placeholder text">
+            </div>
+            <span class="field-hint">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/><path d="M7 6.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="7" cy="4.5" r=".65" fill="currentColor"/></svg>
+              Helpful supporting information.
+            </span>
+          </div>
+        </div>
+
+        <div style="min-width:200px;flex:1">
+          <div class="demo-label">Error hint (no label)</div>
+          <div class="field">
+            <div class="input-wrap is-error">
+              <input type="text" value="bad input" readonly>
+              <span class="input-alert">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#f97066" stroke-width="1.2"/><path d="M8 5v4" stroke="#f97066" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="11" r=".7" fill="#f97066"/></svg>
+              </span>
+            </div>
+            <span class="field-hint is-error">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/><path d="M7 4.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="7" cy="9.5" r=".65" fill="currentColor"/></svg>
+              Inline error without a label.
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══ PROPS TABLE ════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Props / Variants</h2>
+    <p class="section-desc">All component properties mirroring the Figma component API.</p>
+
+    <table class="props-table">
+      <thead>
+        <tr>
+          <th>Prop</th><th>Type</th><th>Default</th><th>Options / Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>type</code></td>
+          <td><span class="badge badge-enum">enum</span></td>
+          <td><code>default</code></td>
+          <td><code>default</code> · <code>input-field</code> · <code>payment</code> · <code>textarea</code> · <code>search</code> · <code>password</code></td>
+        </tr>
+        <tr>
+          <td><code>state</code></td>
+          <td><span class="badge badge-enum">enum</span></td>
+          <td><code>placeholder</code></td>
+          <td><code>placeholder</code> · <code>focused</code> · <code>filled</code> · <code>disabled</code></td>
+        </tr>
+        <tr>
+          <td><code>label</code></td>
+          <td><span class="badge badge-string">string</span></td>
+          <td>—</td>
+          <td>12px / 400 / <code>#707087</code>. When set, renders a <code>&lt;label&gt;</code> above the field.</td>
+        </tr>
+        <tr>
+          <td><code>placeholder</code></td>
+          <td><span class="badge badge-string">string</span></td>
+          <td>—</td>
+          <td>14px / <code>#98a2b3</code>. Short hint shown inside the empty field.</td>
+        </tr>
+        <tr>
+          <td><code>hintText</code></td>
+          <td><span class="badge badge-string">string</span></td>
+          <td>—</td>
+          <td>12px / <code>#707087</code>. Turns <code>#d92d20</code> when <code>destructive=true</code>.</td>
+        </tr>
+        <tr>
+          <td><code>leadingIcon</code></td>
+          <td><span class="badge badge-bool">boolean</span></td>
+          <td><code>false</code></td>
+          <td>20×20px icon at the left edge of the input container.</td>
+        </tr>
+        <tr>
+          <td><code>helpIcon</code></td>
+          <td><span class="badge badge-bool">boolean</span></td>
+          <td><code>false</code></td>
+          <td>16×16px circled ⓘ appended to the label.</td>
+        </tr>
+        <tr>
+          <td><code>destructive</code></td>
+          <td><span class="badge badge-bool">boolean</span></td>
+          <td><code>false</code></td>
+          <td>Switches border to <code>#fda29b</code>, adds alert icon, hint turns <code>#d92d20</code>.</td>
+        </tr>
+        <tr>
+          <td><code>disabled</code></td>
+          <td><span class="badge badge-bool">boolean</span></td>
+          <td><code>false</code></td>
+          <td>BG <code>#f2f4f7</code>, border <code>#d0d5dd</code>, cursor <code>not-allowed</code>.</td>
+        </tr>
+        <tr>
+          <td><code>prefix</code></td>
+          <td><span class="badge badge-string">string</span></td>
+          <td>—</td>
+          <td>Fixed badge on the left (e.g. <code>$</code>, <code>USD</code>, <code>US</code>). Payment type only.</td>
+        </tr>
+        <tr>
+          <td><code>suffix</code></td>
+          <td><span class="badge badge-string">string</span></td>
+          <td>—</td>
+          <td>Fixed badge on the right (e.g. <code>.00</code>, <code>kg</code>). Payment type only.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══ CODE ══════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Code</h2>
+    <p class="section-desc">Copy-paste HTML for each input variant.</p>
+
+    <h3 style="font-size:13px;font-weight:600;color:var(--primary-700);margin-bottom:4px;">Default with label &amp; hint</h3>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"field"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"field-label"</span> <span class="token-attr">for</span>=<span class="token-str">"email"</span><span class="token-tag">&gt;</span>Email address<span class="token-tag">&lt;/label&gt;</span>
+  <span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-wrap"</span><span class="token-tag">&gt;</span>
+    <span class="token-comment">&lt;!-- optional: leading icon --&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"input-icon"</span><span class="token-tag">&gt;</span>…svg…<span class="token-tag">&lt;/span&gt;</span>
+    <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"email"</span> <span class="token-attr">id</span>=<span class="token-str">"email"</span> <span class="token-attr">placeholder</span>=<span class="token-str">"you@company.com"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;/div&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"field-hint"</span><span class="token-tag">&gt;</span>We'll never share your email.<span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></pre>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:600;color:var(--primary-700);margin:20px 0 4px;">Error / Destructive state</h3>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-wrap is-error"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"input-icon"</span><span class="token-tag">&gt;</span>…svg…<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"email"</span> <span class="token-attr">aria-invalid</span>=<span class="token-str">"true"</span> <span class="token-attr">aria-describedby</span>=<span class="token-str">"err"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"input-alert"</span><span class="token-tag">&gt;</span>…alert-circle svg…<span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span>
+<span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"field-hint is-error"</span> <span class="token-attr">id</span>=<span class="token-str">"err"</span> <span class="token-attr">role</span>=<span class="token-str">"alert"</span><span class="token-tag">&gt;</span>
+  Enter a valid email address.
+<span class="token-tag">&lt;/span&gt;</span></pre>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:600;color:var(--primary-700);margin:20px 0 4px;">Disabled</h3>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-wrap is-disabled"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"text"</span> <span class="token-attr">placeholder</span>=<span class="token-str">"Not editable"</span> <span class="token-attr">disabled</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></pre>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:600;color:var(--primary-700);margin:20px 0 4px;">Payment / prefix-suffix</h3>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-wrap"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-prefix"</span><span class="token-tag">&gt;</span>USD<span class="token-tag">&lt;/div&gt;</span>
+  <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"number"</span> <span class="token-attr">placeholder</span>=<span class="token-str">"0.00"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-str">"input-suffix"</span><span class="token-tag">&gt;</span>.00<span class="token-tag">&lt;/div&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══ DO / DON'T ════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Do's &amp; Don'ts</h2>
+    <div class="do-dont-grid">
+
+      <div class="do-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Do
+        </div>
+        <div class="card-body">
+          <p>Always pair a visible <code>&lt;label&gt;</code> with every input. Link them with <code>for</code>/<code>id</code> for screen readers.</p>
+          <div class="card-example">
+            <div class="field">
+              <label class="field-label" for="do-email">Work email</label>
+              <div class="input-wrap">
+                <input type="email" id="do-email" placeholder="jane@acme.com">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dont-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="#d92d20" stroke-width="2" stroke-linecap="round"/></svg>
+          Don't
+        </div>
+        <div class="card-body">
+          <p>Don't use placeholder text as a substitute for a label — it disappears when the user starts typing.</p>
+          <div class="card-example">
+            <div class="field">
+              <div class="input-wrap">
+                <input type="email" placeholder="Work email ← not a label!">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="do-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Do
+        </div>
+        <div class="card-body">
+          <p>Show inline error messages immediately below the field. Include an icon alongside the text for accessibility.</p>
+          <div class="card-example">
+            <div class="field">
+              <label class="field-label">Email</label>
+              <div class="input-wrap is-error">
+                <input type="email" value="not-valid" readonly>
+                <span class="input-alert"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#f97066" stroke-width="1.2"/><path d="M8 5v4" stroke="#f97066" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="11" r=".7" fill="#f97066"/></svg></span>
+              </div>
+              <span class="field-hint is-error">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/><path d="M7 4.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="7" cy="9.5" r=".65" fill="currentColor"/></svg>
+                Enter a valid email address.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dont-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="#d92d20" stroke-width="2" stroke-linecap="round"/></svg>
+          Don't
+        </div>
+        <div class="card-body">
+          <p>Don't rely only on border colour to signal an error. Always add a text message — colour-blind users will miss a colour-only signal.</p>
+          <div class="card-example">
+            <div class="field">
+              <div class="input-wrap" style="border-color:#fda29b;">
+                <input type="email" value="not-valid" readonly>
+              </div>
+              <!-- intentionally no error message — bad pattern -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══ ACCESSIBILITY ══════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Accessibility</h2>
+    <table class="guide-table">
+      <thead><tr><th>Requirement</th><th>Implementation</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Visible label</strong></td>
+          <td>Every input must have a visible <code>&lt;label&gt;</code> linked via <code>for</code>/<code>id</code>. Never use <code>aria-label</code> alone.</td>
+        </tr>
+        <tr>
+          <td><strong>Error association</strong></td>
+          <td>Add <code>aria-invalid="true"</code> to the input and <code>aria-describedby</code> pointing to the hint element. Add <code>role="alert"</code> on the hint to announce it live.</td>
+        </tr>
+        <tr>
+          <td><strong>Focus visible</strong></td>
+          <td>The grey focus ring (<code>0 0 0 4px #f2f4f7</code>) renders outside the border — compliant with WCAG 2.4.11 Focus Appearance.</td>
+        </tr>
+        <tr>
+          <td><strong>Disabled</strong></td>
+          <td>Use the native <code>disabled</code> attribute. The input is excluded from tab order automatically and background changes to <code>#f2f4f7</code>.</td>
+        </tr>
+        <tr>
+          <td><strong>Colour contrast</strong></td>
+          <td>Filled text <code>#29294c</code> on white exceeds 7:1 (WCAG AAA). Label <code>#707087</code> on white meets 4.5:1 (WCAG AA).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /content -->
+</main>
+
+<script>
+function updateCount(el) {
+  const display = document.getElementById('ta-count-display');
+  if (display) display.textContent = el.value.length + ' / 500';
+}
+function togglePw() {
+  const input = document.getElementById('pw-input');
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+function copyCode(btn) {
+  const pre = btn.nextElementSibling;
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1800);
+  });
+}
+</script>
+</body>
+</html>

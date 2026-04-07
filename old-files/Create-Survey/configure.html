@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1512"/>
+<title>Configure – Create Survey – Vantage Pulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;overflow:hidden;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
+button,input,textarea,select{font-family:inherit}
+a{text-decoration:none;color:inherit}
+
+/* ── NAVBAR ─────────────────────────────────────────────── */
+.navbar{position:fixed;top:0;left:0;right:0;height:64px;background:transparent;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:200}
+.navbar-left{display:flex;align-items:center;gap:12px}
+.vc-logo-group{display:flex;align-items:center;gap:10px}
+.vc-logo{display:flex;align-items:center}
+.sidebar-toggle{display:flex;align-items:center;justify-content:center;padding:4px;border:none;background:none;cursor:pointer;border-radius:6px}
+.sidebar-toggle:hover{background:rgba(92,108,124,.12)}
+.nav-divider{width:1px;height:28px;background:#e4e7ec;margin:0 4px}
+.vp-brand{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:#6941c6;padding:6px 16px 6px 10px;border-radius:50px}
+.vp-brand svg{width:20px;height:20px}
+.navbar-right{display:flex;align-items:center;gap:16px}
+.nav-icons{display:flex;align-items:center;gap:16px}
+.nav-icon-btn{width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#667085;cursor:pointer}
+.nav-icon-btn svg{width:22px;height:22px}
+.nav-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;cursor:pointer;background:#e9d7fe;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#6941c6;flex-shrink:0}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar{position:fixed;top:64px;left:0;width:252px;height:calc(100vh - 64px);background:transparent;display:flex;flex-direction:column;padding:0 12px 24px;z-index:100;overflow-y:auto;transition:width .22s ease}
+.sidebar-create-btn{display:flex;align-items:center;gap:8px;background:#7f56d9;color:#fff;font-size:14px;font-weight:500;padding:8px 16px 8px 12px;border-radius:8px;cursor:pointer;width:100%;margin-bottom:8px;transition:background .15s;border:none;overflow:hidden;white-space:nowrap}
+.sidebar-create-btn:hover{background:#6941c6}
+.sidebar-create-btn svg{width:20px;height:20px;flex-shrink:0}
+.sidebar.collapsed{width:64px;padding:0 8px;align-items:center}
+.sidebar.collapsed .sidebar-create-btn{padding:8px;width:40px;min-width:unset;border-radius:10px;justify-content:center;margin-bottom:16px}
+.sidebar.collapsed .sidebar-create-btn .btn-text{display:none}
+.sidebar.collapsed .nav-item{justify-content:center;padding:10px 0;gap:0}
+.sidebar.collapsed .nav-item-text,.sidebar.collapsed .nav-item-chevron,.sidebar.collapsed .nav-sub,.sidebar.collapsed .nav-pro-badge{display:none}
+.sidebar.collapsed .nav-item-icon{width:20px;height:20px}
+.sidebar-nav{display:flex;flex-direction:column;gap:2px;width:100%}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;width:100%;transition:background .15s;font-size:12px;font-weight:500;color:#545470}
+.nav-item:hover{background:#f9fafb}
+.nav-item.active{color:#6941c6}
+.nav-item-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-item-icon svg{width:20px;height:20px}
+.nav-item-text{flex:1;font-size:12px;font-weight:500}
+.nav-item-chevron{width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:#98a2b3;flex-shrink:0}
+.nav-item-chevron svg{width:16px;height:16px}
+.nav-item-chevron.open svg{transform:rotate(90deg)}
+.nav-sub{display:flex;flex-direction:column;gap:0;position:relative;margin-left:13px}
+.nav-sub::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:#e4e7ec}
+.nav-sub-item{display:flex;align-items:center;padding:8px 10px 8px 18px;font-size:12px;font-weight:500;color:#545470;cursor:pointer;border-radius:8px;transition:background .15s}
+.nav-sub-item:hover{background:#f9fafb}
+.nav-sub-item.active{color:#6941c6}
+.nav-pro-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:400;color:#fff;background:linear-gradient(150deg,#dc6803 7%,#7f56d9 71%);line-height:16px}
+
+/* ── MAIN ────────────────────────────────────────────────── */
+.main{margin-top:64px;margin-left:252px;padding:0 16px 16px 0;height:calc(100vh - 64px);overflow:hidden;display:flex;flex-direction:column;transition:margin-left .22s ease}
+.main-card{background:#fff;border-radius:18px;box-shadow:0 4px 8px -2px rgba(16,24,40,.1),0 2px 4px -2px rgba(16,24,40,.06);flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+
+/* ── TOP BAR ────────────────────────────────────────────── */
+.top-bar{display:flex;align-items:center;padding:18px 30px;border-bottom:1px solid #f2f4f7;flex-shrink:0;position:relative;min-height:64px}
+.back-btn{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:500;color:#29294c;padding:6px 8px;border-radius:8px;cursor:pointer;border:none;background:none;transition:background .15s;flex-shrink:0}
+.back-btn:hover{background:#f9fafb}
+.back-btn svg{width:20px;height:20px;color:#545470;flex-shrink:0}
+.steps-check{position:absolute;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center}
+.steps-check-item{display:inline-flex;align-items:center;gap:8px}
+.steps-check-pill{width:24px;height:24px;border-radius:50px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,box-shadow .2s}
+.steps-check-pill svg{width:10px;height:10px}
+.steps-check-num{font-size:10px;font-weight:700;color:#9ca3af;line-height:1}
+.steps-check-label{font-size:13px;font-weight:400;color:#9ca3af;white-space:nowrap}
+.steps-check-line{height:1.5px;background:#d1d5db;min-width:40px;flex:0 0 40px;margin:0 4px;border-radius:2px}
+.steps-check-item.is-done .steps-check-pill{background:#dcfce7}
+.steps-check-item.is-done .steps-check-pill .check-svg{color:#16a34a}
+.steps-check-item.is-done .steps-check-label{color:#111827;font-weight:600}
+.steps-check-item.is-active .steps-check-pill{background:#fff;border:2px solid #12b76a;box-shadow:0 0 0 4px rgba(18,183,106,.12)}
+.steps-check-item.is-active .steps-check-num{color:#059669;font-weight:700}
+.steps-check-item.is-active .steps-check-label{color:#059669;font-weight:700}
+
+/* ── CONTENT AREA ────────────────────────────────────────── */
+.content-area{flex:1;overflow-y:auto;min-height:0;padding:28px 40px 32px;position:relative}
+.content-area::-webkit-scrollbar{width:3px}
+.content-area::-webkit-scrollbar-thumb{background:#e4e7ec;border-radius:4px}
+.content-inner{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+
+/* ── SKELETON ────────────────────────────────────────────── */
+@keyframes shimmer{0%{background-position:-800px 0}100%{background-position:800px 0}}
+#cfg-skeleton{position:absolute;inset:0;padding:28px 40px 32px;display:flex;flex-direction:column;gap:28px;z-index:10;background:#f3f6fd;pointer-events:none}
+#cfg-skeleton.hide{opacity:0;transition:opacity .35s ease;pointer-events:none}
+.sk-card{background:#fff;border-radius:16px;overflow:hidden;display:flex;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sk-left{width:276px;flex-shrink:0;padding:22px 24px;display:flex;flex-direction:column;gap:12px;border-right:1px solid #f2f4f7;background:#fafbfc}
+.sk-right{flex:1;padding:24px;display:flex;flex-direction:column;gap:14px}
+.sk{border-radius:8px;background:linear-gradient(90deg,#f0f0f5 25%,#e4e4ec 50%,#f0f0f5 75%);background-size:800px 100%;animation:shimmer 1.4s infinite linear}
+.sk-icon{width:36px;height:36px;border-radius:10px}
+.sk-title{height:14px;width:70%}
+.sk-desc{height:11px;width:90%}
+.sk-desc2{height:11px;width:75%}
+.sk-label{height:11px;width:30%}
+.sk-input{height:38px;border-radius:8px}
+.sk-pill{height:34px;width:90px;border-radius:50px}
+.sk-wide{height:38px;border-radius:8px}
+.sk-block{height:120px;border-radius:10px}
+
+/* ── CONFIG CARD ─────────────────────────────────────────── */
+@keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.config-card{background:#fff;border:none;border-radius:16px;overflow:hidden;display:flex;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:box-shadow .2s;animation:cardIn .4s cubic-bezier(.22,1,.36,1) both}
+.config-card:nth-child(1){animation-delay:.05s}
+.config-card:nth-child(2){animation-delay:.12s}
+.config-card:nth-child(3){animation-delay:.19s}
+.config-card:nth-child(4){animation-delay:.26s}
+.config-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1)}
+
+/* card left panel — icon + title + desc */
+.card-head{display:flex;flex-direction:column;gap:10px;padding:22px 24px;width:276px;flex-shrink:0;border-right:1px solid #f2f4f7;background:#fafbfc}
+.card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-icon svg{width:18px;height:18px}
+.card-icon.purple{background:#f4f0fd}.card-icon.purple svg{color:#9b8afb}
+.card-icon.blue{background:#eff6ff}.card-icon.blue svg{color:#60a5fa}
+.card-icon.green{background:#f0fdf4}.card-icon.green svg{color:#4ade80}
+.card-icon.orange{background:#fff7ed}.card-icon.orange svg{color:#fb923c}
+.card-head-text{display:flex;flex-direction:column;gap:4px}
+.card-title{font-size:15px;font-weight:600;color:#1d2939}
+.card-desc{font-size:13px;color:#98a2b3;font-weight:400;line-height:1.6}
+
+/* card right body */
+.card-body-inner{flex:1;padding:24px;min-width:0}
+
+/* ── FORM FIELDS ─────────────────────────────────────────── */
+.field-row{display:flex;gap:16px}
+.field{display:flex;flex-direction:column;gap:6px;flex:1}
+.field-label{font-size:12px;font-weight:500;color:#344054;display:flex;align-items:center;gap:4px}
+.field-label .req{color:#d92d20}
+.field input,.field select,.field textarea{width:100%;height:38px;padding:0 12px;border:1.5px solid #e4e7ec;border-radius:8px;font-size:14px;color:#29294c;background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;appearance:none}
+.field input:hover,.field select:hover{border-color:#c0c5ce}
+.field input:focus,.field select:focus{border-color:#9b8afb;box-shadow:0 0 0 3px rgba(124,58,237,.06)}
+.field textarea{height:auto;padding:10px 12px;resize:none}
+.select-wrap{position:relative}
+.select-wrap select{padding-right:36px;cursor:pointer}
+.select-wrap::after{content:'';position:absolute;right:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23667085' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+
+/* date input */
+.date-input-wrap{position:relative;display:flex;align-items:center}
+.date-input-wrap input{padding-left:38px;cursor:pointer}
+.date-input-wrap .date-icon{position:absolute;left:11px;color:#98a2b3;pointer-events:none;display:flex}
+.date-input-wrap .date-icon svg{width:16px;height:16px}
+
+/* time input */
+.time-input-wrap{position:relative;display:flex;align-items:center}
+.time-input-wrap input{padding-left:38px;cursor:pointer}
+.time-input-wrap .time-icon{position:absolute;left:11px;color:#98a2b3;pointer-events:none;display:flex}
+.time-input-wrap .time-icon svg{width:16px;height:16px}
+
+/* ── FREQUENCY PILL TABS ─────────────────────────────────── */
+.freq-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.freq-tab{display:flex;align-items:center;gap:6px;padding:8px 16px;border:1.5px solid #e4e7ec;border-radius:50px;font-size:13px;font-weight:500;color:#545470;cursor:pointer;background:#fff;transition:all .15s;user-select:none}
+.freq-tab:hover{border-color:#c0c5ce;color:#29294c;background:#f9fafb}
+.freq-tab.active{border-color:#29294c;background:#fff;color:#29294c;font-weight:600}
+.freq-tab svg{width:14px;height:14px}
+
+/* ── TOGGLE ROW ─────────────────────────────────────────── */
+.toggle-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-radius:10px;background:transparent;transition:color .15s;cursor:pointer}
+.toggle-row:hover{background:transparent}
+.toggle-row-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toggle-row-icon svg{width:18px;height:18px}
+.toggle-row-info{flex:1}
+.toggle-row-title{font-size:14px;font-weight:500;color:#29294c;line-height:20px}
+.toggle-row-sub{font-size:12px;color:#707087;margin-top:2px;line-height:1.5}
+.toggle-switch{position:relative;width:36px;height:20px;flex-shrink:0;cursor:pointer}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:#d0d5dd;border-radius:50px;transition:background .2s}
+.toggle-switch input:checked+.toggle-track{background:#12b76a}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s}
+.toggle-switch input:checked~.toggle-thumb{transform:translateX(16px)}
+
+/* ── AUDIENCE TABS ──────────────────────────────────────── */
+.audience-pills{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.audience-pill{display:flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px solid #e4e7ec;border-radius:8px;font-size:13px;font-weight:500;color:#545470;cursor:pointer;background:#fff;transition:all .15s;user-select:none}
+.audience-pill:hover{border-color:#c0c5ce;color:#29294c;background:#f9fafb}
+.audience-pill.active{border-color:#29294c;background:#fff;color:#29294c;font-weight:600}
+.audience-pill .pill-dot{width:6px;height:6px;border-radius:50%;background:#d0d5dd;transition:background .15s}
+.audience-pill.active .pill-dot{background:#29294c}
+.audience-pill svg{width:14px;height:14px}
+
+/* audience dropdowns */
+.audience-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.aud-label{font-size:12px;font-weight:500;color:#344054;margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.aud-label svg{width:12px;height:12px}
+.include-badge{background:#f2f4f7;color:#667085;border:1px solid #e4e7ec;font-size:11px;font-weight:400;padding:1px 6px;border-radius:20px}
+.exclude-badge{background:#f2f4f7;color:#667085;border:1px solid #e4e7ec;font-size:11px;font-weight:400;padding:1px 6px;border-radius:20px}
+
+/* ── EMAIL EDITOR ────────────────────────────────────────── */
+.email-editor{border:1.5px solid #e4e7ec;border-radius:10px;overflow:hidden;transition:border-color .15s}
+.email-editor:focus-within{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.08)}
+.email-toolbar{display:flex;align-items:center;gap:2px;padding:8px 12px;border-bottom:1px solid #f2f4f7;background:#fafafa;flex-wrap:wrap}
+.toolbar-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;cursor:pointer;color:#545470;transition:background .12s,color .12s;border:none;background:none;font-size:13px;font-weight:600}
+.toolbar-btn:hover{background:#f2f4f7;color:#29294c}
+.toolbar-divider{width:1px;height:18px;background:#e4e7ec;margin:0 4px}
+.email-body{min-height:120px;padding:14px 16px;font-size:14px;color:#29294c;line-height:1.6;outline:none}
+.email-body[contenteditable="true"]:empty::before{content:'Type your email message...';color:#98a2b3}
+.email-footer{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:#fafafa;border-top:1px solid #f2f4f7}
+.email-hint{font-size:11px;color:#98a2b3;display:flex;align-items:center;gap:4px}
+.email-hint svg{width:12px;height:12px}
+.email-vars{display:flex;gap:6px}
+.email-var{font-size:11px;font-weight:500;color:#545470;background:#f2f4f7;border:1px solid #e4e7ec;padding:2px 8px;border-radius:12px;cursor:pointer;transition:background .12s}
+.email-var:hover{background:#e9ebf0}
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+.page-footer{height:62px;border-top:1px solid #f2f4f7;display:flex;align-items:center;justify-content:space-between;padding:0 30px;flex-shrink:0}
+.btn-cancel{background:#f4f4f6;color:#29294c;font-size:14px;font-weight:500;height:36px;padding:0 20px;border-radius:8px;border:none;cursor:pointer;transition:background .15s}
+.btn-cancel:hover{background:#e9e9ed}
+.btn-continue{display:flex;align-items:center;gap:8px;background:#29294c;color:#fff;font-size:14px;font-weight:500;height:36px;padding:0 24px;border-radius:8px;border:none;cursor:pointer;transition:background .15s,transform .1s}
+.btn-continue:hover{background:#1d2030;transform:translateY(-1px)}
+.btn-continue:active{transform:translateY(0)}
+.btn-continue svg{width:16px;height:16px}
+
+/* divider */
+.field-divider{height:1px;background:#f2f4f7;margin:4px 0}
+
+/* ── CSV DROP ZONE ───────────────────────────────────────── */
+.csv-dropzone{border:1.5px dashed #d0d5dd;border-radius:10px;background:#fff;padding:42px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:border-color .15s,background .15s;min-height:140px}
+.csv-dropzone:hover,.csv-dropzone.drag-over{border-color:#9b8afb;background:#faf8ff}
+.csv-dz-content{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.csv-upload-icon{width:28px;height:28px;color:#667085;margin-bottom:4px}
+.csv-dz-title{font-size:14px;font-weight:500;color:#6941c6}
+.csv-dz-desc{font-size:11px;color:#545470;line-height:1.5;max-width:360px}
+.csv-dz-desc p{margin:0}
+.csv-dz-link{font-size:11px;color:#6941c6;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.csv-dz-link:hover{color:#4e27a0}
+.csv-file-info{display:flex;align-items:center;gap:10px;width:100%}
+
+/* native date/time inputs */
+.field input[type="date"],.field input[type="time"]{width:100%;height:38px;padding:0 12px;border:1.5px solid #e4e7ec;border-radius:8px;font-size:14px;color:#29294c;background:#fff;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;font-family:inherit;transition:border-color .15s,box-shadow .15s;accent-color:#667085;color-scheme:light}
+.field input[type="date"]:hover,.field input[type="time"]:hover{border-color:#c0c5ce}
+.field input[type="date"]:focus,.field input[type="time"]:focus{border-color:#9b8afb;box-shadow:0 0 0 3px rgba(124,58,237,.06)}
+.field input[type="date"]::-webkit-calendar-picker-indicator,.field input[type="time"]::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <div class="vc-logo-group">
+      <a href="../index.html" class="vc-logo">
+        <img src="vc-logo.svg" height="22" alt="VantageCircle"/>
+      </a>
+      <button class="sidebar-toggle" title="Toggle sidebar" onclick="toggleSidebar()">
+        <svg width="18" viewBox="0 0 19 27" fill="none"><path d="M0.75 13.5C0.75 10.4257 0.75 8.88858 1.42818 7.79898C1.67908 7.39585 1.99076 7.04522 2.34909 6.76295C3.31763 6 4.68397 6 7.41667 6H10.75C13.4827 6 14.849 6 15.8176 6.76295C16.1759 7.04522 16.4876 7.39585 16.7385 7.79898C17.4167 8.88858 17.4167 10.4257 17.4167 13.5C17.4167 16.5742 17.4167 18.1114 16.7385 19.201C16.4876 19.6042 16.1759 19.9547 15.8176 20.2371C14.849 21 13.4827 21 10.75 21H7.41667C4.68397 21 3.31763 21 2.34909 20.2371C1.99076 19.9547 1.67908 19.6042 1.42818 19.201C0.75 18.1114 0.75 16.5742 0.75 13.5Z" stroke="#5C6C7C" stroke-width="1.3"/><path d="M7.72656 6L7.72656 21" stroke="#5C6C7C" stroke-width="1.3"/><path d="M3.9668 8.875H4.66124M3.9668 12.25H4.66124" stroke="#5C6C7C" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="vp-brand">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="currentColor"/></svg>
+      Vantage Pulse
+    </div>
+  </div>
+  <div class="navbar-right">
+    <div class="nav-icons">
+      <div class="nav-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11c1.657 0 3-1.343 3-3s-1.343-3-3-3"/><path d="M18 21c0-3.314-2.686-6-6-6s-6 2.686-6 6"/><circle cx="10" cy="8" r="3"/><path d="M21 15h-2m-1 0v-2m0 2v2"/></svg></div>
+      <div class="nav-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2h11C18.88 2 20 3.12 20 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-11C5.12 22 4 20.88 4 19.5v-15C4 3.12 5.12 2 6.5 2z"/><circle cx="12" cy="17" r="1"/></svg></div>
+      <div class="nav-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+    </div>
+    <div class="nav-avatar"><img src="../assets/avatar.png" alt="Bhaskar" style="width:32px;height:32px;border-radius:50%;object-fit:cover;"/></div>
+  </div>
+</nav>
+
+<!-- ── SIDEBAR ─────────────────────────────────────────────── -->
+<aside class="sidebar">
+  <button class="sidebar-create-btn" onclick="window.location.href='create-survey.html'">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8.5"/><line x1="10" y1="6.5" x2="10" y2="13.5"/><line x1="6.5" y1="10" x2="13.5" y2="10"/></svg>
+    <span class="btn-text">Create Survey</span>
+  </button>
+  <nav class="sidebar-nav">
+    <div class="nav-item"><div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="5" height="5" rx="1"/><rect x="9.5" y="1.5" width="5" height="5" rx="1"/><rect x="1.5" y="9.5" width="5" height="5" rx="1"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/></svg></div><span class="nav-item-text">Overview</span></div>
+    <div class="nav-item"><div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12V8m4 4V5m4 7V7m4 5V3"/></svg></div><span class="nav-item-text">Insights</span><div class="nav-item-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div></div>
+    <div class="nav-item active"><div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="13" height="13" rx="2"/><line x1="4.5" y1="5.5" x2="11.5" y2="5.5"/><line x1="4.5" y1="8" x2="11.5" y2="8"/><line x1="4.5" y1="10.5" x2="8.5" y2="10.5"/></svg></div><span class="nav-item-text" style="color:#6941c6">Surveys</span><div class="nav-item-chevron open"><svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div></div>
+    <div class="nav-sub">
+      <div class="nav-sub-item active" onclick="window.location.href='create-survey.html'" style="cursor:pointer">Create</div>
+      <div class="nav-sub-item">Manage</div>
+      <div class="nav-sub-item">Question</div>
+      <div class="nav-sub-item">Templates</div>
+    </div>
+    <div class="nav-item" style="margin-top:4px"><div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5l2.5 1.5"/></svg></div><span class="nav-item-text">Action Planing</span><div class="nav-item-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div></div>
+    <div class="nav-item"><div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/></svg></div><span class="nav-item-text">Configuration</span><div class="nav-item-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div></div>
+    <div class="nav-item"><div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 1.5H3a1.5 1.5 0 00-1.5 1.5v10A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V3A1.5 1.5 0 0013 1.5h-1.5"/><rect x="5" y="1" width="6" height="3" rx="1"/><line x1="5" y1="7" x2="11" y2="7"/><line x1="5" y1="10" x2="11" y2="10"/></svg></div><span class="nav-item-text">Reports</span></div>
+    <div class="nav-item"><div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l1.5 3.5L13 7l-3.5 1.5L8 12l-1.5-3.5L3 7l3.5-1.5z"/></svg></div><span class="nav-item-text">AI Hub</span><span class="nav-pro-badge">Pro</span></div>
+  </nav>
+</aside>
+
+<!-- ── MAIN ─────────────────────────────────────────────────── -->
+<main class="main">
+  <div class="main-card">
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <button class="back-btn" onclick="window.location.href='pulse-select-questions.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back
+      </button>
+      <div class="steps-check">
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Get Started</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-done">
+          <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="steps-check-label">Select Questions</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item is-active">
+          <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+          <span class="steps-check-label">Configure</span>
+        </div>
+        <div class="steps-check-line"></div>
+        <div class="steps-check-item">
+          <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+          <span class="steps-check-label">Preview &amp; Launch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-area">
+
+      <!-- ── SKELETON LOADER ──────────────────────────────── -->
+      <div id="cfg-skeleton">
+        <div style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:28px">
+
+          <!-- card 1 skeleton -->
+          <div class="sk-card">
+            <div class="sk-left">
+              <div class="sk sk-icon"></div>
+              <div class="sk sk-title"></div>
+              <div class="sk sk-desc"></div>
+              <div class="sk sk-desc2"></div>
+            </div>
+            <div class="sk-right">
+              <div class="sk sk-label"></div>
+              <div style="display:flex;gap:16px">
+                <div class="sk sk-input" style="flex:1"></div>
+                <div class="sk sk-input" style="flex:1"></div>
+                <div class="sk sk-input" style="width:160px"></div>
+              </div>
+              <div class="sk sk-input" style="height:34px"></div>
+            </div>
+          </div>
+
+          <!-- card 2 skeleton -->
+          <div class="sk-card">
+            <div class="sk-left">
+              <div class="sk sk-icon"></div>
+              <div class="sk sk-title"></div>
+              <div class="sk sk-desc"></div>
+              <div class="sk sk-desc2"></div>
+            </div>
+            <div class="sk-right">
+              <div class="sk sk-label"></div>
+              <div style="display:flex;gap:8px">
+                <div class="sk sk-pill"></div>
+                <div class="sk sk-pill"></div>
+                <div class="sk sk-pill" style="width:100px"></div>
+                <div class="sk sk-pill" style="width:110px"></div>
+                <div class="sk sk-pill" style="width:100px"></div>
+              </div>
+              <div class="sk" style="height:1px"></div>
+              <div class="sk sk-wide"></div>
+            </div>
+          </div>
+
+          <!-- card 3 skeleton -->
+          <div class="sk-card">
+            <div class="sk-left">
+              <div class="sk sk-icon"></div>
+              <div class="sk sk-title"></div>
+              <div class="sk sk-desc"></div>
+              <div class="sk sk-desc2"></div>
+            </div>
+            <div class="sk-right">
+              <div class="sk sk-label"></div>
+              <div style="display:flex;gap:8px">
+                <div class="sk sk-pill" style="width:180px"></div>
+                <div class="sk sk-pill" style="width:155px"></div>
+                <div class="sk sk-pill" style="width:125px"></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                <div class="sk sk-input"></div>
+                <div class="sk sk-input"></div>
+              </div>
+              <div class="sk sk-wide"></div>
+            </div>
+          </div>
+
+          <!-- card 4 skeleton -->
+          <div class="sk-card">
+            <div class="sk-left">
+              <div class="sk sk-icon"></div>
+              <div class="sk sk-title"></div>
+              <div class="sk sk-desc"></div>
+              <div class="sk sk-desc2"></div>
+            </div>
+            <div class="sk-right">
+              <div class="sk sk-label"></div>
+              <div class="sk sk-input"></div>
+              <div class="sk sk-label"></div>
+              <div class="sk sk-block"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="content-inner" id="cfg-content" style="opacity:0">
+
+        <!-- ── 1. SCHEDULING ─────────────────────────────────── -->
+        <div class="config-card">
+          <div class="card-head">
+            <div class="card-icon purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="8" cy="15" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="15" r="1" fill="currentColor" stroke="none"/><circle cx="16" cy="15" r="1" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <div class="card-head-text">
+              <div class="card-title">Scheduling</div>
+              <div class="card-desc">Set when the survey goes live and when it closes for responses</div>
+            </div>
+          </div>
+          <div class="card-body-inner">
+            <!-- Duration presets -->
+            <div style="margin-bottom:16px">
+              <div class="field-label" style="margin-bottom:10px">Duration</div>
+              <div class="freq-tabs" id="duration-tabs">
+                <button class="freq-tab active" onclick="setDuration(this,'1m')">1 Month</button>
+                <button class="freq-tab" onclick="setDuration(this,'3m')">3 Months</button>
+                <button class="freq-tab" onclick="setDuration(this,'1y')">1 Year</button>
+                <button class="freq-tab" onclick="setDuration(this,'all')">All at once</button>
+              </div>
+            </div>
+            <div class="field-row" style="margin-bottom:16px">
+              <div class="field">
+                <div class="field-label">Start date</div>
+                <input type="date" id="start-date" value="2025-12-01" onchange="onStartChange()"/>
+              </div>
+              <div class="field">
+                <div class="field-label">End date</div>
+                <input type="date" id="end-date" value="2025-12-31" onchange="updateDuration()"/>
+              </div>
+              <div class="field" style="max-width:160px">
+                <div class="field-label">Time</div>
+                <input type="time" id="survey-time" value="12:00"/>
+              </div>
+            </div>
+
+            <!-- Duration pill -->
+            <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:#f9fafb;border-radius:8px">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#98a2b3" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><polyline points="8 4.5 8 8 10.5 9.5"/></svg>
+              <span style="font-size:12px;color:#667085;font-weight:500">Survey duration: <b id="duration-days" style="color:#29294c">30 days</b></span>
+              <span id="duration-range" style="font-size:12px;color:#98a2b3;margin-left:auto">Dec 1 – Dec 31, 2025</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 2. FREQUENCY ──────────────────────────────────── -->
+        <div class="config-card">
+          <div class="card-head">
+            <div class="card-icon blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+            </div>
+            <div class="card-head-text">
+              <div class="card-title">Frequency</div>
+              <div class="card-desc">Control how often questions are sent to participants during the survey period</div>
+            </div>
+          </div>
+          <div class="card-body-inner" style="display:flex;flex-direction:column;gap:16px">
+            <div>
+              <div class="field-label" style="margin-bottom:10px">Send questions</div>
+              <div class="freq-tabs" id="freq-tabs">
+                <button class="freq-tab" onclick="setFreq(this,'once')">Once</button>
+                <button class="freq-tab" onclick="setFreq(this,'daily')">Daily</button>
+                <button class="freq-tab active" onclick="setFreq(this,'weekly')">Weekly</button>
+                <button class="freq-tab" onclick="setFreq(this,'biweekly')">Bi-weekly</button>
+                <button class="freq-tab" onclick="setFreq(this,'monthly')">Monthly</button>
+              </div>
+            </div>
+            <div class="field-divider"></div>
+            <label class="toggle-row" onclick="toggleSwitch('recurring-toggle')">
+              <div class="toggle-row-info">
+                <div class="toggle-row-title">Recurring Survey</div>
+                <div class="toggle-row-sub">Automatically re-send the survey at the selected frequency after it ends</div>
+              </div>
+              <label class="toggle-switch" onclick="event.stopPropagation()">
+                <input type="checkbox" id="recurring-toggle" checked/>
+                <span class="toggle-track"></span>
+                <span class="toggle-thumb"></span>
+              </label>
+            </label>
+          </div>
+        </div>
+
+        <!-- ── 3. AUDIENCE ───────────────────────────────────── -->
+        <div class="config-card">
+          <div class="card-head">
+            <div class="card-icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="card-head-text">
+              <div class="card-title">Audience</div>
+              <div class="card-desc">Define who receives this survey — include or exclude specific groups</div>
+            </div>
+          </div>
+          <div class="card-body-inner" style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <div class="field-label" style="margin-bottom:10px">Target method</div>
+              <div class="audience-pills">
+                <div class="audience-pill active" onclick="setAudience(this,'segments')">Target by Segments</div>
+                <div class="audience-pill" onclick="setAudience(this,'email')">Target by Email</div>
+                <div class="audience-pill" onclick="setAudience(this,'csv')">Upload CSV</div>
+              </div>
+            </div>
+
+            <!-- segments / email view -->
+            <div id="aud-segments-view">
+              <div class="audience-grid">
+                <div class="field">
+                  <div class="field-label">Including</div>
+                  <div class="select-wrap">
+                    <select>
+                      <option>All employees</option>
+                      <option>Department: Engineering</option>
+                      <option>Department: Marketing</option>
+                      <option>Department: Sales</option>
+                      <option>Location: HQ</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field-label">Excluding</div>
+                  <div class="select-wrap">
+                    <select>
+                      <option>None</option>
+                      <option>Finland</option>
+                      <option>Germany</option>
+                      <option>France</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- csv upload view -->
+            <div id="aud-csv-view" style="display:none">
+              <div class="csv-dropzone" id="csv-dropzone" onclick="document.getElementById('csv-file-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleCsvDrop(event)">
+                <input type="file" id="csv-file-input" accept=".csv" style="display:none" onchange="handleCsvFile(this.files[0])"/>
+                <div class="csv-dz-content" id="csv-dz-content">
+                  <svg class="csv-upload-icon" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+                  <div class="csv-dz-title">Upload employee list (CSV)</div>
+                  <div class="csv-dz-desc">
+                    <p>Upload a CSV file containing employee email IDs to invite them to this survey.</p>
+                    <p>Download the sample CSV, add the email IDs, and upload the file.</p>
+                  </div>
+                  <a class="csv-dz-link" href="#" onclick="event.stopPropagation()">Download Sample CSV</a>
+                </div>
+                <div class="csv-file-info" id="csv-file-info" style="display:none">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#039855" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+                  <span id="csv-filename" style="font-size:13px;font-weight:500;color:#1d2939"></span>
+                  <button onclick="event.stopPropagation();clearCsv()" style="margin-left:auto;background:none;border:none;cursor:pointer;color:#98a2b3;font-size:18px;line-height:1;padding:0 4px">×</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 4. EMAIL INVITATION ───────────────────────────── -->
+        <div class="config-card">
+          <div class="card-head">
+            <div class="card-icon orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="card-head-text">
+              <div class="card-title">Email Invitation</div>
+              <div class="card-desc">Customize the email that will be sent to survey participants</div>
+            </div>
+          </div>
+          <div class="card-body-inner" style="display:flex;flex-direction:column;gap:14px">
+            <div class="field">
+              <div class="field-label">Subject line</div>
+              <div style="position:relative">
+                <input type="text" id="email-subject" value="You're invited to participate in our Employee Pulse Survey"
+                  style="width:100%;height:38px;padding:0 40px 0 12px;border:1.5px solid #e4e7ec;border-radius:8px;font-size:14px;color:#29294c;outline:none;transition:border-color .15s,box-shadow .15s"
+                  onfocus="this.style.borderColor='#7c3aed';this.style.boxShadow='0 0 0 3px rgba(124,58,237,.1)'"
+                  onblur="this.style.borderColor='#e4e7ec';this.style.boxShadow='none'"/>
+                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11px;color:#98a2b3" id="subj-count">58</span>
+              </div>
+            </div>
+            <div class="field">
+              <div class="field-label" style="justify-content:space-between">
+                <span>Message</span>
+                <div class="email-vars">
+                  <span class="email-var" onclick="insertVar('[Employee Name]')">[Employee Name]</span>
+                  <span class="email-var" onclick="insertVar('[Manager Name]')">[Manager Name]</span>
+                  <span class="email-var" onclick="insertVar('[Survey Link]')">[Survey Link]</span>
+                </div>
+              </div>
+              <div class="email-editor">
+                <div class="email-toolbar">
+                  <button class="toolbar-btn" title="Bold" onclick="document.execCommand('bold')"><b>B</b></button>
+                  <button class="toolbar-btn" title="Italic" onclick="document.execCommand('italic')"><i>I</i></button>
+                  <button class="toolbar-btn" title="Underline" onclick="document.execCommand('underline')"><u>U</u></button>
+                  <div class="toolbar-divider"></div>
+                  <button class="toolbar-btn" title="Bullet list" onclick="document.execCommand('insertUnorderedList')">
+                    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="5" y1="4" x2="13" y2="4"/><line x1="5" y1="8" x2="13" y2="8"/><line x1="5" y1="12" x2="13" y2="12"/><circle cx="2.5" cy="4" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="8" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
+                  </button>
+                  <button class="toolbar-btn" title="Link">
+                    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6.5 9.5a3.5 3.5 0 005 0l2-2a3.5 3.5 0 00-5-5l-1 1"/><path d="M9.5 6.5a3.5 3.5 0 00-5 0l-2 2a3.5 3.5 0 005 5l1-1"/></svg>
+                  </button>
+                  <div class="toolbar-divider"></div>
+                  <button class="toolbar-btn" title="Undo" onclick="document.execCommand('undo')">
+                    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8a4 4 0 010 8H6"/><polyline points="5 3 2 6 5 9"/></svg>
+                  </button>
+                </div>
+                <div class="email-body" id="email-body" contenteditable="true">Dear [Employee Name],<br><br>We would like to invite you to participate in our <b>Employee Pulse Survey</b>. Your feedback is valuable and will help us improve our workplace culture.<br><br>The survey takes approximately <b>5 minutes</b> to complete and your responses are completely anonymous.<br><br>Thank you for your time and contribution.<br><br>Best regards,<br>[Manager Name]</div>
+                <div class="email-footer">
+                  <div class="email-hint">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><line x1="6" y1="5" x2="6" y2="8"/><circle cx="6" cy="3.5" r=".5" fill="currentColor" stroke="none"/></svg>
+                    Click variable tags above to insert them into the message
+                  </div>
+                  <div style="font-size:11px;color:#98a2b3">Preview will be shown before sending</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="page-footer">
+      <button class="btn-cancel" onclick="window.location.href='create-survey.html'">Cancel</button>
+      <button class="btn-continue" onclick="window.location.href='preview-launch.html'">
+        Continue
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg>
+      </button>
+    </div>
+
+  </div>
+</main>
+
+<script>
+function fmtDate(val) {
+  if (!val) return '';
+  const d = new Date(val);
+  return d.toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'}).replace(',','');
+}
+function fmtTime(val) {
+  if (!val) return '';
+  const [h,m] = val.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  return h12 + ':' + String(m).padStart(2,'0') + ' ' + ampm;
+}
+function saveConfig() {
+  const s = document.getElementById('start-date').value;
+  const e = document.getElementById('end-date').value;
+  const t = document.getElementById('survey-time').value;
+  const freq = (document.querySelector('.freq-tab.active') || {}).textContent || 'Weekly';
+  const aud  = (document.querySelector('.audience-pill.active') || {}).textContent || 'All Employees';
+  const anon = document.getElementById('anon-toggle') ? document.getElementById('anon-toggle').checked : true;
+  const recur = document.getElementById('recurring-toggle') ? document.getElementById('recurring-toggle').checked : true;
+  const days = document.getElementById('duration-days') ? document.getElementById('duration-days').textContent : '';
+  const range = document.getElementById('duration-range') ? document.getElementById('duration-range').textContent : '';
+  localStorage.setItem('vp_cfg', JSON.stringify({
+    start: fmtDate(s), end: fmtDate(e), time: fmtTime(t),
+    freq: freq.trim(), aud: aud.trim(),
+    anonymous: anon, recurring: recur,
+    days, range,
+    start_raw: s, end_raw: e
+  }));
+}
+function updateDuration() {
+  const s = document.getElementById('start-date').value;
+  const e = document.getElementById('end-date').value;
+  if (!s || !e) return;
+  const start = new Date(s), end = new Date(e);
+  if (end < start) return;
+  const days = Math.round((end - start) / 86400000) + 1;
+  const fmt = d => d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  document.getElementById('duration-days').textContent = days + ' day' + (days !== 1 ? 's' : '');
+  document.getElementById('duration-range').textContent = fmt(start) + ' – ' + fmt(end) + ', ' + end.getFullYear();
+  saveConfig();
+}
+function onStartChange() {
+  // If a duration preset is active, recalculate end date from new start
+  const active = document.querySelector('#duration-tabs .freq-tab.active');
+  if (active) {
+    const val = active.getAttribute('onclick').match(/'([^']+)'\)/)[1];
+    setDuration(active, val);
+  } else {
+    updateDuration();
+  }
+}
+function setDuration(el, val) {
+  if (el.classList.contains('active')) return;
+  document.querySelectorAll('#duration-tabs .freq-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+
+  // Auto-set end date
+  const startEl = document.getElementById('start-date');
+  const endEl = document.getElementById('end-date');
+  endEl.disabled = true;
+  endEl.style.background = '#f9fafb';
+  endEl.style.color = '#98a2b3';
+  endEl.style.cursor = 'not-allowed';
+  if (startEl.value) {
+    const start = new Date(startEl.value);
+    const end = new Date(start);
+    if (val === '1m')  { end.setMonth(end.getMonth() + 1); }
+    else if (val === '3m') { end.setMonth(end.getMonth() + 3); }
+    else if (val === '1y') { end.setFullYear(end.getFullYear() + 1); }
+    const pad = n => String(n).padStart(2,'0');
+    endEl.value = end.getFullYear()+'-'+pad(end.getMonth()+1)+'-'+pad(end.getDate());
+    updateDuration();
+  }
+
+  // Disable/enable frequency tabs based on duration
+  const freqTabs = document.querySelectorAll('#freq-tabs .freq-tab');
+  const freqMap = { once:'Once', daily:'Daily', weekly:'Weekly', biweekly:'Bi-weekly', monthly:'Monthly' };
+
+  // Reset all freq tabs first
+  freqTabs.forEach(t => {
+    t.disabled = false;
+    t.style.opacity = '';
+    t.style.cursor = '';
+    t.style.pointerEvents = '';
+  });
+
+  function disableFreq(label) {
+    freqTabs.forEach(t => {
+      if (t.textContent.trim() === label) {
+        t.disabled = true;
+        t.style.opacity = '0.35';
+        t.style.cursor = 'not-allowed';
+        t.style.pointerEvents = 'none';
+        if (t.classList.contains('active')) {
+          t.classList.remove('active');
+          // auto-select Weekly as fallback
+          const weekly = [...freqTabs].find(x => x.textContent.trim() === 'Weekly');
+          if (weekly && !weekly.disabled) weekly.classList.add('active');
+        }
+      }
+    });
+  }
+
+  if (val === '1m')  { disableFreq('Monthly'); }
+  else if (val === '3m') { /* all valid */ }
+  else if (val === '1y') { /* all valid */ }
+  else if (val === 'all') {
+    // Only Once is valid
+    freqTabs.forEach(t => {
+      if (t.textContent.trim() !== 'Once') {
+        t.disabled = true;
+        t.style.opacity = '0.35';
+        t.style.cursor = 'not-allowed';
+        t.style.pointerEvents = 'none';
+        t.classList.remove('active');
+      } else {
+        t.classList.add('active');
+      }
+    });
+  }
+  saveConfig();
+}
+function setFreq(el, val) {
+  document.querySelectorAll('.freq-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  saveConfig();
+}
+function setAudience(el, type) {
+  document.querySelectorAll('.audience-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  var seg = document.getElementById('aud-segments-view');
+  var csv = document.getElementById('aud-csv-view');
+  if (type === 'csv') {
+    seg.style.display = 'none';
+    csv.style.display = 'block';
+  } else {
+    seg.style.display = 'block';
+    csv.style.display = 'none';
+  }
+  saveConfig();
+}
+function handleCsvFile(file) {
+  if (!file) return;
+  document.getElementById('csv-dz-content').style.display = 'none';
+  var info = document.getElementById('csv-file-info');
+  info.style.display = 'flex';
+  document.getElementById('csv-filename').textContent = file.name + ' (' + (file.size > 1024 ? Math.round(file.size/1024) + ' KB' : file.size + ' B') + ')';
+}
+function handleCsvDrop(e) {
+  e.preventDefault();
+  document.getElementById('csv-dropzone').classList.remove('drag-over');
+  var file = e.dataTransfer.files[0];
+  if (file && file.name.endsWith('.csv')) handleCsvFile(file);
+}
+function clearCsv() {
+  document.getElementById('csv-file-input').value = '';
+  document.getElementById('csv-file-info').style.display = 'none';
+  document.getElementById('csv-dz-content').style.display = 'flex';
+}
+function toggleSwitch(id) {
+  const cb = document.getElementById(id);
+  if (cb) { cb.checked = !cb.checked; saveConfig(); }
+}
+function insertVar(v) {
+  const body = document.getElementById('email-body');
+  body.focus();
+  document.execCommand('insertText', false, v);
+}
+// subject char count
+const subj = document.getElementById('email-subject');
+const cnt  = document.getElementById('subj-count');
+if (subj && cnt) {
+  subj.addEventListener('input', () => { cnt.textContent = subj.value.length; cnt.style.color = subj.value.length > 80 ? '#f04438' : '#98a2b3'; });
+}
+
+// ── SKELETON LOADER ──────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function() {
+  var skel    = document.getElementById('cfg-skeleton');
+  var content = document.getElementById('cfg-content');
+  setTimeout(function() {
+    skel.classList.add('hide');
+    content.style.transition = 'opacity .35s ease';
+    content.style.opacity = '1';
+    setTimeout(function(){ skel.style.display = 'none'; }, 380);
+  }, 700);
+  updateDuration();
+  // Apply mandatory duration default
+  const endEl = document.getElementById('end-date');
+  if (endEl) { endEl.disabled = true; endEl.style.background='#f9fafb'; endEl.style.color='#98a2b3'; endEl.style.cursor='not-allowed'; }
+  saveConfig();
+});
+
+// ── SIDEBAR COLLAPSE ─────────────────────────────────────────
+(function(){
+  var sidebar = document.querySelector('.sidebar');
+  var main    = document.querySelector('.main');
+  if (sidebar && localStorage.getItem('sidebarCollapsed') === 'true') {
+    sidebar.classList.add('collapsed');
+    if (main) main.style.marginLeft = '64px';
+  }
+})();
+function toggleSidebar() {
+  var sidebar = document.querySelector('.sidebar');
+  var main    = document.querySelector('.main');
+  if (!sidebar) return;
+  var c = sidebar.classList.toggle('collapsed');
+  localStorage.setItem('sidebarCollapsed', c ? 'true' : 'false');
+  if (main) main.style.marginLeft = c ? '64px' : '252px';
+}
+</script>
+<script src="../assets/pulse-comments.js" data-project="create-survey" data-screen="configure"></script>
+</body>
+</html>

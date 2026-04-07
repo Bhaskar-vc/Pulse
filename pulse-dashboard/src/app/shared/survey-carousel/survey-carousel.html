@@ -1,0 +1,58 @@
+@if (surveys.length <= 1) {
+  <!-- Single survey: render original static layout -->
+  <div class="rp-survey-wrap">
+    <div class="rp-survey-card">
+      <div class="rp-survey-header">
+        <span class="rp-survey-title">Running Survey</span>
+        <span class="rp-survey-count">{{ surveys.length }}<span>/{{ surveys.length }}</span></span>
+      </div>
+      @for (s of surveys; track s.id) {
+        <div class="rp-survey-row">
+          <div class="rp-survey-info">
+            <div class="rp-survey-sname">{{ s.name }}</div>
+            <div class="rp-survey-sdata">{{ s.responses }} responses · {{ s.participation }} · ends {{ s.endDate }}</div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+} @else {
+  <!-- Multiple surveys: stacked carousel -->
+  <div class="sc-wrap" #cardStack>
+    <div class="sc-header">
+      <span class="sc-title">Running Surveys <span class="sc-badge">{{ total }}</span></span>
+      <div class="sc-arrows">
+        <button class="sc-arrow" (click)="prev()" aria-label="Previous survey">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="10 12 6 8 10 4"/></svg>
+        </button>
+        <button class="sc-arrow" (click)="next()" aria-label="Next survey">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="6 4 10 8 6 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="sc-stack">
+      @for (s of surveys; track s.id; let i = $index) {
+        <div
+          class="sc-card"
+          [ngStyle]="getCardStyle(i)"
+          (mousedown)="getRelativePosition(i) === 0 ? onDragStart($event) : null"
+          (touchstart)="getRelativePosition(i) === 0 ? onDragStart($event) : null"
+        >
+          <div class="rp-survey-row">
+            <div class="rp-survey-info">
+              <div class="rp-survey-sname">{{ s.name }}</div>
+              <div class="rp-survey-sdata">{{ s.responses }} responses · {{ s.participation }} · ends {{ s.endDate }}</div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="sc-dots">
+      @for (s of surveys; track s.id; let i = $index) {
+        <div class="sc-dot" [class.active]="i === currentIndex"></div>
+      }
+    </div>
+  </div>
+}

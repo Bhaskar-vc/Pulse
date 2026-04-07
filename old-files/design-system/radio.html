@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radio — Pulse Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary-700: #29294c;
+  --primary-600: #545470;
+  --primary-500: #707087;
+  --primary-400: #9d9dad;
+  --primary-300: #bdbdc8;
+  --primary-200: #eaeaed;
+  --primary-100: #f4f4f6;
+  --primary-50:  #f9fafb;
+  --secondary-700: #6941c6;
+  --secondary-600: #7f56d9;
+  --secondary-500: #9e77ed;
+  --secondary-400: #b692f6;
+  --secondary-300: #d6bbfb;
+  --secondary-200: #e9d7fe;
+  --secondary-100: #f4ebff;
+  --secondary-50:  #f9f5ff;
+  --error-700: #d92d20;
+  --error-100: #fef3f2;
+  --success-700: #039855;
+  --success-100: #ecfdf3;
+  --text-primary: #29294c;
+  --text-secondary: #707087;
+  --text-tertiary: #9d9dad;
+  --border-default: #eaeaed;
+  --bg-page: #f9fafb;
+  --sidebar-w: 240px;
+  --font: 'Inter', sans-serif;
+}
+
+body { font-family: var(--font); color: var(--text-primary); background: var(--bg-page); display: flex; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar { width: var(--sidebar-w); min-width: var(--sidebar-w); background: #fff; border-right: 1px solid var(--border-default); padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid var(--border-default); margin-bottom: 16px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: var(--primary-700); }
+.sidebar-logo sub { font-size: 10px; color: var(--text-tertiary); font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main { margin-left: var(--sidebar-w); flex: 1; padding: 48px 56px; max-width: 1100px; }
+
+/* ── Page header ── */
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text-primary); }
+.breadcrumb-sep { opacity: .4; }
+.page-header { margin-bottom: 40px; }
+.page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+.page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 640px; }
+.page-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+.tag-figma  { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+.tag-wcag   { background: #eff8ff; color: #026aa2; border-color: #b9e6fe; }
+
+/* ── Sections ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; }
+.section-desc  { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+.divider { border: none; border-top: 1px solid var(--border-default); margin: 48px 0; }
+
+/* ── Demo canvas ── */
+.demo-canvas { background: #fff; border: 1px solid var(--border-default); border-radius: 12px; padding: 32px; }
+.demo-canvas + .demo-canvas { margin-top: 16px; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start; }
+.demo-col { display: flex; flex-direction: column; gap: 14px; min-width: 180px; flex: 1; }
+.demo-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text-tertiary); margin-bottom: 6px; }
+
+/* ── Code block ── */
+.code-block { position: relative; background: #1e1e2e; border-radius: 10px; overflow: hidden; margin-top: 16px; }
+.code-block-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: #181825; border-bottom: 1px solid #313244; }
+.code-block-lang { font-size: 11px; font-weight: 500; color: #6c7086; font-family: 'JetBrains Mono', monospace; }
+.copy-btn { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); color: #cdd6f4; font-size: 11px; font-family: var(--font); font-weight: 500; padding: 4px 12px; border-radius: 5px; cursor: pointer; transition: background .15s; }
+.copy-btn:hover { background: rgba(255,255,255,.14); }
+.copy-btn.copied { color: #a6e3a1; border-color: #a6e3a1; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.75; color: #cdd6f4; white-space: pre; }
+.c-tag    { color: #89dceb; }
+.c-attr   { color: #89b4fa; }
+.c-val    { color: #a6e3a1; }
+.c-kw     { color: #cba6f7; }
+.c-str    { color: #a6e3a1; }
+.c-comment{ color: #6c7086; font-style: italic; }
+.c-fn     { color: #89b4fa; }
+.c-type   { color: #f9e2af; }
+
+/* ── Props table ── */
+.props-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid var(--border-default); border-radius: 10px; overflow: hidden; }
+.props-table th { text-align: left; padding: 10px 14px; background: var(--primary-50); color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border-default); }
+.props-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; line-height: 1.5; color: var(--text-primary); }
+.props-table tr:last-child td { border-bottom: none; }
+.props-table tr:hover td { background: #fafafd; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--primary-100); color: var(--secondary-700); padding: 2px 6px; border-radius: 4px; }
+
+/* ── States grid ── */
+.states-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.state-cell { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 20px 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.state-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-tertiary); }
+.state-token { font-size: 10.5px; color: var(--text-tertiary); line-height: 1.5; }
+
+/* ── Do / Don't ── */
+.do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.do-card, .dont-card { border-radius: 12px; padding: 20px; border: 1.5px solid; }
+.do-card { border-color: #a6f4c5; background: #f6fef9; }
+.dont-card { border-color: #fecdca; background: #fffbfa; }
+.do-header, .dont-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+.do-header { color: #027a48; }
+.dont-header { color: #b42318; }
+.do-icon, .dont-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+.do-icon { background: #027a48; color: #fff; }
+.dont-icon { background: #b42318; color: #fff; }
+.do-card p, .dont-card p { font-size: 13px; color: #344054; line-height: 1.6; }
+
+/* ── A11y grid ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ── For cards ── */
+.for-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.for-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 20px; }
+.for-card h4 { font-size: 14px; font-weight: 600; color: var(--primary-700); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.for-card ul { padding-left: 16px; }
+.for-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* ── Group panel ── */
+.group-panel { background: #fff; border: 1px solid var(--border-default); border-radius: 12px; padding: 24px; }
+.group-panel-title { font-size: 13px; font-weight: 600; color: var(--primary-700); margin-bottom: 16px; }
+.group-items { display: flex; flex-direction: column; gap: 12px; }
+.group-items-row { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
+
+/* ═══════════════════════════════════════════
+   RADIO COMPONENT
+   Source: @vantagecircle/vantage-ui/radio
+   Selector: <vc-radio>
+═══════════════════════════════════════════ */
+
+/* Wrapper label */
+.radio-wrap {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+/* Hide native input — keyboard accessible */
+.radio-wrap input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  clip: rect(0,0,0,0);
+  pointer-events: none;
+}
+
+/* Outer circle — the .radio-btn */
+.radio-btn {
+  flex-shrink: 0;
+  border-radius: 9999px;
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  transition: border-color .14s, background .14s, box-shadow .14s;
+  position: relative;
+}
+
+/* Sizes */
+.radio-btn.size-sm { width: 16px; height: 16px; }
+.radio-btn.size-md { width: 20px; height: 20px; }
+
+/* ── Hover (unchecked) ── */
+.radio-wrap:hover:not(.is-disabled) .radio-btn:not([data-checked]) {
+  border-color: #7f56d9;
+  background: #f9f5ff;
+}
+
+/* ── Focus ── */
+.radio-wrap:focus-within .radio-btn,
+.radio-btn.is-focused {
+  border-color: #d6bbfb;
+  box-shadow: 0 0 0 4px #f4ebff;
+}
+
+/* ── Checked — inset box-shadow creates the inner dot ── */
+.radio-btn[data-checked].size-sm {
+  background: #7f56d9;
+  border-color: #7f56d9;
+  box-shadow: inset 0 0 0 4px #f9f5ff;
+}
+.radio-btn[data-checked].size-md {
+  background: #7f56d9;
+  border-color: #7f56d9;
+  box-shadow: inset 0 0 0 5px #f9f5ff;
+}
+
+/* Checked + hover — darkens */
+.radio-wrap:hover:not(.is-disabled) .radio-btn[data-checked].size-sm {
+  background: #6941c6;
+  border-color: #6941c6;
+  box-shadow: inset 0 0 0 4px #f9f5ff;
+}
+.radio-wrap:hover:not(.is-disabled) .radio-btn[data-checked].size-md {
+  background: #6941c6;
+  border-color: #6941c6;
+  box-shadow: inset 0 0 0 5px #f9f5ff;
+}
+
+/* Checked + focused */
+.radio-wrap:focus-within .radio-btn[data-checked].size-sm {
+  background: #7f56d9;
+  border-color: #7f56d9;
+  box-shadow: inset 0 0 0 4px #f9f5ff, 0 0 0 4px #f4ebff;
+}
+.radio-wrap:focus-within .radio-btn[data-checked].size-md {
+  background: #7f56d9;
+  border-color: #7f56d9;
+  box-shadow: inset 0 0 0 5px #f9f5ff, 0 0 0 4px #f4ebff;
+}
+
+/* ── Disabled ── */
+.radio-wrap.is-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.radio-wrap.is-disabled .radio-btn {
+  border-color: #d0d5dd;
+  background: #f9fafb;
+}
+.radio-wrap.is-disabled .radio-btn[data-checked] {
+  background: #d0d5dd;
+  border-color: #d0d5dd;
+  box-shadow: inset 0 0 0 4px #fff !important;
+}
+.radio-wrap.is-disabled .radio-label,
+.radio-wrap.is-disabled .radio-subtext { color: #d0d5dd; }
+
+/* ── Label area ── */
+.radio-label-wrap { display: flex; flex-direction: column; gap: 2px; padding-top: 0; }
+.radio-label { font-size: 14px; font-weight: 500; color: var(--text-primary); line-height: 1.4; }
+.radio-label.fw-regular { font-weight: 400; }
+.radio-subtext { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+
+/* Size alignment offset for label */
+.radio-btn.size-sm + .radio-label-wrap,
+.radio-btn.size-sm + .radio-label { padding-top: 0; }
+.radio-btn.size-md + .radio-label-wrap,
+.radio-btn.size-md + .radio-label { padding-top: 1px; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+<link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon"><span></span><span></span><span></span></span>
+</button>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle" style="display:block"/></a>
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+    <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="radio.html" class="sidebar-link active">Radio</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Components</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Radio</span>
+  </div>
+
+  <div class="page-header">
+    <div class="ph-folder-icon">
+      <div class="ph-folder-wrap">
+        <div class="ph-paper ph-paper-1"></div>
+        <div class="ph-paper ph-paper-2"></div>
+        <div class="ph-paper ph-paper-3"></div>
+        <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+        <span class="ph-folder-label">RADIO</span>
+      </div>
+    </div>
+    <h1 class="page-title">Radio</h1>
+    <p class="page-subtitle">Radios allow users to select a single option from a list of mutually exclusive options. Supports two sizes, label, subtext, disabled state, and full keyboard accessibility.</p>
+    <div class="page-tags">
+      <span class="tag tag-stable">Stable</span>
+      <span class="tag tag-wcag">WCAG AA</span>
+      <span class="tag tag-figma">Figma · 745-29926</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 1. BASIC ────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Basic</h2>
+    <p class="section-desc">A radio group — all buttons share the same <code>name</code>. Selecting one automatically deselects the others. Always pre-select a sensible default.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">Radio group</div>
+          <label class="radio-wrap" data-group="basic">
+            <input type="radio" name="basic" checked>
+            <span class="radio-btn size-sm" data-checked></span>
+            <span class="radio-label">Technical</span>
+          </label>
+          <label class="radio-wrap" data-group="basic">
+            <input type="radio" name="basic">
+            <span class="radio-btn size-sm"></span>
+            <span class="radio-label">Sales</span>
+          </label>
+          <label class="radio-wrap" data-group="basic">
+            <input type="radio" name="basic">
+            <span class="radio-btn size-sm"></span>
+            <span class="radio-label">Design</span>
+          </label>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">With subtext</div>
+          <label class="radio-wrap" data-group="basic-sub">
+            <input type="radio" name="basic-sub" checked>
+            <span class="radio-btn size-sm" data-checked></span>
+            <span class="radio-label-wrap">
+              <span class="radio-label">Monthly billing</span>
+              <span class="radio-subtext">Billed every 30 days</span>
+            </span>
+          </label>
+          <label class="radio-wrap" data-group="basic-sub">
+            <input type="radio" name="basic-sub">
+            <span class="radio-btn size-sm"></span>
+            <span class="radio-label-wrap">
+              <span class="radio-label">Annual billing</span>
+              <span class="radio-subtext">Save 20% — billed yearly</span>
+            </span>
+          </label>
+          <label class="radio-wrap" data-group="basic-sub">
+            <input type="radio" name="basic-sub">
+            <span class="radio-btn size-sm"></span>
+            <span class="radio-label-wrap">
+              <span class="radio-label">Pay as you go</span>
+              <span class="radio-subtext">Charged per usage</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- HTML code -->
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">html</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">&lt;!-- Radio group — all share the same name --&gt;</span>
+<span class="c-tag">&lt;vc-radio</span> <span class="c-attr">name</span>=<span class="c-val">"department"</span> <span class="c-attr">value</span>=<span class="c-val">"technical"</span> <span class="c-attr">[(ngModel)]</span>=<span class="c-val">"department"</span> <span class="c-attr">label</span>=<span class="c-val">"Technical"</span><span class="c-tag">&gt;&lt;/vc-radio&gt;</span>
+<span class="c-tag">&lt;vc-radio</span> <span class="c-attr">name</span>=<span class="c-val">"department"</span> <span class="c-attr">value</span>=<span class="c-val">"sales"</span>     <span class="c-attr">[(ngModel)]</span>=<span class="c-val">"department"</span> <span class="c-attr">label</span>=<span class="c-val">"Sales"</span><span class="c-tag">&gt;&lt;/vc-radio&gt;</span>
+<span class="c-tag">&lt;vc-radio</span> <span class="c-attr">name</span>=<span class="c-val">"department"</span> <span class="c-attr">value</span>=<span class="c-val">"design"</span>   <span class="c-attr">[(ngModel)]</span>=<span class="c-val">"department"</span> <span class="c-attr">label</span>=<span class="c-val">"Design"</span><span class="c-tag">&gt;&lt;/vc-radio&gt;</span></pre></div>
+    </div>
+
+    <!-- TS code -->
+    <div class="code-block" style="margin-top:8px;">
+      <div class="code-block-header">
+        <span class="code-block-lang">typescript</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-kw">import</span> { Component } <span class="c-kw">from</span> <span class="c-str">'@angular/core'</span>;
+<span class="c-kw">import</span> { CommonModule } <span class="c-kw">from</span> <span class="c-str">'@angular/common'</span>;
+<span class="c-kw">import</span> { FormsModule } <span class="c-kw">from</span> <span class="c-str">'@angular/forms'</span>;
+<span class="c-kw">import</span> { VcRadio } <span class="c-kw">from</span> <span class="c-str">'@vantagecircle/vantage-ui/radio'</span>;
+
+@<span class="c-fn">Component</span>({
+  selector: <span class="c-str">'app-radio'</span>,
+  standalone: <span class="c-kw">true</span>,
+  imports: [CommonModule, FormsModule, VcRadio],
+  templateUrl: <span class="c-str">'./radio.component.html'</span>,
+})
+<span class="c-kw">export class</span> <span class="c-type">RadioComponent</span> {
+  department: <span class="c-type">string</span> = <span class="c-str">'technical'</span>;
+}</pre></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 2. SIZES ───────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">Two sizes are available. <code>sm</code> is the default. Use <code>md</code> for forms and settings pages where more visual prominence is needed.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">sm — 16×16 (default)</div>
+          <label class="radio-wrap" data-group="sz-sm">
+            <input type="radio" name="sz-sm" checked>
+            <span class="radio-btn size-sm" data-checked></span>
+            <span class="radio-label">Small</span>
+          </label>
+          <label class="radio-wrap" data-group="sz-sm">
+            <input type="radio" name="sz-sm">
+            <span class="radio-btn size-sm"></span>
+            <span class="radio-label">Small option</span>
+          </label>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">md — 20×20</div>
+          <label class="radio-wrap" data-group="sz-md">
+            <input type="radio" name="sz-md" checked>
+            <span class="radio-btn size-md" data-checked></span>
+            <span class="radio-label">Medium</span>
+          </label>
+          <label class="radio-wrap" data-group="sz-md">
+            <input type="radio" name="sz-md">
+            <span class="radio-btn size-md"></span>
+            <span class="radio-label">Medium option</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <table class="props-table">
+        <thead><tr><th>Size</th><th>Dimension</th><th>Inset dot</th><th>Default</th><th>When to use</th></tr></thead>
+        <tbody>
+          <tr><td><code>sm</code></td><td>16 × 16 px</td><td><code>inset 0 0 0 4px</code></td><td>Yes</td><td>Compact lists, filter panels, data tables</td></tr>
+          <tr><td><code>md</code></td><td>20 × 20 px</td><td><code>inset 0 0 0 5px</code></td><td>—</td><td>Settings pages, onboarding, forms</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- size code -->
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">html</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-tag">&lt;vc-radio</span> <span class="c-attr">name</span>=<span class="c-val">"size"</span> <span class="c-attr">value</span>=<span class="c-val">"small"</span>  <span class="c-attr">[(ngModel)]</span>=<span class="c-val">"size"</span> <span class="c-attr">label</span>=<span class="c-val">"Small"</span>  <span class="c-attr">size</span>=<span class="c-val">"sm"</span><span class="c-tag">&gt;&lt;/vc-radio&gt;</span>
+<span class="c-tag">&lt;vc-radio</span> <span class="c-attr">name</span>=<span class="c-val">"size"</span> <span class="c-attr">value</span>=<span class="c-val">"medium"</span> <span class="c-attr">[(ngModel)]</span>=<span class="c-val">"size"</span> <span class="c-attr">label</span>=<span class="c-val">"Medium"</span> <span class="c-attr">size</span>=<span class="c-val">"md"</span><span class="c-tag">&gt;&lt;/vc-radio&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 3. STATES ──────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">States</h2>
+    <p class="section-desc">Every state is communicated visually through border color, fill, and the focus ring — never by color alone.</p>
+
+    <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:12px;">Unselected</p>
+    <div class="states-grid" style="margin-bottom:24px;">
+      <div class="state-cell">
+        <div class="state-label">Default</div>
+        <label class="radio-wrap">
+          <input type="radio" name="s1">
+          <span class="radio-btn size-sm"></span>
+          <span class="radio-label">Label</span>
+        </label>
+        <div class="state-token">Border <code>#d0d5dd</code><br>Bg <code>#ffffff</code></div>
+      </div>
+      <div class="state-cell">
+        <div class="state-label">Hover</div>
+        <label class="radio-wrap">
+          <span class="radio-btn size-sm" style="border-color:#7f56d9;background:#f9f5ff;"></span>
+          <span class="radio-label">Label</span>
+        </label>
+        <div class="state-token">Border <code>#7f56d9</code><br>Bg <code>#f9f5ff</code></div>
+      </div>
+      <div class="state-cell">
+        <div class="state-label">Focused</div>
+        <label class="radio-wrap">
+          <span class="radio-btn size-sm" style="border-color:#d6bbfb;box-shadow:0 0 0 4px #f4ebff;"></span>
+          <span class="radio-label">Label</span>
+        </label>
+        <div class="state-token">Border <code>#d6bbfb</code><br>Ring <code>#f4ebff</code></div>
+      </div>
+      <div class="state-cell">
+        <div class="state-label">Disabled</div>
+        <label class="radio-wrap is-disabled">
+          <input type="radio" name="s1d" disabled>
+          <span class="radio-btn size-sm"></span>
+          <span class="radio-label">Label</span>
+        </label>
+        <div class="state-token">Border <code>#d0d5dd</code><br>Bg <code>#f9fafb</code></div>
+      </div>
+    </div>
+
+    <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:12px;">Selected</p>
+    <div class="states-grid">
+      <div class="state-cell">
+        <div class="state-label">Default</div>
+        <label class="radio-wrap">
+          <input type="radio" name="s2" checked>
+          <span class="radio-btn size-sm" data-checked></span>
+          <span class="radio-label">Label</span>
+        </label>
+        <div class="state-token">Fill <code>#7f56d9</code><br>Dot <code>inset 0 0 0 4px #f9f5ff</code></div>
+      </div>
+      <div class="state-cell">
+        <div class="state-label">Hover</div>
+        <label class="radio-wrap">
+          <span class="radio-btn size-sm" style="background:#6941c6;border-color:#6941c6;box-shadow:inset 0 0 0 4px #f9f5ff;"></span>
+          <span class="radio-label">Label</span>
+        </label>
+        <div class="state-token">Fill <code>#6941c6</code><br>Dot <code>inset 0 0 0 4px #f9f5ff</code></div>
+      </div>
+      <div class="state-cell">
+        <div class="state-label">Focused</div>
+        <label class="radio-wrap">
+          <span class="radio-btn size-sm" style="background:#7f56d9;border-color:#7f56d9;box-shadow:inset 0 0 0 4px #f9f5ff, 0 0 0 4px #f4ebff;"></span>
+          <span class="radio-label">Label</span>
+        </label>
+        <div class="state-token">Fill <code>#7f56d9</code><br>Ring <code>#f4ebff</code> + dot</div>
+      </div>
+      <div class="state-cell">
+        <div class="state-label">Disabled</div>
+        <label class="radio-wrap is-disabled">
+          <input type="radio" name="s2d" disabled>
+          <span class="radio-btn size-sm" data-checked style="background:#d0d5dd;border-color:#d0d5dd;box-shadow:inset 0 0 0 4px #fff;"></span>
+          <span class="radio-label">Label</span>
+        </label>
+        <div class="state-token">Fill <code>#d0d5dd</code><br>Dot <code>inset 0 0 0 4px #fff</code></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 4. DISABLED ────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Disabled</h2>
+    <p class="section-desc">Add <code>[disabled]="true"</code> to make the radio non-interactive. Also add <code>.is-disabled</code> to the wrapper to prevent pointer events and reduce opacity.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">Disabled unselected</div>
+          <label class="radio-wrap is-disabled">
+            <input type="radio" disabled>
+            <span class="radio-btn size-sm"></span>
+            <span class="radio-label">Disabled option</span>
+          </label>
+          <label class="radio-wrap is-disabled">
+            <input type="radio" disabled>
+            <span class="radio-btn size-sm"></span>
+            <span class="radio-label-wrap">
+              <span class="radio-label">Disabled with subtext</span>
+              <span class="radio-subtext">Not available on your plan</span>
+            </span>
+          </label>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Disabled selected</div>
+          <label class="radio-wrap is-disabled">
+            <input type="radio" disabled>
+            <span class="radio-btn size-sm" style="background:#d0d5dd;border-color:#d0d5dd;box-shadow:inset 0 0 0 4px #fff;"></span>
+            <span class="radio-label">Selected &amp; disabled</span>
+          </label>
+          <label class="radio-wrap is-disabled">
+            <input type="radio" disabled>
+            <span class="radio-btn size-md" style="background:#d0d5dd;border-color:#d0d5dd;box-shadow:inset 0 0 0 5px #fff;"></span>
+            <span class="radio-label-wrap">
+              <span class="radio-label">Selected &amp; disabled (md)</span>
+              <span class="radio-subtext">Legacy plan — no longer available</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">html</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-tag">&lt;vc-radio</span> <span class="c-attr">label</span>=<span class="c-val">"Disabled"</span> <span class="c-attr">[disabled]</span>=<span class="c-val">"true"</span><span class="c-tag">&gt;&lt;/vc-radio&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 5. GROUP PATTERNS ──────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Group Patterns</h2>
+    <p class="section-desc">Radio buttons always live in a group. Use vertical layout by default. Horizontal works only for 2–3 short labels in a wide container.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <div class="demo-col" style="max-width:280px;">
+          <div class="demo-label">Vertical (default)</div>
+          <div class="group-panel">
+            <div class="group-panel-title">Subscription plan</div>
+            <div class="group-items">
+              <label class="radio-wrap" data-group="gv">
+                <input type="radio" name="gv" checked>
+                <span class="radio-btn size-sm" data-checked></span>
+                <span class="radio-label-wrap">
+                  <span class="radio-label">Starter</span>
+                  <span class="radio-subtext">Free — up to 3 projects</span>
+                </span>
+              </label>
+              <label class="radio-wrap" data-group="gv">
+                <input type="radio" name="gv">
+                <span class="radio-btn size-sm"></span>
+                <span class="radio-label-wrap">
+                  <span class="radio-label">Pro</span>
+                  <span class="radio-subtext">$12/mo — unlimited projects</span>
+                </span>
+              </label>
+              <label class="radio-wrap" data-group="gv">
+                <input type="radio" name="gv">
+                <span class="radio-btn size-sm"></span>
+                <span class="radio-label-wrap">
+                  <span class="radio-label">Enterprise</span>
+                  <span class="radio-subtext">Custom pricing, SLA &amp; SSO</span>
+                </span>
+              </label>
+              <label class="radio-wrap is-disabled" data-group="gv">
+                <input type="radio" name="gv" disabled>
+                <span class="radio-btn size-sm"></span>
+                <span class="radio-label-wrap">
+                  <span class="radio-label">Legacy</span>
+                  <span class="radio-subtext">No longer available</span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Horizontal (short labels only)</div>
+          <div class="group-panel">
+            <div class="group-panel-title">Priority</div>
+            <div class="group-items-row">
+              <label class="radio-wrap" data-group="gh">
+                <input type="radio" name="gh" checked>
+                <span class="radio-btn size-sm" data-checked></span>
+                <span class="radio-label">Low</span>
+              </label>
+              <label class="radio-wrap" data-group="gh">
+                <input type="radio" name="gh">
+                <span class="radio-btn size-sm"></span>
+                <span class="radio-label">Medium</span>
+              </label>
+              <label class="radio-wrap" data-group="gh">
+                <input type="radio" name="gh">
+                <span class="radio-btn size-sm"></span>
+                <span class="radio-label">High</span>
+              </label>
+            </div>
+          </div>
+          <div style="margin-top:16px;">
+            <div class="demo-label">md size group</div>
+            <div class="group-panel">
+              <div class="group-panel-title">Notification frequency</div>
+              <div class="group-items">
+                <label class="radio-wrap" data-group="gmd">
+                  <input type="radio" name="gmd" checked>
+                  <span class="radio-btn size-md" data-checked></span>
+                  <span class="radio-label-wrap">
+                    <span class="radio-label">Real-time</span>
+                    <span class="radio-subtext">Notify on every event</span>
+                  </span>
+                </label>
+                <label class="radio-wrap" data-group="gmd">
+                  <input type="radio" name="gmd">
+                  <span class="radio-btn size-md"></span>
+                  <span class="radio-label-wrap">
+                    <span class="radio-label">Daily digest</span>
+                    <span class="radio-subtext">One summary email per day</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 6. DO'S & DON'TS ───────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Do's &amp; Don'ts</h2>
+
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <div class="do-header"><span class="do-icon">✓</span> Always pre-select a default</div>
+        <p>Radio groups should always have one option selected on load. An empty group creates ambiguity and increases error rates on form submit.</p>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;">
+          <label class="radio-wrap" data-group="do1"><input type="radio" name="do1" checked>
+            <span class="radio-btn size-sm" data-checked></span><span class="radio-label">Monthly</span>
+          </label>
+          <label class="radio-wrap" data-group="do1"><input type="radio" name="do1">
+            <span class="radio-btn size-sm"></span><span class="radio-label">Annual</span>
+          </label>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><span class="dont-icon">✕</span> Don't leave all options empty</div>
+        <p>Starting with nothing selected is ambiguous — users don't know if a choice is required and errors spike on submit.</p>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;opacity:.55;">
+          <label class="radio-wrap"><span class="radio-btn size-sm"></span><span class="radio-label">Monthly</span></label>
+          <label class="radio-wrap"><span class="radio-btn size-sm"></span><span class="radio-label">Annual</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="do-dont-grid" style="margin-top:16px;">
+      <div class="do-card">
+        <div class="do-header"><span class="do-icon">✓</span> Use for mutually exclusive options</div>
+        <p>When exactly one choice is valid and all options should be visible at once, radio buttons communicate that constraint clearly.</p>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><span class="dont-icon">✕</span> Don't exceed 6 options</div>
+        <p>More than 6 radios should use a Select dropdown. Long lists require scrolling and make comparisons hard.</p>
+      </div>
+    </div>
+
+    <div class="do-dont-grid" style="margin-top:16px;">
+      <div class="do-card">
+        <div class="do-header"><span class="do-icon">✓</span> Wrap groups in fieldset + legend</div>
+        <p>Gives screen readers the group context, so users understand what question the radio group answers.</p>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><span class="dont-icon">✕</span> Don't mix sizes in one group</div>
+        <p>Mixing <code>sm</code> and <code>md</code> creates misaligned tap targets and visual inconsistency within the same group.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 7. API ──────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">API</h2>
+    <p class="section-desc">Import <code>VcRadio</code> from <code>@vantagecircle/vantage-ui/radio</code>. Selector: <code>&lt;vc-radio&gt;</code>.</p>
+
+    <p style="font-size:13px;font-weight:600;color:var(--primary-700);margin-bottom:10px;">Props</p>
+    <table class="props-table" style="margin-bottom:28px;">
+      <thead>
+        <tr><th>Prop</th><th>Type</th><th>Options</th><th>Default</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>name</code></td><td>string</td><td>—</td><td>—</td>
+          <td>Name of the radio group. All radios sharing the same name are mutually exclusive.</td>
+        </tr>
+        <tr>
+          <td><code>value</code></td><td>string</td><td>—</td><td>—</td>
+          <td>Value of this radio. Submitted with the form when selected.</td>
+        </tr>
+        <tr>
+          <td><code>label</code></td><td>string</td><td>—</td><td>—</td>
+          <td>Visible label text rendered to the right of the control.</td>
+        </tr>
+        <tr>
+          <td><code>subtext</code></td><td>string</td><td>—</td><td>—</td>
+          <td>Smaller descriptive text rendered below the label at 12px.</td>
+        </tr>
+        <tr>
+          <td><code>size</code></td><td>string</td><td><code>"sm"</code> <code>"md"</code></td><td><code>"sm"</code></td>
+          <td>Controls the bounding circle: sm = 16px, md = 20px.</td>
+        </tr>
+        <tr>
+          <td><code>disabled</code></td><td>boolean</td><td><code>true</code> <code>false</code></td><td><code>false</code></td>
+          <td>Renders at reduced opacity and prevents all interaction.</td>
+        </tr>
+        <tr>
+          <td><code>ariaLabel</code></td><td>string</td><td>—</td><td>—</td>
+          <td>Accessible label for the radio when no visible label is provided.</td>
+        </tr>
+        <tr>
+          <td><code>ariaLabelledBy</code></td><td>string</td><td>—</td><td>—</td>
+          <td>ID of an external element that labels this radio.</td>
+        </tr>
+        <tr>
+          <td><code>labelFontWeight</code></td><td>string</td><td><code>"default"</code> <code>"light"</code></td><td><code>"default"</code></td>
+          <td>Font weight of the label. Default = 500, light = 400.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:13px;font-weight:600;color:var(--primary-700);margin-bottom:10px;">Events</p>
+    <table class="props-table">
+      <thead>
+        <tr><th>Event</th><th>Payload</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>onClick</code></td><td><code>VcRadioClickEvent</code></td>
+          <td>Emitted when the radio is clicked and its value changes.</td>
+        </tr>
+        <tr>
+          <td><code>onFocus</code></td><td><code>Event</code></td>
+          <td>Emitted when the radio receives keyboard or mouse focus.</td>
+        </tr>
+        <tr>
+          <td><code>onBlur</code></td><td><code>Event</code></td>
+          <td>Emitted when the radio loses focus.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 8. ACCESSIBILITY ───────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Accessibility</h2>
+    <p class="section-desc">The native <code>input[type=radio]</code> is visually hidden but remains in the accessibility tree, providing correct ARIA role, keyboard behaviour, and form semantics automatically.</p>
+
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#6941c6" stroke-width="1.3"/><path d="M8 5v4M8 10.5v.5" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round"/></svg>
+          ARIA &amp; Semantics
+        </h4>
+        <ul>
+          <li>Native <code>input[type=radio]</code> provides <code>role="radio"</code> automatically</li>
+          <li>Wrap groups in <code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code> for group context</li>
+          <li>Custom visual is <code>aria-hidden="true"</code> — native input carries all semantics</li>
+          <li>Use <code>ariaLabel</code> or <code>ariaLabelledBy</code> when no visible label is present</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="#6941c6" stroke-width="1.3"/><path d="M5 8h6M8 5v6" stroke="#6941c6" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Keyboard Interaction
+        </h4>
+        <ul>
+          <li><kbd style="background:var(--primary-100);padding:1px 6px;border-radius:3px;font-size:11px;font-family:monospace;">Tab</kbd> — enters the group (focuses selected item)</li>
+          <li><kbd style="background:var(--primary-100);padding:1px 6px;border-radius:3px;font-size:11px;font-family:monospace;">↑ / ↓</kbd> or <kbd style="background:var(--primary-100);padding:1px 6px;border-radius:3px;font-size:11px;font-family:monospace;">← / →</kbd> — navigate between options and select</li>
+          <li><kbd style="background:var(--primary-100);padding:1px 6px;border-radius:3px;font-size:11px;font-family:monospace;">Tab</kbd> — exits the group to the next focusable element</li>
+          <li>Focus ring uses <code>box-shadow</code> — visible inside <code>overflow:hidden</code></li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="#6941c6" stroke-width="1.3"/><path d="M2 13c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="#6941c6" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Color &amp; Contrast
+        </h4>
+        <ul>
+          <li>Unselected border <code>#d0d5dd</code> on white meets WCAG AA 3:1 non-text contrast</li>
+          <li>Selected fill <code>#7f56d9</code> on white inner dot passes 4.5:1</li>
+          <li>Label <code>#29294c</code> on white: contrast ratio ≥ 7:1</li>
+          <li>Subtext <code>#707087</code> on white: meets 4.5:1 for small text</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3v10" stroke="#6941c6" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Touch &amp; Target Size
+        </h4>
+        <ul>
+          <li>Minimum touch target is 44×44px — the <code>&lt;label&gt;</code> wrapper expands the hit area</li>
+          <li>Always include label text to maximise tappable area</li>
+          <li>Maintain at least 8px vertical gap between group items</li>
+          <li>Prefer <code>md</code> size on mobile — <code>sm</code> only on desktop</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 9. IMPLEMENTATION NOTES ────────────── -->
+  <div class="section">
+    <h2 class="section-title">Implementation Notes</h2>
+    <div class="for-grid">
+      <div class="for-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" fill="#7f56d9"/><rect x="9" y="2" width="5" height="5" rx="1" fill="#b692f6"/><rect x="2" y="9" width="5" height="5" rx="1" fill="#d6bbfb"/><rect x="9" y="9" width="5" height="5" rx="1" fill="#f4ebff"/></svg>
+          For Designers
+        </h4>
+        <ul>
+          <li>Figma node: <strong>745-29926</strong></li>
+          <li>Use <code>Size</code> prop (sm / md) — never resize the circle frame manually</li>
+          <li><code>subtext</code> slot is optional — detach and remove if unused</li>
+          <li>Maintain 8px vertical gap between group items</li>
+          <li>Use auto-layout column for groups — avoid manual positioning</li>
+          <li>Never override token colors directly on the component instance</li>
+        </ul>
+      </div>
+      <div class="for-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="#7f56d9" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2l-2 12" stroke="#b692f6" stroke-width="1.4" stroke-linecap="round"/></svg>
+          For Developers
+        </h4>
+        <ul>
+          <li>Always use native <code>&lt;input type="radio"&gt;</code> — hidden visually, not from the a11y tree</li>
+          <li>The inner dot is pure CSS: <code>box-shadow: inset 0 0 0 4px #f9f5ff</code> (sm) / <code>5px</code> (md)</li>
+          <li>Group with shared <code>name</code> attribute — browser enforces mutual exclusion natively</li>
+          <li>Wrap groups in <code>&lt;fieldset&gt;</code> / <code>&lt;legend&gt;</code> for screen reader context</li>
+          <li>Disabled: add <code>.is-disabled</code> to wrapper AND <code>disabled</code> to native input</li>
+          <li>Angular: use <code>[(ngModel)]</code> with a shared model variable across the group</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── Interactive radio toggle ──
+document.querySelectorAll('.radio-wrap[data-group]').forEach(wrap => {
+  wrap.addEventListener('click', function (e) {
+    const btn   = this.querySelector('.radio-btn');
+    const input = this.querySelector('input[type="radio"]');
+    if (!btn || !input || this.classList.contains('is-disabled')) return;
+
+    const groupName = input.name;
+    if (groupName) {
+      document.querySelectorAll(`input[name="${groupName}"]`).forEach(inp => {
+        const w = inp.closest('.radio-wrap');
+        const b = w && w.querySelector('.radio-btn');
+        if (b) b.removeAttribute('data-checked');
+        inp.checked = false;
+      });
+    }
+    btn.setAttribute('data-checked', '');
+    input.checked = true;
+    e.preventDefault();
+    input.focus();
+  });
+});
+
+// ── Copy button ──
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

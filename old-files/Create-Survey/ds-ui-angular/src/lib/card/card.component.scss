@@ -1,0 +1,80 @@
+// Card — Figma node 1490:3727
+// bg white, border #f2f4f7, rounded-12, optional shadow
+// CTA button: bg #6941c6, rounded-8
+// Media area: bg #fcfaff (secondary-50), rounded-12
+
+.ds-card {
+  display:        flex;
+  flex-direction: column;
+  background:     var(--color-white);
+  border:         1px solid var(--border-subtle); // #f2f4f7
+  border-radius:  var(--radius-lg);               // 12px
+  overflow:       hidden;
+  font-family:    var(--font-family);
+  transition:     box-shadow 0.2s ease;
+
+  &--elevated {
+    box-shadow: var(--shadow-md);
+    &:hover { box-shadow: var(--shadow-lg); }
+  }
+
+  // ── Accent strip (top colour bar) ────────────────────
+  &__accent {
+    height:        4px;
+    flex-shrink:   0;
+  }
+
+  // ── Media area ───────────────────────────────────────
+  &__media {
+    background:    var(--color-primary-50); // #fcfaff
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    overflow:      hidden;
+    flex-shrink:   0;
+    min-height:    120px;
+    display:       flex;
+    align-items:   center;
+    justify-content: center;
+    padding:       var(--space-4);
+  }
+
+  // ── Header ───────────────────────────────────────────
+  &__header {
+    padding:        var(--space-4) var(--space-5) 0;
+    display:        flex;
+    flex-direction: column;
+    gap:            var(--space-1);
+  }
+
+  &__title {
+    font-size:    var(--font-size-base);
+    font-weight:  var(--font-weight-semibold);
+    color:        var(--text-primary);
+    margin:       0;
+    line-height:  var(--line-height-base);
+  }
+
+  &__subtitle {
+    font-size:   var(--font-size-xs);
+    color:       var(--text-secondary);
+    margin:      0;
+    line-height: var(--line-height-xs);
+  }
+
+  // ── Body ─────────────────────────────────────────────
+  &__body {
+    flex:    1;
+    padding: var(--space-4) var(--space-5);
+  }
+
+  // ── Footer / CTA ─────────────────────────────────────
+  &__footer {
+    padding:    var(--space-4) var(--space-5);
+    border-top: 1px solid var(--border-subtle);
+
+    // If it contains a ds-button or native button, style as the CTA block
+    :is(button, [ds-button], .ds-btn--primary) {
+      width:         100%;
+      border-radius: var(--radius-md); // 8px
+    }
+  }
+}

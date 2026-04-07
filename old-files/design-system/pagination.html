@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pagination – Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; font-size: 14px; color: #1d2939; background: #f8f9fb; min-height: 100vh; display: flex; }
+
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #eaeaed; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #eaeaed; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #29294c; }
+.sidebar-logo sub { font-size: 10px; color: #9d9dad; font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+.main { margin-left: 240px; flex: 1; }
+.content { max-width: 1100px; padding: 48px 56px; }
+
+.page-header { margin-bottom: 44px; }
+.breadcrumb { font-size: 12px; color: #98a2b3; margin-bottom: 10px; }
+.breadcrumb span { color: #6941c6; }
+.page-title { font-size: 30px; font-weight: 700; color: #101828; letter-spacing: -.4px; line-height: 1.2; }
+.page-desc { margin-top: 8px; font-size: 15px; color: #475467; line-height: 1.6; max-width: 640px; }
+.tag-row { display: flex; gap: 8px; margin-top: 14px; }
+.page-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.tag-a11y { color: #026aa2; background: #e0f2fe; border-color: #b9e6fe; }
+.tag-figma { color: #6941c6; background: #f4f0fd; border-color: #d6bbfb; }
+
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 700; color: #101828; padding-bottom: 12px; border-bottom: 1px solid #e4e7ec; margin-bottom: 20px; }
+.section-desc { font-size: 14px; color: #475467; line-height: 1.7; margin-bottom: 20px; }
+.divider { border: none; border-top: 1px solid #e4e7ec; margin: 0 0 56px; }
+.variant-label { font-size: 12px; font-weight: 600; color: #98a2b3; text-transform: uppercase; letter-spacing: .06em; margin: 20px 0 8px; }
+
+.demo-box { background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 40px 32px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
+.demo-box-grey { background: #f4f4f6; border: 1px solid #e4e7ec; border-radius: 12px; padding: 40px 32px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
+.demo-box-col { flex-direction: column; align-items: flex-start; }
+
+.ds-table-wrap { border: 1px solid #e4e7ec; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-table thead { background: #f9fafb; }
+.ds-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .05em; }
+.ds-table td { padding: 11px 16px; border-top: 1px solid #f2f4f7; color: #344054; }
+.ds-table tr:hover td { background: #fafbff; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: #f2f4f7; color: #29294c; padding: 2px 6px; border-radius: 4px; }
+
+.code-block { background: #0f172a; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.code-block-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155; }
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.copy-btn { font-size: 11px; font-weight: 600; color: #94a3b8; background: none; border: 1px solid #334155; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s, color .15s; }
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; } .c-tag { color: #7dd3fc; } .c-attr { color: #a5b4fc; } .c-val { color: #86efac; }
+
+/* ═══════════════════════════════
+   PAGINATION COMPONENT
+   ═══════════════════════════════ */
+
+/* ── Base pagination bar ── */
+.pgn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: #29294c;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Navigation arrow buttons ── */
+.pgn-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  color: #344054;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 500;
+}
+.pgn-btn:hover:not(:disabled) {
+  background: #f9f5ff;
+  border-color: #7f56d9;
+  color: #6941c6;
+}
+.pgn-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.pgn-btn.is-active {
+  background: #7f56d9;
+  border-color: #7f56d9;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── Page number buttons ── */
+.pgn-pages {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.pgn-ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: #98a2b3;
+  font-size: 13px;
+  user-select: none;
+  letter-spacing: 1px;
+}
+
+/* ── Short / simple variant ── */
+.pgn-short {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  color: #29294c;
+}
+.pgn-short .pgn-counter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.pgn-short .pgn-counter .dim { color: #707087; }
+.pgn-short .pgn-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pgn-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #29294c;
+  border-radius: 4px;
+  transition: color .15s, background .15s;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.pgn-arrow:hover:not(:disabled) { color: #6941c6; background: #f4f0fd; }
+.pgn-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ── Full variant with rows-per-page ── */
+.pgn-full {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 14px;
+  color: #29294c;
+}
+.pgn-full-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pgn-label {
+  white-space: nowrap;
+  color: #29294c;
+}
+
+/* Rows-per-page select box */
+.pgn-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #d0d5dd;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  background: #fff;
+  color: #29294c;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  transition: border-color .15s;
+  position: relative;
+  user-select: none;
+}
+.pgn-select:hover { border-color: #7f56d9; }
+.pgn-select select {
+  border: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #29294c;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 18px;
+}
+
+/* Go-to-page input */
+.pgn-goto {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pgn-input {
+  width: 52px;
+  height: 36px;
+  border: 1px solid #d0d5dd;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #29294c;
+  text-align: center;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.pgn-input:focus {
+  border-color: #7f56d9;
+  box-shadow: 0 0 0 3px rgba(127,86,217,0.15);
+}
+
+/* Rows-per-page native select wrapper */
+.pgn-rpp {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pgn-rpp-select {
+  height: 36px;
+  border: 1px solid #d0d5dd;
+  border-radius: 6px;
+  padding: 0 28px 0 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #29294c;
+  background: #fff url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2398a2b3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+.pgn-rpp-select:focus {
+  border-color: #7f56d9;
+  box-shadow: 0 0 0 3px rgba(127,86,217,0.15);
+}
+
+/* ── Size modifiers ── */
+/* Small */
+.pgn--sm .pgn-btn, .pgn--sm .pgn-ellipsis { width: 28px; height: 28px; font-size: 12px; border-radius: 6px; }
+.pgn--sm { gap: 3px; font-size: 13px; }
+
+/* Large */
+.pgn--lg .pgn-btn, .pgn--lg .pgn-ellipsis { width: 44px; height: 44px; font-size: 15px; border-radius: 10px; }
+.pgn--lg { gap: 5px; font-size: 15px; }
+
+/* ── Rounded variant ── */
+.pgn--rounded .pgn-btn { border-radius: 99px; }
+
+/* ── Outline variant ── */
+.pgn--outline .pgn-btn { border-width: 1.5px; }
+.pgn--outline .pgn-btn.is-active {
+  background: transparent;
+  color: #7f56d9;
+  border-color: #7f56d9;
+}
+
+/* ── Ghost / minimal variant ── */
+.pgn--ghost .pgn-btn { border-color: transparent; background: transparent; }
+.pgn--ghost .pgn-btn:hover:not(:disabled) { background: #f4f0fd; border-color: transparent; }
+.pgn--ghost .pgn-btn.is-active { background: #f4f0fd; color: #7f56d9; border-color: transparent; }
+
+/* ── Interactive demo ── */
+.pgn-demo-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.pgn-demo-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.pgn-demo-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #667085;
+  min-width: 100px;
+}
+.pgn-demo-live {
+  background: #fff;
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+.pgn-demo-info {
+  font-size: 13px;
+  color: #667085;
+  padding: 8px 14px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e4e7ec;
+}
+
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle" style="display:block"/></a>
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link active">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<main class="main">
+<div class="content">
+
+  <!-- Page Header -->
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">PAGINATION</span>
+    </div>
+  </div>
+    
+    <h1 class="page-title">Pagination</h1>
+    <p class="page-desc">Pagination allows users to navigate through large datasets split into pages. Supports numbered pages, range counters, rows-per-page selectors, and quick-jump inputs.</p>
+    <div class="tag-row">
+      <span class="page-tag tag-stable">Stable</span>
+      <span class="page-tag tag-a11y">Accessible</span>
+      <span class="page-tag tag-figma">Figma Ready</span>
+    </div>
+  </div>
+
+  <!-- ── Overview ── -->
+  <section class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">The three core variants from the design system: Short (compact range counter), Default (with rows-per-page and go-to), and numbered page buttons.</p>
+
+    <p class="variant-label">Short — compact range + arrows</p>
+    <div class="demo-box">
+      <!-- Short variant -->
+      <div class="pgn-short">
+        <div class="pgn-counter">
+          <span>1</span><span>–</span><span>10</span>
+          <span class="dim">of</span>
+          <span class="dim">35</span>
+        </div>
+        <div class="pgn-nav">
+          <button class="pgn-arrow" disabled aria-label="Previous page">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="pgn-arrow" aria-label="Next page">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <p class="variant-label">Default — rows per page + go to + arrows</p>
+    <div class="demo-box">
+      <div class="pgn-full">
+        <div class="pgn-rpp">
+          <span class="pgn-label">Rows per Page:</span>
+          <select class="pgn-rpp-select" aria-label="Rows per page">
+            <option>10</option>
+            <option>15</option>
+            <option>20</option>
+            <option>30</option>
+            <option>50</option>
+          </select>
+        </div>
+        <div class="pgn-goto">
+          <span class="pgn-label">Go to</span>
+          <input class="pgn-input" type="number" min="1" max="4" value="1" aria-label="Go to page"/>
+        </div>
+        <div class="pgn-short" style="gap:12px;">
+          <div class="pgn-counter">
+            <span>1</span><span>–</span><span>10</span>
+            <span class="dim">of</span>
+            <span class="dim">35</span>
+          </div>
+          <div class="pgn-nav">
+            <button class="pgn-arrow" disabled aria-label="Previous page">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="pgn-arrow" aria-label="Next page">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="variant-label">Numbered — page buttons with ellipsis</p>
+    <div class="demo-box">
+      <nav class="pgn" aria-label="Page navigation">
+        <button class="pgn-btn" disabled aria-label="Previous page">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pgn-pages">
+          <button class="pgn-btn is-active" aria-current="page">1</button>
+          <button class="pgn-btn">2</button>
+          <button class="pgn-btn">3</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">8</button>
+          <button class="pgn-btn">9</button>
+          <button class="pgn-btn">10</button>
+        </div>
+        <button class="pgn-btn" aria-label="Next page">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ── Variants ── -->
+  <section class="section">
+    <h2 class="section-title">Variants</h2>
+
+    <p class="variant-label">Rounded</p>
+    <div class="demo-box">
+      <nav class="pgn pgn--rounded" aria-label="Page navigation">
+        <button class="pgn-btn" disabled aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pgn-pages">
+          <button class="pgn-btn is-active" aria-current="page">1</button>
+          <button class="pgn-btn">2</button>
+          <button class="pgn-btn">3</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">9</button>
+          <button class="pgn-btn">10</button>
+        </div>
+        <button class="pgn-btn" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <p class="variant-label">Outline (active page = bordered, not filled)</p>
+    <div class="demo-box">
+      <nav class="pgn pgn--outline" aria-label="Page navigation">
+        <button class="pgn-btn" disabled aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pgn-pages">
+          <button class="pgn-btn is-active" aria-current="page">1</button>
+          <button class="pgn-btn">2</button>
+          <button class="pgn-btn">3</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">9</button>
+          <button class="pgn-btn">10</button>
+        </div>
+        <button class="pgn-btn" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <p class="variant-label">Ghost / minimal</p>
+    <div class="demo-box">
+      <nav class="pgn pgn--ghost" aria-label="Page navigation">
+        <button class="pgn-btn" disabled aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pgn-pages">
+          <button class="pgn-btn is-active" aria-current="page">1</button>
+          <button class="pgn-btn">2</button>
+          <button class="pgn-btn">3</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">9</button>
+          <button class="pgn-btn">10</button>
+        </div>
+        <button class="pgn-btn" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <p class="variant-label">With text labels on arrows</p>
+    <div class="demo-box">
+      <nav class="pgn" style="gap:8px;" aria-label="Page navigation">
+        <button class="pgn-btn" style="width:auto; padding:0 14px; gap:6px;" disabled aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Previous
+        </button>
+        <div class="pgn-pages">
+          <button class="pgn-btn is-active" aria-current="page">1</button>
+          <button class="pgn-btn">2</button>
+          <button class="pgn-btn">3</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">8</button>
+          <button class="pgn-btn">9</button>
+        </div>
+        <button class="pgn-btn" style="width:auto; padding:0 14px; gap:6px;" aria-label="Next">
+          Next
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <p class="variant-label">Middle page — ellipsis on both sides</p>
+    <div class="demo-box">
+      <nav class="pgn" aria-label="Page navigation">
+        <button class="pgn-btn" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pgn-pages">
+          <button class="pgn-btn">1</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">4</button>
+          <button class="pgn-btn is-active" aria-current="page">5</button>
+          <button class="pgn-btn">6</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">10</button>
+        </div>
+        <button class="pgn-btn" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <p class="variant-label">Last page — next disabled</p>
+    <div class="demo-box">
+      <nav class="pgn" aria-label="Page navigation">
+        <button class="pgn-btn" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pgn-pages">
+          <button class="pgn-btn">1</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">8</button>
+          <button class="pgn-btn">9</button>
+          <button class="pgn-btn is-active" aria-current="page">10</button>
+        </div>
+        <button class="pgn-btn" disabled aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ── Sizes ── -->
+  <section class="section">
+    <h2 class="section-title">Sizes</h2>
+
+    <p class="variant-label">Small</p>
+    <div class="demo-box">
+      <nav class="pgn pgn--sm" aria-label="Page navigation">
+        <button class="pgn-btn" disabled aria-label="Previous">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pgn-pages">
+          <button class="pgn-btn is-active" aria-current="page">1</button>
+          <button class="pgn-btn">2</button>
+          <button class="pgn-btn">3</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">8</button>
+          <button class="pgn-btn">9</button>
+          <button class="pgn-btn">10</button>
+        </div>
+        <button class="pgn-btn" aria-label="Next">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <p class="variant-label">Medium (default)</p>
+    <div class="demo-box">
+      <nav class="pgn" aria-label="Page navigation">
+        <button class="pgn-btn" disabled aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pgn-pages">
+          <button class="pgn-btn is-active" aria-current="page">1</button>
+          <button class="pgn-btn">2</button>
+          <button class="pgn-btn">3</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">8</button>
+          <button class="pgn-btn">9</button>
+          <button class="pgn-btn">10</button>
+        </div>
+        <button class="pgn-btn" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <p class="variant-label">Large</p>
+    <div class="demo-box">
+      <nav class="pgn pgn--lg" aria-label="Page navigation">
+        <button class="pgn-btn" disabled aria-label="Previous">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pgn-pages">
+          <button class="pgn-btn is-active" aria-current="page">1</button>
+          <button class="pgn-btn">2</button>
+          <button class="pgn-btn">3</button>
+          <span class="pgn-ellipsis">···</span>
+          <button class="pgn-btn">8</button>
+          <button class="pgn-btn">9</button>
+          <button class="pgn-btn">10</button>
+        </div>
+        <button class="pgn-btn" aria-label="Next">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ── Interactive Demo ── -->
+  <section class="section">
+    <h2 class="section-title">Interactive Demo</h2>
+    <p class="section-desc">A fully functional pagination — navigate pages, change rows per page, and jump to any page.</p>
+
+    <div class="pgn-demo-live" id="demo-wrap">
+
+      <!-- Rows per page + info row -->
+      <div class="pgn-full" style="width:100%; justify-content: space-between; flex-wrap:wrap; gap:12px;">
+        <div class="pgn-rpp">
+          <span class="pgn-label">Rows per Page:</span>
+          <select class="pgn-rpp-select" id="demo-rpp" onchange="demoUpdate()" aria-label="Rows per page">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+        <div class="pgn-demo-info" id="demo-info">Showing 1 – 10 of 100 items</div>
+      </div>
+
+      <!-- Numbered pagination -->
+      <nav class="pgn" id="demo-pgn" aria-label="Interactive page navigation"></nav>
+
+      <!-- Go to page -->
+      <div class="pgn-goto">
+        <span class="pgn-label">Go to page</span>
+        <input class="pgn-input" id="demo-goto" type="number" min="1" value="1" aria-label="Go to page" onkeydown="if(event.key==='Enter') demoGoTo()" style="width:60px"/>
+        <button class="pgn-btn" onclick="demoGoTo()" style="width:auto; padding:0 14px; font-size:13px;">Go</button>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ── API / Props ── -->
+  <section class="section">
+    <h2 class="section-title">CSS Classes</h2>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead><tr><th>Class</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>.pgn</code></td><td>Numbered pagination container (base)</td></tr>
+          <tr><td><code>.pgn--sm</code></td><td>Small size — 28px buttons</td></tr>
+          <tr><td><code>.pgn--lg</code></td><td>Large size — 44px buttons</td></tr>
+          <tr><td><code>.pgn--rounded</code></td><td>Fully rounded pill-shaped buttons</td></tr>
+          <tr><td><code>.pgn--outline</code></td><td>Outlined active state (no fill)</td></tr>
+          <tr><td><code>.pgn--ghost</code></td><td>Minimal / ghost buttons, no border</td></tr>
+          <tr><td><code>.pgn-btn</code></td><td>Individual page or nav button</td></tr>
+          <tr><td><code>.pgn-btn.is-active</code></td><td>Currently active page state</td></tr>
+          <tr><td><code>.pgn-pages</code></td><td>Wrapper for numbered page buttons</td></tr>
+          <tr><td><code>.pgn-ellipsis</code></td><td>Non-interactive ellipsis separator</td></tr>
+          <tr><td><code>.pgn-short</code></td><td>Compact range counter with arrows</td></tr>
+          <tr><td><code>.pgn-full</code></td><td>Full variant with rows-per-page, go-to</td></tr>
+          <tr><td><code>.pgn-rpp-select</code></td><td>Styled native select for rows per page</td></tr>
+          <tr><td><code>.pgn-input</code></td><td>Go-to page text input</td></tr>
+          <tr><td><code>.pgn-arrow</code></td><td>Simple icon-only arrow button (short variant)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── Code ── -->
+  <section class="section">
+    <h2 class="section-title">Code</h2>
+
+    <p class="variant-label">Short variant</p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">pagination.html</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">&lt;!-- Short: range counter + arrows --&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-short"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-counter"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;span&gt;</span>1<span class="c-tag">&lt;/span&gt;</span><span class="c-tag">&lt;span&gt;</span>–<span class="c-tag">&lt;/span&gt;</span><span class="c-tag">&lt;span&gt;</span>10<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class</span>=<span class="c-val">"dim"</span><span class="c-tag">&gt;</span>of<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class</span>=<span class="c-val">"dim"</span><span class="c-tag">&gt;</span>35<span class="c-tag">&lt;/span&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-nav"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-arrow"</span> <span class="c-attr">disabled</span><span class="c-tag">&gt;</span>←<span class="c-tag">&lt;/button&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-arrow"</span><span class="c-tag">&gt;</span>→<span class="c-tag">&lt;/button&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+    </div>
+
+    <p class="variant-label">Numbered variant</p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">pagination.html</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-tag">&lt;nav</span> <span class="c-attr">class</span>=<span class="c-val">"pgn"</span> <span class="c-attr">aria-label</span>=<span class="c-val">"Page navigation"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-btn"</span> <span class="c-attr">disabled</span> <span class="c-attr">aria-label</span>=<span class="c-val">"Previous page"</span><span class="c-tag">&gt;</span>‹<span class="c-tag">&lt;/button&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-pages"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-btn is-active"</span> <span class="c-attr">aria-current</span>=<span class="c-val">"page"</span><span class="c-tag">&gt;</span>1<span class="c-tag">&lt;/button&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-btn"</span><span class="c-tag">&gt;</span>2<span class="c-tag">&lt;/button&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-btn"</span><span class="c-tag">&gt;</span>3<span class="c-tag">&lt;/button&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-ellipsis"</span><span class="c-tag">&gt;</span>···<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-btn"</span><span class="c-tag">&gt;</span>9<span class="c-tag">&lt;/button&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-btn"</span><span class="c-tag">&gt;</span>10<span class="c-tag">&lt;/button&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-val">"pgn-btn"</span> <span class="c-attr">aria-label</span>=<span class="c-val">"Next page"</span><span class="c-tag">&gt;</span>›<span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;/nav&gt;</span></pre></div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<script>
+/* ── Copy button ── */
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+/* ════════════════════════════════
+   INTERACTIVE DEMO
+   ════════════════════════════════ */
+const DEMO_TOTAL = 100;
+let demoCurrent = 1;
+
+function demoTotalPages() {
+  const rpp = parseInt(document.getElementById('demo-rpp').value, 10);
+  return Math.ceil(DEMO_TOTAL / rpp);
+}
+
+function demoPageRange() {
+  const rpp = parseInt(document.getElementById('demo-rpp').value, 10);
+  const start = (demoCurrent - 1) * rpp + 1;
+  const end = Math.min(demoCurrent * rpp, DEMO_TOTAL);
+  return { start, end };
+}
+
+function demoRender() {
+  const total = demoTotalPages();
+  const { start, end } = demoPageRange();
+  const pgn = document.getElementById('demo-pgn');
+  const info = document.getElementById('demo-info');
+  const gotoInput = document.getElementById('demo-goto');
+
+  info.textContent = `Showing ${start} – ${end} of ${DEMO_TOTAL} items`;
+  gotoInput.max = total;
+  gotoInput.value = demoCurrent;
+
+  // Build numbered pages with window logic
+  const pages = buildPageWindow(demoCurrent, total);
+
+  let html = `<button class="pgn-btn" ${demoCurrent === 1 ? 'disabled' : ''} onclick="demoNav(-1)" aria-label="Previous page">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button><div class="pgn-pages">`;
+
+  pages.forEach(p => {
+    if (p === '…') {
+      html += `<span class="pgn-ellipsis">···</span>`;
+    } else {
+      html += `<button class="pgn-btn${p === demoCurrent ? ' is-active' : ''}" ${p === demoCurrent ? 'aria-current="page"' : ''} onclick="demoGoPage(${p})">${p}</button>`;
+    }
+  });
+
+  html += `</div><button class="pgn-btn" ${demoCurrent === total ? 'disabled' : ''} onclick="demoNav(1)" aria-label="Next page">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>`;
+
+  pgn.innerHTML = html;
+}
+
+function buildPageWindow(current, total) {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const pages = [];
+  if (current <= 4) {
+    for (let i = 1; i <= 5; i++) pages.push(i);
+    pages.push('…');
+    pages.push(total);
+  } else if (current >= total - 3) {
+    pages.push(1);
+    pages.push('…');
+    for (let i = total - 4; i <= total; i++) pages.push(i);
+  } else {
+    pages.push(1);
+    pages.push('…');
+    pages.push(current - 1);
+    pages.push(current);
+    pages.push(current + 1);
+    pages.push('…');
+    pages.push(total);
+  }
+  return pages;
+}
+
+function demoNav(dir) {
+  const total = demoTotalPages();
+  demoCurrent = Math.max(1, Math.min(total, demoCurrent + dir));
+  demoRender();
+}
+
+function demoGoPage(page) {
+  demoCurrent = page;
+  demoRender();
+}
+
+function demoUpdate() {
+  demoCurrent = 1;
+  demoRender();
+}
+
+function demoGoTo() {
+  const input = document.getElementById('demo-goto');
+  const total = demoTotalPages();
+  const val = parseInt(input.value, 10);
+  if (!isNaN(val) && val >= 1 && val <= total) {
+    demoCurrent = val;
+    demoRender();
+  } else {
+    input.value = demoCurrent;
+  }
+}
+
+demoRender();
+</script>
+
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

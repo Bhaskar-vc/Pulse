@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1512"/>
+<title>Get Started – Create Survey – Vantage Pulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
+button,input,textarea{font-family:inherit}
+a{text-decoration:none;color:inherit}
+
+/* ── NAVBAR ─────────────────────────────────────────────── */
+.navbar{position:fixed;top:0;left:0;right:0;height:64px;background:transparent;border-bottom:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:200}
+.navbar-left{display:flex;align-items:center;gap:12px}
+.vc-logo-group{display:flex;align-items:center;gap:10px}
+.vc-logo{display:flex;align-items:center;gap:8px}
+.vc-logo-text{font-size:13px;font-weight:700;color:#1d2939;letter-spacing:.3px}
+.sidebar-toggle{display:flex;align-items:center;justify-content:center;padding:4px;border:none;background:none;cursor:pointer;border-radius:6px;flex-shrink:0}
+.sidebar-toggle:hover{background:rgba(92,108,124,.12)}
+.nav-divider{width:1px;height:28px;background:#e4e7ec;margin:0 4px}
+.vp-brand{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:#6941c6;padding:6px 16px 6px 10px;border-radius:50px}
+.vp-brand svg{width:20px;height:20px;color:#6941c6}
+.navbar-right{display:flex;align-items:center;gap:16px}
+.nav-icons{display:flex;align-items:center;gap:16px}
+.nav-icon-btn{width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#667085;cursor:pointer}
+.nav-icon-btn svg{width:22px;height:22px}
+.nav-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;background:#e9d7fe;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#6941c6;flex-shrink:0}
+.nav-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar{position:fixed;top:64px;left:0;width:252px;height:calc(100vh - 64px);background:transparent;border-right:none;display:flex;flex-direction:column;padding:16px 12px 24px;z-index:100;overflow-y:auto;transition:width .22s ease}
+.sidebar-create-btn{display:flex;align-items:center;gap:8px;background:#7f56d9;color:#fff;font-size:14px;font-weight:500;padding:8px 16px 8px 12px;border-radius:8px;cursor:pointer;width:100%;margin-bottom:24px;transition:background .15s;border:none;overflow:hidden;white-space:nowrap}
+.sidebar-create-btn:hover{background:#6941c6}
+.sidebar-create-btn svg{width:20px;height:20px;flex-shrink:0}
+.sidebar.collapsed{width:64px;padding:12px 8px;align-items:center}
+.sidebar.collapsed .sidebar-create-btn{padding:8px;width:40px;min-width:unset;border-radius:10px;justify-content:center;margin-bottom:16px}
+.sidebar.collapsed .sidebar-create-btn .btn-text{display:none}
+.sidebar.collapsed .nav-item{justify-content:center;padding:10px 0;gap:0}
+.sidebar.collapsed .nav-item-text,.sidebar.collapsed .nav-item-chevron,.sidebar.collapsed .nav-sub,.sidebar.collapsed .nav-pro-badge{display:none}
+.sidebar.collapsed .nav-item-icon{width:20px;height:20px}
+.sidebar.collapsed .nav-item-icon svg{width:20px;height:20px}
+.sidebar-nav{display:flex;flex-direction:column;gap:2px;width:100%}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;width:100%;transition:background .15s;font-size:12px;font-weight:500;color:#545470}
+.nav-item:hover{background:#f9fafb}
+.nav-item.active{color:#6941c6}
+.nav-item-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-item-icon svg{width:16px;height:16px}
+.nav-item-text{flex:1;font-size:12px;font-weight:500}
+.nav-item-chevron{width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:#98a2b3;flex-shrink:0}
+.nav-item-chevron svg{width:16px;height:16px}
+.nav-item-chevron.open svg{transform:rotate(90deg)}
+.nav-sub{display:flex;flex-direction:column;gap:0;position:relative;margin-left:13px}
+.nav-sub::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:#e4e7ec}
+.nav-sub-item{display:flex;align-items:center;padding:8px 10px 8px 18px;font-size:12px;font-weight:500;color:#545470;cursor:pointer;border-radius:8px;transition:background .15s}
+.nav-sub-item:hover{background:#f9fafb}
+.nav-sub-item.active{color:#6941c6}
+.nav-pro-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:400;color:#fff;background:linear-gradient(150deg,#dc6803 7%,#7f56d9 71%);line-height:16px}
+
+/* ── MAIN ────────────────────────────────────────────────── */
+.main{margin-top:64px;margin-left:252px;padding:0 16px 16px 0;height:calc(100vh - 64px);overflow:hidden;display:flex;flex-direction:column;transition:margin-left .22s ease}
+.main-card{background:#fff;border-radius:18px;box-shadow:0 4px 8px -2px rgba(16,24,40,.1),0 2px 4px -2px rgba(16,24,40,.06);flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+
+/* ── TOP BAR (Back + Stepper) ────────────────────────────── */
+.top-bar{display:flex;align-items:center;padding:18px 30px;border-bottom:1px solid #f2f4f7;flex-shrink:0;position:relative;min-height:64px}
+.back-btn{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:500;color:#29294c;padding:6px 8px;border-radius:8px;cursor:pointer;border:none;background:none;transition:background .15s;flex-shrink:0}
+.back-btn:hover{background:#f9fafb}
+.back-btn svg{width:20px;height:20px;color:#545470;flex-shrink:0}
+
+/* Stepper */
+.stepper{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:0}
+.step-group{display:flex;align-items:center;gap:8px}
+.step-line{width:54px;height:1px;background:#e4e7ec;flex-shrink:0;margin:0 0}
+.step-circle{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-circle.done{background:#d1fadf}
+.step-circle.done img{width:14px;height:14px}
+.step-circle.inactive{background:#f2f4f7}
+.step-circle.inactive img{width:14px;height:14px;opacity:.45}
+.step-label{font-size:14px;font-weight:400;line-height:1.4;white-space:nowrap}
+.step-label.active{color:#29294c}
+.step-label.inactive{color:#d0d5dd}
+
+/* ── CONTENT AREA ────────────────────────────────────────── */
+.content-area{flex:1;display:flex;flex-direction:column;overflow-y:auto;min-height:0;padding:0 60px}
+.content-inner{display:flex;align-items:center;gap:40px;width:100%;max-width:1240px;margin:auto;padding:24px 0}
+
+/* Illustration */
+.illustration-col{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:420px}
+.illustration-col img{width:420px;height:auto;object-fit:contain}
+
+/* Form side */
+.form-col{display:flex;flex-direction:column;gap:12px;width:570px;flex-shrink:0}
+.form-heading{font-size:16px;font-weight:600;color:#29294c;letter-spacing:.024px;line-height:1.5}
+.form-subheading{font-size:12px;font-weight:400;color:#707087;letter-spacing:.03px;line-height:1.4;margin-top:2px}
+
+.form-box{background:#fff;border:1px solid #f2f4f7;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:10px}
+
+/* Input field */
+.field{display:flex;flex-direction:column;gap:6px}
+.field-label{display:flex;align-items:center;gap:2px;font-size:12px;font-weight:400;color:#545470;letter-spacing:.03px;line-height:1.4}
+.field-label .required{font-size:14px;color:#d92d20;line-height:1}
+.field-label .optional{color:#707087}
+.field input,.field textarea{width:100%;border:1px solid #e1e5ea;border-radius:6px;padding:8px 16px;font-size:14px;font-weight:400;color:#29294c;background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;resize:none}
+.field input{height:36px}
+.field textarea{height:102px}
+.field input::placeholder,.field textarea::placeholder{color:#98a2b3}
+.field input:focus,.field textarea:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+
+/* QR toggle row */
+.toggle-row{border:1px solid #e1e5ea;border-radius:8px;padding:12px;display:flex;align-items:center;gap:8px}
+.toggle-row-text{flex:1;display:flex;flex-direction:column;gap:0}
+.toggle-row-title{font-size:14px;font-weight:500;color:#29294c;line-height:20px}
+.toggle-row-sub{font-size:12px;font-weight:400;color:#707087;letter-spacing:.03px;line-height:1.4}
+
+/* Toggle switch */
+.toggle-switch{position:relative;width:28px;height:16px;flex-shrink:0;cursor:pointer}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:rgba(0,0,0,.09);border-radius:50px;transition:background .2s;box-shadow:inset 0 0 1px rgba(0,0,0,.02),inset 0 .5px 1.5px rgba(0,0,0,.12)}
+.toggle-switch input:checked+.toggle-track{background:#6941c6}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s}
+.toggle-switch input:checked~.toggle-thumb{transform:translateX(12px)}
+
+/* Action buttons */
+.form-actions{display:flex;align-items:center;gap:12px;padding-top:2px}
+.btn-cancel{background:#f4f4f6;color:#29294c;font-size:14px;font-weight:500;height:36px;padding:0 16px;border-radius:8px;border:none;cursor:pointer;transition:background .15s;white-space:nowrap}
+.btn-cancel:hover{background:#e9e9ed}
+.btn-proceed{display:flex;align-items:center;gap:8px;background:#29294c;color:#fff;font-size:14px;font-weight:500;height:36px;padding:0 16px;border-radius:8px;border:none;cursor:pointer;transition:background .15s,opacity .15s;white-space:nowrap;opacity:.5}
+.btn-proceed.enabled{opacity:1}
+.btn-proceed.enabled:hover{background:#1d2030}
+.btn-proceed svg{width:16px;height:16px;flex-shrink:0}
+
+/* Error state */
+.field input.error{border-color:#f04438;box-shadow:0 0 0 3px rgba(240,68,56,.1)}
+.field-error{font-size:12px;color:#f04438;margin-top:4px;display:none;align-items:center;gap:4px}
+.field-error.show{display:flex}
+.field-error svg{width:12px;height:12px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <div class="vc-logo-group">
+      <a href="create-survey.html" class="vc-logo">
+        <img src="vc-logo.svg" height="22" alt="VantageCircle"/>
+      </a>
+      <button class="sidebar-toggle" title="Toggle sidebar" onclick="toggleSidebar()">
+        <svg width="18" viewBox="0 0 19 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.75 13.5C0.75 10.4257 0.75 8.88858 1.42818 7.79898C1.67908 7.39585 1.99076 7.04522 2.34909 6.76295C3.31763 6 4.68397 6 7.41667 6H10.75C13.4827 6 14.849 6 15.8176 6.76295C16.1759 7.04522 16.4876 7.39585 16.7385 7.79898C17.4167 8.88858 17.4167 10.4257 17.4167 13.5C17.4167 16.5742 17.4167 18.1114 16.7385 19.201C16.4876 19.6042 16.1759 19.9547 15.8176 20.2371C14.849 21 13.4827 21 10.75 21H7.41667C4.68397 21 3.31763 21 2.34909 20.2371C1.99076 19.9547 1.67908 19.6042 1.42818 19.201C0.75 18.1114 0.75 16.5742 0.75 13.5Z" stroke="#5C6C7C" stroke-width="1.5"/>
+          <path d="M7.72656 6L7.72656 21" stroke="#5C6C7C" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M3.9668 8.875H4.66124M3.9668 12.25H4.66124" stroke="#5C6C7C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="vp-brand">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="currentColor"/></svg>
+      Vantage Pulse
+    </div>
+  </div>
+  <div class="navbar-right">
+    <div class="nav-icons">
+      <div class="nav-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11c1.657 0 3-1.343 3-3s-1.343-3-3-3"/><path d="M18 21c0-3.314-2.686-6-6-6s-6 2.686-6 6"/><circle cx="10" cy="8" r="3"/><path d="M21 15h-2m-1 0v-2m0 2v2"/></svg>
+      </div>
+      <div class="nav-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2h11C18.88 2 20 3.12 20 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-11C5.12 22 4 20.88 4 19.5v-15C4 3.12 5.12 2 6.5 2z"/><circle cx="12" cy="17" r="1"/></svg>
+      </div>
+      <div class="nav-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </div>
+    </div>
+    <div class="nav-avatar">
+      <img src="https://www.figma.com/api/mcp/asset/2ebf6b0e-7b49-4c89-b291-e2f6a7aa4028" alt="avatar" onerror="this.style.display='none'"/>
+    </div>
+  </div>
+</nav>
+
+<!-- ── SIDEBAR ─────────────────────────────────────────────── -->
+<aside class="sidebar">
+
+  <!-- Create Survey button -->
+  <button class="sidebar-create-btn" onclick="window.location.href='get-started.html'">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10" cy="10" r="8.5"/><line x1="10" y1="6.5" x2="10" y2="13.5"/><line x1="6.5" y1="10" x2="13.5" y2="10"/>
+    </svg>
+    <span class="btn-text">Create Survey</span>
+  </button>
+
+  <nav class="sidebar-nav">
+
+    <!-- Overview -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1.5" y="1.5" width="5" height="5" rx="1"/><rect x="9.5" y="1.5" width="5" height="5" rx="1"/>
+          <rect x="1.5" y="9.5" width="5" height="5" rx="1"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Overview</span>
+    </div>
+
+    <!-- Insights -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12V8m4 4V5m4 7V7m4 5V3"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Insights</span>
+      <div class="nav-item-chevron">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Surveys (expanded) -->
+    <div class="nav-item active">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1.5" y="1.5" width="13" height="13" rx="2"/><line x1="4.5" y1="5.5" x2="11.5" y2="5.5"/><line x1="4.5" y1="8" x2="11.5" y2="8"/><line x1="4.5" y1="10.5" x2="8.5" y2="10.5"/>
+        </svg>
+      </div>
+      <span class="nav-item-text" style="color:#6941c6">Surveys</span>
+      <div class="nav-item-chevron open">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Surveys sub-items -->
+    <div class="nav-sub">
+      <div class="nav-sub-item active">Create</div>
+      <div class="nav-sub-item">Manage</div>
+      <div class="nav-sub-item">Question</div>
+      <div class="nav-sub-item">Templates</div>
+    </div>
+
+    <!-- Action Planing -->
+    <div class="nav-item" style="margin-top:4px">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5l2.5 1.5"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Action Planing</span>
+      <div class="nav-item-chevron">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Configuration -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="8" r="2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Configuration</span>
+      <div class="nav-item-chevron">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- Reports -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.5 1.5H3a1.5 1.5 0 00-1.5 1.5v10A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V3A1.5 1.5 0 0013 1.5h-1.5"/><rect x="5" y="1" width="6" height="3" rx="1"/><line x1="5" y1="7" x2="11" y2="7"/><line x1="5" y1="10" x2="11" y2="10"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">Reports</span>
+    </div>
+
+    <!-- AI Hub -->
+    <div class="nav-item">
+      <div class="nav-item-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 2l1.5 3.5L13 7l-3.5 1.5L8 12l-1.5-3.5L3 7l3.5-1.5z"/>
+        </svg>
+      </div>
+      <span class="nav-item-text">AI Hub</span>
+      <span class="nav-pro-badge">Pro</span>
+    </div>
+
+  </nav>
+</aside>
+
+<!-- ── MAIN ────────────────────────────────────────────────── -->
+<main class="main">
+  <div class="main-card">
+
+    <!-- Top bar: Back + Stepper -->
+    <div class="top-bar">
+      <button class="back-btn" onclick="window.location.href='create-survey.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M5 12l7 7M5 12l7-7"/>
+        </svg>
+        Back
+      </button>
+
+      <!-- Stepper centered -->
+      <div class="stepper">
+        <!-- Step 1: Get Started (active/done) -->
+        <div class="step-group">
+          <div class="step-circle done">
+            <img src="https://www.figma.com/api/mcp/asset/5f1feeff-fc83-4d9d-a50d-00da8e58fb64" alt="done"/>
+          </div>
+          <span class="step-label active">Get Started</span>
+        </div>
+
+        <!-- Line -->
+        <div class="step-line"></div>
+
+        <!-- Step 2: Select Questions -->
+        <div class="step-group">
+          <div class="step-circle inactive">
+            <img src="https://www.figma.com/api/mcp/asset/c2c605a4-d7de-492a-8310-649b3d21864b" alt="inactive"/>
+          </div>
+          <span class="step-label inactive">Select Questions</span>
+        </div>
+
+        <!-- Line -->
+        <div class="step-line"></div>
+
+        <!-- Step 3: Configure -->
+        <div class="step-group">
+          <div class="step-circle inactive">
+            <img src="https://www.figma.com/api/mcp/asset/c2c605a4-d7de-492a-8310-649b3d21864b" alt="inactive"/>
+          </div>
+          <span class="step-label inactive">Configure</span>
+        </div>
+
+        <!-- Line -->
+        <div class="step-line"></div>
+
+        <!-- Step 4: Preview & Launch -->
+        <div class="step-group">
+          <div class="step-circle inactive">
+            <img src="https://www.figma.com/api/mcp/asset/c2c605a4-d7de-492a-8310-649b3d21864b" alt="inactive"/>
+          </div>
+          <span class="step-label inactive">Preview &amp; Launch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-area">
+      <div class="content-inner">
+
+        <!-- 3D Illustration -->
+        <div class="illustration-col">
+          <img
+            src="https://www.figma.com/api/mcp/asset/fb0f0866-d85e-42fb-8b24-29491750b1a4"
+            alt="Create survey illustration"
+          />
+        </div>
+
+        <!-- Form -->
+        <div class="form-col">
+          <div>
+            <div class="form-heading">Create your Pulse Survey</div>
+            <div class="form-subheading">Follow these simple steps to create and launch your employee pulse survey</div>
+          </div>
+
+          <div class="form-box">
+
+            <!-- Survey name -->
+            <div class="field">
+              <div class="field-label">
+                Survey name
+                <span class="required">*</span>
+              </div>
+              <input
+                id="survey-name"
+                type="text"
+                placeholder="Enter survey name"
+                oninput="onNameInput()"
+              />
+              <div class="field-error" id="name-error">
+                <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" stroke="#f04438"/><line x1="6" y1="4" x2="6" y2="6.5" stroke="#f04438" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="8.5" r=".6" fill="#f04438"/></svg>
+                Survey name is required.
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="field">
+              <div class="field-label">
+                Description
+                <span class="optional">(optional)</span>
+              </div>
+              <textarea placeholder="Enter a description..."></textarea>
+            </div>
+
+            <!-- QR Codes toggle -->
+            <div class="toggle-row">
+              <div class="toggle-row-text">
+                <div class="toggle-row-title">QR Codes or Kiosks</div>
+                <div class="toggle-row-sub">For deskless employees</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="qr-toggle"/>
+                <div class="toggle-track">
+                  <div class="toggle-thumb"></div>
+                </div>
+              </label>
+            </div>
+
+          </div>
+
+          <!-- Actions -->
+          <div class="form-actions">
+            <button class="btn-cancel" onclick="window.location.href='create-survey.html'">Cancel</button>
+            <button class="btn-proceed" id="btn-proceed" onclick="proceed()">
+              Save &amp; Proceed
+              <svg viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+function onNameInput() {
+  const name = document.getElementById('survey-name').value.trim();
+  const btn  = document.getElementById('btn-proceed');
+  const input = document.getElementById('survey-name');
+  const err  = document.getElementById('name-error');
+  if (name.length > 0) {
+    btn.classList.add('enabled');
+    input.classList.remove('error');
+    err.classList.remove('show');
+  } else {
+    btn.classList.remove('enabled');
+  }
+}
+
+function proceed() {
+  const name  = document.getElementById('survey-name').value.trim();
+  const input = document.getElementById('survey-name');
+  const err   = document.getElementById('name-error');
+  if (!name) {
+    input.classList.add('error');
+    err.classList.add('show');
+    input.focus();
+    return;
+  }
+  window.location.href = 'pulse-select-questions.html';
+}
+</script>
+<script>
+(function(){
+  var sidebar=document.querySelector('.sidebar');
+  var main=document.querySelector('.main');
+  if(sidebar&&localStorage.getItem('sidebarCollapsed')==='true'){
+    sidebar.classList.add('collapsed');
+    if(main)main.style.marginLeft='64px';
+  }
+})();
+function toggleSidebar(){
+  var sidebar=document.querySelector('.sidebar');
+  var main=document.querySelector('.main');
+  if(!sidebar)return;
+  var c=sidebar.classList.toggle('collapsed');
+  localStorage.setItem('sidebarCollapsed',c?'true':'false');
+  if(main)main.style.marginLeft=c?'64px':'252px';
+}
+</script>
+</body>
+</html>

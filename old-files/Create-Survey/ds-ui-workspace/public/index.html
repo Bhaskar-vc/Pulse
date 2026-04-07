@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1512"/>
+<title>Select Questions – Vantage Pulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;background:#f3f6fd;font-family:'Inter',sans-serif;font-size:14px;color:#29294c}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+/* ── NAVBAR ─────────────────────────────────────────────── */
+.navbar{position:fixed;top:0;left:0;right:0;height:64px;background:transparent;border-bottom:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:200}
+.navbar-left{display:flex;align-items:center;gap:12px}
+.vc-logo-group{display:flex;align-items:center;gap:10px}
+.vc-logo{display:flex;align-items:center}
+.sidebar-toggle{display:flex;align-items:center;justify-content:center;padding:4px;border:none;background:none;cursor:pointer;border-radius:6px;flex-shrink:0}
+.sidebar-toggle:hover{background:rgba(92,108,124,.12)}
+.nav-divider{width:1px;height:28px;background:#e4e7ec;margin:0 4px}
+.vp-brand{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:#6941c6;padding:6px 16px 6px 10px;border-radius:50px}
+.vp-brand svg{width:20px;height:20px;color:#6941c6}
+.navbar-right{display:flex;align-items:center;gap:16px}
+.nav-icons{display:flex;align-items:center;gap:16px}
+.nav-icon-btn{width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#667085;cursor:pointer}
+.nav-icon-btn svg{width:22px;height:22px}
+.nav-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;cursor:pointer;background:#e9d7fe;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#6941c6;flex-shrink:0}
+.nav-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.side-nav{position:fixed;top:64px;left:0;width:252px;height:calc(100vh - 64px);background:transparent;border-right:none;display:flex;flex-direction:column;padding:16px 12px 24px;z-index:100;overflow-y:auto;transition:width .22s ease}
+.sidebar-create-btn{display:flex;align-items:center;gap:8px;background:#7f56d9;color:#fff;font-size:14px;font-weight:500;padding:8px 16px 8px 12px;border-radius:8px;cursor:pointer;width:100%;margin-bottom:24px;transition:background .15s;border:none;overflow:hidden;white-space:nowrap}
+.sidebar-create-btn:hover{background:#6941c6}
+.sidebar-create-btn svg{width:20px;height:20px;flex-shrink:0}
+.side-nav.collapsed{width:64px;padding:12px 8px;align-items:center}
+.side-nav.collapsed .sidebar-create-btn{padding:8px;width:40px;min-width:unset;border-radius:10px;justify-content:center;margin-bottom:16px}
+.side-nav.collapsed .sidebar-create-btn .btn-text{display:none}
+.side-nav.collapsed .nav-item{justify-content:center;padding:10px 0;gap:0}
+.side-nav.collapsed .nav-item-text,.side-nav.collapsed .nav-item-chevron,.side-nav.collapsed .nav-sub,.side-nav.collapsed .nav-pro-badge{display:none}
+.side-nav.collapsed .nav-item-icon{width:20px;height:20px}
+.side-nav.collapsed .nav-item-icon svg{width:20px;height:20px}
+.sidebar-nav{display:flex;flex-direction:column;gap:2px;width:100%}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;width:100%;transition:background .15s;font-size:12px;font-weight:500;color:#545470}
+.nav-item:hover{background:#f9fafb}
+.nav-item.active{color:#6941c6}
+.nav-item-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-item-icon svg{width:16px;height:16px}
+.nav-item-text{flex:1;font-size:12px;font-weight:500}
+.nav-item-chevron{width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:#98a2b3;flex-shrink:0}
+.nav-item-chevron svg{width:16px;height:16px}
+.nav-item-chevron.open svg{transform:rotate(90deg)}
+.nav-sub{display:flex;flex-direction:column;gap:0;position:relative;margin-left:13px}
+.nav-sub::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:#e4e7ec}
+.nav-sub-item{display:flex;align-items:center;padding:8px 10px 8px 18px;font-size:12px;font-weight:500;color:#545470;cursor:pointer;border-radius:8px;transition:background .15s}
+.nav-sub-item:hover{background:#f9fafb}
+.nav-sub-item.active{color:#6941c6}
+.nav-pro-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:400;color:#fff;background:linear-gradient(150deg,#dc6803 7%,#7f56d9 71%);line-height:16px}
+
+/* ── PAGE SHELL ─────────────────────────────────────────────── */
+.page{margin-top:64px;margin-left:252px;padding:0 16px 16px 0;height:calc(100vh - 64px);overflow:hidden;display:flex;flex-direction:column;transition:margin-left .22s ease}
+.page-card{background:#fff;border-radius:16px;box-shadow:0 4px 16px rgba(16,24,40,.06);flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+
+/* ── TOP ROW: BACK + STEPPER ────────────────────────────────── */
+.top-row{display:flex;align-items:center;padding:20px 30px 16px;gap:0;border-bottom:1px solid #f2f4f7;flex-shrink:0;min-height:72px}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:#29294c;padding:8px 10px;border-radius:8px;white-space:nowrap;transition:background .15s;flex-shrink:0}
+.back-btn:hover{background:#f9fafb}
+.back-btn svg{width:16px;height:16px;color:#545470}
+
+.stepper{flex:1;display:flex;align-items:center;justify-content:center}
+.step-item{display:flex;align-items:center;gap:8px}
+.step-connector{width:54px;height:1px;background:#e4e7ec;margin:0 0}
+.step-connector.done{background:#12b76a}
+.step-circle{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-circle.done{background:#d1fadf}
+.step-circle.done svg{width:14px;height:14px;color:#039855}
+.step-circle.inactive{background:#f2f4f7}
+.step-circle.inactive svg{width:14px;height:14px;color:#d0d5dd}
+.step-label{font-size:14px;font-weight:400;line-height:1.4;white-space:nowrap}
+.step-label.done-label{color:#29294c}
+.step-label.inactive-label{color:#d0d5dd}
+
+/* ── THREE PANELS ───────────────────────────────────────────── */
+.panels{display:flex;flex:1;overflow:hidden;min-height:0}
+
+/* ── LEFT: QUESTION BANK ────────────────────────────────────── */
+.panel-bank{width:462px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid #f2f4f7}
+.pb-header{padding:14px 0 12px;flex-shrink:0}
+.pb-title-row{display:flex;align-items:center;justify-content:space-between;padding:0 0 10px}
+.pb-title{font-size:14px;font-weight:600;color:#29294c}
+.pb-title span{font-weight:400;color:#98a2b3}
+.pb-actions{display:flex;align-items:center;gap:0}
+
+/* "Add all" checkbox style */
+.add-all-wrap{display:flex;align-items:center;gap:6px;cursor:pointer;padding:2px 6px;border-radius:6px}
+.add-all-wrap:hover{background:#f9fafb}
+.add-all-cb{width:16px;height:16px;border:1.5px solid #d0d5dd;border-radius:4px;display:flex;align-items:center;justify-content:center;background:#fff;flex-shrink:0}
+.add-all-cb.checked{background:#6941c6;border-color:#6941c6}
+.add-all-cb svg{width:10px;height:10px;color:#fff}
+.add-all-label{font-size:13px;color:#344054;font-weight:400}
+
+.clear-btn{display:flex;align-items:center;gap:4px;font-size:13px;color:#344054;padding:2px 8px;border-radius:6px;transition:background .15s}
+.clear-btn:hover{background:#fef3f2;color:#f04438}
+.clear-btn svg{width:12px;height:12px}
+.pb-divider-v{width:1px;height:16px;background:#e4e7ec;margin:0 4px}
+
+.pb-search{padding:0 0 12px;flex-shrink:0;position:relative}
+.pb-search input{width:100%;height:36px;padding:0 12px 0 34px;border:1px solid #d0d5dd;border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;color:#344054;outline:none;transition:border-color .15s}
+.pb-search input:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+.pb-search input::placeholder{color:#98a2b3}
+.pb-search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#98a2b3;pointer-events:none}
+.pb-search-icon svg{width:14px;height:14px}
+
+.pb-body{flex:1;overflow-y:auto;padding:0}
+.pb-body::-webkit-scrollbar{width:4px}
+.pb-body::-webkit-scrollbar-thumb{background:#e4e7ec;border-radius:4px}
+
+/* accordion */
+.accord-header{display:flex;align-items:center;gap:0;padding:12px 0;cursor:pointer;user-select:none}
+.accord-header:hover{background:#fafafa}
+.accord-chevron{width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s}
+.accord-chevron.closed{transform:rotate(-90deg)}
+.accord-chevron svg{width:16px;height:16px;color:#545470}
+.accord-title{font-size:14px;font-weight:500;color:#29294c;flex:1}
+.accord-count{font-size:13px;color:#98a2b3}
+.accord-body{overflow:hidden}
+.accord-body.closed{display:none}
+
+/* question card in bank */
+.qcard{display:flex;align-items:center;gap:6px;padding:12px;border:1px solid #e1e5ea;border-radius:8px;margin-bottom:8px;background:#fff;transition:border-color .15s,box-shadow .15s}
+.qcard:last-child{margin-bottom:12px}
+.qcard:hover{border-color:#c9b8f5;box-shadow:0 1px 4px rgba(105,65,198,.08)}
+.qcard.selected{border-color:#e1e5ea;background:#fff}
+.qcard-content{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0}
+.qcard-text{font-size:14px;font-weight:500;color:#545470;line-height:20px}
+.qcard-tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:16px;font-size:12px;font-weight:500;line-height:1.4;letter-spacing:.03px;white-space:nowrap}
+.tag-rating{background:#f6fef9;border:.5px solid #039855;color:#039855}
+.tag-mcq{background:#fffaeb;border:.5px solid #f79009;color:#b54708}
+.tag-text-type{background:#eff8ff;border:.5px solid #2e90fa;color:#1849a9}
+.tag-scale{background:#f9f5ff;border:.5px solid #9e77ed;color:#6941c6}
+.tag-yesno{background:#f0fdf4;border:.5px solid #16a34a;color:#16a34a}
+.tag-category{background:#fff;border:1px solid #d0d5dd;color:#29294c}
+
+.add-q-btn{width:30px;height:30px;border-radius:8px;background:#7f56d9;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,transform .1s}
+.add-q-btn:hover{background:#6941c6;transform:scale(1.05)}
+.add-q-btn.added{background:#fff;border:1.5px solid #fda29b}
+.add-q-btn.added:hover{background:#fef3f2}
+.add-q-btn svg{width:16px;height:16px;color:#fff}
+.add-q-btn.added svg{color:#f04438}
+
+/* ── CENTER: SELECTED QUESTIONS ──────────────────────────────── */
+.panel-sel{flex:1;display:flex;flex-direction:column;border-right:1px solid #f2f4f7;min-width:0}
+.ps-header{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 24px 0;flex-shrink:0;gap:12px}
+.ps-title-wrap{display:flex;flex-direction:column;gap:8px}
+.ps-title{font-size:14px;font-weight:600;color:#29294c}
+.ps-stats{font-size:12px;color:#707087;font-weight:400;line-height:1.4;letter-spacing:.03px;white-space:nowrap}
+.ps-stats b{font-weight:400}
+.add-custom-btn{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid #d0d5dd;background:#fff;font-size:12px;font-weight:500;color:#344054;white-space:nowrap;flex-shrink:0;transition:background .15s,border-color .15s}
+.add-custom-btn:hover{background:#f9fafb;border-color:#98a2b3}
+.add-custom-btn svg{width:12px;height:12px}
+.ps-divider{height:1px;background:#f2f4f7;margin:12px 24px 0}
+
+.ps-body{flex:1;overflow-y:auto;padding:12px 24px}
+.ps-body::-webkit-scrollbar{width:4px}
+.ps-body::-webkit-scrollbar-thumb{background:#e4e7ec;border-radius:4px}
+
+/* selected question card */
+.selq-card{border:1px solid #e1e5ea;border-radius:6px;background:#fff;padding:20px 24px;margin-bottom:8px}
+.selq-inner{display:flex;align-items:center;gap:12px}
+.selq-content{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0}
+.selq-text{font-size:14px;font-weight:500;color:#29294c;line-height:20px}
+.selq-text .qnum{color:#707087}
+.selq-tags{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.selq-chevron{width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#98a2b3}
+.selq-chevron svg{width:16px;height:16px}
+
+/* empty state */
+.sel-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#98a2b3;text-align:center;padding:40px 20px}
+.sel-empty svg{width:88px;height:88px;opacity:.55}
+.sel-empty-title{font-size:14px;font-weight:600;color:#667085}
+.sel-empty-sub{font-size:13px;color:#98a2b3}
+
+/* ── RIGHT: LIVE PREVIEW ─────────────────────────────────────── */
+.panel-prev{width:400px;flex-shrink:0;display:flex;flex-direction:column;padding:20px;background:#f3f6fd}
+.pp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-shrink:0}
+.pp-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:#29294c}
+.pp-title img,.pp-title svg{width:20px;height:20px}
+.pp-collapse{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:6px;color:#667085;transition:background .15s;cursor:pointer}
+.pp-collapse:hover{background:rgba(0,0,0,.06)}
+.pp-collapse svg{width:20px;height:20px}
+.panel-prev{transition:width .25s ease,padding .25s ease}
+.panel-prev.collapsed{width:52px;padding:16px 14px;overflow:hidden}
+.panel-prev.collapsed .pp-title{display:none}
+.panel-prev.collapsed .pp-body{display:none}
+.panel-prev.collapsed .pp-header{justify-content:center}
+.panel-prev.collapsed .pp-collapse img{transform:scaleX(-1)}
+
+.pp-body{flex:1;display:flex;flex-direction:column;gap:0;overflow:hidden;min-height:0}
+.pp-progress-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;flex-shrink:0}
+.pp-prog-label{font-size:12px;color:#707087;font-weight:400;line-height:1.4;letter-spacing:.03px;white-space:nowrap}
+.pp-prog-track{width:130px;height:7px;background:#f5fbff;border-radius:78px;overflow:hidden;position:relative}
+.pp-prog-fill{height:100%;background:#98a2b3;border-radius:78px;width:51%}
+
+.pp-card{background:#fff;border-radius:10px;box-shadow:0 4px 8px 0 rgba(16,24,40,.1),0 2px 4px 0 rgba(16,24,40,.06);padding:20px;display:flex;flex-direction:column;gap:30px;flex:1;overflow-y:auto;min-height:0}
+.pp-card::-webkit-scrollbar{width:3px}
+.pp-card::-webkit-scrollbar-thumb{background:#e4e7ec;border-radius:4px}
+
+.pp-question-text{font-size:14px;font-weight:600;color:#29294c;line-height:1.4;letter-spacing:.021px}
+.pp-rating-wrap{display:flex;flex-direction:column;gap:10px}
+.pp-rating-btns{display:flex;gap:12px}
+.rating-btn{width:44px;height:48px;border:1px solid #d0d5dd;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-size:16px;font-weight:500;color:#545470;letter-spacing:.024px;cursor:pointer;transition:border-color .15s,background .15s,color .15s;flex-shrink:0}
+.rating-btn:hover{border-color:#7f56d9;background:#f4f3ff;color:#6941c6}
+.rating-btn.selected-r{background:#f4f3ff;border-color:#7f56d9;color:#6941c6}
+.pp-rating-labels{display:flex;justify-content:space-between;font-size:12px;color:#707087;line-height:1.4;letter-spacing:.03px}
+
+.pp-comment-wrap{display:flex;flex-direction:column;gap:4px}
+.pp-comment-label{font-size:12px;color:#545470;font-weight:400;line-height:1.4;letter-spacing:.03px}
+.pp-comment-input{width:100%;height:80px;border:1px solid #d0d5dd;border-radius:6px;padding:8px 16px;font-family:'Inter',sans-serif;font-size:14px;color:#101828;resize:none;outline:none;transition:border-color .15s}
+.pp-comment-input:focus{border-color:#7f56d9;box-shadow:0 0 0 3px rgba(127,86,217,.1)}
+
+.pp-skip-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 0;font-size:12px;font-weight:500;color:#6941c6;line-height:1.4;letter-spacing:.03px;cursor:pointer;background:none;border:none}
+.pp-skip-btn svg{width:16px;height:16px}
+
+.pp-nav{display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.pp-nav-btn{display:flex;align-items:center;gap:4px;min-width:60px;width:88px;padding:4px 12px;border-radius:50px;border:1px solid #d0d5dd;background:#fff;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;color:#29294c;justify-content:center;transition:background .15s}
+.pp-nav-btn:hover:not(:disabled){background:#f9fafb}
+.pp-nav-btn:disabled,.pp-nav-btn.disabled{color:#d0d5dd;border-color:#d0d5dd;cursor:not-allowed}
+.pp-nav-btn svg{width:16px;height:16px;flex-shrink:0}
+
+.pp-empty{flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;color:#98a2b3;text-align:center;padding:20px}
+
+/* ── FOOTER ─────────────────────────────────────────────────── */
+.page-footer{height:62px;border-top:1px solid #f2f4f7;display:flex;align-items:center;justify-content:space-between;padding:0 30px;flex-shrink:0}
+.cancel-btn{height:36px;padding:0 20px;border-radius:6px;border:1px solid #d0d5dd;background:#fff;font-size:14px;font-weight:500;color:#344054;transition:background .15s}
+.cancel-btn:hover{background:#f9fafb}
+.continue-btn{display:flex;align-items:center;gap:6px;height:36px;padding:0 20px;border-radius:6px;background:#29294c;border:none;font-size:14px;font-weight:500;color:#fff;transition:background .15s,opacity .15s}
+.continue-btn:hover:not(:disabled){background:#1d1d38}
+.continue-btn:disabled{opacity:.4;cursor:not-allowed}
+.continue-btn svg{width:16px;height:16px}
+
+/* ── MODAL ───────────────────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);backdrop-filter:blur(2px);z-index:500;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:16px;padding:28px;width:480px;box-shadow:0 20px 60px rgba(0,0,0,.15);animation:mIn .2s ease}
+@keyframes mIn{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-title{font-size:18px;font-weight:700;color:#1d2939;margin-bottom:4px}
+.modal-sub{font-size:13px;color:#667085;margin-bottom:20px}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:13px;font-weight:500;color:#344054;margin-bottom:6px}
+.form-control{width:100%;padding:9px 12px;border:1px solid #d0d5dd;border-radius:8px;font-size:14px;color:#1d2939;outline:none;font-family:'Inter',sans-serif;transition:border-color .15s}
+.form-control:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+textarea.form-control{resize:vertical;min-height:80px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px}
+.modal-cancel{padding:9px 18px;border-radius:8px;border:1px solid #d0d5dd;background:#fff;font-size:14px;font-weight:500;color:#344054;cursor:pointer}
+.modal-submit{padding:9px 18px;border-radius:8px;border:none;background:#6941c6;color:#fff;font-size:14px;font-weight:500;cursor:pointer}
+.modal-submit:hover{background:#5b21b6}
+
+/* ── TOAST ───────────────────────────────────────────────────── */
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:600;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:#1d2939;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,.2);display:flex;align-items:center;gap:8px;animation:tIn .3s ease;opacity:1;transition:opacity .3s}
+.toast.success{background:#039855}
+@keyframes tIn{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* ── BANK HEADER PADDING ─────────────────────────────────────── */
+.pb-inner{padding:0 0 0 0}
+.pb-header,.pb-title-row,.pb-search,.accord-header,.qcard{padding-left:0;padding-right:0}
+.pb-title-row{padding:12px 0 10px}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <div class="vc-logo-group">
+      <a href="create-survey.html" class="vc-logo">
+        <img src="vc-logo.svg" height="22" alt="VantageCircle"/>
+      </a>
+      <button class="sidebar-toggle" title="Toggle sidebar" onclick="toggleSidebar()">
+        <svg width="18" viewBox="0 0 19 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.75 13.5C0.75 10.4257 0.75 8.88858 1.42818 7.79898C1.67908 7.39585 1.99076 7.04522 2.34909 6.76295C3.31763 6 4.68397 6 7.41667 6H10.75C13.4827 6 14.849 6 15.8176 6.76295C16.1759 7.04522 16.4876 7.39585 16.7385 7.79898C17.4167 8.88858 17.4167 10.4257 17.4167 13.5C17.4167 16.5742 17.4167 18.1114 16.7385 19.201C16.4876 19.6042 16.1759 19.9547 15.8176 20.2371C14.849 21 13.4827 21 10.75 21H7.41667C4.68397 21 3.31763 21 2.34909 20.2371C1.99076 19.9547 1.67908 19.6042 1.42818 19.201C0.75 18.1114 0.75 16.5742 0.75 13.5Z" stroke="#5C6C7C" stroke-width="1.5"/>
+          <path d="M7.72656 6L7.72656 21" stroke="#5C6C7C" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M3.9668 8.875H4.66124M3.9668 12.25H4.66124" stroke="#5C6C7C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="vp-brand">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="currentColor"/></svg>
+      Vantage Pulse
+    </div>
+  </div>
+  <div class="navbar-right">
+    <div class="nav-icons">
+      <div class="nav-icon-btn" title="Invite">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11c1.657 0 3-1.343 3-3s-1.343-3-3-3"/><path d="M18 21c0-3.314-2.686-6-6-6s-6 2.686-6 6"/><circle cx="10" cy="8" r="3"/><path d="M21 15h-2m-1 0v-2m0 2v2"/></svg>
+      </div>
+      <div class="nav-icon-btn" title="Support">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2h11C18.88 2 20 3.12 20 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-11C5.12 22 4 20.88 4 19.5v-15C4 3.12 5.12 2 6.5 2z"/><circle cx="12" cy="17" r="1"/></svg>
+      </div>
+      <div class="nav-icon-btn" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </div>
+    </div>
+    <div class="nav-avatar">
+      <img src="https://www.figma.com/api/mcp/asset/2ebf6b0e-7b49-4c89-b291-e2f6a7aa4028" alt="avatar" onerror="this.style.display='none'"/>
+    </div>
+  </div>
+</nav>
+
+<!-- SIDE NAV -->
+<aside class="side-nav">
+  <button class="sidebar-create-btn" onclick="window.location.href='create-survey.html'">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10" cy="10" r="8.5"/><line x1="10" y1="6.5" x2="10" y2="13.5"/><line x1="6.5" y1="10" x2="13.5" y2="10"/>
+    </svg>
+    <span class="btn-text">Create Survey</span>
+  </button>
+  <nav class="sidebar-nav">
+    <div class="nav-item">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="5" height="5" rx="1"/><rect x="9.5" y="1.5" width="5" height="5" rx="1"/><rect x="1.5" y="9.5" width="5" height="5" rx="1"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/></svg></div>
+      <span class="nav-item-text">Overview</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12V8m4 4V5m4 7V7m4 5V3"/></svg></div>
+      <span class="nav-item-text">Insights</span>
+      <div class="nav-item-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div>
+    </div>
+    <div class="nav-item active">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="13" height="13" rx="2"/><line x1="4.5" y1="5.5" x2="11.5" y2="5.5"/><line x1="4.5" y1="8" x2="11.5" y2="8"/><line x1="4.5" y1="10.5" x2="8.5" y2="10.5"/></svg></div>
+      <span class="nav-item-text" style="color:#6941c6">Surveys</span>
+      <div class="nav-item-chevron open"><svg viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div>
+    </div>
+    <div class="nav-sub">
+      <div class="nav-sub-item active">Create</div>
+      <div class="nav-sub-item">Manage</div>
+      <div class="nav-sub-item">Question</div>
+      <div class="nav-sub-item">Templates</div>
+    </div>
+    <div class="nav-item" style="margin-top:4px">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5l2.5 1.5"/></svg></div>
+      <span class="nav-item-text">Action Planing</span>
+      <div class="nav-item-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div>
+    </div>
+    <div class="nav-item">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/></svg></div>
+      <span class="nav-item-text">Configuration</span>
+      <div class="nav-item-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></div>
+    </div>
+    <div class="nav-item">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 1.5H3a1.5 1.5 0 00-1.5 1.5v10A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V3A1.5 1.5 0 0013 1.5h-1.5"/><rect x="5" y="1" width="6" height="3" rx="1"/><line x1="5" y1="7" x2="11" y2="7"/><line x1="5" y1="10" x2="11" y2="10"/></svg></div>
+      <span class="nav-item-text">Reports</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-item-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l1.5 3.5L13 7l-3.5 1.5L8 12l-1.5-3.5L3 7l3.5-1.5z"/></svg></div>
+      <span class="nav-item-text">AI Hub</span>
+      <span class="nav-pro-badge">Pro</span>
+    </div>
+  </nav>
+</aside>
+
+<!-- MAIN PAGE -->
+<div class="page">
+  <div class="page-card">
+
+    <!-- TOP ROW: BACK + STEPPER -->
+    <div class="top-row">
+      <button class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back
+      </button>
+      <div class="stepper">
+        <!-- Step 1: Get Started (done) -->
+        <div class="step-item">
+          <div class="step-circle done">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="step-label done-label">Get Started</span>
+        </div>
+        <div class="step-connector done"></div>
+        <!-- Step 2: Select Questions (done) -->
+        <div class="step-item">
+          <div class="step-circle done">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#039855" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="step-label done-label">Select Questions</span>
+        </div>
+        <div class="step-connector"></div>
+        <!-- Step 3: Configure (inactive) -->
+        <div class="step-item">
+          <div class="step-circle inactive">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#d0d5dd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="step-label inactive-label">Configure</span>
+        </div>
+        <div class="step-connector"></div>
+        <!-- Step 4: Preview & Launch (inactive) -->
+        <div class="step-item">
+          <div class="step-circle inactive">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2.333 7l3 3 6-6" stroke="#d0d5dd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="step-label inactive-label">Preview &amp; Launch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- THREE PANELS -->
+    <div class="panels">
+
+      <!-- LEFT: QUESTION BANK -->
+      <div class="panel-bank" style="padding:0 0 0 0">
+        <div style="padding:0 16px;flex:1;display:flex;flex-direction:column;min-height:0">
+
+          <!-- Bank header -->
+          <div style="padding-top:12px;flex-shrink:0">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+              <div style="font-size:14px;font-weight:600;color:#29294c">
+                Question Bank <span id="bank-count" style="font-weight:400;color:#98a2b3">(35)</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0">
+                <!-- Add all checkbox -->
+                <div style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:3px 6px;border-radius:6px" onclick="addAllQuestions()" onmouseenter="this.style.background='#f9fafb'" onmouseleave="this.style.background='transparent'">
+                  <div id="add-all-cb" style="width:16px;height:16px;border:1.5px solid #d0d5dd;border-radius:4px;display:flex;align-items:center;justify-content:center;background:#fff;flex-shrink:0">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" style="display:none" id="add-all-check"><path d="M1.5 6L4.5 9L10.5 3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <span style="font-size:13px;color:#344054">Add all</span>
+                </div>
+                <div id="clear-all-divider" style="display:none;width:1px;height:16px;background:#e4e7ec;margin:0 6px"></div>
+                <button id="clear-all-btn" onclick="clearAllQuestions()" style="display:none;align-items:center;gap:4px;font-size:13px;color:#344054;padding:3px 6px;border-radius:6px;background:transparent;border:none;cursor:pointer" onmouseenter="this.style.background='#fef3f2';this.style.color='#f04438'" onmouseleave="this.style.background='transparent';this.style.color='#344054'">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M9 3L3 9M3 3l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  Clear All
+                </button>
+              </div>
+            </div>
+            <!-- Search -->
+            <div style="position:relative;margin-bottom:12px">
+              <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#98a2b3;pointer-events:none;width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="search-input" type="text" placeholder="Search questions" oninput="filterQuestions(this.value)"
+                style="width:100%;height:36px;padding:0 12px 0 32px;border:1px solid #d0d5dd;border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;color:#344054;outline:none;transition:border-color .15s"
+                onfocus="this.style.borderColor='#7c3aed';this.style.boxShadow='0 0 0 3px rgba(124,58,237,.1)'"
+                onblur="this.style.borderColor='#d0d5dd';this.style.boxShadow='none'"/>
+            </div>
+          </div>
+
+          <!-- Accordion list -->
+          <div id="question-bank" style="flex:1;overflow-y:auto;padding-bottom:16px">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER: SELECTED QUESTIONS -->
+      <div class="panel-sel">
+        <div class="ps-header">
+          <div class="ps-title-wrap">
+            <div class="ps-title">Selected Questions</div>
+            <div class="ps-stats" id="ps-stats">
+              <span id="stat-count">0</span> questions selected &nbsp;from <span id="stat-cats">0</span> categories • ~<span id="stat-time">0</span>s to complete
+            </div>
+          </div>
+          <button class="add-custom-btn" onclick="openCustomModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Custom Question
+          </button>
+        </div>
+        <div class="ps-divider"></div>
+        <div class="ps-body" id="sel-body">
+          <!-- rendered by JS -->
+        </div>
+      </div>
+
+      <!-- RIGHT: LIVE PREVIEW -->
+      <div class="panel-prev">
+        <!-- Header -->
+        <div class="pp-header">
+          <div class="pp-title">
+            <img src="https://www.figma.com/api/mcp/asset/ddebc936-6070-4f58-a782-49ae6e44b5e6" width="20" height="20" alt=""/>
+            Live Preview
+          </div>
+          <button class="pp-collapse" title="Collapse" onclick="togglePreview()">
+            <img src="https://www.figma.com/api/mcp/asset/39485630-f29c-47ba-94cb-bc78c3198610" width="24" height="24" alt=""/>
+          </button>
+        </div>
+
+        <div class="pp-body" id="preview-body">
+          <!-- rendered by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="page-footer">
+      <button class="cancel-btn" onclick="if(confirm('Cancel survey creation?')) location.reload()">Cancel</button>
+      <button class="continue-btn" id="continue-btn" disabled>
+        Continue
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOM QUESTION MODAL -->
+<div class="modal-overlay" id="custom-modal" onclick="if(event.target===this)closeCustomModal()">
+  <div class="modal-box">
+    <div class="modal-title">Add Custom Question</div>
+    <div class="modal-sub">Create a question tailored to your survey needs.</div>
+    <div class="form-group">
+      <label class="form-label">Question Text *</label>
+      <textarea class="form-control" id="cq-text" placeholder="Enter your question here..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Question Type</label>
+      <select class="form-control" id="cq-type">
+        <option value="Rating Scale (1-5)">Rating Scale (1-5)</option>
+        <option value="MCQ">Multiple Choice (MCQ)</option>
+        <option value="Yes/No">Yes / No</option>
+        <option value="Text">Open Text</option>
+        <option value="Scale (1-10)">Scale (1-10)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select class="form-control" id="cq-cat">
+        <option value="">— Select Category —</option>
+        <option>Recognition</option><option>Employee Satisfaction</option>
+        <option>Compensation and Benefits</option><option>Wellness</option>
+        <option>Manager Effectiveness</option><option>Work-Life Balance</option>
+        <option>Diversity &amp; Inclusion</option><option>Custom</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeCustomModal()">Cancel</button>
+      <button class="modal-submit" onclick="submitCustom()">Add Question</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toasts"></div>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────
+const CATEGORIES = [
+  { name:'Recognition', questions:[
+    {id:1, text:'My organization encourages employees to give recognition to one another', type:'Rating Scale (1-5)'},
+    {id:2, text:'If I do great work, I know that it will be recognised', type:'Rating Scale (1-5)'},
+    {id:3, text:'Horem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis ...', type:'MCQ'},
+  ]},
+  { name:'Employee Satisfaction', questions:[
+    {id:4, text:'Overall, how satisfied are you with working at this organization?', type:'Rating Scale (1-5)'},
+    {id:5, text:'I feel proud to work for this organization.', type:'Rating Scale (1-5)'},
+    {id:6, text:'I would recommend this organization as a great place to work.', type:'Scale (1-10)'},
+    {id:7, text:'My work gives me a feeling of personal accomplishment.', type:'Rating Scale (1-5)'},
+    {id:8, text:'What is one thing that would improve your work experience?', type:'Text'},
+  ]},
+  { name:'Compensation and Benefits', questions:[
+    {id:9, text:'I believe my pay is fair for the work I do.', type:'Rating Scale (1-5)'},
+    {id:10, text:'The benefits package offered by my organization meets my needs.', type:'Rating Scale (1-5)'},
+    {id:11, text:'Which benefit matters most to you?', type:'MCQ'},
+  ]},
+  { name:'Wellness', questions:[
+    {id:12, text:'My organization supports my physical and mental wellbeing.', type:'Rating Scale (1-5)'},
+    {id:13, text:'I feel I have enough energy at the end of a typical workday.', type:'Yes/No'},
+  ]},
+  { name:'Manager Effectiveness', questions:[
+    {id:14, text:'My manager provides me with regular, useful feedback.', type:'Rating Scale (1-5)'},
+    {id:15, text:'My manager genuinely cares about my career development.', type:'Rating Scale (1-5)'},
+    {id:16, text:'My manager creates an environment where I feel safe to speak up.', type:'Rating Scale (1-5)'},
+    {id:17, text:'How effective is your manager at removing obstacles for your team?', type:'Scale (1-10)'},
+    {id:18, text:'My manager clearly communicates team goals and expectations.', type:'Rating Scale (1-5)'},
+  ]},
+  { name:'Work-Life Balance', questions:[
+    {id:19, text:'I am able to maintain a healthy balance between my work and personal life.', type:'Rating Scale (1-5)'},
+    {id:20, text:'My workload is manageable on a day-to-day basis.', type:'Rating Scale (1-5)'},
+    {id:21, text:'I am able to disconnect from work outside of working hours.', type:'Yes/No'},
+    {id:22, text:'How often do you work beyond your contracted hours?', type:'MCQ'},
+  ]},
+  { name:'Diversity & Inclusion', questions:[
+    {id:23, text:'People from all backgrounds are treated fairly in this organization.', type:'Rating Scale (1-5)'},
+    {id:24, text:'I feel I can be myself at work without fear of judgment.', type:'Rating Scale (1-5)'},
+    {id:25, text:'My organization takes diversity and inclusion seriously.', type:'Rating Scale (1-5)'},
+    {id:26, text:'Have you witnessed or experienced discrimination at work in the past year?', type:'Yes/No'},
+  ]},
+  { name:'Learning & Development', questions:[
+    {id:27, text:'I have access to the learning and development resources I need.', type:'Rating Scale (1-5)'},
+    {id:28, text:'My organization invests in my professional growth.', type:'Rating Scale (1-5)'},
+    {id:29, text:'I have had meaningful career conversations with my manager this year.', type:'Yes/No'},
+    {id:30, text:'Which learning format do you prefer?', type:'MCQ'},
+  ]},
+  { name:'Team Collaboration', questions:[
+    {id:31, text:'My team works well together to achieve common goals.', type:'Rating Scale (1-5)'},
+    {id:32, text:'I trust my team members to do their part.', type:'Rating Scale (1-5)'},
+    {id:33, text:'Communication within my team is clear and open.', type:'Rating Scale (1-5)'},
+    {id:34, text:'My team celebrates wins and learns from setbacks together.', type:'Rating Scale (1-5)'},
+    {id:35, text:'How would you rate cross-team collaboration in your organization?', type:'Scale (1-10)'},
+  ]},
+];
+
+// State
+let selectedIds   = new Set();
+let collapsed     = new Set(['Employee Satisfaction','Compensation and Benefits','Wellness','Manager Effectiveness','Work-Life Balance','Diversity & Inclusion','Learning & Development','Team Collaboration']);
+let searchQuery   = '';
+let customCounter = 1000;
+let previewRating = null;
+let previewIndex  = 0;
+
+function getAllQs() {
+  const r = [];
+  CATEGORIES.forEach(c => c.questions.forEach(q => r.push({...q, category:c.name})));
+  return r;
+}
+
+function badgeClass(t) {
+  if (t.startsWith('Rating')||t.startsWith('Scale')) return 'tag-rating';
+  if (t==='MCQ') return 'tag-mcq';
+  if (t==='Text') return 'tag-text-type';
+  if (t==='Yes/No') return 'tag-yesno';
+  return 'tag-scale';
+}
+
+// ── RENDER BANK ──────────────────────────────────────────────
+function renderBank() {
+  const container = document.getElementById('question-bank');
+  const q = searchQuery.toLowerCase();
+  let html = '';
+  let visible = 0;
+
+  CATEGORIES.forEach(cat => {
+    const qs = cat.questions.filter(x => !q || x.text.toLowerCase().includes(q) || x.type.toLowerCase().includes(q));
+    if (!qs.length) return;
+    visible += qs.length;
+    const isClosed = collapsed.has(cat.name);
+
+    html += `<div>
+      <div onclick="toggleCat('${cat.name.replace(/'/g,"&#39;")}')"
+           style="display:flex;align-items:center;gap:0;padding:12px 0;cursor:pointer;user-select:none"
+           onmouseenter="this.style.background='#fafafa'" onmouseleave="this.style.background='transparent'">
+        <span style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s;transform:rotate(${isClosed?'-90deg':'0'})">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#545470" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+        <span style="font-size:14px;font-weight:500;color:#29294c;flex:1;margin-left:6px">${cat.name}</span>
+        <span style="font-size:13px;color:#98a2b3">(${qs.length})</span>
+      </div>
+      ${isClosed ? '' : `<div style="padding-bottom:4px">${qs.map(q => renderQCard(q, cat.name)).join('')}</div>`}
+    </div>`;
+  });
+
+  if (!html) html = `<div style="text-align:center;padding:32px 0;color:#98a2b3;font-size:13px">No questions match your search.</div>`;
+  container.innerHTML = html;
+  document.getElementById('bank-count').textContent = `(${visible})`;
+}
+
+function renderQCard(q, catName) {
+  const added = selectedIds.has(q.id);
+  return `<div style="display:flex;align-items:center;gap:6px;padding:12px;border:1px solid #e1e5ea;border-radius:8px;margin-bottom:8px;background:#fff;transition:border-color .15s"
+              onmouseenter="this.style.borderColor='#c9b8f5'" onmouseleave="this.style.borderColor='${added?'#e1e5ea':'#e1e5ea'}'">
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px;min-width:0">
+      <p style="font-size:14px;font-weight:500;color:#545470;line-height:20px">${q.text}</p>
+      <span class="${badgeClass(q.type)}" style="display:inline-flex;align-items:center;align-self:flex-start;padding:2px 8px;border-radius:16px;font-size:12px;font-weight:500;line-height:1.4;letter-spacing:.03px;white-space:nowrap">${q.type}</span>
+    </div>
+    <button onclick="toggleQ(${q.id})"
+            style="width:30px;height:30px;border-radius:8px;background:${added?'#fff':'#7f56d9'};border:${added?'1.5px solid #fda29b':'none'};display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:background .15s"
+            title="${added?'Remove':'Add question'}"
+            onmouseenter="this.style.background='${added?'#fef3f2':'#6941c6'}'"
+            onmouseleave="this.style.background='${added?'#fff':'#7f56d9'}'">
+      ${added
+        ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f04438" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`
+        : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`
+      }
+    </button>
+  </div>`;
+}
+
+// ── RENDER SELECTED ──────────────────────────────────────────
+function renderSelected() {
+  const body = document.getElementById('sel-body');
+  const all = getAllQs().filter(q => selectedIds.has(q.id));
+
+  if (!all.length) {
+    body.innerHTML = `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:12px;color:#98a2b3;text-align:center;min-height:300px">
+      <svg width="88" height="88" viewBox="0 0 88 88" fill="none" opacity=".5">
+        <rect x="10" y="14" width="68" height="60" rx="6" fill="#f2f4f7" stroke="#e4e7ec" stroke-width="1.5"/>
+        <rect x="20" y="26" width="30" height="5" rx="2.5" fill="#d0d5dd"/>
+        <rect x="20" y="36" width="48" height="3.5" rx="1.75" fill="#e4e7ec"/>
+        <rect x="20" y="44" width="40" height="3.5" rx="1.75" fill="#e4e7ec"/>
+        <rect x="20" y="52" width="28" height="3.5" rx="1.75" fill="#e4e7ec"/>
+        <circle cx="69" cy="64" r="13" fill="#f9fafb" stroke="#e4e7ec" stroke-width="1.5"/>
+        <path d="M65 64 Q69 58 73 64" stroke="#d0d5dd" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <circle cx="67" cy="62.5" r="1.2" fill="#d0d5dd"/>
+        <circle cx="71" cy="62.5" r="1.2" fill="#d0d5dd"/>
+      </svg>
+      <div style="font-size:14px;font-weight:600;color:#667085">No questions selected</div>
+      <div style="font-size:13px;color:#98a2b3">Add questions from the library to build your survey</div>
+    </div>`;
+    return;
+  }
+
+  const groups = {};
+  all.forEach((q,i) => {
+    const k = q.category || 'Custom';
+    if (!groups[k]) groups[k] = [];
+    groups[k].push({...q, idx: i+1});
+  });
+
+  let idx = 1;
+  let html = '';
+  Object.entries(groups).forEach(([cat, qs]) => {
+    qs.forEach(q => {
+      html += `<div style="border:1px solid #e1e5ea;border-radius:6px;background:#fff;padding:20px 24px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="flex:1;display:flex;flex-direction:column;gap:10px;min-width:0">
+            <p style="font-size:14px;font-weight:500;color:#29294c;line-height:20px">
+              <span style="color:#707087">Q${idx++}.</span> ${q.text}
+            </p>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span style="display:inline-flex;align-items:center;align-self:flex-start;padding:2px 8px;border-radius:16px;font-size:12px;font-weight:500;border:1px solid #d0d5dd;color:#29294c;background:#fff;white-space:nowrap">${cat}</span>
+              <span class="${badgeClass(q.type)}" style="display:inline-flex;align-items:center;align-self:flex-start;padding:2px 8px;border-radius:16px;font-size:12px;font-weight:500;line-height:1.4;letter-spacing:.03px;white-space:nowrap">${q.type}</span>
+            </div>
+          </div>
+          <button onclick="toggleQ(${q.id})" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#98a2b3;border:none;background:transparent;border-radius:6px;cursor:pointer;flex-shrink:0" onmouseenter="this.style.background='#f9fafb'" onmouseleave="this.style.background='transparent'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </div>
+      </div>`;
+    });
+  });
+  body.innerHTML = html;
+}
+
+// ── RENDER PREVIEW ───────────────────────────────────────────
+function renderPreview() {
+  const body = document.getElementById('preview-body');
+  const all = getAllQs().filter(q => selectedIds.has(q.id));
+
+  if (!all.length) {
+    body.innerHTML = `<div style="flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;color:#98a2b3;text-align:center;padding:20px;min-height:200px">Add questions to see the preview</div>`;
+    return;
+  }
+
+  const total = all.length;
+  if (previewIndex >= total) previewIndex = total - 1;
+  const current = all[previewIndex];
+  const progressPct = Math.round(((previewIndex + 1) / total) * 100);
+
+  let responseHtml = '';
+  if (current.type.startsWith('Rating') || current.type.startsWith('Scale')) {
+    const max = current.type.includes('10') ? 10 : 5;
+    const labels = max<=5 ? ['Strongly disagree','Strongly agree'] : ['Strongly disagree','Strongly agree'];
+    const btnCount = max<=5 ? 5 : 10;
+    responseHtml = `
+      <div style="display:flex;flex-direction:column;gap:10px;width:${btnCount<=5?268:508}px">
+        <div class="pp-rating-btns">
+          ${Array.from({length:btnCount},(_, i)=>`
+            <button onclick="selectRating(${i+1},this)" class="rating-btn" id="rbtn-${i+1}">${i+1}</button>
+          `).join('')}
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#707087;line-height:1.4;letter-spacing:.03px">
+          <span>Strongly disagree</span><span>Strongly agree</span>
+        </div>
+      </div>`;
+  } else if (current.type==='MCQ') {
+    responseHtml = ['Always','Often','Sometimes','Rarely','Never'].map(o=>`
+      <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e1e5ea;border-radius:8px;cursor:pointer;margin-bottom:6px;font-size:13px;color:#344054" onmouseenter="this.style.borderColor='#9e77ed'" onmouseleave="this.style.borderColor='#e1e5ea'">
+        <span style="width:16px;height:16px;border:1.5px solid #d0d5dd;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff"></span>${o}
+      </label>`).join('');
+  } else if (current.type==='Yes/No') {
+    responseHtml = ['Yes','No'].map(o=>`
+      <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e1e5ea;border-radius:8px;cursor:pointer;margin-bottom:6px;font-size:13px;color:#344054" onmouseenter="this.style.borderColor='#9e77ed'" onmouseleave="this.style.borderColor='#e1e5ea'">
+        <span style="width:16px;height:16px;border:1.5px solid #d0d5dd;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff"></span>${o}
+      </label>`).join('');
+  } else {
+    responseHtml = `<textarea placeholder="Your answer..." style="width:100%;height:80px;border:1px solid #d0d5dd;border-radius:6px;padding:8px 12px;font-family:'Inter',sans-serif;font-size:13px;color:#101828;resize:none;outline:none"></textarea>`;
+  }
+
+  body.innerHTML = `
+    <!-- Progress -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;flex-shrink:0">
+      <span style="font-size:12px;color:#707087;font-weight:400;line-height:1.4;letter-spacing:.03px;white-space:nowrap">${previewIndex + 1} of ${total}</span>
+      <div style="width:130px;height:7px;background:#f5fbff;border-radius:78px;overflow:hidden;position:relative">
+        <div style="height:100%;width:${progressPct}%;background:#98a2b3;border-radius:78px"></div>
+      </div>
+    </div>
+
+    <!-- Question card -->
+    <div style="background:#fff;border-radius:10px;box-shadow:0 4px 8px 0 rgba(16,24,40,.1),0 2px 4px 0 rgba(16,24,40,.06);padding:14px;display:flex;flex-direction:column;gap:30px;flex:1;overflow-y:auto;min-height:0">
+
+      <div style="display:flex;flex-direction:column;gap:30px">
+        <!-- Question text -->
+        <p style="font-size:14px;font-weight:600;color:#29294c;line-height:1.4;letter-spacing:.021px">${current.text}</p>
+
+        <!-- Response -->
+        <div>${responseHtml}</div>
+
+        <!-- Comment box (for rating types) -->
+        ${(current.type.startsWith('Rating')||current.type.startsWith('Scale'))?`
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:2px">
+            <span style="font-size:12px;color:#545470;line-height:1.4;letter-spacing:.03px">Add your comment </span>
+          </div>
+          <textarea placeholder="" style="width:100%;height:80px;border:1px solid #d0d5dd;border-radius:6px;padding:8px 16px;font-family:'Inter',sans-serif;font-size:14px;color:#101828;resize:none;outline:none"
+            onfocus="this.style.borderColor='#7f56d9';this.style.boxShadow='0 0 0 3px rgba(127,86,217,.1)'"
+            onblur="this.style.borderColor='#d0d5dd';this.style.boxShadow='none'"></textarea>
+          <!-- Skip question -->
+          <button style="display:inline-flex;align-items:center;gap:8px;padding:6px 0;font-size:12px;font-weight:500;color:#6941c6;line-height:1.4;letter-spacing:.03px;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif">
+            Skip Question
+            <img src="https://www.figma.com/api/mcp/asset/bd85e03a-2437-4734-aa9e-377fa4cb49c8" width="16" height="16" alt=""/>
+          </button>
+        </div>` : ''}
+      </div>
+
+      <!-- Back / Next -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <button onclick="previewNav(-1)" ${previewIndex===0?'disabled':''} style="display:flex;align-items:center;gap:4px;min-width:60px;width:88px;padding:4px 12px;border-radius:50px;border:1px solid #d0d5dd;background:#fff;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;color:${previewIndex===0?'#d0d5dd':'#29294c'};justify-content:center;cursor:${previewIndex===0?'not-allowed':'pointer'}" ${previewIndex>0?'onmouseenter="this.style.background=\'#f9fafb\'" onmouseleave="this.style.background=\'#fff\'"':''}>
+          <img src="https://www.figma.com/api/mcp/asset/5a977cbc-0631-4920-9001-8e541e49ffca" width="11" height="11" alt="" style="transform:scaleX(-1)"/>
+          Back
+        </button>
+        <button onclick="previewNav(1)" ${previewIndex===total-1?'disabled':''} style="display:flex;align-items:center;gap:4px;min-width:60px;width:88px;padding:4px 12px;border-radius:50px;border:1px solid #d0d5dd;background:#fff;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;color:${previewIndex===total-1?'#d0d5dd':'#29294c'};justify-content:center;cursor:${previewIndex===total-1?'not-allowed':'pointer'}" ${previewIndex<total-1?'onmouseenter="this.style.background=\'#f9fafb\'" onmouseleave="this.style.background=\'#fff\'"':''}>
+          Next
+          <img src="https://www.figma.com/api/mcp/asset/67f32449-7a02-4198-8e7d-2660f5a2bf7e" width="11" height="11" alt=""/>
+        </button>
+      </div>
+    </div>`;
+}
+
+function previewNav(dir) {
+  const all = getAllQs().filter(q => selectedIds.has(q.id));
+  previewIndex = Math.max(0, Math.min(all.length - 1, previewIndex + dir));
+  renderPreview();
+}
+
+function togglePreview() {
+  document.querySelector('.panel-prev').classList.toggle('collapsed');
+}
+
+function selectRating(val, btn) {
+  const parent = btn.closest('.pp-rating-btns');
+  if (!parent) return;
+  parent.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected-r'));
+  btn.classList.add('selected-r');
+}
+
+// ── STATS ────────────────────────────────────────────────────
+function updateStats() {
+  const count = selectedIds.size;
+  const all   = getAllQs().filter(q => selectedIds.has(q.id));
+  const cats  = new Set(all.map(q => q.category||'Custom'));
+  document.getElementById('stat-count').textContent = count;
+  document.getElementById('stat-cats').textContent  = cats.size;
+  document.getElementById('stat-time').textContent  = Math.round(count*20);
+  document.getElementById('continue-btn').disabled  = count===0;
+}
+
+// ── ACTIONS ──────────────────────────────────────────────────
+function addAllQuestions() {
+  const all = getAllQs();
+  const allAdded = all.length > 0 && all.every(q => selectedIds.has(q.id));
+  if (allAdded) {
+    all.forEach(q => selectedIds.delete(q.id));
+  } else {
+    all.forEach(q => selectedIds.add(q.id));
+  }
+  previewIndex = 0;
+  renderAll();
+  updateAddAllCheckbox();
+}
+
+function clearAllQuestions() {
+  selectedIds.clear();
+  previewIndex = 0;
+  renderAll();
+  updateAddAllCheckbox();
+}
+
+function updateAddAllCheckbox() {
+  const all = getAllQs();
+  const allAdded = all.length > 0 && all.every(q => selectedIds.has(q.id));
+  const cb  = document.getElementById('add-all-cb');
+  const chk = document.getElementById('add-all-check');
+  const clearBtn = document.getElementById('clear-all-btn');
+  const divider  = document.getElementById('clear-all-divider');
+  if (cb) {
+    cb.style.background  = allAdded ? '#6941c6' : '#fff';
+    cb.style.borderColor = allAdded ? '#6941c6' : '#d0d5dd';
+  }
+  if (chk) chk.style.display = allAdded ? 'block' : 'none';
+  if (clearBtn) clearBtn.style.display = selectedIds.size > 0 ? 'flex' : 'none';
+  if (divider)  divider.style.display  = selectedIds.size > 0 ? 'block' : 'none';
+}
+
+function toggleQ(id) {
+  if (selectedIds.has(id)) {
+    selectedIds.delete(id);
+    const remaining = getAllQs().filter(q => selectedIds.has(q.id)).length;
+    if (previewIndex >= remaining) previewIndex = Math.max(0, remaining - 1);
+  } else {
+    selectedIds.add(id);
+    toast('Question added','success');
+  }
+  renderAll();
+}
+function toggleCat(name) {
+  if (collapsed.has(name)) collapsed.delete(name); else collapsed.add(name);
+  renderBank();
+}
+function addAllQuestions() {
+  const q = searchQuery.toLowerCase();
+  const qs = getAllQs().filter(x => !q || x.text.toLowerCase().includes(q));
+  qs.forEach(x => selectedIds.add(x.id));
+  renderAll();
+  toast(`${qs.length} questions added`,'success');
+}
+function clearAllQuestions() {
+  if (!selectedIds.size) return;
+  selectedIds.clear();
+  renderAll();
+  toast('All questions removed');
+}
+function filterQuestions(v) { searchQuery=v; renderBank(); }
+
+// ── CUSTOM MODAL ─────────────────────────────────────────────
+function openCustomModal()  { document.getElementById('custom-modal').classList.add('open'); }
+function closeCustomModal() {
+  document.getElementById('custom-modal').classList.remove('open');
+  document.getElementById('cq-text').value='';
+}
+function submitCustom() {
+  const text = document.getElementById('cq-text').value.trim();
+  if (!text) { alert('Please enter a question text.'); return; }
+  const type = document.getElementById('cq-type').value;
+  const cat  = document.getElementById('cq-cat').value || 'Custom';
+  const id   = ++customCounter;
+  let c = CATEGORIES.find(x => x.name===cat);
+  if (!c) { c={name:cat,questions:[]}; CATEGORIES.push(c); }
+  c.questions.push({id, text, type});
+  selectedIds.add(id);
+  closeCustomModal();
+  renderAll();
+  toast('Custom question added','success');
+}
+
+// ── TOAST ────────────────────────────────────────────────────
+function toast(msg, type='') {
+  const ct = document.getElementById('toasts');
+  const t  = document.createElement('div');
+  t.className = 'toast'+(type?' '+type:'');
+  t.innerHTML = (type==='success'
+    ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+    : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+  )+msg;
+  ct.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 2200);
+}
+
+function renderAll() { renderBank(); renderSelected(); renderPreview(); updateStats(); updateAddAllCheckbox(); }
+
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeCustomModal(); });
+renderAll();
+
+// ── SIDEBAR COLLAPSE ─────────────────────────────────────────
+(function(){
+  var sidebar=document.querySelector('.side-nav');
+  var page=document.querySelector('.page');
+  if(sidebar&&localStorage.getItem('sidebarCollapsed')==='true'){
+    sidebar.classList.add('collapsed');
+    if(page)page.style.marginLeft='64px';
+  }
+})();
+function toggleSidebar(){
+  var sidebar=document.querySelector('.side-nav');
+  var page=document.querySelector('.page');
+  if(!sidebar)return;
+  var c=sidebar.classList.toggle('collapsed');
+  localStorage.setItem('sidebarCollapsed',c?'true':'false');
+  if(page)page.style.marginLeft=c?'64px':'252px';
+}
+</script>
+</body>
+</html>

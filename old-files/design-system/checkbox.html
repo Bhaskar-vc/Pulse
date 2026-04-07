@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkbox &amp; Radio — Pulse Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary-700: #29294c;
+  --primary-600: #545470;
+  --primary-500: #707087;
+  --primary-400: #9d9dad;
+  --primary-300: #bdbdc8;
+  --primary-200: #eaeaed;
+  --primary-100: #f4f4f6;
+  --primary-50:  #f9fafb;
+  --secondary-700: #6941c6;
+  --secondary-600: #7f56d9;
+  --secondary-500: #9e77ed;
+  --secondary-400: #b692f6;
+  --secondary-300: #d6bbfb;
+  --secondary-200: #e9d7fe;
+  --secondary-100: #f4ebff;
+  --secondary-50:  #f9f5ff;
+  --error-700: #d92d20;
+  --error-600: #f04438;
+  --error-100: #fef3f2;
+  --success-700: #039855;
+  --success-600: #12b76a;
+  --success-100: #ecfdf3;
+  --text-primary: #29294c;
+  --text-secondary: #707087;
+  --text-tertiary: #9d9dad;
+  --text-placeholder: #bdbdc8;
+  --text-link: #6941c6;
+  --border-default: #eaeaed;
+  --border-focus: #7f56d9;
+  --bg-page: #f9fafb;
+  --sidebar-w: 240px;
+  --font: 'Inter', sans-serif;
+}
+
+body { font-family: var(--font); color: var(--text-primary); background: var(--bg-page); display: flex; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar { width: var(--sidebar-w); min-width: var(--sidebar-w); background: #fff; border-right: 1px solid var(--border-default); padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid var(--border-default); margin-bottom: 16px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: var(--primary-700); }
+.sidebar-logo sub { font-size: 10px; color: var(--text-tertiary); font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main { margin-left: var(--sidebar-w); flex: 1; padding: 48px 56px; max-width: 1100px; }
+
+/* ── Page header ── */
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text-primary); }
+.breadcrumb-sep { opacity: .4; }
+.page-header { margin-bottom: 40px; }
+.page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+.page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 640px; }
+.page-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+.tag-figma  { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+.tag-wcag   { background: #eff8ff; color: #026aa2; border-color: #b9e6fe; }
+
+/* ── Sections ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; }
+.section-desc  { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+.divider { border: none; border-top: 1px solid var(--border-default); margin: 48px 0; }
+
+/* ── Demo canvas ── */
+.demo-canvas {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 32px;
+}
+.demo-canvas + .demo-canvas { margin-top: 16px; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+.demo-row + .demo-row { margin-top: 24px; }
+.demo-col { display: flex; flex-direction: column; gap: 16px; min-width: 200px; flex: 1; }
+.demo-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text-tertiary); margin-bottom: 8px; }
+
+/* ── Code block ── */
+.code-block { position: relative; background: #1e1e2e; border-radius: 10px; padding: 20px; overflow-x: auto; margin-top: 16px; }
+.code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; color: #cdd6f4; }
+.code-block .token-tag    { color: #89dceb; }
+.code-block .token-attr   { color: #89b4fa; }
+.code-block .token-str    { color: #a6e3a1; }
+.code-block .token-comment { color: #6c7086; font-style: italic; }
+.copy-btn {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  color: #cdd6f4; font-size: 11px; font-family: var(--font); font-weight: 500;
+  padding: 5px 12px; border-radius: 6px; cursor: pointer;
+  transition: background .15s;
+}
+.copy-btn:hover { background: rgba(255,255,255,.15); }
+.copy-btn.copied { color: #a6e3a1; border-color: #a6e3a1; }
+
+/* ── Props table ── */
+.props-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid var(--border-default); border-radius: 10px; overflow: hidden; }
+.props-table th { text-align: left; padding: 10px 14px; background: var(--primary-50); color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border-default); }
+.props-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; line-height: 1.5; }
+.props-table tr:last-child td { border-bottom: none; }
+.props-table code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--primary-100); color: var(--secondary-700); padding: 2px 6px; border-radius: 4px; }
+
+/* ── Do / Don't ── */
+.do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+.do-card, .dont-card { border-radius: 12px; padding: 20px; border: 1.5px solid; }
+.do-card { border-color: #a6f4c5; background: #f6fef9; }
+.dont-card { border-color: #fecdca; background: #fffbfa; }
+.do-header, .dont-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.do-header { color: #027a48; }
+.dont-header { color: #b42318; }
+.do-icon, .dont-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+.do-icon { background: #027a48; color: #fff; }
+.dont-icon { background: #b42318; color: #fff; }
+.do-card p, .dont-card p { font-size: 13px; color: #344054; line-height: 1.6; }
+.do-card ul, .dont-card ul { padding-left: 16px; }
+.do-card li, .dont-card li { font-size: 13px; color: #344054; line-height: 1.7; }
+
+/* ── States grid ── */
+.states-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.states-grid-2row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.state-cell { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 20px 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.state-cell-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-tertiary); }
+
+/* ── Accessibility cards ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ── For designers / devs ── */
+.for-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.for-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 20px; }
+.for-card h4 { font-size: 14px; font-weight: 600; color: var(--primary-700); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.for-card ul { padding-left: 16px; }
+.for-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ── Group panel ── */
+.group-panel { background: #fff; border: 1px solid var(--border-default); border-radius: 12px; padding: 24px; }
+.group-panel-title { font-size: 13px; font-weight: 600; color: var(--primary-700); margin-bottom: 16px; }
+.group-items { display: flex; flex-direction: column; gap: 12px; }
+
+/* ══════════════════════════════════════
+   CHECKBOX + RADIO COMPONENT STYLES
+   Source: Figma node 745-29926
+══════════════════════════════════════ */
+
+/* Wrapper */
+.cb-wrap {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+/* Hide native input — keep 1px so it remains keyboard-focusable */
+.cb-wrap input[type="checkbox"],
+.cb-wrap input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  pointer-events: none;
+}
+
+/* Custom box/circle */
+.cb-control {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #d0d5dd;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+  position: relative;
+}
+
+/* Checkbox sm=4px md=6px, Radio/Check-circle sm=8px md=10px */
+.cb-control.is-checkbox.size-sm  { border-radius: 4px; }
+.cb-control.is-checkbox.size-md  { border-radius: 6px; }
+.cb-control.is-radio.size-sm     { border-radius: 8px; }
+.cb-control.is-radio.size-md     { border-radius: 10px; }
+.cb-control.is-check-circle.size-sm { border-radius: 8px; }
+.cb-control.is-check-circle.size-md { border-radius: 10px; }
+
+/* Sizes */
+.cb-control.size-sm { width: 16px; height: 16px; }
+.cb-control.size-md { width: 20px; height: 20px; }
+
+/* Hover — unchecked */
+.cb-wrap:hover:not(.is-disabled) .cb-control:not(.is-checked):not(.is-indeterminate) {
+  border-color: #9e77ed;
+  background: #fcfaff;
+}
+
+/* Focused */
+.cb-wrap:focus-within .cb-control,
+.cb-control.is-focused {
+  border-color: #7f56d9;
+  box-shadow: 0 0 0 3px rgba(127,86,217,.12);
+}
+
+/* Checked */
+.cb-control.is-checked {
+  background: #7f56d9;
+  border-color: #7f56d9;
+}
+/* Checked + hover — darkens to show hover affordance */
+.cb-wrap:hover:not(.is-disabled) .cb-control.is-checked {
+  background: #6941c6;
+  border-color: #6941c6;
+}
+/* Checked + focused */
+.cb-wrap:focus-within .cb-control.is-checked,
+.cb-control.is-checked.is-focused {
+  background: #7f56d9;
+  border-color: #7f56d9;
+  box-shadow: 0 0 0 3px rgba(127,86,217,.12);
+}
+
+/* Indeterminate */
+.cb-control.is-indeterminate {
+  background: #7f56d9;
+  border-color: #7f56d9;
+}
+/* Indeterminate + hover */
+.cb-wrap:hover:not(.is-disabled) .cb-control.is-indeterminate {
+  background: #6941c6;
+  border-color: #6941c6;
+}
+
+/* Disabled */
+.cb-wrap.is-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.cb-wrap.is-disabled .cb-control {
+  background: #f2f4f7;
+  border-color: #d0d5dd;
+}
+.cb-wrap.is-disabled .cb-label,
+.cb-wrap.is-disabled .cb-supporting { color: #9d9dad; }
+
+/* SVG marks */
+.cb-check-svg, .cb-radio-dot, .cb-dash-svg { display: none; }
+.cb-control.is-checked .cb-check-svg { display: block; }
+.cb-control.is-checked.is-radio .cb-check-svg { display: none; }
+.cb-control.is-checked.is-radio .cb-radio-dot { display: block; }
+.cb-control.is-indeterminate .cb-check-svg { display: none; }
+.cb-control.is-indeterminate .cb-dash-svg { display: block; }
+
+/* Label area */
+.cb-label-wrap { display: flex; flex-direction: column; gap: 2px; padding-top: 1px; }
+.cb-label { font-size: 14px; font-weight: 500; color: var(--text-primary); line-height: 1.4; }
+.cb-label.weight-light { font-weight: 400; }
+.cb-supporting { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle" style="display:block"/></a>
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link active">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Components</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Checkbox</span>
+  </div>
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">CHECKBOX</span>
+    </div>
+  </div>
+    
+    <h1 class="page-title">Checkbox &amp; Radio</h1>
+    <p class="page-subtitle">Checkboxes let users select one or more items from a list. Radio buttons let users select exactly one option from a set. Both support label, supporting text, indeterminate state, and two sizes.</p>
+    <div class="page-tags">
+      <span class="tag tag-stable">Stable</span>
+      <span class="tag tag-wcag">WCAG AA</span>
+      <span class="tag tag-figma">Figma · 745-29926</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── OVERVIEW ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">Both controls share the same token set and behavior model — they differ only in selection logic and shape. Use them in forms, settings panels, filter sidebars, and any context where users need to choose from a predefined list.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">Checkbox — multi-select</div>
+          <label class="cb-wrap interactive">
+            <input type="checkbox">
+            <span class="cb-control is-checkbox size-md is-checked">
+              <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="cb-label-wrap">
+              <span class="cb-label">Accept terms and conditions</span>
+              <span class="cb-supporting">You must agree before continuing</span>
+            </span>
+          </label>
+          <label class="cb-wrap interactive">
+            <input type="checkbox">
+            <span class="cb-control is-checkbox size-md is-checked">
+              <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="cb-label-wrap">
+              <span class="cb-label">Subscribe to newsletter</span>
+            </span>
+          </label>
+          <label class="cb-wrap interactive">
+            <input type="checkbox">
+            <span class="cb-control is-checkbox size-md">
+              <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="cb-label-wrap">
+              <span class="cb-label">Marketing emails</span>
+            </span>
+          </label>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Radio — single-select</div>
+          <label class="cb-wrap interactive" data-radio-group="overview-demo">
+            <input type="radio" name="overview-demo">
+            <span class="cb-control is-radio size-md is-checked">
+              <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"></svg>
+              <svg class="cb-radio-dot" width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="#fff"/></svg>
+            </span>
+            <span class="cb-label-wrap">
+              <span class="cb-label">Monthly billing</span>
+              <span class="cb-supporting">Billed every 30 days</span>
+            </span>
+          </label>
+          <label class="cb-wrap interactive" data-radio-group="overview-demo">
+            <input type="radio" name="overview-demo">
+            <span class="cb-control is-radio size-md">
+              <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"></svg>
+              <svg class="cb-radio-dot" width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="#fff"/></svg>
+            </span>
+            <span class="cb-label-wrap">
+              <span class="cb-label">Annual billing</span>
+              <span class="cb-supporting">Save 20% — billed yearly</span>
+            </span>
+          </label>
+          <label class="cb-wrap interactive" data-radio-group="overview-demo">
+            <input type="radio" name="overview-demo">
+            <span class="cb-control is-radio size-md">
+              <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"></svg>
+              <svg class="cb-radio-dot" width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="#fff"/></svg>
+            </span>
+            <span class="cb-label-wrap">
+              <span class="cb-label">Pay as you go</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── TYPES ─────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Types</h2>
+    <p class="section-desc">Choose the type based on the selection logic — whether the user can pick one item or many.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <div class="demo-col">
+          <div class="demo-label">Checkbox</div>
+          <label class="cb-wrap interactive">
+            <input type="checkbox">
+            <span class="cb-control is-checkbox size-md is-checked">
+              <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="cb-label-wrap"><span class="cb-label">Option A</span></span>
+          </label>
+          <label class="cb-wrap interactive">
+            <input type="checkbox">
+            <span class="cb-control is-checkbox size-md">
+              <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="cb-label-wrap"><span class="cb-label">Option B</span></span>
+          </label>
+          <p style="font-size:12px;color:var(--text-secondary);margin-top:8px;line-height:1.5;">4px border-radius. Multiple items can be selected simultaneously. Supports indeterminate state for "select all" patterns.</p>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">Radio</div>
+          <label class="cb-wrap interactive" data-radio-group="types-demo">
+            <input type="radio" name="types-demo">
+            <span class="cb-control is-radio size-md is-checked">
+              <svg class="cb-radio-dot" width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="#fff"/></svg>
+            </span>
+            <span class="cb-label-wrap"><span class="cb-label">Option A</span></span>
+          </label>
+          <label class="cb-wrap interactive" data-radio-group="types-demo">
+            <input type="radio" name="types-demo">
+            <span class="cb-control is-radio size-md">
+              <svg class="cb-radio-dot" width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="#fff"/></svg>
+            </span>
+            <span class="cb-label-wrap"><span class="cb-label">Option B</span></span>
+          </label>
+          <p style="font-size:12px;color:var(--text-secondary);margin-top:8px;line-height:1.5;">50% border-radius (circle). Exactly one item can be selected at a time. No indeterminate state.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- When to use table -->
+    <div style="margin-top:16px;">
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Control</th>
+            <th>Use when</th>
+            <th>Avoid when</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Checkbox</strong></td>
+            <td>Users can select zero, one, or multiple options. E.g. "Select features to enable", filter tags, permission toggles.</td>
+            <td>Only one option is valid at a time. Never use checkboxes as radio button substitutes.</td>
+          </tr>
+          <tr>
+            <td><strong>Radio</strong></td>
+            <td>Users must pick exactly one from a small set (2–6 items). E.g. billing cycle, gender, priority level.</td>
+            <td>There are more than 6 options — use a Select instead. Never allow all radios to be deselected.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── STATES ─────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">States</h2>
+    <p class="section-desc">Every state is visually distinct and never relies on color alone to convey meaning. Disabled items must be perceivable but non-interactive.</p>
+
+    <!-- Unchecked row -->
+    <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:12px;">Unchecked</p>
+    <div class="states-grid" style="margin-bottom:24px;">
+      <div class="state-cell">
+        <div class="state-cell-label">Default</div>
+        <label class="cb-wrap interactive">
+          <input type="checkbox">
+          <span class="cb-control is-checkbox size-md">
+            <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Border <code style="font-size:10px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">#bdbdc8</code></p>
+      </div>
+      <div class="state-cell">
+        <div class="state-cell-label">Hover</div>
+        <label class="cb-wrap">
+          <span class="cb-control is-checkbox size-md" style="border-color:var(--secondary-500);">
+            <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Border <code style="font-size:10px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">#9e77ed</code></p>
+      </div>
+      <div class="state-cell">
+        <div class="state-cell-label">Focused</div>
+        <label class="cb-wrap">
+          <span class="cb-control is-checkbox size-md" style="border-color:var(--secondary-600);box-shadow:0 0 0 3px rgba(127,86,217,.12);">
+            <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Border <code style="font-size:10px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">#7f56d9</code> + ring</p>
+      </div>
+      <div class="state-cell">
+        <div class="state-cell-label">Disabled</div>
+        <label class="cb-wrap is-disabled">
+          <span class="cb-control is-checkbox size-md">
+            <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Opacity 0.5, cursor not-allowed</p>
+      </div>
+    </div>
+
+    <!-- Checked row -->
+    <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:12px;">Checked</p>
+    <div class="states-grid" style="margin-bottom:24px;">
+      <div class="state-cell">
+        <div class="state-cell-label">Default</div>
+        <label class="cb-wrap interactive">
+          <input type="checkbox">
+          <span class="cb-control is-checkbox size-md is-checked">
+            <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Bg <code style="font-size:10px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">#7f56d9</code></p>
+      </div>
+      <div class="state-cell">
+        <div class="state-cell-label">Hover</div>
+        <label class="cb-wrap">
+          <span class="cb-control is-checkbox size-md is-checked" style="background:var(--secondary-700);border-color:var(--secondary-700);">
+            <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Bg darkens to <code style="font-size:10px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">#6941c6</code></p>
+      </div>
+      <div class="state-cell">
+        <div class="state-cell-label">Focused</div>
+        <label class="cb-wrap">
+          <span class="cb-control is-checkbox size-md is-checked" style="box-shadow:0 0 0 3px rgba(127,86,217,.12);">
+            <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Checked + focus ring</p>
+      </div>
+      <div class="state-cell">
+        <div class="state-cell-label">Disabled</div>
+        <label class="cb-wrap is-disabled">
+          <span class="cb-control is-checkbox size-md is-checked">
+            <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Opacity 0.5, non-interactive</p>
+      </div>
+    </div>
+
+    <!-- Indeterminate row (checkbox only) -->
+    <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:12px;">Indeterminate (checkbox only)</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+      <div class="state-cell">
+        <div class="state-cell-label">Default</div>
+        <label class="cb-wrap interactive indeterminate-demo">
+          <input type="checkbox">
+          <span class="cb-control is-checkbox size-md is-indeterminate">
+            <svg class="cb-dash-svg" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Bg <code style="font-size:10px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">#7f56d9</code> + dash</p>
+      </div>
+      <div class="state-cell">
+        <div class="state-cell-label">Hover</div>
+        <label class="cb-wrap">
+          <span class="cb-control is-checkbox size-md is-indeterminate" style="background:var(--secondary-700);border-color:var(--secondary-700);">
+            <svg class="cb-dash-svg" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Bg darkens on hover</p>
+      </div>
+      <div class="state-cell">
+        <div class="state-cell-label">Focused</div>
+        <label class="cb-wrap">
+          <span class="cb-control is-checkbox size-md is-indeterminate" style="box-shadow:0 0 0 3px rgba(127,86,217,.12);">
+            <svg class="cb-dash-svg" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Indeterminate + ring</p>
+      </div>
+      <div class="state-cell">
+        <div class="state-cell-label">Disabled</div>
+        <label class="cb-wrap is-disabled">
+          <span class="cb-control is-checkbox size-md is-indeterminate">
+            <svg class="cb-dash-svg" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          <span class="cb-label"><span>Label</span></span>
+        </label>
+        <p style="font-size:11px;color:var(--text-tertiary);">Opacity 0.5</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── SIZES ─────────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">Two sizes map to different density contexts. The md size is the default for most product UIs. Use sm in dense tables, filter sidebars, or compact panels.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row" style="align-items:center;">
+        <div class="demo-col">
+          <div class="demo-label">sm — 16×16px</div>
+          <label class="cb-wrap interactive">
+            <input type="checkbox">
+            <span class="cb-control is-checkbox size-sm is-checked">
+              <svg class="cb-check-svg" width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2.5 2.5 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="cb-label-wrap"><span class="cb-label" style="font-size:13px;">Small checkbox</span></span>
+          </label>
+          <label class="cb-wrap interactive">
+            <input type="radio" name="size-demo-sm">
+            <span class="cb-control is-radio size-sm is-checked">
+              <svg class="cb-radio-dot" width="6" height="6" viewBox="0 0 6 6" fill="none"><circle cx="3" cy="3" r="2.5" fill="#fff"/></svg>
+            </span>
+            <span class="cb-label-wrap"><span class="cb-label" style="font-size:13px;">Small radio</span></span>
+          </label>
+          <p style="font-size:12px;color:var(--text-secondary);margin-top:4px;line-height:1.5;">Use in compact list items, data tables, filter panels</p>
+        </div>
+        <div class="demo-col">
+          <div class="demo-label">md — 20×20px (default)</div>
+          <label class="cb-wrap interactive">
+            <input type="checkbox">
+            <span class="cb-control is-checkbox size-md is-checked">
+              <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="cb-label-wrap"><span class="cb-label">Medium checkbox</span></span>
+          </label>
+          <label class="cb-wrap interactive">
+            <input type="radio" name="size-demo-md">
+            <span class="cb-control is-radio size-md is-checked">
+              <svg class="cb-radio-dot" width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="#fff"/></svg>
+            </span>
+            <span class="cb-label-wrap"><span class="cb-label">Medium radio</span></span>
+          </label>
+          <p style="font-size:12px;color:var(--text-secondary);margin-top:4px;line-height:1.5;">Default for forms, settings pages, onboarding flows</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <table class="props-table">
+        <thead>
+          <tr><th>Size</th><th>Box dimension</th><th>Icon size</th><th>Use case</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>sm</code></td><td>16×16px</td><td>9×9px checkmark / 6px dot</td><td>Dense UIs, data tables, compact sidebars</td></tr>
+          <tr><td><code>md</code></td><td>20×20px</td><td>12×12px checkmark / 8px dot</td><td>Default forms, settings, preference pages</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── GROUP PATTERNS ─────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Group Patterns</h2>
+    <p class="section-desc">Common real-world groupings. The "Select all" pattern uses indeterminate state when only some children are checked.</p>
+
+    <div class="demo-canvas">
+      <div class="demo-row">
+        <!-- Checkbox group with select all -->
+        <div class="demo-col" style="max-width:320px;">
+          <div class="demo-label">Checkbox group with Select all</div>
+          <div class="group-panel">
+            <div class="group-panel-title">Notification channels</div>
+            <div class="group-items">
+              <!-- Parent "select all" -->
+              <label class="cb-wrap interactive select-all-parent" id="select-all-parent">
+                <input type="checkbox" id="select-all-cb">
+                <span class="cb-control is-checkbox size-md is-indeterminate" id="select-all-control">
+                  <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg class="cb-dash-svg" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+                </span>
+                <span class="cb-label-wrap"><span class="cb-label">Select all</span></span>
+              </label>
+              <div style="padding-left:28px;display:flex;flex-direction:column;gap:10px;border-left:2px solid var(--border-default);margin-left:10px;padding-top:4px;">
+                <label class="cb-wrap interactive child-cb" data-parent="select-all-control">
+                  <input type="checkbox" class="child-input" checked>
+                  <span class="cb-control is-checkbox size-md is-checked">
+                    <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span class="cb-label-wrap"><span class="cb-label">Email</span></span>
+                </label>
+                <label class="cb-wrap interactive child-cb" data-parent="select-all-control">
+                  <input type="checkbox" class="child-input">
+                  <span class="cb-control is-checkbox size-md">
+                    <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span class="cb-label-wrap"><span class="cb-label">SMS</span></span>
+                </label>
+                <label class="cb-wrap interactive child-cb" data-parent="select-all-control">
+                  <input type="checkbox" class="child-input">
+                  <span class="cb-control is-checkbox size-md">
+                    <svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span class="cb-label-wrap"><span class="cb-label">Push notifications</span></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Radio group -->
+        <div class="demo-col" style="max-width:320px;">
+          <div class="demo-label">Radio group</div>
+          <div class="group-panel">
+            <div class="group-panel-title">Subscription plan</div>
+            <div class="group-items">
+              <label class="cb-wrap interactive" data-radio-group="plan-group">
+                <input type="radio" name="plan-group">
+                <span class="cb-control is-radio size-md is-checked">
+                  <svg class="cb-radio-dot" width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="#fff"/></svg>
+                </span>
+                <span class="cb-label-wrap">
+                  <span class="cb-label">Starter</span>
+                  <span class="cb-supporting">Free — up to 3 projects</span>
+                </span>
+              </label>
+              <label class="cb-wrap interactive" data-radio-group="plan-group">
+                <input type="radio" name="plan-group">
+                <span class="cb-control is-radio size-md">
+                  <svg class="cb-radio-dot" width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="#fff"/></svg>
+                </span>
+                <span class="cb-label-wrap">
+                  <span class="cb-label">Pro</span>
+                  <span class="cb-supporting">$12/mo — unlimited projects</span>
+                </span>
+              </label>
+              <label class="cb-wrap interactive" data-radio-group="plan-group">
+                <input type="radio" name="plan-group">
+                <span class="cb-control is-radio size-md">
+                  <svg class="cb-radio-dot" width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="#fff"/></svg>
+                </span>
+                <span class="cb-label-wrap">
+                  <span class="cb-label">Enterprise</span>
+                  <span class="cb-supporting">Custom pricing, SLA &amp; SSO</span>
+                </span>
+              </label>
+              <label class="cb-wrap is-disabled" data-radio-group="plan-group">
+                <input type="radio" name="plan-group" disabled>
+                <span class="cb-control is-radio size-md">
+                  <svg class="cb-radio-dot" width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="#fff"/></svg>
+                </span>
+                <span class="cb-label-wrap">
+                  <span class="cb-label">Legacy plan</span>
+                  <span class="cb-supporting">No longer available</span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── PROPS TABLE ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Props</h2>
+    <p class="section-desc">All configurable properties for both Checkbox and Radio components.</p>
+
+    <table class="props-table">
+      <thead>
+        <tr>
+          <th>Prop</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Values</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>type</code></td>
+          <td>string</td>
+          <td><code>"checkbox"</code></td>
+          <td><code>"checkbox"</code> <code>"radio"</code></td>
+          <td>Determines selection logic and visual shape.</td>
+        </tr>
+        <tr>
+          <td><code>size</code></td>
+          <td>string</td>
+          <td><code>"md"</code></td>
+          <td><code>"sm"</code> <code>"md"</code></td>
+          <td>Controls the bounding box: sm = 16px, md = 20px.</td>
+        </tr>
+        <tr>
+          <td><code>checked</code></td>
+          <td>boolean</td>
+          <td><code>false</code></td>
+          <td><code>true</code> <code>false</code></td>
+          <td>Whether the control is in a selected state.</td>
+        </tr>
+        <tr>
+          <td><code>indeterminate</code></td>
+          <td>boolean</td>
+          <td><code>false</code></td>
+          <td><code>true</code> <code>false</code></td>
+          <td>Checkbox only. Shows a dash when some children are selected.</td>
+        </tr>
+        <tr>
+          <td><code>disabled</code></td>
+          <td>boolean</td>
+          <td><code>false</code></td>
+          <td><code>true</code> <code>false</code></td>
+          <td>Renders at 50% opacity and prevents all interaction.</td>
+        </tr>
+        <tr>
+          <td><code>label</code></td>
+          <td>string</td>
+          <td>—</td>
+          <td>Any text</td>
+          <td>The visible label text rendered to the right of the control.</td>
+        </tr>
+        <tr>
+          <td><code>supportingText</code></td>
+          <td>string</td>
+          <td>—</td>
+          <td>Any text</td>
+          <td>Smaller descriptive text shown below the label at 12px.</td>
+        </tr>
+        <tr>
+          <td><code>textWeight</code></td>
+          <td>string</td>
+          <td><code>"default"</code></td>
+          <td><code>"default"</code> <code>"light"</code></td>
+          <td>Default = font-weight 500. Light = font-weight 400.</td>
+        </tr>
+        <tr>
+          <td><code>name</code></td>
+          <td>string</td>
+          <td>—</td>
+          <td>Any string</td>
+          <td>Radio only. Groups radios so only one can be selected.</td>
+        </tr>
+        <tr>
+          <td><code>value</code></td>
+          <td>string</td>
+          <td>—</td>
+          <td>Any string</td>
+          <td>The form value submitted when the control is checked.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── DO'S AND DON'TS ─────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Do's &amp; Don'ts</h2>
+
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <div class="do-header">
+          <span class="do-icon">✓</span>
+          Use checkboxes for multi-select
+        </div>
+        <p>When users need to pick multiple items from a list, checkboxes clearly communicate that all selections are valid simultaneously.</p>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
+          <label class="cb-wrap interactive"><input type="checkbox"><span class="cb-control is-checkbox size-md is-checked"><svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="cb-label">Email updates</span></label>
+          <label class="cb-wrap interactive"><input type="checkbox"><span class="cb-control is-checkbox size-md is-checked"><svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="cb-label">SMS alerts</span></label>
+          <label class="cb-wrap interactive"><input type="checkbox"><span class="cb-control is-checkbox size-md"><svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="cb-label">Push notifications</span></label>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header">
+          <span class="dont-icon">✕</span>
+          Don't use checkboxes as radio substitutes
+        </div>
+        <p>If only one selection is valid at a time, use radio buttons. Checkboxes suggest multiple values are acceptable — misusing them creates false expectations.</p>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
+          <label class="cb-wrap interactive"><input type="checkbox"><span class="cb-control is-checkbox size-md is-checked"><svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="cb-label" style="text-decoration:line-through;opacity:.5;">Monthly</span></label>
+          <label class="cb-wrap interactive"><input type="checkbox"><span class="cb-control is-checkbox size-md is-checked"><svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="cb-label" style="text-decoration:line-through;opacity:.5;">Annual</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="do-dont-grid" style="margin-top:16px;">
+      <div class="do-card">
+        <div class="do-header">
+          <span class="do-icon">✓</span>
+          Use supporting text for context
+        </div>
+        <p>Supporting text below the label gives users the additional context needed to make a confident decision without cluttering the label itself.</p>
+        <div style="margin-top:12px;">
+          <label class="cb-wrap interactive"><input type="checkbox"><span class="cb-control is-checkbox size-md"><svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="cb-label-wrap"><span class="cb-label">Enable 2-factor auth</span><span class="cb-supporting">We'll send a code to your phone</span></span></label>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header">
+          <span class="dont-icon">✕</span>
+          Don't use overly long labels
+        </div>
+        <p>Labels should be concise — ideally one line. Lengthy label text wraps awkwardly next to the small control and hurts scannability.</p>
+        <div style="margin-top:12px;">
+          <label class="cb-wrap"><span class="cb-control is-checkbox size-md"><svg class="cb-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="cb-label" style="opacity:.5;">I agree to receive promotional marketing emails from the company and its affiliates on a regular basis</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="do-dont-grid" style="margin-top:16px;">
+      <div class="do-card">
+        <div class="do-header">
+          <span class="do-icon">✓</span>
+          Always provide a visible label
+        </div>
+        <p>Every checkbox and radio must have an associated text label. Icon-only controls are inaccessible and confuse users who rely on screen readers.</p>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header">
+          <span class="dont-icon">✕</span>
+          Don't mix sizes in the same group
+        </div>
+        <p>All controls within a single group should use the same size. Mixing sm and md creates visual inconsistency and misaligned tap targets.</p>
+      </div>
+    </div>
+
+    <div class="do-dont-grid" style="margin-top:16px;">
+      <div class="do-card">
+        <div class="do-header">
+          <span class="do-icon">✓</span>
+          Use indeterminate for partial selection
+        </div>
+        <p>When a parent "Select all" checkbox has only some children checked, set it to indeterminate. This communicates the mixed state clearly and allows the user to check or uncheck all at once.</p>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header">
+          <span class="dont-icon">✕</span>
+          Don't use radio buttons without a default
+        </div>
+        <p>Always pre-select a sensible default radio option. An empty radio group forces users to make a choice before they can proceed, which increases cognitive load and error rates.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── ACCESSIBILITY ─────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Accessibility</h2>
+    <p class="section-desc">Checkbox and Radio are keyboard navigable, screen-reader compatible, and meet WCAG 2.1 AA contrast requirements in all states.</p>
+
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#6941c6" stroke-width="1.3"/><path d="M8 5v4M8 10.5v.5" stroke="#6941c6" stroke-width="1.4" stroke-linecap="round"/></svg>
+          ARIA Roles &amp; Attributes
+        </h4>
+        <ul>
+          <li>Native <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">input[type=checkbox]</code> and <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">input[type=radio]</code> provide correct roles automatically</li>
+          <li>Use <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">aria-checked="mixed"</code> for indeterminate checkbox state</li>
+          <li>Label must be associated via <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">htmlFor</code> or wrapping <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;label&gt;</code></li>
+          <li>Group radios in <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;fieldset&gt;</code> with <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;legend&gt;</code> to convey group context</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="#6941c6" stroke-width="1.3"/><path d="M5 8h6M8 5v6" stroke="#6941c6" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Keyboard Interaction
+        </h4>
+        <ul>
+          <li><kbd style="background:var(--primary-100);padding:1px 5px;border-radius:3px;font-size:11px;font-family:monospace;">Tab</kbd> — moves focus to the control</li>
+          <li><kbd style="background:var(--primary-100);padding:1px 5px;border-radius:3px;font-size:11px;font-family:monospace;">Space</kbd> — toggles checkbox; selects focused radio</li>
+          <li><kbd style="background:var(--primary-100);padding:1px 5px;border-radius:3px;font-size:11px;font-family:monospace;">Arrow keys</kbd> — navigate between radio options in a group</li>
+          <li>Focus ring uses <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">box-shadow</code> so it renders inside overflow:hidden containers</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="#6941c6" stroke-width="1.3"/><path d="M2 13c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="#6941c6" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Color &amp; Contrast
+        </h4>
+        <ul>
+          <li>Unchecked border (#bdbdc8 on white) meets WCAG AA 3:1 non-text contrast</li>
+          <li>Checked fill (#7f56d9) against white checkmark passes WCAG AA 4.5:1</li>
+          <li>Label text (#29294c) on white background: contrast ratio ≥ 7:1</li>
+          <li>Supporting text (#707087) on white: meets 4.5:1 for small text</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3v10" stroke="#6941c6" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Touch &amp; Target Size
+        </h4>
+        <ul>
+          <li>Minimum touch target is 44×44px (the wrapping <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;label&gt;</code> expands the hit area)</li>
+          <li>Include label text to maximize tappable area</li>
+          <li>Maintain at least 8px vertical gap between items in a group</li>
+          <li>Never rely on hover state alone — all state information is also available at touch level</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── CODE SNIPPETS ─────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Code</h2>
+    <p class="section-desc">Copy-paste ready HTML markup for the most common configurations.</p>
+
+    <!-- Checkbox HTML -->
+    <p style="font-size:13px;font-weight:600;color:var(--primary-700);margin-bottom:8px;">Checkbox (HTML)</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-comment">&lt;!-- Basic checkbox --&gt;</span>
+<span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"cb-wrap"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"checkbox"</span> <span class="token-attr">name</span>=<span class="token-str">"newsletter"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"cb-control is-checkbox size-md"</span> <span class="token-attr">aria-hidden</span>=<span class="token-str">"true"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;svg</span> <span class="token-attr">class</span>=<span class="token-str">"cb-check-svg"</span> <span class="token-attr">width</span>=<span class="token-str">"12"</span> <span class="token-attr">height</span>=<span class="token-str">"12"</span> <span class="token-attr">viewBox</span>=<span class="token-str">"0 0 12 12"</span> <span class="token-attr">fill</span>=<span class="token-str">"none"</span><span class="token-tag">&gt;</span>
+      <span class="token-tag">&lt;path</span> <span class="token-attr">d</span>=<span class="token-str">"M2 6l3 3 5-5"</span> <span class="token-attr">stroke</span>=<span class="token-str">"#fff"</span> <span class="token-attr">stroke-width</span>=<span class="token-str">"1.8"</span>
+            <span class="token-attr">stroke-linecap</span>=<span class="token-str">"round"</span> <span class="token-attr">stroke-linejoin</span>=<span class="token-str">"round"</span><span class="token-tag">/&gt;</span>
+    <span class="token-tag">&lt;/svg&gt;</span>
+  <span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"cb-label-wrap"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"cb-label"</span><span class="token-tag">&gt;</span>Subscribe to newsletter<span class="token-tag">&lt;/span&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"cb-supporting"</span><span class="token-tag">&gt;</span>You can unsubscribe at any time<span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/label&gt;</span>
+
+<span class="token-comment">&lt;!-- Disabled checkbox --&gt;</span>
+<span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"cb-wrap is-disabled"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"checkbox"</span> <span class="token-attr">disabled</span><span class="token-tag">&gt;</span>
+  ...
+<span class="token-tag">&lt;/label&gt;</span></pre>
+    </div>
+
+    <!-- Indeterminate JS -->
+    <p style="font-size:13px;font-weight:600;color:var(--primary-700);margin-bottom:8px;margin-top:20px;">Indeterminate state (JavaScript)</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-comment">// Set indeterminate state on the native input</span>
+<span class="token-tag">const</span> cb = document.querySelector(<span class="token-str">'#select-all'</span>);
+cb.indeterminate = <span class="token-str">true</span>;
+
+<span class="token-comment">// Sync visual control class</span>
+<span class="token-tag">function</span> updateParent(parentControl, children) {
+  <span class="token-tag">const</span> checked = [...children].filter(c =&gt; c.checked).length;
+  <span class="token-tag">const</span> total   = children.length;
+  <span class="token-tag">if</span> (checked === 0) {
+    parentControl.classList.remove(<span class="token-str">'is-checked'</span>, <span class="token-str">'is-indeterminate'</span>);
+  } <span class="token-tag">else if</span> (checked === total) {
+    parentControl.classList.add(<span class="token-str">'is-checked'</span>);
+    parentControl.classList.remove(<span class="token-str">'is-indeterminate'</span>);
+  } <span class="token-tag">else</span> {
+    parentControl.classList.add(<span class="token-str">'is-indeterminate'</span>);
+    parentControl.classList.remove(<span class="token-str">'is-checked'</span>);
+  }
+}</pre>
+    </div>
+
+    <!-- Radio group HTML -->
+    <p style="font-size:13px;font-weight:600;color:var(--primary-700);margin-bottom:8px;margin-top:20px;">Radio group (HTML + ARIA)</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-tag">&lt;fieldset</span> <span class="token-attr">style</span>=<span class="token-str">"border:none;padding:0"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;legend</span> <span class="token-attr">class</span>=<span class="token-str">"section-label"</span><span class="token-tag">&gt;</span>Subscription plan<span class="token-tag">&lt;/legend&gt;</span>
+
+  <span class="token-tag">&lt;label</span> <span class="token-attr">class</span>=<span class="token-str">"cb-wrap"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-str">"radio"</span> <span class="token-attr">name</span>=<span class="token-str">"plan"</span> <span class="token-attr">value</span>=<span class="token-str">"monthly"</span> <span class="token-attr">checked</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"cb-control is-radio size-md"</span> <span class="token-attr">aria-hidden</span>=<span class="token-str">"true"</span><span class="token-tag">&gt;</span>
+      <span class="token-tag">&lt;svg</span> <span class="token-attr">class</span>=<span class="token-str">"cb-radio-dot"</span> <span class="token-attr">width</span>=<span class="token-str">"8"</span> <span class="token-attr">height</span>=<span class="token-str">"8"</span>
+           <span class="token-attr">viewBox</span>=<span class="token-str">"0 0 8 8"</span> <span class="token-attr">fill</span>=<span class="token-str">"none"</span><span class="token-tag">&gt;</span>
+        <span class="token-tag">&lt;circle</span> <span class="token-attr">cx</span>=<span class="token-str">"4"</span> <span class="token-attr">cy</span>=<span class="token-str">"4"</span> <span class="token-attr">r</span>=<span class="token-str">"3"</span> <span class="token-attr">fill</span>=<span class="token-str">"#fff"</span><span class="token-tag">/&gt;</span>
+      <span class="token-tag">&lt;/svg&gt;</span>
+    <span class="token-tag">&lt;/span&gt;</span>
+    <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"cb-label-wrap"</span><span class="token-tag">&gt;</span>
+      <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"cb-label"</span><span class="token-tag">&gt;</span>Monthly billing<span class="token-tag">&lt;/span&gt;</span>
+      <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"cb-supporting"</span><span class="token-tag">&gt;</span>Billed every 30 days<span class="token-tag">&lt;/span&gt;</span>
+    <span class="token-tag">&lt;/span&gt;</span>
+  <span class="token-tag">&lt;/label&gt;</span>
+
+<span class="token-tag">&lt;/fieldset&gt;</span></pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── FOR DESIGNERS / DEVELOPERS ─────────── -->
+  <div class="section">
+    <h2 class="section-title">Implementation Notes</h2>
+
+    <div class="for-grid">
+      <div class="for-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" fill="#7f56d9"/><rect x="9" y="2" width="5" height="5" rx="1" fill="#b692f6"/><rect x="2" y="9" width="5" height="5" rx="1" fill="#d6bbfb"/><rect x="9" y="9" width="5" height="5" rx="1" fill="#f4ebff"/></svg>
+          For Designers
+        </h4>
+        <ul>
+          <li>Figma component node: <strong>745-29926</strong></li>
+          <li>Use the <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">Type</code> prop to switch between Checkbox and Radio</li>
+          <li>The <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">Indeterminate</code> prop only appears when Type = Checkbox</li>
+          <li>Supporting text is optional — detach and remove if not needed</li>
+          <li>Maintain 8px vertical gap between items in all groups</li>
+          <li>Never modify the control shape or color tokens directly — override via the design token layer</li>
+          <li>Use the auto-layout frame to build groups — avoid manual positioning</li>
+        </ul>
+      </div>
+      <div class="for-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="#7f56d9" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2l-2 12" stroke="#b692f6" stroke-width="1.4" stroke-linecap="round"/></svg>
+          For Developers
+        </h4>
+        <ul>
+          <li>Always use native <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;input&gt;</code> — hide visually, not from the accessibility tree</li>
+          <li>Set <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">input.indeterminate = true</code> in JS (not an HTML attribute)</li>
+          <li>Keep radio buttons grouped with the same <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">name</code> attribute</li>
+          <li>Wrap groups in <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;fieldset&gt;</code>/<code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">&lt;legend&gt;</code> for screen reader context</li>
+          <li>The <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">.is-checked</code> class on <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">.cb-control</code> drives the visual state — keep it in sync with the native input</li>
+          <li>Disabled state: add <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">.is-disabled</code> to the wrapper AND <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">disabled</code> to the native input</li>
+          <li>In React, use controlled components and call <code style="font-size:11px;background:var(--primary-100);color:var(--secondary-700);padding:1px 5px;border-radius:3px;font-family:monospace;">onChange</code> to update state</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── Interactive checkbox/radio toggle ──
+document.querySelectorAll('.cb-wrap.interactive').forEach(wrap => {
+  wrap.addEventListener('click', function(e) {
+    const control = this.querySelector('.cb-control');
+    const input   = this.querySelector('input');
+    if (!control || !input) return;
+
+    if (input.type === 'radio') {
+      // Radio: deselect all in group, select this one
+      const groupName = input.name;
+      if (groupName) {
+        document.querySelectorAll(`input[name="${groupName}"]`).forEach(inp => {
+          const parentWrap = inp.closest('.cb-wrap');
+          const parentCtrl = parentWrap ? parentWrap.querySelector('.cb-control') : null;
+          if (parentCtrl) {
+            parentCtrl.classList.remove('is-checked');
+            inp.checked = false;
+          }
+        });
+      }
+      control.classList.add('is-checked');
+      input.checked = true;
+
+    } else {
+      // Checkbox toggle
+      const isIndeterminate = this.classList.contains('indeterminate-demo');
+      if (control.classList.contains('is-indeterminate')) {
+        // indeterminate -> checked
+        control.classList.remove('is-indeterminate');
+        control.classList.add('is-checked');
+        input.checked = true;
+        input.indeterminate = false;
+      } else if (control.classList.contains('is-checked')) {
+        control.classList.remove('is-checked');
+        input.checked = false;
+      } else {
+        control.classList.add('is-checked');
+        input.checked = true;
+      }
+    }
+
+    e.preventDefault();
+    input.focus();
+  });
+});
+
+// ── Select-all / children sync ──
+function syncSelectAll() {
+  const parentControl = document.getElementById('select-all-control');
+  const childInputs   = document.querySelectorAll('.child-cb .child-input');
+  if (!parentControl) return;
+
+  const total   = childInputs.length;
+  const checked = [...childInputs].filter(i => i.checked).length;
+
+  parentControl.classList.remove('is-checked', 'is-indeterminate');
+  if (checked === 0) {
+    // nothing
+  } else if (checked === total) {
+    parentControl.classList.add('is-checked');
+  } else {
+    parentControl.classList.add('is-indeterminate');
+  }
+}
+
+// Child checkbox clicks
+document.querySelectorAll('.child-cb').forEach(wrap => {
+  wrap.addEventListener('click', function(e) {
+    const input   = this.querySelector('.child-input');
+    const control = this.querySelector('.cb-control');
+    if (!input || !control) return;
+
+    if (control.classList.contains('is-checked')) {
+      control.classList.remove('is-checked');
+      input.checked = false;
+    } else {
+      control.classList.add('is-checked');
+      input.checked = true;
+    }
+    syncSelectAll();
+    e.preventDefault();
+    input.focus();
+  });
+});
+
+// Parent "select all" click
+document.getElementById('select-all-parent')?.addEventListener('click', function(e) {
+  const parentControl = document.getElementById('select-all-control');
+  const childWraps    = document.querySelectorAll('.child-cb');
+
+  const shouldCheckAll = !parentControl.classList.contains('is-checked');
+
+  childWraps.forEach(wrap => {
+    const input   = wrap.querySelector('.child-input');
+    const control = wrap.querySelector('.cb-control');
+    if (input && control) {
+      if (shouldCheckAll) {
+        control.classList.add('is-checked');
+        input.checked = true;
+      } else {
+        control.classList.remove('is-checked');
+        input.checked = false;
+      }
+    }
+  });
+  syncSelectAll();
+  e.preventDefault();
+});
+
+// ── Copy button ──
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  const text = pre.innerText || pre.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

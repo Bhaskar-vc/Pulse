@@ -1,0 +1,127 @@
+<!-- Shadow rectangles -->
+<div class="shadow-rect shadow-rect-1"></div>
+<div class="shadow-rect shadow-rect-2"></div>
+
+<!-- Main white card -->
+<div class="main-card">
+
+  <!-- Header -->
+  <div class="card-header">
+    <h1>Create Surveys</h1>
+  </div>
+
+  <div class="card-body">
+
+    <!-- Option Cards -->
+    <div class="option-cards">
+
+      <!-- Start from scratch -->
+      <div class="option-card card-purple" (click)="goToGetStarted()">
+        <div class="option-card-title">Start from scratch</div>
+        <div class="option-icon-wrap purple">
+          <img src="icon-rocket.svg" alt="Start from scratch" width="64" height="64"/>
+        </div>
+        <p class="option-card-desc">Write your own questions and customize everything</p>
+        <button class="option-card-btn" (click)="$event.stopPropagation(); goToGetStarted()">Create Custom Survey</button>
+      </div>
+
+      <!-- Use ready-made templates -->
+      <div class="option-card card-green">
+        <div class="option-card-title">Use ready-made templates</div>
+        <div class="option-icon-wrap green">
+          <img src="icon-artboard.svg" alt="Use ready-made templates" width="64" height="64"/>
+        </div>
+        <p class="option-card-desc">Quick start with proven questions from HR experts</p>
+        <button class="option-card-btn">Browse Templates</button>
+      </div>
+
+      <!-- Automated surveys -->
+      <div class="option-card card-blue">
+        <div class="option-card-title">Automated surveys</div>
+        <div class="option-icon-wrap blue">
+          <img src="icon-ai-scheduling.svg" alt="Automated surveys" width="64" height="64"/>
+        </div>
+        <p class="option-card-desc">Perfect for onboarding and work anniversaries</p>
+        <button class="option-card-btn">Set Up Automation</button>
+      </div>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Recent Templates -->
+    <div class="recent-header">Your recent survey templates</div>
+    <div class="template-cards">
+
+      <!-- Onboarding -->
+      <div class="template-card">
+        <div class="template-card-title">Onboarding</div>
+        <div class="template-card-meta">
+          <span>44 questions</span>
+          <span class="dot"></span>
+          <span>12 mins</span>
+        </div>
+        <div class="template-card-img">
+          <img src="tpl-onboarding.png" alt="Onboarding"/>
+        </div>
+        <div class="template-card-actions">
+          <button class="template-btn-select">Select</button>
+          <button class="template-btn-preview">Preview</button>
+        </div>
+      </div>
+
+      <!-- Psychosocial Health -->
+      <div class="template-card">
+        <div class="template-card-title">Psychosocial Health</div>
+        <div class="template-card-meta">
+          <span>8 questions</span>
+          <span class="dot"></span>
+          <span>5 mins</span>
+        </div>
+        <div class="template-card-img">
+          <img src="tpl-psychosocial-health.png" alt="Psychosocial Health"/>
+        </div>
+        <div class="template-card-actions">
+          <button class="template-btn-select">Select</button>
+          <button class="template-btn-preview">Preview</button>
+        </div>
+      </div>
+
+      <!-- Back to office -->
+      <div class="template-card">
+        <div class="template-card-title">Back to office</div>
+        <div class="template-card-meta">
+          <span>4 questions</span>
+          <span class="dot"></span>
+          <span>2 mins</span>
+        </div>
+        <div class="template-card-img">
+          <img src="tpl-back-to-office.png" alt="Back to office"/>
+        </div>
+        <div class="template-card-actions">
+          <button class="template-btn-select">Select</button>
+          <button class="template-btn-preview">Preview</button>
+        </div>
+      </div>
+
+      <!-- 5 Years Work Anniversary -->
+      <div class="template-card">
+        <div class="template-card-title">5 Years Work Anniversary</div>
+        <div class="template-card-meta">
+          <span>12 questions</span>
+          <span class="dot"></span>
+          <span>3 mins</span>
+        </div>
+        <div class="template-card-img">
+          <img src="tpl-work-anniversary.png" alt="5 Years Work Anniversary"/>
+        </div>
+        <div class="template-card-actions">
+          <button class="template-btn-select">Select</button>
+          <button class="template-btn-preview">Preview</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
