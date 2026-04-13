@@ -290,7 +290,11 @@ app-top-nav { display: flex; align-items: center; flex: 1; min-width: 0; }
 
 /* MAIN AREA */
 .main-area { flex: 1; position: relative; display: flex; flex-direction: column; overflow: hidden; }
-.main-area > router-outlet + *, .main-area pulse-root { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+/* Ensure every routed component in the flex chain fills height */
+app-root { display: flex; flex-direction: column; flex: 1; height: 100%; }
+app-portal { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+pulse-root { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.main-area > router-outlet + * { display: flex; flex-direction: column; flex: 1; min-height: 0; }
 pulse-root > router-outlet + * { display: flex; flex-direction: column; flex: 1; min-height: 0; }
 .shadow-rect { position: absolute; pointer-events: none; border-radius: 30px 30px 0 0; right: 0; bottom: 0; }
 .shadow-rect-1 { background: white; opacity: 0.3; top: 59px; left: 0; z-index: 0; }
@@ -299,7 +303,7 @@ pulse-root > router-outlet + * { display: flex; flex-direction: column; flex: 1;
   box-shadow: 0px 12px 16px -4px rgba(16,24,40,0.08), 0px 4px 6px -2px rgba(16,24,40,0.03);
 }
 .main-card {
-  position: relative; flex: 1; background: white; border-radius: 30px 30px 0 0;
+  position: relative; flex: 1; min-height: 0; background: white; border-radius: 30px 30px 0 0;
   box-shadow: 0px 12px 16px -4px rgba(16,24,40,0.08), 0px 4px 6px -2px rgba(16,24,40,0.03);
   border: 2px solid white; display: flex; flex-direction: column;
   overflow: hidden; z-index: 2; margin-left: 19px;

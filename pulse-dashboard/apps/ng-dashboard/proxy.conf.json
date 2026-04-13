@@ -1,12 +1,12 @@
 {
   "/api": {
-    "target": "https://api.vantagecircle.co.in",
-    "secure": true,
+    "target": "http://localhost:9040",
+    "secure": false,
     "changeOrigin": true
   },
   "/pulse/api": {
-    "target": "https://api.vantagecircle.co.in",
-    "secure": true,
+    "target": "http://localhost:9040",
+    "secure": false,
     "changeOrigin": true
   }
 }
