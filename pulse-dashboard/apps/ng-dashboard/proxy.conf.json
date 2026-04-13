@@ -1,0 +1,12 @@
+{
+  "/api": {
+    "target": "https://api.vantagecircle.co.in",
+    "secure": true,
+    "changeOrigin": true
+  },
+  "/pulse/api": {
+    "target": "https://api.vantagecircle.co.in",
+    "secure": true,
+    "changeOrigin": true
+  }
+}

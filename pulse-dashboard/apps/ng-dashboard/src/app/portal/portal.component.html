@@ -1,0 +1,10 @@
+<header class="topnav">
+  <app-top-nav (sidebarToggle)="toggleNav()"></app-top-nav>
+</header>
+<div class="page-body" [class.nav-open]="navOpen">
+  <div id="ln-tooltip"></div>
+  <app-left-nav [navOpen]="navOpen" (sidebarToggle)="toggleNav()"></app-left-nav>
+  <div class="main-area">
+    <router-outlet></router-outlet>
+  </div>
+</div>
