@@ -833,6 +833,79 @@ body {
 }
 .chart-heading svg { width: 16px; height: 16px; color: #667085; }
 
+.time-segment-filter {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #fff;
+  border: 1px solid #e4e7ec;
+  border-radius: 10px;
+  padding: 3px;
+}
+.segment-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  color: #667085;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 8px;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.segment-btn:hover { color: #344054; background: #f9fafb; }
+.segment-btn.active {
+  background: #f2f4f7;
+  color: #101828;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(16,24,40,0.06);
+}
+.segment-btn svg { flex-shrink: 0; }
+
+/* Custom Calendar Dropdown */
+.custom-cal-wrapper { position: relative; }
+.cal-popover { position: absolute; top: calc(100% + 8px); left: 0; z-index: 1000; opacity: 0; pointer-events: none; transform: translateY(-6px); transition: opacity 0.15s, transform 0.15s; }
+.cal-popover.is-open { opacity: 1; pointer-events: all; transform: translateY(0); }
+.cal-wrap { background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; box-shadow: 0 12px 16px -4px rgba(16,24,40,.08), 0 4px 6px -2px rgba(16,24,40,.03); display: inline-flex; flex-direction: column; overflow: hidden; }
+.cal-wrap--range { flex-direction: row; }
+.cal-panel { display: flex; flex-direction: column; padding: 20px 24px; gap: 12px; }
+.cal-panel + .cal-panel { border-left: 1px solid #f2f4f7; }
+.cal-header { display: flex; align-items: center; justify-content: space-between; width: 280px; }
+.cal-nav { width: 36px; height: 36px; border-radius: 8px; border: none; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #667085; transition: background .1s; }
+.cal-nav:hover { background: #f4f4f6; }
+.cal-month-label { font-size: 14px; font-weight: 600; color: #29294c; text-align: center; letter-spacing: .02em; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 40px); gap: 0; }
+.cal-day-hd { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: #29294c; letter-spacing: .02em; }
+.cal-cell { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #29294c; font-weight: 400; cursor: pointer; position: relative; border-radius: 50%; transition: background .1s, color .1s; user-select: none; }
+.cal-cell:hover:not(.is-out) { background: #f4f4f6; }
+.cal-cell.is-out { color: #707087; cursor: default; }
+.cal-cell.is-out:hover { background: none; }
+.cal-cell.is-today::after { content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: #7f56d9; }
+.cal-cell.is-range-start { background: #7f56d9; color: #fff; font-weight: 500; border-radius: 50% 0 0 50%; }
+.cal-cell.is-range-end { background: #7f56d9; color: #fff; font-weight: 500; border-radius: 0 50% 50% 0; }
+.cal-cell.is-range-start.is-range-end { border-radius: 50%; }
+.cal-cell.is-in-range { background: #f9f5ff; color: #6941c6; font-weight: 500; border-radius: 0; }
+.cal-cell.is-range-start::before, .cal-cell.is-range-end::before { content: ''; position: absolute; top: 0; bottom: 0; width: 50%; background: #f9f5ff; z-index: -1; }
+.cal-cell.is-range-start::before { right: 0; left: auto; }
+.cal-cell.is-range-end::before { left: 0; right: auto; }
+.cal-cell.is-range-start.is-range-end::before { display: none; }
+.cal-footer { border-top: 1px solid #f2f4f7; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border-radius: 0 0 12px 12px; }
+.cal-date-inputs { display: flex; align-items: center; gap: 10px; }
+.cal-date-input { width: 128px; height: 36px; border: 1px solid #d0d5dd; border-radius: 8px; padding: 0 12px; font-family: 'Inter', sans-serif; font-size: 14px; color: #101828; outline: none; transition: border-color .15s; }
+.cal-date-input:focus { border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12); }
+.cal-date-sep { color: #667085; font-size: 15px; }
+.cal-actions { display: flex; gap: 10px; }
+.cal-btn { height: 36px; padding: 0 20px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .15s, color .15s; white-space: nowrap; }
+.cal-btn-cancel { background: #fff; border: 1px solid #d0d5dd; color: #29294c; }
+.cal-btn-cancel:hover { background: #f9fafb; }
+.cal-btn-apply { background: #29294c; border: 1px solid #29294c; color: #fff; }
+.cal-btn-apply:hover { background: #1e1e38; }
+
 .btn-view-more {
   display: flex;
   align-items: center;
@@ -2540,6 +2613,17 @@ body {
               Engagement Over Time
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="5.5" x2="8" y2="8"/><circle cx="8" cy="10.5" r="0.6" fill="currentColor" stroke="none"/></svg>
             </div>
+            <div class="time-segment-filter">
+              <span class="segment-cal-icon">
+                <svg viewBox="0 0 16 16" fill="none" stroke="#667085" stroke-width="1.4" width="15" height="15"><rect x="2" y="3" width="12" height="11" rx="1.5"/><line x1="2" y1="6.5" x2="14" y2="6.5"/><line x1="5.5" y1="1.5" x2="5.5" y2="4.5"/><line x1="10.5" y1="1.5" x2="10.5" y2="4.5"/></svg>
+              </span>
+              <button class="segment-btn" onclick="setTimeSegment(this, '7d')">7 days</button>
+              <button class="segment-btn" onclick="setTimeSegment(this, '15d')">15d</button>
+              <button class="segment-btn" onclick="setTimeSegment(this, '30d')">30d</button>
+              <button class="segment-btn" onclick="setTimeSegment(this, '3m')">3m</button>
+              <button class="segment-btn" onclick="setTimeSegment(this, '6m')">6m</button>
+              <button class="segment-btn active" onclick="setTimeSegment(this, '12m')">12m</button>
+            </div>
             <button class="btn-view-more">
               View more
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg>
@@ -3581,14 +3665,25 @@ function makeGrad(ctx, c1, c2) {
   return g;
 }
 
-new Chart(lineCtx, {
+const timeSegmentData = {
+  'custom': { labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'], engagement: [30, 33, 35, 38, 36, 40, 42, 44], enps: [45, 50, 52, 58, 55, 60, 62, 65], participants: [55, 58, 60, 62, 64, 66, 68, 70] },
+  '24h':    { labels: ['12 AM', '4 AM', '8 AM', '12 PM', '4 PM', '8 PM'], engagement: [40, 38, 42, 45, 43, 41], enps: [58, 56, 62, 64, 60, 59], participants: [70, 65, 72, 76, 74, 71] },
+  '7d':     { labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], engagement: [32, 36, 34, 44, 38, 42, 40], enps: [48, 55, 75, 65, 60, 60, 58], participants: [58, 62, 54, 70, 66, 74, 68] },
+  '15d':    { labels: ['Day 1', 'Day 3', 'Day 5', 'Day 7', 'Day 9', 'Day 11', 'Day 13', 'Day 15'], engagement: [30, 34, 32, 38, 36, 42, 40, 44], enps: [50, 54, 58, 62, 56, 64, 60, 68], participants: [56, 60, 58, 66, 62, 70, 68, 72] },
+  '30d':    { labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], engagement: [34, 38, 42, 46], enps: [52, 58, 64, 68], participants: [60, 66, 70, 76] },
+  '3m':     { labels: ['Jan 24', 'Feb 24', 'Mar 24'], engagement: [32, 36, 34], enps: [48, 55, 75], participants: [58, 62, 54] },
+  '6m':     { labels: ['Jan 24', 'Feb 24', 'Mar 24', 'Apr 24', 'May 24', 'Jun 24'], engagement: [32, 36, 34, 44, 38, 42], enps: [48, 55, 75, 65, 60, 60], participants: [58, 62, 54, 70, 66, 74] },
+  '12m':    { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], engagement: [30, 32, 36, 34, 44, 38, 42, 40, 46, 48, 50, 52], enps: [45, 48, 55, 75, 65, 60, 60, 58, 62, 68, 70, 72], participants: [55, 58, 62, 54, 70, 66, 74, 68, 72, 76, 78, 80] },
+};
+
+const engagementChart = new Chart(lineCtx, {
   type: 'line',
   data: {
-    labels: ['Jan 24', 'Feb 24', 'Mar 24', 'Apr 24', 'May 24', 'Jun 24'],
+    labels: timeSegmentData['12m'].labels,
     datasets: [
       {
         label: 'Engagement',
-        data: [32, 36, 34, 44, 38, 42],
+        data: timeSegmentData['12m'].engagement,
         borderColor: '#5b9bd5',
         backgroundColor: makeGrad(lineCtx, 'rgba(91,155,213,0.18)', 'rgba(91,155,213,0)'),
         borderWidth: 2.5,
@@ -3601,7 +3696,7 @@ new Chart(lineCtx, {
       },
       {
         label: 'eNPS',
-        data: [48, 55, 75, 65, 60, 60],
+        data: timeSegmentData['12m'].enps,
         borderColor: '#9b72cf',
         backgroundColor: makeGrad(lineCtx, 'rgba(155,114,207,0.15)', 'rgba(155,114,207,0)'),
         borderWidth: 2.5,
@@ -3614,7 +3709,7 @@ new Chart(lineCtx, {
       },
       {
         label: 'Participants',
-        data: [58, 62, 54, 70, 66, 74],
+        data: timeSegmentData['12m'].participants,
         borderColor: '#1f2937',
         backgroundColor: 'transparent',
         borderWidth: 2,
@@ -3675,6 +3770,139 @@ new Chart(lineCtx, {
     },
     interaction: { mode: 'index', intersect: false },
     animation: { duration: 1300, easing: 'easeInOutQuart', delay: 1700 }
+  }
+});
+
+function setTimeSegment(btn, segment) {
+  document.querySelectorAll('.time-segment-filter .segment-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const data = timeSegmentData[segment];
+  if (data && engagementChart) {
+    engagementChart.data.labels = data.labels;
+    engagementChart.data.datasets[0].data = data.engagement;
+    engagementChart.data.datasets[1].data = data.enps;
+    engagementChart.data.datasets[2].data = data.participants;
+    engagementChart.update();
+  }
+}
+
+// ── Custom Calendar Date Range Picker ──
+const CAL_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const CAL_DAYS = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+let ccYear = new Date().getFullYear(), ccMonth = new Date().getMonth();
+let ccStart = null, ccEnd = null;
+
+function ccDateKey(d) { return d ? `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}` : null; }
+function ccFmtDate(d) { return d ? `${CAL_MONTHS[d.getMonth()].slice(0,3)} ${d.getDate()}, ${d.getFullYear()}` : ''; }
+
+function ccBuildGrid(year, month) {
+  const todayD = new Date(); todayD.setHours(0,0,0,0);
+  const todayKey = ccDateKey(todayD);
+  const startKey = ccDateKey(ccStart);
+  const endKey = ccDateKey(ccEnd);
+  const first = new Date(year, month, 1);
+  let startDow = first.getDay(); startDow = startDow === 0 ? 6 : startDow - 1;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrev = new Date(year, month, 0).getDate();
+  let html = '';
+  CAL_DAYS.forEach(d => { html += `<div class="cal-day-hd">${d}</div>`; });
+  for (let i = startDow - 1; i >= 0; i--) {
+    html += ccBuildCell(new Date(year, month - 1, daysInPrev - i), true, todayKey, startKey, endKey);
+  }
+  for (let day = 1; day <= daysInMonth; day++) {
+    html += ccBuildCell(new Date(year, month, day), false, todayKey, startKey, endKey);
+  }
+  const total = startDow + daysInMonth;
+  const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (let day = 1; day <= remaining; day++) {
+    html += ccBuildCell(new Date(year, month + 1, day), true, todayKey, startKey, endKey);
+  }
+  return html;
+}
+
+function ccBuildCell(dt, isOut, todayKey, startKey, endKey) {
+  const key = ccDateKey(dt);
+  const cls = ['cal-cell'];
+  if (isOut) cls.push('is-out');
+  if (key === todayKey) cls.push('is-today');
+  if (startKey && endKey) {
+    if (key === startKey && key === endKey) cls.push('is-range-start','is-range-end');
+    else if (key === startKey) cls.push('is-range-start');
+    else if (key === endKey) cls.push('is-range-end');
+    else if (ccStart && ccEnd && dt > ccStart && dt < ccEnd) cls.push('is-in-range');
+  } else if (startKey && !endKey) {
+    if (key === startKey) cls.push('is-range-start','is-range-end');
+  }
+  const click = !isOut ? ` onclick="ccPickDate(new Date(${dt.getFullYear()},${dt.getMonth()},${dt.getDate()}))"` : '';
+  return `<div class="${cls.join(' ')}"${click}>${dt.getDate()}</div>`;
+}
+
+function renderCustomCal() {
+  const rM = ccMonth === 11 ? 0 : ccMonth + 1;
+  const rY = ccMonth === 11 ? ccYear + 1 : ccYear;
+  document.getElementById('customCalLabelL').textContent = `${CAL_MONTHS[ccMonth]} ${ccYear}`;
+  document.getElementById('customCalLabelR').textContent = `${CAL_MONTHS[rM]} ${rY}`;
+  document.getElementById('customCalGridL').innerHTML = ccBuildGrid(ccYear, ccMonth);
+  document.getElementById('customCalGridR').innerHTML = ccBuildGrid(rY, rM);
+  document.getElementById('customCalStart').value = ccFmtDate(ccStart);
+  document.getElementById('customCalEnd').value = ccFmtDate(ccEnd);
+}
+
+function toggleCustomCal(e) {
+  e.stopPropagation();
+  const pop = document.getElementById('customCalPopover');
+  const isOpen = pop.classList.toggle('is-open');
+  if (isOpen) renderCustomCal();
+}
+
+function customCalNav(dir) {
+  ccMonth += dir;
+  if (ccMonth > 11) { ccMonth = 0; ccYear++; }
+  if (ccMonth < 0) { ccMonth = 11; ccYear--; }
+  renderCustomCal();
+}
+
+function ccPickDate(dt) {
+  if (!ccStart || (ccStart && ccEnd)) { ccStart = dt; ccEnd = null; }
+  else { if (dt < ccStart) { ccEnd = ccStart; ccStart = dt; } else { ccEnd = dt; } }
+  renderCustomCal();
+}
+
+function customCalCancel() {
+  ccStart = null; ccEnd = null;
+  document.getElementById('customCalPopover').classList.remove('is-open');
+}
+
+function customCalApply() {
+  if (ccStart && ccEnd) {
+    document.getElementById('customLabel').textContent = `${ccFmtDate(ccStart)} – ${ccFmtDate(ccEnd)}`;
+    document.querySelectorAll('.time-segment-filter .segment-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('customSegBtn').classList.add('active');
+    const diffDays = Math.round((ccEnd - ccStart) / 86400000);
+    const labels = [], engagement = [], enps = [], participants = [];
+    const steps = Math.min(diffDays, 12);
+    const interval = Math.max(1, Math.floor(diffDays / steps));
+    for (let i = 0; i <= diffDays; i += interval) {
+      const d = new Date(ccStart.getTime() + i * 86400000);
+      labels.push(`${CAL_MONTHS[d.getMonth()].slice(0,3)} ${d.getDate()}`);
+      engagement.push(Math.round(30 + Math.random() * 25));
+      enps.push(Math.round(40 + Math.random() * 30));
+      participants.push(Math.round(50 + Math.random() * 30));
+    }
+    timeSegmentData['custom'] = { labels, engagement, enps, participants };
+    engagementChart.data.labels = labels;
+    engagementChart.data.datasets[0].data = engagement;
+    engagementChart.data.datasets[1].data = enps;
+    engagementChart.data.datasets[2].data = participants;
+    engagementChart.update();
+    document.getElementById('customCalPopover').classList.remove('is-open');
+  }
+}
+
+document.addEventListener('click', function(e) {
+  const pop = document.getElementById('customCalPopover');
+  if (pop && pop.classList.contains('is-open') && !e.target.closest('.custom-cal-wrapper')) {
+    pop.classList.remove('is-open');
   }
 });
 </script>

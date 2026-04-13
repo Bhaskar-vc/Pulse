@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, AfterViewInit, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, AfterViewInit, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -11,23 +11,20 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class LeftNavComponent implements AfterViewInit, OnChanges {
   @Input() navOpen = false;
+  @Output() sidebarToggle = new EventEmitter<void>();
 
   insightsOpen = false;
   surveysOpen = false;
   settingsOpen = false;
-  productSwitchOpen = false;
 
   constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {}
 
+  onCollapseClick() {
+    this.sidebarToggle.emit();
+  }
+
   ngAfterViewInit() {
     this.initTooltip();
-    document.addEventListener('mousedown', (e: MouseEvent) => {
-      const wrap = this.el.nativeElement.querySelector('.ln-product-wrap');
-      if (wrap && !wrap.contains(e.target as Node) && this.productSwitchOpen) {
-        this.productSwitchOpen = false;
-        this.cdr.detectChanges();
-      }
-    });
   }
 
   ngOnChanges() {
@@ -36,11 +33,6 @@ export class LeftNavComponent implements AfterViewInit, OnChanges {
       this.surveysOpen = false;
       this.settingsOpen = false;
     }
-  }
-
-  toggleProductSwitch() {
-    this.productSwitchOpen = !this.productSwitchOpen;
-    this.cdr.detectChanges();
   }
 
   toggleNavItem(item: 'insights' | 'surveys' | 'settings') {
@@ -80,7 +72,17 @@ export class LeftNavComponent implements AfterViewInit, OnChanges {
           const link = document.createElement('a');
           link.className = 'tip-item';
           link.textContent = (a as HTMLElement).textContent;
-          link.href = 'javascript:void(0)';
+          const origHref = (a as HTMLAnchorElement).getAttribute('href');
+          link.href = origHref || 'javascript:void(0)';
+          // Handle Angular routerLink clicks
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const anchor = a as HTMLAnchorElement;
+            if (anchor.href && anchor.href !== '#' && !anchor.href.endsWith('void(0)')) {
+              anchor.click();
+            }
+            tip.classList.remove('visible');
+          });
           tip.appendChild(link);
         });
       } else {

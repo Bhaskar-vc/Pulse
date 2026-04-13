@@ -26,7 +26,142 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
   private engChart: Chart | null = null;
   private engChartExpanded: Chart | null = null;
   activeSeg: 'top' | 'needs' = 'top';
+  activeTimeSegment: string = '12m';
   surveyDropdownOpen = false;
+
+  // Calendar state
+  calendarOpen = false;
+  calYear = new Date().getFullYear();
+  calMonth = new Date().getMonth();
+  calRangeStart: Date | null = null;
+  calRangeEnd: Date | null = null;
+  calCustomLabel = 'Custom';
+
+  private readonly MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  private readonly DAYS = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+
+  get calMonthLabel(): string { return `${this.MONTHS[this.calMonth]} ${this.calYear}`; }
+  get calRightMonth(): number { return this.calMonth === 11 ? 0 : this.calMonth + 1; }
+  get calRightYear(): number { return this.calMonth === 11 ? this.calYear + 1 : this.calYear; }
+  get calRightMonthLabel(): string { return `${this.MONTHS[this.calRightMonth]} ${this.calRightYear}`; }
+  get calStartDisplay(): string { return this.calRangeStart ? this.fmtDate(this.calRangeStart) : ''; }
+  get calEndDisplay(): string { return this.calRangeEnd ? this.fmtDate(this.calRangeEnd) : ''; }
+
+  get leftCalGrid(): { day: number; date: Date; isOut: boolean; isToday: boolean; isStart: boolean; isEnd: boolean; isInRange: boolean }[] {
+    return this.buildCalGrid(this.calYear, this.calMonth);
+  }
+  get rightCalGrid(): { day: number; date: Date; isOut: boolean; isToday: boolean; isStart: boolean; isEnd: boolean; isInRange: boolean }[] {
+    return this.buildCalGrid(this.calRightYear, this.calRightMonth);
+  }
+  get dayHeaders(): string[] { return this.DAYS; }
+
+  private buildCalGrid(year: number, month: number) {
+    const todayD = new Date(); todayD.setHours(0,0,0,0);
+    const first = new Date(year, month, 1);
+    let startDow = first.getDay(); startDow = startDow === 0 ? 6 : startDow - 1;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysInPrev = new Date(year, month, 0).getDate();
+    const cells: any[] = [];
+    for (let i = startDow - 1; i >= 0; i--) {
+      const d = new Date(year, month - 1, daysInPrev - i); cells.push(this.makeCell(d, true, todayD));
+    }
+    for (let day = 1; day <= daysInMonth; day++) {
+      const d = new Date(year, month, day); cells.push(this.makeCell(d, false, todayD));
+    }
+    const total = startDow + daysInMonth;
+    const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+    for (let day = 1; day <= remaining; day++) {
+      const d = new Date(year, month + 1, day); cells.push(this.makeCell(d, true, todayD));
+    }
+    return cells;
+  }
+
+  private makeCell(date: Date, isOut: boolean, todayD: Date) {
+    const dk = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    const key = dk(date);
+    const startKey = this.calRangeStart ? dk(this.calRangeStart) : null;
+    const endKey = this.calRangeEnd ? dk(this.calRangeEnd) : null;
+    return {
+      day: date.getDate(), date, isOut,
+      isToday: key === dk(todayD),
+      isStart: key === startKey,
+      isEnd: key === endKey,
+      isInRange: !!(this.calRangeStart && this.calRangeEnd && date > this.calRangeStart && date < this.calRangeEnd),
+    };
+  }
+
+  private fmtDate(d: Date): string {
+    return `${this.MONTHS[d.getMonth()].slice(0,3)} ${d.getDate()}, ${d.getFullYear()}`;
+  }
+
+  toggleCalendar() { this.calendarOpen = !this.calendarOpen; }
+  calNav(dir: number) {
+    this.calMonth += dir;
+    if (this.calMonth > 11) { this.calMonth = 0; this.calYear++; }
+    if (this.calMonth < 0) { this.calMonth = 11; this.calYear--; }
+  }
+  pickCalDate(cell: any) {
+    if (cell.isOut) return;
+    if (!this.calRangeStart || (this.calRangeStart && this.calRangeEnd)) {
+      this.calRangeStart = cell.date; this.calRangeEnd = null;
+    } else {
+      if (cell.date < this.calRangeStart) { this.calRangeEnd = this.calRangeStart; this.calRangeStart = cell.date; }
+      else { this.calRangeEnd = cell.date; }
+    }
+  }
+  calCancel() { this.calRangeStart = null; this.calRangeEnd = null; this.calendarOpen = false; }
+  calApply() {
+    if (this.calRangeStart && this.calRangeEnd) {
+      this.calCustomLabel = `${this.fmtDate(this.calRangeStart)} – ${this.fmtDate(this.calRangeEnd)}`;
+      this.activeTimeSegment = 'custom';
+      const diffDays = Math.round((this.calRangeEnd.getTime() - this.calRangeStart.getTime()) / (1000 * 60 * 60 * 24));
+      const labels: string[] = [];
+      const engagement: number[] = [], enps: number[] = [], participants: number[] = [];
+      const steps = Math.min(diffDays, 12);
+      const interval = Math.max(1, Math.floor(diffDays / steps));
+      for (let i = 0; i <= diffDays; i += interval) {
+        const d = new Date(this.calRangeStart.getTime() + i * 86400000);
+        labels.push(`${this.MONTHS[d.getMonth()].slice(0,3)} ${d.getDate()}`);
+        engagement.push(Math.round(30 + Math.random() * 25));
+        enps.push(Math.round(40 + Math.random() * 30));
+        participants.push(Math.round(50 + Math.random() * 30));
+      }
+      this.timeSegmentData['custom'] = { labels, engagement, enps, participants };
+      this.onTimeSegmentChange('custom');
+      this.calendarOpen = false;
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocClick(e: Event) {
+    const target = e.target as HTMLElement;
+    if (this.calendarOpen && !target.closest('.custom-cal-wrapper')) {
+      this.calendarOpen = false;
+    }
+  }
+
+  private timeSegmentData: Record<string, { labels: string[]; engagement: number[]; enps: number[]; participants: number[] }> = {
+    'custom': { labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'], engagement: [30, 33, 35, 38, 36, 40, 42, 44], enps: [45, 50, 52, 58, 55, 60, 62, 65], participants: [55, 58, 60, 62, 64, 66, 68, 70] },
+    '24h':    { labels: ['12 AM', '4 AM', '8 AM', '12 PM', '4 PM', '8 PM'], engagement: [40, 38, 42, 45, 43, 41], enps: [58, 56, 62, 64, 60, 59], participants: [70, 65, 72, 76, 74, 71] },
+    '7d':     { labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], engagement: [32, 36, 34, 44, 38, 42, 40], enps: [48, 55, 75, 65, 60, 60, 58], participants: [58, 62, 54, 70, 66, 74, 68] },
+    '15d':    { labels: ['Day 1', 'Day 3', 'Day 5', 'Day 7', 'Day 9', 'Day 11', 'Day 13', 'Day 15'], engagement: [30, 34, 32, 38, 36, 42, 40, 44], enps: [50, 54, 58, 62, 56, 64, 60, 68], participants: [56, 60, 58, 66, 62, 70, 68, 72] },
+    '30d':    { labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], engagement: [34, 38, 42, 46], enps: [52, 58, 64, 68], participants: [60, 66, 70, 76] },
+    '3m':     { labels: ['Jan 24', 'Feb 24', 'Mar 24'], engagement: [32, 36, 34], enps: [48, 55, 75], participants: [58, 62, 54] },
+    '6m':     { labels: ['Jan 24', 'Feb 24', 'Mar 24', 'Apr 24', 'May 24', 'Jun 24'], engagement: [32, 36, 34, 44, 38, 42], enps: [48, 55, 75, 65, 60, 60], participants: [58, 62, 54, 70, 66, 74] },
+    '12m':    { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], engagement: [30, 32, 36, 34, 44, 38, 42, 40, 46, 48, 50, 52], enps: [45, 48, 55, 75, 65, 60, 60, 58, 62, 68, 70, 72], participants: [55, 58, 62, 54, 70, 66, 74, 68, 72, 76, 78, 80] },
+  };
+
+  onTimeSegmentChange(segment: string) {
+    this.activeTimeSegment = segment;
+    const data = this.timeSegmentData[segment];
+    if (this.chart && data) {
+      this.chart.data.labels = data.labels;
+      this.chart.data.datasets[0].data = data.engagement;
+      this.chart.data.datasets[1].data = data.enps;
+      this.chart.data.datasets[2].data = data.participants;
+      this.chart.update();
+    }
+  }
 
   surveyOptions = [
     {
@@ -235,15 +370,15 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
       }
     };
 
-    // Needs Attention: Work-Life Balance 85, Leadership 65, Communication 52
-    // Top Performers:  Cybersecurity 85,   Leadership 65, Communication 52
+    // Needs Attention: Work-Life Balance 48, Leadership 42, Communication 35
+    // Top Performers:  Cybersecurity 92,   Innovation 87, Team Collab 81
     this.engChart = new Chart(ctx, {
       type: 'line',
       plugins: [bgBandsPlugin],
       data: {
-        labels: ['W-L Balance', 'Leadership', 'Comm.', 'Cybersec.', 'Leadership', 'Comm.'],
+        labels: ['W-L Balance', 'Leadership', 'Comm.', 'Cybersec.', 'Innovation', 'Team Collab.'],
         datasets: [{
-          data: [85, 65, 52, 85, 65, 52],
+          data: [48, 42, 35, 92, 87, 81],
           borderWidth: 2, tension: 0.38,
           pointRadius: 3.5, pointHoverRadius: 5, pointBorderWidth: 1.5,
           fill: false,
@@ -266,7 +401,7 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
             grid: { display: false }, border: { display: false },
             ticks: { font: { family: 'Inter', size: 8 }, color: '#9ca3af', maxRotation: 0 }
           },
-          y: { display: false, min: 40, max: 95 }
+          y: { display: false, min: 25, max: 100 }
         },
         layout: { padding: { left: 2, right: 2, top: 4, bottom: 0 } }
       }
@@ -349,14 +484,15 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
       return g;
     };
 
+    const defaultData = this.timeSegmentData[this.activeTimeSegment];
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['Jan 24', 'Feb 24', 'Mar 24', 'Apr 24', 'May 24', 'Jun 24'],
+        labels: defaultData.labels,
         datasets: [
           {
             label: 'Engagement',
-            data: [32, 36, 34, 44, 38, 42],
+            data: defaultData.engagement,
             borderColor: '#5b9bd5',
             backgroundColor: makeGrad('rgba(91,155,213,0.18)', 'rgba(91,155,213,0)'),
             borderWidth: 2.5, tension: 0.45, fill: true,
@@ -364,7 +500,7 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
           },
           {
             label: 'eNPS',
-            data: [48, 55, 75, 65, 60, 60],
+            data: defaultData.enps,
             borderColor: '#9b72cf',
             backgroundColor: makeGrad('rgba(155,114,207,0.15)', 'rgba(155,114,207,0)'),
             borderWidth: 2.5, tension: 0.45, fill: true,
@@ -372,7 +508,7 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
           },
           {
             label: 'Participants',
-            data: [58, 62, 54, 70, 66, 74],
+            data: defaultData.participants,
             borderColor: '#1f2937', backgroundColor: 'transparent',
             borderWidth: 2, tension: 0.45, fill: false,
             pointBackgroundColor: '#1f2937', pointRadius: 3.5, pointHoverRadius: 5.5, pointBorderWidth: 0,

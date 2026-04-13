@@ -73,20 +73,20 @@ export class ExpandableCardComponent implements OnDestroy {
     host.innerHTML = `
       <div class="ec-overlay">
         <div class="ec-expanded">
+          <div class="ec-top-header">
+            <div>
+              <p class="ec-description">${this.description}</p>
+              <h3 class="ec-title">${this.title}</h3>
+            </div>
+            <button class="ec-close-btn" aria-label="Close card">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18" /><path d="M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
           ${imageHtml}
           <div class="ec-body">
-            <div class="ec-header">
-              <div>
-                <p class="ec-description">${this.description}</p>
-                <h3 class="ec-title">${this.title}</h3>
-              </div>
-              <button class="ec-close-btn" aria-label="Close card">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M18 6L6 18" /><path d="M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
             <div class="ec-content"></div>
           </div>
         </div>
