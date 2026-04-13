@@ -329,6 +329,14 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.searchSubject$.next(v);
   }
 
+  get filteredReports(): RecentReport[] {
+    const q = this.reportSearch.toLowerCase();
+    return (q
+      ? this.recentReports.filter(r => r.title.toLowerCase().includes(q) || r.survey.toLowerCase().includes(q))
+      : this.recentReports
+    ).slice(0, this.visibleCount);
+  }
+
   get groupedReports(): { label: string; reports: RecentReport[] }[] {
     const today = '2026-04-07';
     const yesterday = '2026-04-06';
