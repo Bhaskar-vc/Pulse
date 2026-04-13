@@ -337,6 +337,16 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
     ).slice(0, this.visibleCount);
   }
 
+  get groupedByDate(): { label: string; reports: RecentReport[] }[] {
+    const groups: { [key: string]: RecentReport[] } = {};
+    for (const r of this.filteredReports) {
+      const label = r.endDate || 'Other';
+      if (!groups[label]) groups[label] = [];
+      groups[label].push(r);
+    }
+    return Object.keys(groups).map(label => ({ label, reports: groups[label] }));
+  }
+
   get groupedReports(): { label: string; reports: RecentReport[] }[] {
     const today = '2026-04-07';
     const yesterday = '2026-04-06';
