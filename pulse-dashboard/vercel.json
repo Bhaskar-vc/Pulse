@@ -1,0 +1,16 @@
+{
+  "buildCommand": "npx nx build ng-dashboard --configuration=production",
+  "outputDirectory": "dist/apps/ng-dashboard/browser",
+  "installCommand": "npm install --legacy-peer-deps",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/survey/getSurveysForReport", "destination": "/api/survey/getSurveysForReport" },
+    { "source": "/api/survey/searchSurveysForReport", "destination": "/api/survey/searchSurveysForReport" },
+    { "source": "/api/survey/getFiltersForSurveyReport", "destination": "/api/survey/getFiltersForSurveyReport" },
+    { "source": "/pulse/api/v1/survey/getProcessedSentiments", "destination": "/api/pulse/api/v1/survey/getProcessedSentiments" },
+    { "source": "/pulse/api/v1/survey/getOverallSentimentBySurveyId", "destination": "/api/pulse/api/v1/survey/getOverallSentimentBySurveyId" },
+    { "source": "/pulse/api/v1/survey/getFeedbackCount", "destination": "/api/pulse/api/v1/survey/getFeedbackCount" },
+    { "source": "/pulse/api/v2/survey/getSurveyComments", "destination": "/api/pulse/api/v2/survey/getSurveyComments" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}
