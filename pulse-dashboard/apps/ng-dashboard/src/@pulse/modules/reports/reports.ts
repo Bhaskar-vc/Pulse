@@ -340,23 +340,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
     const groups: { [key: string]: RecentReport[] } = {};
 
     for (const r of filtered) {
-      let label: string;
-      if (!r.generatedAt) {
-        label = 'Survey Reports';
-      } else {
-        // generatedAt can be "YYYY-MM-DD HH:mm" or "DD Mon YYYY" format
-        const dateStr = r.generatedAt.split(' ')[0];
-        if (dateStr === today) { label = 'Today'; }
-        else if (dateStr === yesterday) { label = 'Yesterday'; }
-        else if (dateStr.includes('-') && dateStr.length === 10) {
-          const [y, m, d] = dateStr.split('-');
-          const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-          label = `${parseInt(d)} ${months[parseInt(m) - 1]} ${y}`;
-        } else {
-          // Already in readable format like "30 Jun 2026" or use as-is
-          label = 'Survey Reports';
-        }
-      }
+      // Group by endDate for a clean date separation
+      const label = r.endDate || r.generatedAt || 'Survey Reports';
       if (!groups[label]) groups[label] = [];
       groups[label].push(r);
     }
