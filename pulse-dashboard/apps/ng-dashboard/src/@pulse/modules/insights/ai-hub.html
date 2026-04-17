@@ -5,6 +5,11 @@
 <div class="main-card">
   <div class="aihub-wrap" [class.chat-mode]="chatMode" id="aihubWrap">
 
+    <!-- Close button (chat mode) -->
+    <button class="aihub-close-btn" *ngIf="chatMode" (click)="exitChatMode()" title="Close chat">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" stroke-linecap="round"><line x1="5" y1="5" x2="15" y2="15"/><line x1="15" y1="5" x2="5" y2="15"/></svg>
+    </button>
+
     <!-- Top: headline + bot -->
     <div class="aihub-top">
       <div class="aihub-headline">
@@ -47,66 +52,7 @@
       </div>
     </div>
 
-    <!-- Feature cards -->
-    <div class="aihub-cards">
-      <div class="aihub-card" (click)="cardClick('Show me the engagement score and trends from our pulse survey')">
-        <svg class="aihub-card-icon-svg" viewBox="0 0 48 48" fill="none">
-          <rect x="4" y="32" width="40" height="8" rx="4" fill="#f59e0b" opacity="0.3"/>
-          <rect x="6" y="22" width="36" height="12" rx="4" fill="#f59e0b" opacity="0.6"/>
-          <rect x="8" y="12" width="32" height="14" rx="4" fill="#f59e0b"/>
-          <path d="M16 19l4 6 4-10 4 6 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <p class="aihub-card-text">Analyse pulse responses, uncover sentiment trends, and understand what truly drives your team.</p>
-        <span class="aihub-card-tag">Fast Insights</span>
-      </div>
-      <div class="aihub-card aihub-card-mid" (click)="cardClick('What are the top sentiment trends from our pulse survey?')">
-        <svg class="aihub-card-icon-svg" viewBox="0 0 48 48" fill="none">
-          <circle cx="16" cy="16" r="6" fill="#e11d9a" opacity="0.9"/>
-          <circle cx="32" cy="16" r="6" fill="#36c5f0" opacity="0.9"/>
-          <circle cx="16" cy="32" r="6" fill="#2eb67d" opacity="0.9"/>
-          <circle cx="32" cy="32" r="6" fill="#ecb22e" opacity="0.9"/>
-          <path d="M20 16h8M16 20v8M32 20v8M20 32h8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-        <p class="aihub-card-text">Share AI-generated summaries with your team, align on findings, and collaborate on what matters most to employees.</p>
-        <span class="aihub-card-tag">Collaborate with Team</span>
-      </div>
-      <div class="aihub-card" (click)="cardClick('Help me build an action plan from pulse survey results')">
-        <svg class="aihub-card-icon-svg" viewBox="0 0 48 48" fill="none">
-          <rect x="6" y="10" width="36" height="32" rx="6" fill="#4285f4"/>
-          <rect x="6" y="10" width="36" height="14" rx="6" fill="#1a73e8"/>
-          <rect x="6" y="18" width="36" height="6" fill="#1a73e8"/>
-          <rect x="6" y="22" width="36" height="20" rx="6" fill="white"/>
-          <text x="24" y="36" text-anchor="middle" font-size="12" font-weight="700" fill="#1a73e8" font-family="Inter,sans-serif">AI</text>
-          <rect x="14" y="6" width="4" height="8" rx="2" fill="#5f6368"/>
-          <rect x="30" y="6" width="4" height="8" rx="2" fill="#5f6368"/>
-        </svg>
-        <p class="aihub-card-text">Organise survey results, set clear priorities, and build AI-powered action plans to improve engagement.</p>
-        <span class="aihub-card-tag">Planning</span>
-      </div>
-    </div>
-
-    <!-- Chat messages -->
-    <div class="aihub-chat-messages" #messagesEl [class.active]="chatMode">
-      <ng-container *ngFor="let msg of messages">
-        <div class="ai-msg" [class.user]="msg.isUser" *ngIf="!msg.isTyping">
-          <div class="ai-msg-avatar">{{ msg.isUser ? 'KW' : 'AI' }}</div>
-          <div class="ai-msg-bubble" [innerHTML]="msg.html"></div>
-        </div>
-        <div class="ai-msg bot" *ngIf="msg.isTyping">
-          <div class="ai-msg-avatar">AI</div>
-          <div class="ai-msg-bubble ai-typing-bubble">
-            <div class="ai-typing-dot"></div>
-            <div class="ai-typing-dot"></div>
-            <div class="ai-typing-dot"></div>
-          </div>
-        </div>
-        <div class="ai-suggestions" *ngIf="!msg.isUser && !msg.isTyping && msg.chips?.length">
-          <button class="ai-suggestion-chip" *ngFor="let chip of msg.chips" (click)="chipClick(chip)">{{ chip }}</button>
-        </div>
-      </ng-container>
-    </div>
-
-    <!-- Input section -->
+    <!-- Input section (top center) -->
     <div class="aihub-input-section">
       <div class="aihub-input-wrap">
         <div class="ai-chat-container" #chatContainer [class.expanded]="chatExpanded" (click)="activateInput()">
@@ -124,7 +70,7 @@
                 <span class="pl-letter" *ngFor="let l of placeholderLetters" [style.animationDelay]="l.delay">{{ l.ch }}</span>
               </div>
             </div>
-            <button class="ai-chat-mic" title="Voice input" type="button" (click)="$event.stopPropagation()">
+            <button class="ai-chat-mic" [class.recording]="isRecording" title="Voice input" type="button" (click)="$event.stopPropagation(); toggleMic()">
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><rect x="7" y="2" width="6" height="10" rx="3"/><path d="M4 10a6 6 0 0012 0M10 16v3"/></svg>
             </button>
             <button class="ai-chat-send" title="Send" type="button" (click)="$event.stopPropagation(); send()">
@@ -141,6 +87,308 @@
               <span class="ai-deep-label" *ngIf="deepActive">Deep Search</span>
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature hero cards row -->
+    <div class="aihub-hero-row">
+
+      <!-- Create Survey card -->
+      <div class="aihub-survey-card" (click)="startSurveyFlow()">
+        <span class="survey-card-tag">AI-Powered</span>
+        <h2 class="survey-card-headline">Create Survey</h2>
+        <div class="survey-card-bar"></div>
+        <p class="survey-card-desc">Design intelligent pulse surveys with AI-generated questions tailored to your organisation's needs.</p>
+        <svg class="sparkle sparkle-lg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="spkBody" cx="40%" cy="35%" r="60%">
+              <stop offset="0%" stop-color="#ffe082"/><stop offset="40%" stop-color="#ffca28"/>
+              <stop offset="75%" stop-color="#f5a623"/><stop offset="100%" stop-color="#c77e1a"/>
+            </radialGradient>
+            <radialGradient id="spkHigh" cx="35%" cy="30%" r="50%">
+              <stop offset="0%" stop-color="#fff8e1" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#ffe082" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="spkShadow"><feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#8b5e0a" flood-opacity="0.35"/></filter>
+          </defs>
+          <path filter="url(#spkShadow)" d="M60 0 C62 38,82 58,120 60 C82 62,62 82,60 120 C58 82,38 62,0 60 C38 58,58 38,60 0Z" fill="url(#spkBody)"/>
+          <path d="M60 8 C61 40,78 56,112 58 C78 60,61 76,60 112 C59 76,42 60,8 58 C42 56,59 40,60 8Z" fill="url(#spkHigh)" opacity="0.5"/>
+        </svg>
+        <svg class="sparkle sparkle-md" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <path filter="url(#spkShadow)" d="M60 0 C62 38,82 58,120 60 C82 62,62 82,60 120 C58 82,38 62,0 60 C38 58,58 38,60 0Z" fill="url(#spkBody)"/>
+          <path d="M60 8 C61 40,78 56,112 58 C78 60,61 76,60 112 C59 76,42 60,8 58 C42 56,59 40,60 8Z" fill="url(#spkHigh)" opacity="0.5"/>
+        </svg>
+        <svg class="sparkle sparkle-sm" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <path filter="url(#spkShadow)" d="M60 0 C62 38,82 58,120 60 C82 62,62 82,60 120 C58 82,38 62,0 60 C38 58,58 38,60 0Z" fill="url(#spkBody)"/>
+          <path d="M60 8 C61 40,78 56,112 58 C78 60,61 76,60 112 C59 76,42 60,8 58 C42 56,59 40,60 8Z" fill="url(#spkHigh)" opacity="0.5"/>
+        </svg>
+      </div>
+
+      <!-- Report card -->
+      <div class="aihub-survey-card aihub-report-card" (click)="cardClick('Show me the latest survey report with engagement scores and category breakdown')">
+        <span class="survey-card-tag">Analytics</span>
+        <h2 class="survey-card-headline">Generate Report</h2>
+        <div class="survey-card-bar report-bar"></div>
+        <p class="survey-card-desc">View AI-powered reports with category scores, sentiment analysis, and actionable insights.</p>
+        <!-- 3D chart bar icons -->
+        <svg class="rpt-icon rpt-icon-1" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bar1G" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#2563eb"/>
+            </linearGradient>
+            <linearGradient id="bar1H" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.6"/><stop offset="100%" stop-color="#60a5fa" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="barSh"><feDropShadow dx="1" dy="3" stdDeviation="3" flood-color="#1e3a5f" flood-opacity="0.35"/></filter>
+          </defs>
+          <rect filter="url(#barSh)" x="5" y="10" width="50" height="85" rx="10" fill="url(#bar1G)"/>
+          <rect x="5" y="10" width="25" height="85" rx="10" fill="url(#bar1H)"/>
+        </svg>
+        <svg class="rpt-icon rpt-icon-2" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bar2G" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#7c3aed"/>
+            </linearGradient>
+            <linearGradient id="bar2H" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.6"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <rect filter="url(#barSh)" x="5" y="25" width="50" height="70" rx="10" fill="url(#bar2G)"/>
+          <rect x="5" y="25" width="25" height="70" rx="10" fill="url(#bar2H)"/>
+        </svg>
+        <svg class="rpt-icon rpt-icon-3" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bar3G" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#059669"/>
+            </linearGradient>
+            <linearGradient id="bar3H" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#6ee7b7" stop-opacity="0.6"/><stop offset="100%" stop-color="#34d399" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <rect filter="url(#barSh)" x="5" y="40" width="50" height="55" rx="10" fill="url(#bar3G)"/>
+          <rect x="5" y="40" width="25" height="55" rx="10" fill="url(#bar3H)"/>
+        </svg>
+      </div>
+
+      <!-- Statistics card -->
+      <div class="aihub-survey-card aihub-stats-card" (click)="cardClick('Show me key statistics — participation rates, eNPS, engagement trends across departments')">
+        <span class="survey-card-tag">Data</span>
+        <h2 class="survey-card-headline">View Statistics</h2>
+        <div class="survey-card-bar stats-bar"></div>
+        <p class="survey-card-desc">Explore participation rates, eNPS scores, and engagement trends across your organisation.</p>
+        <!-- 3D donut / pie chart icon -->
+        <svg class="stat-icon stat-icon-ring" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="statG1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#db2777"/>
+            </linearGradient>
+            <linearGradient id="statG2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#7c3aed"/>
+            </linearGradient>
+            <linearGradient id="statG3" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0284c7"/>
+            </linearGradient>
+            <filter id="statSh"><feDropShadow dx="1" dy="3" stdDeviation="4" flood-color="#581c87" flood-opacity="0.3"/></filter>
+          </defs>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="url(#statG1)" stroke-width="16" stroke-dasharray="110 166" stroke-linecap="round" filter="url(#statSh)" transform="rotate(-90 60 60)"/>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="url(#statG2)" stroke-width="16" stroke-dasharray="90 186" stroke-dashoffset="-110" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="url(#statG3)" stroke-width="16" stroke-dasharray="76 200" stroke-dashoffset="-200" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+        </svg>
+        <!-- Floating percentage badge -->
+        <div class="stat-badge">
+          <span class="stat-badge-num">{{ statCounter }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Chat + Live Preview layout -->
+    <div class="aihub-chat-layout" [class.has-preview]="surveyFlowActive && surveyStep >= 1">
+
+      <!-- Left: Chat column -->
+      <div class="aihub-chat-col">
+        <!-- Chat messages -->
+        <div class="aihub-chat-messages" #messagesEl [class.active]="chatMode">
+          <ng-container *ngFor="let msg of messages">
+            <div class="ai-msg" [class.user]="msg.isUser" *ngIf="!msg.isTyping">
+              <div class="ai-msg-avatar">{{ msg.isUser ? 'KW' : 'AI' }}</div>
+              <div class="ai-msg-bubble" [innerHTML]="msg.html"></div>
+            </div>
+            <div class="ai-msg bot" *ngIf="msg.isTyping">
+              <div class="ai-msg-avatar">AI</div>
+              <div class="ai-msg-bubble ai-typing-bubble">
+                <div class="ai-typing-dot"></div>
+                <div class="ai-typing-dot"></div>
+                <div class="ai-typing-dot"></div>
+              </div>
+            </div>
+            <div class="ai-suggestions" *ngIf="!msg.isUser && !msg.isTyping && msg.chips?.length">
+              <button class="ai-suggestion-chip" *ngFor="let chip of msg.chips" (click)="chipClick(chip)">{{ chip }}</button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Right: Live survey preview (what respondent sees) -->
+      <div class="survey-preview" *ngIf="surveyFlowActive && surveyStep >= 1">
+        <div class="sp-device">
+          <div class="sp-browser-bar">
+            <span class="sp-dot"></span><span class="sp-dot"></span><span class="sp-dot"></span>
+            <span class="sp-url">pulse.yourcompany.com/survey</span>
+          </div>
+          <div class="sp-screen">
+
+            <!-- Empty state -->
+            <div class="sp-empty-state" *ngIf="!surveyDraft.name">
+              <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
+                <rect x="6" y="8" width="36" height="34" rx="6" fill="#ede9fe"/>
+                <rect x="12" y="16" width="24" height="3" rx="1.5" fill="#c4b5fd"/>
+                <rect x="12" y="22" width="18" height="2" rx="1" fill="#ddd6fe"/>
+                <circle cx="15" cy="30" r="2" fill="#c4b5fd"/><rect x="20" y="29" width="16" height="2" rx="1" fill="#ddd6fe"/>
+                <circle cx="15" cy="36" r="2" fill="#c4b5fd"/><rect x="20" y="35" width="14" height="2" rx="1" fill="#ddd6fe"/>
+              </svg>
+              <p>Your survey preview will<br>appear here as you build it</p>
+            </div>
+
+            <!-- Survey content -->
+            <div class="sp-survey" *ngIf="surveyDraft.name">
+
+              <!-- Header -->
+              <div class="sp-survey-header">
+                <div class="sp-logo">
+                  <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="10" fill="#7c3aed"/><path d="M8 12l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3 class="sp-survey-title">{{ surveyDraft.name }}</h3>
+                <p class="sp-survey-desc" *ngIf="surveyDraft.description">{{ surveyDraft.description }}</p>
+              </div>
+
+              <!-- Progress -->
+              <div class="sp-survey-progress" *ngIf="surveyDraft.questions.length > 0">
+                <div class="sp-survey-progress-bar">
+                  <div class="sp-survey-progress-fill" [style.width.%]="previewQuestionProgress"></div>
+                </div>
+                <span class="sp-survey-progress-text">Question {{ previewQIndex + 1 }} of {{ surveyDraft.questions.length }}</span>
+              </div>
+
+              <!-- Question card -->
+              <div class="sp-question-card" *ngIf="surveyDraft.questions.length > 0">
+                <div class="sp-q-category">{{ previewCurrentQ?.category || surveyDraft.categories[0] }}</div>
+                <p class="sp-q-title">{{ previewCurrentQ?.text }}</p>
+
+                <!-- Rating Scale -->
+                <div class="sp-q-rating" *ngIf="isPreviewRating(previewCurrentQ)">
+                  <div class="sp-rating-option" *ngFor="let n of getPreviewRatingRange(previewCurrentQ)"
+                       [class.selected]="previewSelectedRating === n"
+                       (click)="previewSelectedRating = n">
+                    {{ n }}
+                  </div>
+                  <div class="sp-rating-labels">
+                    <span>Strongly Disagree</span>
+                    <span>Strongly Agree</span>
+                  </div>
+                </div>
+
+                <!-- MCQ -->
+                <div class="sp-q-mcq" *ngIf="previewCurrentQ?.type === 'MCQ'">
+                  <label class="sp-mcq-option" *ngFor="let opt of ['Option A', 'Option B', 'Option C', 'Option D']; let i = index"
+                         [class.selected]="previewSelectedMcq === i" (click)="previewSelectedMcq = i">
+                    <span class="sp-radio"></span>
+                    {{ opt }}
+                  </label>
+                </div>
+
+                <!-- Yes/No -->
+                <div class="sp-q-yesno" *ngIf="previewCurrentQ?.type === 'Yes/No'">
+                  <button class="sp-yn-btn" [class.selected]="previewSelectedYn === 'yes'" (click)="previewSelectedYn = 'yes'">
+                    <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="8" stroke="#22c55e" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Yes
+                  </button>
+                  <button class="sp-yn-btn" [class.selected]="previewSelectedYn === 'no'" (click)="previewSelectedYn = 'no'">
+                    <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="8" stroke="#ef4444" stroke-width="1.5"/><path d="M7 7l6 6M13 7l-6 6" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    No
+                  </button>
+                </div>
+
+                <!-- Text / Open Ended -->
+                <div class="sp-q-text" *ngIf="previewCurrentQ?.type === 'Text'">
+                  <div class="sp-textarea-mock">Type your answer here...</div>
+                </div>
+              </div>
+
+              <!-- Navigation -->
+              <div class="sp-nav" *ngIf="surveyDraft.questions.length > 0">
+                <button class="sp-nav-btn sp-nav-prev" [disabled]="previewQIndex === 0" (click)="previewQIndex = previewQIndex - 1; resetPreviewSelections()">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><polyline points="10 3 5 8 10 13"/></svg>
+                  Back
+                </button>
+                <button class="sp-nav-btn sp-nav-next"
+                        [disabled]="previewQIndex >= surveyDraft.questions.length - 1"
+                        (click)="previewQIndex = previewQIndex + 1; resetPreviewSelections()">
+                  {{ previewQIndex >= surveyDraft.questions.length - 1 ? 'Submit' : 'Next' }}
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><polyline points="6 3 11 8 6 13"/></svg>
+                </button>
+              </div>
+
+              <!-- No questions yet -->
+              <div class="sp-no-questions" *ngIf="surveyDraft.questions.length === 0">
+                <p>Questions will appear here once you select a category</p>
+              </div>
+
+              <!-- Footer -->
+              <div class="sp-survey-footer">
+                <span>Powered by</span>
+                <svg viewBox="0 0 60 16" width="50" height="14"><text x="0" y="12" font-size="11" font-weight="700" fill="#7c3aed" font-family="Inter,sans-serif">Pulse</text></svg>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Divider + Feature cards (hidden for now) -->
+    <div class="aihub-bottom-section" style="display:none">
+      <div class="aihub-divider">
+        <span class="aihub-divider-line"></span>
+        <span class="aihub-divider-text">Quick actions</span>
+        <span class="aihub-divider-line"></span>
+      </div>
+      <div class="aihub-cards">
+        <div class="aihub-card" (click)="cardClick('Show me the engagement score and trends from our pulse survey')">
+          <svg class="aihub-card-icon-svg" viewBox="0 0 48 48" fill="none">
+            <rect x="4" y="32" width="40" height="8" rx="4" fill="#f59e0b" opacity="0.3"/>
+            <rect x="6" y="22" width="36" height="12" rx="4" fill="#f59e0b" opacity="0.6"/>
+            <rect x="8" y="12" width="32" height="14" rx="4" fill="#f59e0b"/>
+            <path d="M16 19l4 6 4-10 4 6 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p class="aihub-card-text">Analyse pulse responses, uncover sentiment trends, and understand what truly drives your team.</p>
+          <span class="aihub-card-tag">Fast Insights</span>
+        </div>
+        <div class="aihub-card aihub-card-mid" (click)="cardClick('What are the top sentiment trends from our pulse survey?')">
+          <svg class="aihub-card-icon-svg" viewBox="0 0 48 48" fill="none">
+            <circle cx="16" cy="16" r="6" fill="#e11d9a" opacity="0.9"/>
+            <circle cx="32" cy="16" r="6" fill="#36c5f0" opacity="0.9"/>
+            <circle cx="16" cy="32" r="6" fill="#2eb67d" opacity="0.9"/>
+            <circle cx="32" cy="32" r="6" fill="#ecb22e" opacity="0.9"/>
+            <path d="M20 16h8M16 20v8M32 20v8M20 32h8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <p class="aihub-card-text">Share AI-generated summaries with your team, align on findings, and collaborate on what matters most to employees.</p>
+          <span class="aihub-card-tag">Collaborate with Team</span>
+        </div>
+        <div class="aihub-card" (click)="cardClick('Help me build an action plan from pulse survey results')">
+          <svg class="aihub-card-icon-svg" viewBox="0 0 48 48" fill="none">
+            <rect x="6" y="10" width="36" height="32" rx="6" fill="#4285f4"/>
+            <rect x="6" y="10" width="36" height="14" rx="6" fill="#1a73e8"/>
+            <rect x="6" y="18" width="36" height="6" fill="#1a73e8"/>
+            <rect x="6" y="22" width="36" height="20" rx="6" fill="white"/>
+            <text x="24" y="36" text-anchor="middle" font-size="12" font-weight="700" fill="#1a73e8" font-family="Inter,sans-serif">AI</text>
+            <rect x="14" y="6" width="4" height="8" rx="2" fill="#5f6368"/>
+            <rect x="30" y="6" width="4" height="8" rx="2" fill="#5f6368"/>
+          </svg>
+          <p class="aihub-card-text">Organise survey results, set clear priorities, and build AI-powered action plans to improve engagement.</p>
+          <span class="aihub-card-tag">Planning</span>
         </div>
       </div>
     </div>
