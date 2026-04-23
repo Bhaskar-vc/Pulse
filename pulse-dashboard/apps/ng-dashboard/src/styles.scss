@@ -681,7 +681,8 @@ app-ai-hub .main-card {
   cursor: pointer;
   border: 1px solid #e5e1f0;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, opacity 0.35s ease;
+  opacity: 0.7;
   animation: aihubFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.1s both;
   display: flex;
   flex-direction: column;
@@ -690,6 +691,7 @@ app-ai-hub .main-card {
 .aihub-survey-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+  opacity: 1;
 }
 .survey-card-tag {
   display: inline-block;
