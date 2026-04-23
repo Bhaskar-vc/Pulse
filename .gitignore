@@ -1,5 +1,11 @@
 pulse-dashboard/node_modules/
 pulse-dashboard/dist/
 pulse-dashboard/.angular/
+pulse-dashboard/.nx/
 .DS_Store
 .vscode/
+.claude/
+Pulse-prod/
+UAT/
+vantagecircle-core/
+dtc-strategy.pine
