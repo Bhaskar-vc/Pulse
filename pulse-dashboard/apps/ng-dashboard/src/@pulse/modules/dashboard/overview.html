@@ -12,6 +12,25 @@
       <p>You are now viewing the summarized data from all conducted surveys.</p>
     </div>
     <div class="survey-controls">
+      <!-- Country Dropdown -->
+      <div class="country-dd-wrap">
+        <div class="country-dropdown" [class.is-open]="countryDropdownOpen" (click)="toggleCountryDropdown($event)">
+          <img class="country-flag-img" [src]="selectedCountry.flag" [alt]="selectedCountry.name" />
+          <span class="country-name">{{ selectedCountry.name }}</span>
+          <div class="survey-chevron">
+            <svg viewBox="0 0 20 20" fill="none" stroke="#667085" stroke-width="1.8"><polyline points="5 8 10 13 15 8"/></svg>
+          </div>
+        </div>
+        <div class="country-dd-menu" [class.is-open]="countryDropdownOpen">
+          <div class="country-dd-item"
+               *ngFor="let country of countryOptions"
+               [class.is-selected]="country.code === selectedCountry.code"
+               (click)="selectCountry(country)">
+            <img class="country-flag-img" [src]="country.flag" [alt]="country.name" />
+            <span class="country-dd-item-name">{{ country.name }}</span>
+          </div>
+        </div>
+      </div>
       <div class="survey-dd-wrap">
         <div class="survey-dropdown" [class.is-open]="surveyDropdownOpen" (click)="toggleSurveyDropdown($event)">
           <span class="survey-name">{{ selectedSurvey.name }}</span>
@@ -552,7 +571,7 @@
 
       <!-- Illustration -->
       <div class="rp-illustration">
-        <img src="team-illustration.png" alt="Team illustration" />
+        <img src="/team-illustration.png" alt="Team illustration" />
       </div>
 
     </aside>

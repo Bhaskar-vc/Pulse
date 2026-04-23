@@ -25,6 +25,16 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
   activeSeg: 'top' | 'needs' = 'top';
   activeTimeSegment: string = '12m';
   surveyDropdownOpen = false;
+  countryDropdownOpen = false;
+
+  countryOptions = [
+    { code: 'in', name: 'IND', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/in.svg' },
+    { code: 'us', name: 'USA', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/us.svg' },
+    { code: 'gb', name: 'UK', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/gb.svg' },
+    { code: 'de', name: 'GER', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/de.svg' },
+    { code: 'sg', name: 'SGP', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/sg.svg' },
+  ];
+  selectedCountry = this.countryOptions[0];
 
   // Calendar state
   calendarOpen = false;
@@ -196,9 +206,9 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
   selectedSurvey = this.surveyOptions[0];
 
   surveys: SurveyItem[] = [
-    { id: 1, name: 'Q1 Engagement Survey 2025', responses: 36, participation: '36%', endDate: 'Jun 2026', active: true },
-    { id: 2, name: 'Annual Culture Assessment', responses: 112, participation: '52%', endDate: 'Aug 2026', active: true },
-    { id: 3, name: 'Onboarding Feedback Pulse', responses: 8, participation: '67%', endDate: 'May 2026', active: true },
+    { id: 1, name: 'Q1 Engagement Survey 2025', responses: 36, total: 100, endDate: 'Jun 2026', active: true },
+    { id: 2, name: 'Annual Culture Assessment', responses: 112, total: 215, endDate: 'Aug 2026', active: true },
+    { id: 3, name: 'Onboarding Feedback Pulse', responses: 8, total: 12, endDate: 'May 2026', active: true },
   ];
 
   ngAfterViewInit() {
@@ -228,6 +238,16 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
     this.updateDonutArc();
   }
 
+  toggleCountryDropdown(event: Event) {
+    event.stopPropagation();
+    this.countryDropdownOpen = !this.countryDropdownOpen;
+  }
+
+  selectCountry(country: typeof this.countryOptions[0]) {
+    this.selectedCountry = country;
+    this.countryDropdownOpen = false;
+  }
+
   get donutDasharray(): string {
     const circumference = 2 * Math.PI * 105; // ~659.73
     const filled = (this.selectedSurvey.engagement.score / 100) * circumference;
@@ -245,6 +265,7 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
   @HostListener('document:click')
   closeSurveyDropdown() {
     this.surveyDropdownOpen = false;
+    this.countryDropdownOpen = false;
   }
 
   scrollFeedback(direction: number) {

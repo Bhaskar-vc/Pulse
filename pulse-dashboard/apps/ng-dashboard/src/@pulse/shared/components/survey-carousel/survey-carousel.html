@@ -1,5 +1,4 @@
 @if (surveys.length <= 1) {
-  <!-- Single survey: render original static layout -->
   <div class="rp-survey-wrap">
     <div class="rp-survey-card">
       <div class="rp-survey-header">
@@ -10,7 +9,7 @@
         <div class="rp-survey-row">
           <div class="rp-survey-info">
             <div class="rp-survey-sname">{{ s.name }}</div>
-            <div class="rp-survey-sdata">{{ s.responses }} responses · {{ s.participation }} · ends {{ s.endDate }}</div>
+            <div class="rp-survey-sdata">{{ s.responses }} responses · {{ getParticipation(s) }}% · ends {{ s.endDate }}</div>
           </div>
         </div>
       }
@@ -20,7 +19,7 @@
   <!-- Multiple surveys: stacked carousel -->
   <div class="sc-wrap" #cardStack>
     <div class="sc-header">
-      <span class="sc-title">Running Surveys <span class="sc-badge">{{ total }}</span></span>
+      <span class="sc-title"><span class="sc-badge">{{ total }}</span> Running Surveys</span>
       <div class="sc-arrows">
         <button class="sc-arrow" (click)="prev()" aria-label="Previous survey">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="10 12 6 8 10 4"/></svg>
@@ -39,11 +38,23 @@
           (mousedown)="getRelativePosition(i) === 0 ? onDragStart($event) : null"
           (touchstart)="getRelativePosition(i) === 0 ? onDragStart($event) : null"
         >
-          <div class="rp-survey-row">
-            <div class="rp-survey-info">
-              <div class="rp-survey-sname">{{ s.name }}</div>
-              <div class="rp-survey-sdata">{{ s.responses }} responses · {{ s.participation }} · ends {{ s.endDate }}</div>
-            </div>
+          <div class="sc-card-top">
+            <div class="sc-card-name">{{ s.name }}</div>
+            @if (s.active) {
+              <div class="sc-live-badge">
+                <span class="sc-live-dot"></span>
+                <span>Live</span>
+              </div>
+            }
+          </div>
+          <div class="sc-card-meta">
+            <span class="sc-resp-count">{{ s.responses }}<span class="sc-resp-total"> / {{ s.total }}</span></span>
+            <span class="sc-meta-sep">·</span>
+            <span class="sc-end-date">ends {{ s.endDate }}</span>
+          </div>
+          <div class="sc-progress-track">
+            <div class="sc-progress-fill" [style.width]="getParticipation(s) + '%'"></div>
+            <span class="sc-pct-label">{{ getParticipation(s) }}%</span>
           </div>
         </div>
       }

@@ -4,7 +4,7 @@ export interface SurveyItem {
   id: number | string;
   name: string;
   responses: number;
-  participation: string;
+  total: number;
   endDate: string;
   active: boolean;
 }
@@ -26,6 +26,7 @@ export class SurveyCarouselComponent implements OnInit, OnDestroy {
   private startX = 0;
   private startY = 0;
   private hasMoved = false;
+  private liveTimer: ReturnType<typeof setTimeout> | null = null;
 
   // Bound handlers for cleanup
   private boundMove: ((e: MouseEvent | TouchEvent) => void) | null = null;
@@ -34,10 +35,32 @@ export class SurveyCarouselComponent implements OnInit, OnDestroy {
   get total() { return this.surveys.length; }
   get showCarousel() { return this.total > 1; }
 
-  ngOnInit() {}
+  getParticipation(s: SurveyItem): number {
+    return s.total > 0 ? Math.round((s.responses / s.total) * 100) : 0;
+  }
+
+  ngOnInit() {
+    this.startLiveTicker();
+  }
+
+  private startLiveTicker() {
+    const schedule = () => {
+      const delay = 4000 + Math.random() * 6000;
+      this.liveTimer = setTimeout(() => {
+        const live = this.surveys.filter(s => s.active && s.responses < s.total);
+        if (live.length) {
+          const s = live[Math.floor(Math.random() * live.length)];
+          s.responses = Math.min(s.responses + 1, s.total);
+        }
+        schedule();
+      }, delay);
+    };
+    schedule();
+  }
 
   ngOnDestroy() {
     this.cleanupDrag();
+    if (this.liveTimer) clearTimeout(this.liveTimer);
   }
 
   getCardStyle(index: number) {
