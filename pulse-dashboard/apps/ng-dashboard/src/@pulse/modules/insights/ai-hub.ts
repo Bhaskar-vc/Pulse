@@ -51,6 +51,9 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
 
   constructor(private cdr: ChangeDetectorRef, private router: Router) {}
 
+  scrolledToBottom = false;
+  private scrollHandler = () => this.checkScroll();
+
   inputValue = '';
   chatMode = false;
   chatExpanded = false;
@@ -210,6 +213,13 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
     this.startStatCounter();
 
     document.addEventListener('mousedown', this.handleDocClick);
+
+    // Listen for scroll on the main-card container
+    const mainCard = document.querySelector('app-ai-hub .main-card');
+    if (mainCard) {
+      mainCard.addEventListener('scroll', this.scrollHandler);
+      this.checkScroll();
+    }
   }
 
   private startStatCounter() {
@@ -224,6 +234,18 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
     this.stopCycle();
     if (this.statTimer) clearInterval(this.statTimer);
     document.removeEventListener('mousedown', this.handleDocClick);
+    const mainCard = document.querySelector('app-ai-hub .main-card');
+    if (mainCard) mainCard.removeEventListener('scroll', this.scrollHandler);
+  }
+
+  private checkScroll() {
+    const el = document.querySelector('app-ai-hub .main-card') as HTMLElement;
+    if (!el) return;
+    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 50;
+    if (atBottom !== this.scrolledToBottom) {
+      this.scrolledToBottom = atBottom;
+      this.cdr.detectChanges();
+    }
   }
 
   private handleDocClick = (e: MouseEvent) => {

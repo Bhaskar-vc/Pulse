@@ -27,6 +27,46 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
   surveyDropdownOpen = false;
   countryDropdownOpen = false;
 
+  activePopover: string | null = null;
+  popoverTexts: Record<string, string> = {
+    enps: 'Employee Net Promoter Score measures how likely employees are to recommend your organization as a great place to work. Scores range from -100 to +100.',
+    participation: 'Participation Rate shows the percentage of invited employees who completed the survey. Higher participation yields more reliable insights.',
+    category: 'Category scores track performance across key engagement drivers like leadership, communication, and work-life balance over time.',
+    engagement_time: 'Engagement Over Time visualizes how overall engagement, eNPS, and participation trends have changed across survey cycles.',
+    engagement_index: 'The Engagement Index is a composite score (0–100) reflecting overall employee engagement based on all survey responses.',
+  };
+
+  togglePopover(key: string, event: MouseEvent) {
+    event.stopPropagation();
+    this.activePopover = this.activePopover === key ? null : key;
+  }
+
+  datePickerOpen = false;
+  dateRangeLabel = '01 Jan - 31 Dec 2026';
+  dateRangeOptions = [
+    { label: '01 Jan - 31 Mar 2026' },
+    { label: '01 Apr - 30 Jun 2026' },
+    { label: '01 Jul - 30 Sep 2026' },
+    { label: '01 Oct - 31 Dec 2026' },
+    { label: '01 Jan - 31 Dec 2026' },
+  ];
+
+  toggleDatePicker(event: MouseEvent) {
+    event.stopPropagation();
+    this.datePickerOpen = !this.datePickerOpen;
+  }
+
+  selectDateRange(opt: { label: string }) {
+    this.dateRangeLabel = opt.label;
+    this.datePickerOpen = false;
+  }
+
+  @HostListener('document:click')
+  closeDropdowns() {
+    this.activePopover = null;
+    this.datePickerOpen = false;
+  }
+
   countryOptions = [
     { code: 'in', name: 'IND', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/in.svg' },
     { code: 'us', name: 'USA', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/us.svg' },

@@ -11,8 +11,8 @@ interface SetupStep {
 interface TemplateCard {
   title: string;
   questions: number;
-  teams: number;
-  icon: string;
+  duration: string;
+  image: string;
 }
 
 @Component({
@@ -34,10 +34,11 @@ export class PortalComponent implements OnInit {
   ];
 
   templateCards: TemplateCard[] = [
-    { title: 'Quarterly Engagement', questions: 14, teams: 12, icon: 'engagement' },
-    { title: 'Manager Effectiveness', questions: 10, teams: 8, icon: 'manager' },
-    { title: 'Onboarding (30/60/90)', questions: 8, teams: 18, icon: 'onboarding' },
-    { title: 'eNPS \u00b7 Monthly', questions: 3, teams: 14, icon: 'enps' },
+    { title: 'Quick Engagement Survey', questions: 44, duration: '12 mins', image: 'assets/templates/quick-engagement.png' },
+    { title: 'Psychosocial Health', questions: 8, duration: '5 mins', image: 'assets/templates/psychosocial-health.png' },
+    { title: 'Diversity, Equity & Inclusion (DEI) Survey', questions: 12, duration: '3 mins', image: 'assets/templates/dei-survey.png' },
+    { title: 'Change Success (During or Post)', questions: 4, duration: '2 mins', image: 'assets/templates/change-success.png' },
+    { title: 'Quick Engagement Survey', questions: 5, duration: '3 mins', image: 'assets/templates/quick-engagement-2.png' },
   ];
 
   get setupComplete(): number { return this.setupSteps.filter(s => s.done).length; }
