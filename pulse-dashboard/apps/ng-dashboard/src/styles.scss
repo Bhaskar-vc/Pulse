@@ -171,7 +171,7 @@ app-top-nav { display: flex; align-items: center; flex: 1; min-width: 0; }
 .ln-section-label:first-child { padding-top: 0; }
 .nav-open .ln-section-label:first-child { padding-top: 2px; }
 .ln-btn {
-  width: 44px; height: 44px; border-radius: 100px; background: rgba(255,255,255,0.5);
+  width: 44px; height: 44px; border-radius: 100px; background: transparent;
   border: none; display: flex; align-items: center; justify-content: flex-start;
   gap: 0px; padding: 0 0 0 12px; cursor: pointer; color: #6b7280;
   overflow: hidden; flex-shrink: 0;
