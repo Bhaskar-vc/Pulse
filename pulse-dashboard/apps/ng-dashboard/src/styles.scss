@@ -545,7 +545,7 @@ pulse-root > router-outlet + * { display: flex; flex-direction: column; flex: 1;
 .mc-popover--left { left: auto; right: 0; transform: none; }
 @keyframes popIn { from { opacity: 0; transform: translateX(-50%) translateY(-4px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
 .mc-popover--left { animation-name: popInLeft; }
-@keyframes popInLeft { from { opacity: 0; translateY(-4px); } to { opacity: 1; translateY(0); } }
+@keyframes popInLeft { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 .mc-score-row { display: flex; align-items: flex-start; gap: 5px; margin-bottom: 4px; }
 .mc-score { font-size: 40px; font-weight: 600; color: #29294c; letter-spacing: 0.6px; line-height: 1.2; }
 .tag-green {
@@ -2140,10 +2140,11 @@ app-ai-hub .aihub-bottom-fade.fade-hidden { opacity: 0; }
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding-right: 24px;
+  padding: 0 32px;
   border-right: 1px solid #f3f4f6;
 }
-.lp-stat:last-child { border-right: none; padding-right: 0; padding-left: 24px; }
+.lp-stat:first-child { padding-left: 0; }
+.lp-stat:last-child { border-right: none; padding-right: 0; }
 .lp-stat-label {
   font-size: 12px;
   font-weight: 500;
