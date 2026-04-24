@@ -28,16 +28,9 @@
                 <span class="pl-letter" *ngFor="let l of placeholderLetters" [style.animationDelay]="l.delay">{{ l.ch }}</span>
               </div>
             </div>
-            <button class="ai-chat-mic" [class.recording]="isRecording" title="Voice input" type="button" (click)="$event.stopPropagation(); toggleMic()">
-              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><rect x="7" y="2" width="6" height="10" rx="3"/><path d="M4 10a6 6 0 0012 0M10 16v3"/></svg>
-            </button>
             <button class="ai-chat-send" title="Send" type="button" (click)="$event.stopPropagation(); send()">
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17"><line x1="4" y1="10" x2="16" y2="10"/><polyline points="11 5 16 10 11 15"/></svg>
             </button>
-          </div>
-          <div class="ai-chat-controls">
-            <button class="ai-ctrl-btn" type="button" [class.active]="thinkActive" (click)="toggleThink($event)"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M10 2a6 6 0 00-3 11.2V15a1 1 0 001 1h4a1 1 0 001-1v-1.8A6 6 0 0010 2z"/><line x1="8" y1="18" x2="12" y2="18" stroke-linecap="round"/></svg> Think</button>
-            <button class="ai-ctrl-btn ai-ctrl-deep" type="button" [class.active]="deepActive" (click)="toggleDeep($event)"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><circle cx="10" cy="10" r="8"/><ellipse cx="10" cy="10" rx="3.5" ry="8"/><line x1="2" y1="10" x2="18" y2="10"/></svg><span class="ai-deep-label" *ngIf="deepActive">Deep Search</span></button>
           </div>
         </div>
       </div>
