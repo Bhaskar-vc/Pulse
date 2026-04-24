@@ -12,8 +12,8 @@
     <!-- Top: headline -->
     <div class="aihub-top aihub-top--center">
       <div class="aihub-headline">
-        <h1 class="aihub-hi">Hi Kristin, <span>Ready to</span></h1>
-        <h1 class="aihub-big">Create Your Pulse Survey?</h1>
+        <p class="aihub-hi">Hi Kristin,</p>
+        <h1 class="aihub-big" [class.aihub-big--out]="headlineState === 'out'" [class.aihub-big--entering]="headlineState === 'entering'">{{ HEADLINES[currentHeadlineIndex] }}</h1>
       </div>
     </div>
 

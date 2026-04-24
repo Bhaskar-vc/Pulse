@@ -56,7 +56,7 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
 
   inputValue = '';
   chatMode = false;
-  chatExpanded = false;
+  chatExpanded = true;
   showPlaceholder = true;
   thinkActive = false;
   deepActive = false;
@@ -65,6 +65,16 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
   placeholderHiding = false;
   statCounter = 0;
   private statTimer: ReturnType<typeof setInterval> | null = null;
+
+  // Rotating headlines
+  readonly HEADLINES = [
+    'Your team has answers. Are you listening?',
+    'Small surveys. Big breakthroughs.',
+    "Don't guess what your team thinks — ask them.",
+  ];
+  currentHeadlineIndex = 0;
+  headlineState: 'visible' | 'out' | 'entering' = 'visible';
+  private headlineTimer: ReturnType<typeof setInterval> | null = null;
 
   // Live pulse dashboard
   livePulseTab = 0;
@@ -211,6 +221,7 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
     this.renderPlaceholder(this.PLACEHOLDERS[0], false);
     this.startCycle();
     this.startStatCounter();
+    this.startHeadlineCycle();
 
     document.addEventListener('mousedown', this.handleDocClick);
 
@@ -232,6 +243,7 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.stopCycle();
+    this.stopHeadlineCycle();
     if (this.statTimer) clearInterval(this.statTimer);
     document.removeEventListener('mousedown', this.handleDocClick);
     const mainCard = document.querySelector('app-ai-hub .main-card');
@@ -274,6 +286,26 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
 
   private startCycle() { this.phTimer = setInterval(() => this.cyclePlaceholder(), 3200); }
   private stopCycle() { if (this.phTimer) { clearInterval(this.phTimer); this.phTimer = null; } }
+
+  private cycleHeadline() {
+    // Slide up + blur out
+    this.headlineState = 'out';
+    this.cdr.detectChanges();
+    setTimeout(() => {
+      // Snap to bottom position with no transition, change text
+      this.currentHeadlineIndex = (this.currentHeadlineIndex + 1) % this.HEADLINES.length;
+      this.headlineState = 'entering';
+      this.cdr.detectChanges();
+      // Small tick so DOM paints the entering state, then animate in
+      setTimeout(() => {
+        this.headlineState = 'visible';
+        this.cdr.detectChanges();
+      }, 32);
+    }, 460);
+  }
+
+  private startHeadlineCycle() { this.headlineTimer = setInterval(() => this.cycleHeadline(), 3800); }
+  private stopHeadlineCycle() { if (this.headlineTimer) { clearInterval(this.headlineTimer); this.headlineTimer = null; } }
 
   activateInput() {
     if (this.chatExpanded) return;
