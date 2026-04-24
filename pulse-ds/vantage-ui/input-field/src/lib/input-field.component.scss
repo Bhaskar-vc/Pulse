@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  width: fit-content;
+}
+
+input[type='number'].hide-arrow-button::-webkit-inner-spin-button,
+input[type='number'].hide-arrow-button::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+// ::ng-deep .tag {
+//   @apply p-2xs;
+//   border-radius: 6px !important;
+// }

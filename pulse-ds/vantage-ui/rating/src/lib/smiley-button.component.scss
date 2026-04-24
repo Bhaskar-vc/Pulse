@@ -1,0 +1,63 @@
+.rating-button {
+    @apply w-11 h-12;
+    perspective: 180px;
+  }
+  
+  .rating-button-inner {
+    @apply relative w-full h-full text-center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  
+  .rating-button.flipped .rating-button-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .rating-button-front,
+  .rating-button-back {
+    @apply absolute w-full h-full text-center flex flex-row justify-center items-center;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+  }
+  
+  .rating-button-front {
+    @apply rounded-[8px] cursor-pointer;
+    border: 1px solid #d0d5dd;
+  }
+  
+  .rating-button-front:hover {
+    @apply rounded-[8px];
+    border: 1px solid #9e77ed;
+    background: #f9f5ff;
+  }
+  
+  .rating-button-back {
+    transform: rotateY(180deg);
+  }
+  
+  .rating-value {
+    @apply text-primary-400 text-lg font-medium leading-6 tracking-[0.024px];
+    font-style: normal;
+  }
+  
+  .button-error {
+    @apply rounded-[8px];
+    border: 1px solid #f04438;
+    background: #fffbfa;
+  }
+  
+  .button-warning {
+    @apply rounded-[8px];
+    border: 1px solid #f79009;
+    background: #fffcf5;
+  }
+  
+  .button-success {
+    @apply rounded-[8px];
+    border: 1px solid #12b76a;
+    background: #f6fef9;
+  }
+  
+  .emoticons-wrapper {
+    @apply flex flex-row justify-center items-center w-full h-full;
+  }

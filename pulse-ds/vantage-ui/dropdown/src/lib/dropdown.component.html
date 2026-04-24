@@ -1,0 +1,24 @@
+<ng-template>
+  <div
+    #vcDropdownMenu
+    class="dropdown-menu"
+    [attr.data-show]="showMenu"
+    [ngStyle]="{ width: width + 'px' }"
+    @dropdownAnimation
+  >
+    @if (items) {
+      <ul role="listbox" [attr.aria-labelledby]="elementId">
+        @for (item of items; track $index) {
+          <vc-dropdown-item
+            [item]="item"
+            [showIcon]="showIcon"
+            [showShortcut]="showShortcut"
+            [hovered]="$index === activeIndex"
+            [customTemplate]="itemTemplate"
+            (onClick)="handleSelectItem($event, item)"
+          ></vc-dropdown-item>
+        }
+      </ul>
+    }
+  </div>
+</ng-template>

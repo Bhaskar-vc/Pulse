@@ -1,0 +1,15 @@
+<div
+  class="rounded overflow-auto"
+  [ngClass]="{ 'shadow-md': shadow }"
+  [style.max-height.px]="maxHeight"
+>
+  @if (header) {
+    <div class="flex flex-row gap-sm px-6 py-5">
+      <div class="text-xl font-500 text-[#101828]">{{ heading }}</div>
+      @if (headingTag === true) {
+        <vc-tag>{{ headingTagText }}</vc-tag>
+      }
+    </div>
+  }
+  <ng-content></ng-content>
+</div>

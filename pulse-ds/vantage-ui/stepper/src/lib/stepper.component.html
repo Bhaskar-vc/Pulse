@@ -1,0 +1,131 @@
+@switch (orientation) {
+  @case ('horizontal') {
+    <div class="vc-horizontal-stepper-wrapper">
+      <div class="vc-horizontal-stepper-header-container">
+        @for (
+          step of steps;
+          track step;
+          let i = $index, isFirst = $first, isLast = $last
+        ) {
+          <ng-container
+            [ngTemplateOutlet]="stepTemplate"
+            [ngTemplateOutletContext]="{
+              step: step,
+              i: i,
+              isFirst: isFirst,
+              isLast: isLast
+            }"
+          ></ng-container>
+          @if (!isLast) {
+            <div class="horizontal-connector-container">
+              <div class="vc-stepper-horizontal-line"></div>
+              <!-- <div class="h-6"></div> -->
+            </div>
+          }
+        }
+      </div>
+
+      <div class="vc-horizontal-content-container">
+        @for (step of steps; track step; let i = $index) {
+          <div
+            class="vc-horizontal-stepper-content"
+            role="tabpanel"
+            [id]="_getStepContentId(i)"
+            [class.vc-horizontal-stepper-content-inactive]="selectedIndex !== i"
+            [@horizontalStepTransition]="{
+              value: _getAnimationDirection(i)
+            }"
+          >
+            <ng-container [ngTemplateOutlet]="step.content"></ng-container>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  @case ('vertical') {
+    <!-- <div class="vc-vertical-stepper-wrapper">
+      <div class="vc-vertical-stepper-header-container">
+        @for (step of steps; track step; let i = $index) {
+          <ng-container
+            [ngTemplateOutlet]="stepTemplate"
+            [ngTemplateOutletContext]="{ step: step, i: i }"
+          ></ng-container>
+        }
+      </div>
+
+      <div class="vc-vertical-content-container">
+        @for (step of steps; track step; let i = $index) {
+          <div
+            class="vertical-stepper-content"
+            role="tabpanel"
+            [id]="_getStepContentId(i)"
+          >
+            <ng-container [ngTemplateOutlet]="step.content"></ng-container>
+          </div>
+        }
+      </div>
+    </div> -->
+    @for (step of steps; track step; let i = $index, isLast = $last) {
+      <div class="flex flex-col vc-step">
+        <ng-container
+          [ngTemplateOutlet]="stepTemplate"
+          [ngTemplateOutletContext]="{ step: step, i: i }"
+        ></ng-container>
+        <div class="flex flex-row items-stretch">
+          <div class="vc-vertical-connector-container">
+            <div [class.vc-stepper-vertical-line]="!isLast"></div>
+          </div>
+          <div
+            class="vc-vertical-content-container"
+          >
+            <div
+              class="vc-vertical-stepper-content"
+              role="tabpanel"
+              [id]="_getStepContentId(i)"
+              [class.vc-vertical-stepper-content-inactive]="selectedIndex !== i"
+              [@verticalStepTransition]="{
+                value: _getAnimationDirection(i)
+              }"
+            >
+              <div class="vc-vertical-content">
+                <ng-container [ngTemplateOutlet]="step.content"></ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  }
+}
+
+<!-- <div class="flex flex-row w-fit">
+  @for (step of steps; track step; let i = $index) {
+    <ng-container
+      [ngTemplateOutlet]="stepTemplate"
+      [ngTemplateOutletContext]="{ step: step, i: i }"
+    ></ng-container>
+  }
+</div> -->
+
+<ng-template
+  let-step="step"
+  let-i="i"
+  let-isFirst="isFirst"
+  let-isLast="isLast"
+  #stepTemplate
+>
+  <vc-step-header
+    [orientation]="orientation"
+    [index]="i"
+    (click)="step.select()"
+    [id]="_getStepLabelId(i)"
+    [label]="step.label"
+    [active]="_stepIsNavigable(i, step)"
+    [state]="step.indicatorType()"
+    [selected]="selectedIndex === i"
+    [isFirst]="isFirst"
+    [isLast]="isLast"
+  ></vc-step-header>
+  <!-- {{ step }} -->
+</ng-template>

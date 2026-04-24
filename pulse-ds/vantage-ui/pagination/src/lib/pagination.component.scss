@@ -1,0 +1,39 @@
+.pagination-container {
+  @apply flex flex-row gap-[24px] items-center;
+
+  .pagination-range {
+    @apply flex flex-row items-center gap-sm;
+
+    .current-page-rows {
+      @apply flex flex-row items-center gap-sm text-primary-500;
+    }
+  }
+
+  .pagination-btn-group {
+    @apply flex flex-row gap-2xl;
+
+    .pagination-btn {
+      @apply text-sm cursor-pointer;
+
+      &.pagination-btn-disabled {
+        @apply text-neutral-300 cursor-not-allowed;
+      }
+    }
+  }
+}
+
+::ng-deep .go-to-input-container input[type='number'] {
+  text-align: center;
+}
+
+::ng-deep
+  .go-to-input-container
+  input[type='number']::-webkit-inner-spin-button,
+::ng-deep
+  .go-to-input-container
+  input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}

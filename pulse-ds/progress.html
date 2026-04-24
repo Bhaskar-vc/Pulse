@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Progress – Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; font-size: 14px; color: #1d2939; background: #f8f9fb; min-height: 100vh; display: flex; }
+
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #eaeaed; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #eaeaed; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #29294c; }
+.sidebar-logo sub { font-size: 10px; color: #9d9dad; font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+.main { margin-left: 240px; flex: 1; min-width: 0; }
+.content { max-width: 1100px; padding: 48px 56px; }
+
+.page-header { margin-bottom: 44px; }
+.breadcrumb { font-size: 12px; color: #98a2b3; margin-bottom: 10px; }
+.breadcrumb span { color: #6941c6; }
+.page-title { font-size: 30px; font-weight: 700; color: #101828; letter-spacing: -.4px; line-height: 1.2; }
+.page-desc { margin-top: 8px; font-size: 15px; color: #475467; line-height: 1.6; max-width: 640px; }
+.tag-row { display: flex; gap: 8px; margin-top: 14px; }
+.page-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.tag-a11y { color: #026aa2; background: #e0f2fe; border-color: #b9e6fe; }
+.tag-figma { color: #6941c6; background: #f4f0fd; border-color: #d6bbfb; }
+
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 700; color: #101828; padding-bottom: 12px; border-bottom: 1px solid #e4e7ec; margin-bottom: 20px; }
+.section-desc { font-size: 14px; color: #475467; line-height: 1.7; margin-bottom: 20px; }
+.divider { border: none; border-top: 1px solid #e4e7ec; margin: 0 0 56px; }
+.variant-label { font-size: 12px; font-weight: 600; color: #98a2b3; text-transform: uppercase; letter-spacing: .06em; margin: 20px 0 8px; }
+
+.demo-box { background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 32px; margin-bottom: 12px; }
+.demo-row { display: flex; flex-direction: column; gap: 24px; }
+.demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.demo-grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+.ds-table-wrap { border: 1px solid #e4e7ec; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-table thead { background: #f9fafb; }
+.ds-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .05em; }
+.ds-table td { padding: 11px 16px; border-top: 1px solid #f2f4f7; color: #344054; }
+.ds-table tr:hover td { background: #fafbff; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: #f2f4f7; color: #29294c; padding: 2px 6px; border-radius: 4px; }
+
+.code-block { background: #0f172a; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.code-block-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155; }
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.copy-btn { font-size: 11px; font-weight: 600; color: #94a3b8; background: none; border: 1px solid #334155; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s, color .15s; }
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; } .c-tag { color: #7dd3fc; } .c-attr { color: #a5b4fc; } .c-val { color: #86efac; }
+
+/* ═══════════════════════════════
+   PROGRESS BAR
+   ═══════════════════════════════ */
+.progress-wrap { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.progress-label-row { display: flex; align-items: center; justify-content: space-between; }
+.progress-label { font-size: 13px; font-weight: 500; color: #344054; }
+.progress-value { font-size: 12px; font-weight: 600; color: #6941c6; }
+
+.progress-track {
+  width: 100%;
+  border-radius: 99px;
+  background: #eaeaed;
+  overflow: hidden;
+  position: relative;
+}
+.progress-track--sm  { height: 4px; }
+.progress-track--md  { height: 8px; }
+.progress-track--lg  { height: 12px; }
+.progress-track--xl  { height: 16px; }
+
+.progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: #7f56d9;
+  transition: width 0.4s ease;
+  position: relative;
+}
+.progress-fill--primary { background: #7f56d9; }
+.progress-fill--success { background: #039855; }
+.progress-fill--warning { background: #f79009; }
+.progress-fill--error   { background: #f04438; }
+.progress-fill--info    { background: #0ba5ec; }
+
+/* Striped */
+.progress-fill--striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255,255,255,.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255,255,255,.2) 50%,
+    rgba(255,255,255,.2) 75%,
+    transparent 75%
+  );
+  background-size: 16px 16px;
+}
+
+/* Indeterminate / animated */
+@keyframes progress-indeterminate {
+  0%   { transform: translateX(-100%) scaleX(0.5); }
+  50%  { transform: translateX(25%) scaleX(0.6); }
+  100% { transform: translateX(100%) scaleX(0.5); }
+}
+.progress-fill--indeterminate {
+  width: 60% !important;
+  animation: progress-indeterminate 1.6s ease infinite;
+  transform-origin: left;
+}
+
+@keyframes stripe-move {
+  from { background-position: 0 0; }
+  to   { background-position: 32px 0; }
+}
+.progress-fill--striped.progress-fill--animated {
+  animation: stripe-move 0.6s linear infinite;
+}
+
+/* Step progress (segmented) */
+.progress-steps { display: flex; gap: 4px; width: 100%; }
+.progress-step {
+  flex: 1;
+  height: 8px;
+  border-radius: 99px;
+  background: #eaeaed;
+  transition: background 0.3s;
+}
+.progress-step.is-done { background: #7f56d9; }
+.progress-step.is-active { background: #9e77ed; }
+
+/* ═══════════════════════════════
+   PROGRESS CIRCLE
+   ═══════════════════════════════ */
+.progress-circle-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.progress-circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.progress-circle svg { transform: rotate(-90deg); }
+.progress-circle-track { fill: none; stroke: #eaeaed; }
+.progress-circle-fill {
+  fill: none;
+  stroke: #7f56d9;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+.progress-circle-fill--success { stroke: #039855; }
+.progress-circle-fill--warning { stroke: #f79009; }
+.progress-circle-fill--error   { stroke: #f04438; }
+.progress-circle-fill--info    { stroke: #0ba5ec; }
+
+.progress-circle-label {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+.progress-circle-pct  { font-size: 20px; font-weight: 700; color: #29294c; line-height: 1; }
+.progress-circle-sub  { font-size: 11px; color: #98a2b3; }
+.progress-circle-pct--sm { font-size: 14px; }
+.progress-circle-pct--lg { font-size: 28px; }
+
+.circle-group { display: flex; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle"/></a><div><span>Pulse DS</span><sub>v1.0.0 · Design System</sub></div></div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link active">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</aside>
+
+<main class="main">
+<div class="content">
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">PROGRESS</span>
+    </div>
+  </div>
+    
+    <h1 class="page-title">Progress</h1>
+    <p class="page-desc">Progress indicators communicate the completion status of a task or process — either as a linear bar or a circular ring.</p>
+    <div class="tag-row">
+      <span class="page-tag tag-stable">Stable</span>
+      <span class="page-tag tag-a11y">Accessible</span>
+      <span class="page-tag tag-figma">Figma Ready</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Progress Bar -->
+  <div class="section">
+    <h2 class="section-title">Progress Bar</h2>
+    <p class="section-desc">A horizontal track with a filled region indicating completion percentage.</p>
+
+    <div class="variant-label">Default — with label and value</div>
+    <div class="demo-box">
+      <div class="demo-row" style="max-width:560px;">
+        <div class="progress-wrap">
+          <div class="progress-label-row">
+            <span class="progress-label">Uploading files…</span>
+            <span class="progress-value" id="pb1-val">65%</span>
+          </div>
+          <div class="progress-track progress-track--md">
+            <div class="progress-fill progress-fill--primary" style="width:65%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Intent variants</div>
+    <div class="demo-box">
+      <div class="demo-row" style="max-width:560px;">
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Primary</span><span class="progress-value">72%</span></div>
+          <div class="progress-track progress-track--md"><div class="progress-fill progress-fill--primary" style="width:72%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Success</span><span class="progress-value" style="color:#039855">100%</span></div>
+          <div class="progress-track progress-track--md"><div class="progress-fill progress-fill--success" style="width:100%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Warning</span><span class="progress-value" style="color:#f79009">48%</span></div>
+          <div class="progress-track progress-track--md"><div class="progress-fill progress-fill--warning" style="width:48%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Error</span><span class="progress-value" style="color:#f04438">23%</span></div>
+          <div class="progress-track progress-track--md"><div class="progress-fill progress-fill--error" style="width:23%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Info</span><span class="progress-value" style="color:#0ba5ec">56%</span></div>
+          <div class="progress-track progress-track--md"><div class="progress-fill progress-fill--info" style="width:56%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Sizes</div>
+    <div class="demo-box">
+      <div class="demo-row" style="max-width:560px;">
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">XSmall (4px)</span></div>
+          <div class="progress-track progress-track--sm"><div class="progress-fill progress-fill--primary" style="width:60%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Small (8px) — default</span></div>
+          <div class="progress-track progress-track--md"><div class="progress-fill progress-fill--primary" style="width:60%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Medium (12px)</span></div>
+          <div class="progress-track progress-track--lg"><div class="progress-fill progress-fill--primary" style="width:60%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Large (16px)</span></div>
+          <div class="progress-track progress-track--xl"><div class="progress-fill progress-fill--primary" style="width:60%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Striped &amp; Animated</div>
+    <div class="demo-box">
+      <div class="demo-row" style="max-width:560px;">
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Striped</span><span class="progress-value">55%</span></div>
+          <div class="progress-track progress-track--lg">
+            <div class="progress-fill progress-fill--primary progress-fill--striped" style="width:55%"></div>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Striped + Animated</span><span class="progress-value">70%</span></div>
+          <div class="progress-track progress-track--lg">
+            <div class="progress-fill progress-fill--primary progress-fill--striped progress-fill--animated" style="width:70%"></div>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Indeterminate</span></div>
+          <div class="progress-track progress-track--md" style="overflow:hidden;">
+            <div class="progress-fill progress-fill--primary progress-fill--indeterminate"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Step / Segmented</div>
+    <div class="demo-box">
+      <div class="demo-row" style="max-width:560px;">
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Step 2 of 5</span><span class="progress-value">40%</span></div>
+          <div class="progress-steps">
+            <div class="progress-step is-done"></div>
+            <div class="progress-step is-done"></div>
+            <div class="progress-step is-active"></div>
+            <div class="progress-step"></div>
+            <div class="progress-step"></div>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label-row"><span class="progress-label">Step 4 of 6</span><span class="progress-value">67%</span></div>
+          <div class="progress-steps">
+            <div class="progress-step is-done"></div>
+            <div class="progress-step is-done"></div>
+            <div class="progress-step is-done"></div>
+            <div class="progress-step is-active"></div>
+            <div class="progress-step"></div>
+            <div class="progress-step"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive demo -->
+    <div class="variant-label">Interactive demo</div>
+    <div class="demo-box">
+      <div style="max-width:560px; display:flex; flex-direction:column; gap:20px;">
+        <div class="progress-wrap">
+          <div class="progress-label-row">
+            <span class="progress-label">Drag to adjust</span>
+            <span class="progress-value" id="demo-val">40%</span>
+          </div>
+          <div class="progress-track progress-track--lg">
+            <div class="progress-fill progress-fill--primary" id="demo-fill" style="width:40%"></div>
+          </div>
+        </div>
+        <input type="range" min="0" max="100" value="40" style="width:100%;accent-color:#7f56d9;" oninput="
+          document.getElementById('demo-fill').style.width = this.value + '%';
+          document.getElementById('demo-val').textContent = this.value + '%';
+        ">
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Progress Circle -->
+  <div class="section">
+    <h2 class="section-title">Progress Circle</h2>
+    <p class="section-desc">A circular SVG-based progress indicator using <code>stroke-dasharray</code> and <code>stroke-dashoffset</code>. Inner label shows the percentage and optional subtext.</p>
+
+    <div class="variant-label">Default — medium (100px)</div>
+    <div class="demo-box">
+      <div class="circle-group">
+
+        <!-- 25% -->
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:100px;height:100px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="progress-circle-track" cx="50" cy="50" r="40" stroke-width="8"/>
+              <circle class="progress-circle-fill" cx="50" cy="50" r="40" stroke-width="8"
+                stroke-dasharray="251.2" stroke-dashoffset="188.4"/>
+            </svg>
+            <div class="progress-circle-label">
+              <span class="progress-circle-pct">25%</span>
+            </div>
+          </div>
+          <span style="font-size:12px;color:#98a2b3;">25%</span>
+        </div>
+
+        <!-- 50% -->
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:100px;height:100px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="progress-circle-track" cx="50" cy="50" r="40" stroke-width="8"/>
+              <circle class="progress-circle-fill" cx="50" cy="50" r="40" stroke-width="8"
+                stroke-dasharray="251.2" stroke-dashoffset="125.6"/>
+            </svg>
+            <div class="progress-circle-label">
+              <span class="progress-circle-pct">50%</span>
+            </div>
+          </div>
+          <span style="font-size:12px;color:#98a2b3;">50%</span>
+        </div>
+
+        <!-- 75% -->
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:100px;height:100px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="progress-circle-track" cx="50" cy="50" r="40" stroke-width="8"/>
+              <circle class="progress-circle-fill" cx="50" cy="50" r="40" stroke-width="8"
+                stroke-dasharray="251.2" stroke-dashoffset="62.8"/>
+            </svg>
+            <div class="progress-circle-label">
+              <span class="progress-circle-pct">75%</span>
+            </div>
+          </div>
+          <span style="font-size:12px;color:#98a2b3;">75%</span>
+        </div>
+
+        <!-- 100% success -->
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:100px;height:100px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="progress-circle-track" cx="50" cy="50" r="40" stroke-width="8"/>
+              <circle class="progress-circle-fill progress-circle-fill--success" cx="50" cy="50" r="40" stroke-width="8"
+                stroke-dasharray="251.2" stroke-dashoffset="0"/>
+            </svg>
+            <div class="progress-circle-label">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#039855" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <span style="font-size:12px;color:#98a2b3;">Complete</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="variant-label">Intent variants</div>
+    <div class="demo-box">
+      <div class="circle-group">
+
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:100px;height:100px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="progress-circle-track" cx="50" cy="50" r="40" stroke-width="8"/>
+              <circle class="progress-circle-fill" cx="50" cy="50" r="40" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="75.36"/>
+            </svg>
+            <div class="progress-circle-label"><span class="progress-circle-pct">70%</span><span class="progress-circle-sub">Primary</span></div>
+          </div>
+        </div>
+
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:100px;height:100px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="progress-circle-track" cx="50" cy="50" r="40" stroke-width="8"/>
+              <circle class="progress-circle-fill progress-circle-fill--success" cx="50" cy="50" r="40" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="25.12"/>
+            </svg>
+            <div class="progress-circle-label"><span class="progress-circle-pct" style="color:#039855">90%</span><span class="progress-circle-sub">Success</span></div>
+          </div>
+        </div>
+
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:100px;height:100px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="progress-circle-track" cx="50" cy="50" r="40" stroke-width="8"/>
+              <circle class="progress-circle-fill progress-circle-fill--warning" cx="50" cy="50" r="40" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="125.6"/>
+            </svg>
+            <div class="progress-circle-label"><span class="progress-circle-pct" style="color:#f79009">50%</span><span class="progress-circle-sub">Warning</span></div>
+          </div>
+        </div>
+
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:100px;height:100px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="progress-circle-track" cx="50" cy="50" r="40" stroke-width="8"/>
+              <circle class="progress-circle-fill progress-circle-fill--error" cx="50" cy="50" r="40" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="188.4"/>
+            </svg>
+            <div class="progress-circle-label"><span class="progress-circle-pct" style="color:#f04438">25%</span><span class="progress-circle-sub">Error</span></div>
+          </div>
+        </div>
+
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:100px;height:100px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="progress-circle-track" cx="50" cy="50" r="40" stroke-width="8"/>
+              <circle class="progress-circle-fill progress-circle-fill--info" cx="50" cy="50" r="40" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="100.48"/>
+            </svg>
+            <div class="progress-circle-label"><span class="progress-circle-pct" style="color:#0ba5ec">60%</span><span class="progress-circle-sub">Info</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="variant-label">Sizes</div>
+    <div class="demo-box">
+      <div class="circle-group" style="align-items:center;">
+
+        <!-- Small 64px -->
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:64px;height:64px;">
+            <svg width="64" height="64" viewBox="0 0 64 64">
+              <circle class="progress-circle-track" cx="32" cy="32" r="26" stroke-width="5"/>
+              <circle class="progress-circle-fill" cx="32" cy="32" r="26" stroke-width="5"
+                stroke-dasharray="163.4" stroke-dashoffset="57.2"/>
+            </svg>
+            <div class="progress-circle-label"><span class="progress-circle-pct progress-circle-pct--sm">65%</span></div>
+          </div>
+          <span style="font-size:11px;color:#98a2b3;">Small (64px)</span>
+        </div>
+
+        <!-- Medium 100px -->
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:100px;height:100px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle class="progress-circle-track" cx="50" cy="50" r="40" stroke-width="8"/>
+              <circle class="progress-circle-fill" cx="50" cy="50" r="40" stroke-width="8"
+                stroke-dasharray="251.2" stroke-dashoffset="87.92"/>
+            </svg>
+            <div class="progress-circle-label"><span class="progress-circle-pct">65%</span><span class="progress-circle-sub">Medium</span></div>
+          </div>
+          <span style="font-size:11px;color:#98a2b3;">Medium (100px)</span>
+        </div>
+
+        <!-- Large 140px -->
+        <div class="progress-circle-wrap">
+          <div class="progress-circle" style="width:140px;height:140px;">
+            <svg width="140" height="140" viewBox="0 0 140 140">
+              <circle class="progress-circle-track" cx="70" cy="70" r="58" stroke-width="10"/>
+              <circle class="progress-circle-fill" cx="70" cy="70" r="58" stroke-width="10"
+                stroke-dasharray="364.4" stroke-dashoffset="127.6"/>
+            </svg>
+            <div class="progress-circle-label">
+              <span class="progress-circle-pct progress-circle-pct--lg">65%</span>
+              <span class="progress-circle-sub">of 100 tasks</span>
+            </div>
+          </div>
+          <span style="font-size:11px;color:#98a2b3;">Large (140px)</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Interactive circle -->
+    <div class="variant-label">Interactive demo</div>
+    <div class="demo-box" style="display:flex; align-items:center; gap:48px; flex-wrap:wrap;">
+      <div class="progress-circle-wrap">
+        <div class="progress-circle" style="width:120px;height:120px;">
+          <svg width="120" height="120" viewBox="0 0 120 120" id="circle-svg">
+            <circle class="progress-circle-track" cx="60" cy="60" r="50" stroke-width="10"/>
+            <circle class="progress-circle-fill" cx="60" cy="60" r="50" stroke-width="10"
+              id="circle-fill"
+              stroke-dasharray="314.2" stroke-dashoffset="157.1"/>
+          </svg>
+          <div class="progress-circle-label">
+            <span class="progress-circle-pct" id="circle-pct">50%</span>
+            <span class="progress-circle-sub">complete</span>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1; min-width:200px;">
+        <label style="font-size:13px;font-weight:500;color:#344054;display:block;margin-bottom:8px;">Adjust progress</label>
+        <input type="range" min="0" max="100" value="50" style="width:100%;accent-color:#7f56d9;" id="circle-range"
+          oninput="
+            const v = +this.value;
+            const circ = 314.2;
+            document.getElementById('circle-fill').setAttribute('stroke-dashoffset', circ - (circ * v / 100));
+            document.getElementById('circle-pct').textContent = v + '%';
+          ">
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CSS Classes -->
+  <div class="section">
+    <h2 class="section-title">CSS Classes</h2>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead><tr><th>Class</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>.progress-track</code></td><td>Grey outer track — set height via size modifier</td></tr>
+          <tr><td><code>.progress-track--sm/md/lg/xl</code></td><td>Track heights: 4px / 8px / 12px / 16px</td></tr>
+          <tr><td><code>.progress-fill</code></td><td>Colored fill region — set <code>width</code> as a % inline</td></tr>
+          <tr><td><code>.progress-fill--primary/success/warning/error/info</code></td><td>Intent fill colors</td></tr>
+          <tr><td><code>.progress-fill--striped</code></td><td>Diagonal stripe overlay pattern</td></tr>
+          <tr><td><code>.progress-fill--animated</code></td><td>Animates the stripe pattern (add alongside striped)</td></tr>
+          <tr><td><code>.progress-fill--indeterminate</code></td><td>Looping animation for unknown duration tasks</td></tr>
+          <tr><td><code>.progress-steps</code></td><td>Segmented step track container</td></tr>
+          <tr><td><code>.progress-step.is-done / .is-active</code></td><td>Completed / current step segments</td></tr>
+          <tr><td><code>.progress-circle</code></td><td>Circular progress wrapper — position relative, inline-flex</td></tr>
+          <tr><td><code>.progress-circle-track</code></td><td>Background circle ring — grey stroke</td></tr>
+          <tr><td><code>.progress-circle-fill</code></td><td>Foreground arc — use <code>stroke-dashoffset</code> to set %</td></tr>
+          <tr><td><code>.progress-circle-fill--success/warning/error/info</code></td><td>Intent arc colors</td></tr>
+          <tr><td><code>.progress-circle-label</code></td><td>Absolutely centered inner label area</td></tr>
+          <tr><td><code>.progress-circle-pct</code></td><td>Large bold percentage number</td></tr>
+          <tr><td><code>.progress-circle-sub</code></td><td>Small muted sub-label below percentage</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Code -->
+  <div class="section">
+    <h2 class="section-title">Code</h2>
+
+    <div class="variant-label">Progress Bar</div>
+    <div class="code-block">
+      <div class="code-block-header"><span class="code-block-title">progress-bar.html</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <div class="code-body"><pre><span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"progress-wrap"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"progress-label-row"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"progress-label"</span><span class="c-tag">&gt;</span>Uploading…<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"progress-value"</span><span class="c-tag">&gt;</span>65%<span class="c-tag">&lt;/span&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"progress-track progress-track--md"</span>
+       <span class="c-attr">role=</span><span class="c-val">"progressbar"</span> <span class="c-attr">aria-valuenow=</span><span class="c-val">"65"</span>
+       <span class="c-attr">aria-valuemin=</span><span class="c-val">"0"</span> <span class="c-attr">aria-valuemax=</span><span class="c-val">"100"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"progress-fill progress-fill--primary"</span>
+         <span class="c-attr">style=</span><span class="c-val">"width: 65%"</span><span class="c-tag">&gt;&lt;/div&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+    </div>
+
+    <div class="variant-label">Progress Circle</div>
+    <div class="code-block">
+      <div class="code-block-header"><span class="code-block-title">progress-circle.html</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <div class="code-body"><pre><span class="c-comment">&lt;!-- circumference = 2π × r = 2π × 40 ≈ 251.2 --&gt;</span>
+<span class="c-comment">&lt;!-- stroke-dashoffset = circumference × (1 - pct/100) --&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"progress-circle"</span> <span class="c-attr">style=</span><span class="c-val">"width:100px;height:100px;"</span>
+     <span class="c-attr">role=</span><span class="c-val">"progressbar"</span> <span class="c-attr">aria-valuenow=</span><span class="c-val">"65"</span>
+     <span class="c-attr">aria-valuemin=</span><span class="c-val">"0"</span> <span class="c-attr">aria-valuemax=</span><span class="c-val">"100"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;svg</span> <span class="c-attr">width=</span><span class="c-val">"100"</span> <span class="c-attr">height=</span><span class="c-val">"100"</span> <span class="c-attr">viewBox=</span><span class="c-val">"0 0 100 100"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;circle</span> <span class="c-attr">class=</span><span class="c-val">"progress-circle-track"</span>
+            <span class="c-attr">cx=</span><span class="c-val">"50"</span> <span class="c-attr">cy=</span><span class="c-val">"50"</span> <span class="c-attr">r=</span><span class="c-val">"40"</span> <span class="c-attr">stroke-width=</span><span class="c-val">"8"</span><span class="c-tag">/&gt;</span>
+    <span class="c-tag">&lt;circle</span> <span class="c-attr">class=</span><span class="c-val">"progress-circle-fill"</span>
+            <span class="c-attr">cx=</span><span class="c-val">"50"</span> <span class="c-attr">cy=</span><span class="c-val">"50"</span> <span class="c-attr">r=</span><span class="c-val">"40"</span> <span class="c-attr">stroke-width=</span><span class="c-val">"8"</span>
+            <span class="c-attr">stroke-dasharray=</span><span class="c-val">"251.2"</span>
+            <span class="c-attr">stroke-dashoffset=</span><span class="c-val">"87.9"</span><span class="c-tag">/&gt;</span>
+  <span class="c-tag">&lt;/svg&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"progress-circle-label"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"progress-circle-pct"</span><span class="c-tag">&gt;</span>65%<span class="c-tag">&lt;/span&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<div
+  role="listbox"
+  class="listbox"
+  [ngClass]="{
+    light: theme === 'light',
+    dark: theme === 'dark',
+  }"
+  [ngStyle]="{
+    width: width
+  }"
+>
+  @if (multiple) {
+    <div class="listbox-header">
+      <div class="listbox-header-left-content">
+        <span class="listbox-header-main-heading"
+          >{{ getSelectedCount() }} Selected</span
+        >
+        @if (hintText) {
+          <span class="listbox-header-subtext">{{ hintText }}</span>
+        }
+      </div>
+      @if (showSelectAllCheckbox) {
+        <vc-checkbox
+          label="All"
+          size="sm"
+          [checked]="selectedAll"
+          [indeterminate]="selectedSome"
+          (onChange)="handleSelectAllChange($event)"
+        ></vc-checkbox>
+      }
+    </div>
+  }
+  <div class="listbox-body">
+    @if (loading) {
+      <vc-option [loading]="loading"></vc-option>
+    } @else {
+      @for (option of options; track $index) {
+        <vc-option
+          [theme]="theme"
+          [componentStyle]="optionStyle"
+          [multiple]="multiple"
+          [value]="option"
+          [active]="activeIndex === $index"
+          [scrollToView]="scrollIndexToView === $index"
+          [selected]="isSelected($index)"
+          (onSelect)="handleOptionSelect($event, $index)"
+        >
+          <div class="flex flex-col">
+            <span class="text-[13px] truncate" [ngClass]="{'text-neutral-200': theme === 'dark'}" [innerHTML]="option?.text"></span>
+            <span
+              class="text-sm-normal text-primary-300 truncate"
+              [ngClass]="{'text-[11px]': size === 'sm', 'text-neutral-300': theme === 'dark', 'text-primary-300': theme === 'light'}"
+              [innerHTML]="option?.subtext"
+            ></span>
+          </div>
+        </vc-option>
+      }
+    }
+  </div>
+</div>

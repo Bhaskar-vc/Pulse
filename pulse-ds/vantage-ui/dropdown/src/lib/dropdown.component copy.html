@@ -1,0 +1,71 @@
+<div
+  class="dropdown-container"
+  [ngStyle]="{ width: width }"
+  [attr.data-collapsed]="!showMenu"
+  (keydown.enter)="handleEnterPress($event)"
+  (keydown.space)="handleSpacePress($event)"
+  (keydown.arrowup)="hoverUp($event)"
+  (keydown.arrowdown)="hoverDown($event)"
+  (blur)="toggleMenu(false)"
+  tabindex="0"
+>
+  <div
+    class="dropdown-btn"
+    [ngClass]="{ borderless: borderLess }"
+    (click)="toggleMenu(!showMenu)"
+  >
+    <span class="text-primary-500 text-base-medium" [id]="elementId">{{
+      placeholder
+    }}</span>
+    <!-- <span
+      class="dropdown-placeholder"
+      [id]="elementId"
+      [ngClass]="{ 'dropdown-selected-text': selectedItem !== undefined }"
+      >{{ selectedItem?.text || placeholder }}</span
+    > -->
+    <i class="dropdown-icon vc-arrow-down"></i>
+  </div>
+  <div class="dropdown-menu">
+    @if (options !== undefined) {
+      <ul role="listbox" [attr.aria-labelledby]="elementId">
+        @for (item of options; track $index) {
+          <vc-dropdown-item
+            [item]="item"
+            [hovered]="$index === hoveredIndex"
+            (onClick)="handleSelectItem($event, item)"
+          ></vc-dropdown-item>
+          <!-- <li
+            class="dropdown-list-item"
+            [ngClass]="{
+              'dropdown-selected-item':
+                selectedItem && item.id === selectedItem.id,
+              'dropdown-hovered-item': $index === hoveredIndex
+            }"
+            [attr.aria-checked]="
+              selectedItem && item.id === selectedItem.id ? true : false
+            "
+            (click)="handleSelectItem($event, item)"
+          >
+            <span>{{ item.text }}</span>
+            @if (selectedItem && item.id === selectedItem.id) {
+              <svg
+                class="check-icon"
+                viewBox="0 0 20 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16.6668 5.5L7.50016 14.6667L3.3335 10.5"
+                  stroke="currentColor"
+                  stroke-width="1.66667"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            }
+          </li> -->
+        }
+      </ul>
+    }
+  </div>
+</div>

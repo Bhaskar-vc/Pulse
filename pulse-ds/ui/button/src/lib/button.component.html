@@ -1,0 +1,29 @@
+<button
+  [type]="type"
+  [class]="buttonClasses"
+  [disabled]="disabled"
+  [attr.aria-disabled]="disabled"
+  [attr.aria-label]="ariaLabel"
+  [attr.aria-pressed]="pressed"
+  [attr.aria-expanded]="expanded"
+  [attr.aria-controls]="controls"
+  [attr.id]="id"
+  [attr.name]="name"
+  [attr.value]="value"
+  [attr.form]="form"
+  [attr.formaction]="formaction"
+  [attr.formenctype]="formenctype"
+  [attr.formmethod]="formmethod"
+  [attr.formnovalidate]="formnovalidate"
+  [attr.formtarget]="formtarget"
+  (click)="onClick($event)"
+  (focus)="onFocus($event)"
+  (blur)="onBlur($event)"
+>
+  @if (loading) {
+    <v-spinner [color]="color" [size]="size" [theme]="spinnerTheme"></v-spinner>
+    {{ loadingText }}
+  } @else {
+    <ng-content></ng-content>
+  }
+</button>

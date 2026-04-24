@@ -1,0 +1,104 @@
+<div class="file-upload-item flex" [style.max-width.%]="fullWidth && 100">
+  <div class="left-content justify-center flex items-center">
+    <div class="file-icon-container">
+      <ng-container *ngTemplateOutlet="fileIcon"></ng-container>
+    </div>
+    <div class="file-info-container">
+      <div class="file-text-info-container">
+        <p class="text-base-medium text-primary-500">
+          {{ name }}
+        </p>
+       @if(showBytes){ <p class="text-primary 300">{{ formatFileSize(size) }}</p>}
+      </div>
+      @if(showProgressBar){
+      @if (progress < 100) {
+        <div class="file-upload-progress-container">
+          <div class="file-upload-progress-bar">
+            <div class="file-upload-progress" [style.width.%]="progress"></div>
+          </div>
+          <span class="subheading-2">{{ progress }}%</span>
+        </div>
+      }}
+    </div>
+  </div>
+  <div class="right-content justify-center flex items-center">
+    @if (showUploadStatusIcon) {
+      <div class="file-action-container file-upload-status-icon-container">
+        <ng-container *ngTemplateOutlet="checkIcon"></ng-container>
+      </div>
+    }
+    <div
+      class="file-action-container file-remove-icon-container cursor-pointer"
+      (click)="handleRemoveFile()"
+    >
+      <ng-container *ngTemplateOutlet="trashIcon"></ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #fileIcon>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+  >
+    <path
+      d="M8.66663 1.33337H3.99996C3.64634 1.33337 3.3072 1.47385 3.05715 1.7239C2.8071 1.97395 2.66663 2.31309 2.66663 2.66671V13.3334C2.66663 13.687 2.8071 14.0261 3.05715 14.2762C3.3072 14.5262 3.64634 14.6667 3.99996 14.6667H12C12.3536 14.6667 12.6927 14.5262 12.9428 14.2762C13.1928 14.0261 13.3333 13.687 13.3333 13.3334V6.00004M8.66663 1.33337L13.3333 6.00004M8.66663 1.33337V6.00004H13.3333"
+      stroke="currentColor"
+      stroke-width="1.33333"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</ng-template>
+
+<ng-template #checkIcon>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="10"
+    height="10"
+    viewBox="0 0 10 10"
+    fill="none"
+  >
+    <g id="check">
+      <path
+        id="Icon"
+        d="M8.33329 2.5L3.74996 7.08333L1.66663 5"
+        stroke="currentColor"
+        stroke-width="1.66667"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </g>
+  </svg>
+</ng-template>
+
+<ng-template #trashIcon>
+  <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+    <path
+      d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320"
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="32"
+    />
+    <path
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-miterlimit="10"
+      stroke-width="32"
+      d="M80 112h352"
+    />
+    <path
+      d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224"
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="32"
+    />
+  </svg>
+</ng-template>

@@ -1,0 +1,9 @@
+<div class="carousel-indicators" [ngClass]="getContainerClass()">
+  @for (i of [].constructor(count); track i) {
+    <button
+      class="indicator"
+      [ngClass]="getIndicatorClass($index)"
+      (click)="handleCarouselSlideSelected($event, $index)"
+    ></button>
+  }
+</div>

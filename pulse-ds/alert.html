@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alert – Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1d2939;
+  background: #f8f9fb;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── Sidebar ── */
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #eaeaed; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #eaeaed; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #29294c; }
+.sidebar-logo sub { font-size: 10px; color: #9d9dad; font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; border-radius: 0;
+  text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+}
+.content {
+  max-width: 1100px;
+  margin: 0;
+  padding: 48px 56px;
+}
+
+/* ── Page Header ── */
+.page-header { margin-bottom: 44px; }
+.breadcrumb { font-size: 12px; color: #98a2b3; margin-bottom: 10px; }
+.breadcrumb span { color: #6941c6; }
+.page-title { font-size: 30px; font-weight: 700; color: #101828; letter-spacing: -.4px; line-height: 1.2; }
+.page-desc { margin-top: 8px; font-size: 15px; color: #475467; line-height: 1.6; max-width: 600px; }
+.tag-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.page-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.tag-a11y   { color: #026aa2; background: #e0f2fe; border-color: #b9e6fe; }
+.tag-figma  { color: #6941c6; background: #f4f0fd; border-color: #d6bbfb; }
+
+/* ── Section ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 700; color: #101828; padding-bottom: 12px; border-bottom: 1px solid #e4e7ec; margin-bottom: 20px; }
+.section-desc { font-size: 14px; color: #475467; line-height: 1.7; margin-bottom: 20px; }
+
+/* ── Demo Box ── */
+.demo-box { background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 24px; margin-bottom: 12px; }
+.demo-box-label { font-size: 12px; font-weight: 600; color: #98a2b3; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px; }
+
+/* ── Variant heading ── */
+.variant-heading { font-size: 13px; font-weight: 600; color: #344054; margin: 24px 0 10px; }
+
+/* ── Props Table ── */
+.ds-table-wrap { border: 1px solid #e4e7ec; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-table thead { background: #f9fafb; }
+.ds-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .05em; }
+.ds-table td { padding: 11px 16px; border-top: 1px solid #f2f4f7; color: #344054; }
+.ds-table tr:hover td { background: #fafbff; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: #f2f4f7; color: #29294c; padding: 2px 6px; border-radius: 4px; }
+
+/* ── Code Block ── */
+.code-block { background: #0f172a; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.code-block-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155; }
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.copy-btn { font-size: 11px; font-weight: 600; color: #94a3b8; background: none; border: 1px solid #334155; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s, color .15s; }
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; }
+.c-tag     { color: #7dd3fc; }
+.c-attr    { color: #a5b4fc; }
+.c-val     { color: #86efac; }
+
+/* ── Do / Don't ── */
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.do-card, .dont-card { border-radius: 12px; padding: 20px; border: 1.5px solid; }
+.do-card { border-color: #a6f4c5; background: #f6fef9; }
+.dont-card { border-color: #fecdca; background: #fffbfa; }
+.do-header, .dont-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.do-header { color: #027a48; }
+.dont-header { color: #b42318; }
+.do-icon, .dont-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.do-icon { background: #027a48; color: #fff; }
+.dont-icon { background: #b42318; color: #fff; }
+.do-card ul, .dont-card ul { padding-left: 18px; }
+.do-card li, .dont-card li { font-size: 13px; color: #344054; line-height: 1.7; }
+
+/* ── A11y ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid #e4e7ec; border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: #101828; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: #475467; line-height: 1.7; }
+
+/* ── Anatomy ── */
+.anatomy-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+.anatomy-item { display: flex; align-items: flex-start; gap: 10px; background: #f9fafb; border-radius: 8px; padding: 10px 14px; border: 1px solid #f2f4f7; }
+.anatomy-num { width: 22px; height: 22px; border-radius: 50%; background: #6941c6; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.anatomy-text { font-size: 13px; color: #344054; }
+.anatomy-text strong { color: #101828; font-weight: 600; }
+
+/* ════════════════════════════════
+   ALERT COMPONENT STYLES
+   ════════════════════════════════ */
+
+/* Base alert */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border-left: 4px solid transparent;
+  margin-bottom: 12px;
+  position: relative;
+  animation: alert-in .18s ease;
+}
+@keyframes alert-in {
+  from { opacity:0; transform: translateY(-4px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes alert-out {
+  from { opacity:1; max-height: 200px; margin-bottom: 12px; }
+  to   { opacity:0; max-height: 0; margin-bottom: 0; padding-top:0; padding-bottom:0; }
+}
+.alert.dismissing {
+  animation: alert-out .2s ease forwards;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Alert icon */
+.alert-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+.alert-icon svg { width: 20px; height: 20px; }
+
+/* Alert body */
+.alert-body { flex: 1; min-width: 0; }
+.alert-title { font-size: 14px; font-weight: 600; line-height: 1.4; margin-bottom: 2px; }
+.alert-message { font-size: 14px; line-height: 1.6; }
+.alert-action { margin-top: 8px; font-size: 13px; font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; font-family: inherit; }
+
+/* Dismiss button */
+.alert-dismiss {
+  flex-shrink: 0; margin-left: 4px; margin-top: 0;
+  width: 24px; height: 24px; border-radius: 4px;
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .12s; padding: 0;
+}
+.alert-dismiss svg { width: 16px; height: 16px; }
+
+/* ── Success ── */
+.alert-success {
+  background: #ecfdf3;
+  border-left-color: #039855;
+}
+.alert-success .alert-title  { color: #027a48; }
+.alert-success .alert-message { color: #065f46; }
+.alert-success .alert-icon svg { color: #039855; }
+.alert-success .alert-dismiss { color: #039855; }
+.alert-success .alert-dismiss:hover { background: #d1fadf; }
+.alert-success .alert-action { color: #027a48; }
+
+/* ── Warning ── */
+.alert-warning {
+  background: #fffaeb;
+  border-left-color: #f79009;
+}
+.alert-warning .alert-title  { color: #b54708; }
+.alert-warning .alert-message { color: #92400e; }
+.alert-warning .alert-icon svg { color: #f79009; }
+.alert-warning .alert-dismiss { color: #b54708; }
+.alert-warning .alert-dismiss:hover { background: #fef0c7; }
+.alert-warning .alert-action { color: #b54708; }
+
+/* ── Error ── */
+.alert-error {
+  background: #fef3f2;
+  border-left-color: #d92d20;
+}
+.alert-error .alert-title  { color: #b42318; }
+.alert-error .alert-message { color: #912018; }
+.alert-error .alert-icon svg { color: #f04438; }
+.alert-error .alert-dismiss { color: #b42318; }
+.alert-error .alert-dismiss:hover { background: #fee4e2; }
+.alert-error .alert-action { color: #b42318; }
+
+/* ── Info ── */
+.alert-info {
+  background: #f0f9ff;
+  border-left-color: #0ba5ec;
+}
+.alert-info .alert-title  { color: #026aa2; }
+.alert-info .alert-message { color: #0c4a6e; }
+.alert-info .alert-icon svg { color: #0ba5ec; }
+.alert-info .alert-dismiss { color: #026aa2; }
+.alert-info .alert-dismiss:hover { background: #e0f2fe; }
+.alert-info .alert-action { color: #026aa2; }
+
+/* ── Filled variant ── */
+.alert-filled.alert-success  { background: #d1fadf; }
+.alert-filled.alert-warning  { background: #fef0c7; }
+.alert-filled.alert-error    { background: #fee4e2; }
+.alert-filled.alert-info     { background: #e0f2fe; }
+
+/* ── Outlined variant ── */
+.alert-outlined {
+  border: 1px solid;
+  border-left-width: 4px;
+  background: transparent;
+}
+.alert-outlined.alert-success { border-color: #039855; background: #f6fef9; }
+.alert-outlined.alert-warning { border-color: #f79009; background: #fffdf5; }
+.alert-outlined.alert-error   { border-color: #d92d20; background: #fffbfa; }
+.alert-outlined.alert-info    { border-color: #0ba5ec; background: #f7fdff; }
+
+/* ── Toast variant ── */
+.alert-toast {
+  border-left: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px -4px rgba(0,0,0,.12), 0 2px 6px -2px rgba(0,0,0,.08);
+  background: #fff;
+  border: 1px solid #e4e7ec;
+  max-width: 400px;
+}
+.alert-toast.alert-success .alert-title  { color: #027a48; }
+.alert-toast.alert-warning .alert-title  { color: #b54708; }
+.alert-toast.alert-error .alert-title    { color: #b42318; }
+.alert-toast.alert-info .alert-title     { color: #026aa2; }
+
+/* ── Size: sm ── */
+.alert-sm { padding: 10px 14px; gap: 10px; }
+.alert-sm .alert-title   { font-size: 12px; }
+.alert-sm .alert-message { font-size: 12px; }
+.alert-sm .alert-icon    { width: 16px; height: 16px; }
+.alert-sm .alert-icon svg { width: 16px; height: 16px; }
+
+/* ── Size: banner ── */
+.alert-banner {
+  border-radius: 0;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid;
+  padding: 12px 24px;
+  justify-content: center;
+  gap: 16px;
+}
+.alert-banner.alert-success { border-bottom-color: #039855; }
+.alert-banner.alert-warning { border-bottom-color: #f79009; }
+.alert-banner.alert-error   { border-bottom-color: #d92d20; }
+.alert-banner.alert-info    { border-bottom-color: #0ba5ec; }
+.alert-banner .alert-body { flex: 0 0 auto; }
+
+/* No title style */
+.alert-notitle .alert-message { margin-top: 0; }
+
+/* Anatomy label */
+.anatomy-label {
+  display: inline-block; background: #f4f0fd; color: #6941c6;
+  font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;
+  letter-spacing: .04em; margin-left: 6px; vertical-align: middle;
+}
+
+@media (max-width: 640px) {
+  .do-dont { grid-template-columns: 1fr; }
+  .a11y-grid { grid-template-columns: 1fr; }
+  .content {
+  max-width: 1100px;
+  margin: 0;
+  padding: 48px 56px;
+}
+  .anatomy-list { grid-template-columns: 1fr; }
+}
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle" style="display:block"/></a>
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link active">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<main class="main">
+<div class="content">
+
+  <!-- Page Header -->
+  <header class="page-header">
+  <div class="ph-folder-icon">
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">ALERT</span>
+    </div>
+  </div>
+    
+    <h1 class="page-title">Alert</h1>
+    <p class="page-desc">Alerts display important messages that inform users about system states, feedback, or required actions. They support semantic variants, dismissal, and contextual actions.</p>
+    <div class="tag-row">
+      <span class="page-tag tag-stable">Stable</span>
+      <span class="page-tag tag-a11y">WCAG AA</span>
+      <span class="page-tag tag-figma">Figma 230-4914</span>
+    </div>
+  </header>
+
+  <!-- ── Overview ── -->
+  <section class="section" id="overview">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">All four semantic variants displayed together. Each communicates a different intent through color, icon, and copy.</p>
+    <div class="demo-box">
+      <div class="alert alert-success" role="status" id="ov-success">
+        <div class="alert-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="alert-body">
+          <div class="alert-title">Changes saved successfully</div>
+          <div class="alert-message">Your profile has been updated and all changes are live.</div>
+        </div>
+        <button class="alert-dismiss" onclick="dismissAlert('ov-success')" aria-label="Dismiss alert">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="alert alert-warning" role="status" id="ov-warning">
+        <div class="alert-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        </div>
+        <div class="alert-body">
+          <div class="alert-title">Your free trial ends in 3 days</div>
+          <div class="alert-message">Upgrade your plan to avoid losing access to premium features.</div>
+          <button class="alert-action alert-warning" onclick="alert('Upgrade plan')">Upgrade now</button>
+        </div>
+        <button class="alert-dismiss" onclick="dismissAlert('ov-warning')" aria-label="Dismiss alert">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="alert alert-error" role="alert" id="ov-error">
+        <div class="alert-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="alert-body">
+          <div class="alert-title">Payment failed</div>
+          <div class="alert-message">We couldn't process your payment. Please check your card details and try again.</div>
+          <button class="alert-action" style="color:#b42318;" onclick="alert('Update payment')">Update payment method</button>
+        </div>
+        <button class="alert-dismiss" onclick="dismissAlert('ov-error')" aria-label="Dismiss alert">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="alert alert-info" role="status" id="ov-info">
+        <div class="alert-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="alert-body">
+          <div class="alert-title">Scheduled maintenance</div>
+          <div class="alert-message">The system will be unavailable on Sunday, March 22 from 2–4 AM UTC.</div>
+          <button class="alert-action" style="color:#026aa2;" onclick="alert('Learn more')">Learn more</button>
+        </div>
+        <button class="alert-dismiss" onclick="dismissAlert('ov-info')" aria-label="Dismiss alert">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div style="margin-top:4px; text-align:center;">
+        <button onclick="restoreAlerts()" style="font-size:12px;color:#6941c6;background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:underline;">Restore dismissed alerts</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Anatomy ── -->
+  <section class="section" id="anatomy">
+    <h2 class="section-title">Anatomy</h2>
+    <div class="demo-box">
+      <div class="alert alert-info" role="status" style="margin-bottom:0; pointer-events:none;">
+        <div class="alert-icon" style="position:relative;">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span class="anatomy-label" style="position:absolute;top:-18px;left:0;white-space:nowrap;">1 Icon</span>
+        </div>
+        <div class="alert-body">
+          <div class="alert-title">Alert Title <span class="anatomy-label">2</span></div>
+          <div class="alert-message">This is the body message with supporting detail. <span class="anatomy-label">3</span></div>
+          <button class="alert-action" style="color:#026aa2;">Action link <span class="anatomy-label">4</span></button>
+        </div>
+        <button class="alert-dismiss" style="color:#026aa2;" aria-label="Dismiss" tabindex="-1">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          <span class="anatomy-label" style="position:absolute;bottom:-20px;right:0;">5</span>
+        </button>
+      </div>
+    </div>
+    <div class="anatomy-list">
+      <div class="anatomy-item"><div class="anatomy-num">1</div><div class="anatomy-text"><strong>Icon</strong> — Semantic SVG icon, 20px, color matches variant.</div></div>
+      <div class="anatomy-item"><div class="anatomy-num">2</div><div class="anatomy-text"><strong>Title</strong> — 14px/600 weight. Optional but recommended for scan-ability.</div></div>
+      <div class="anatomy-item"><div class="anatomy-num">3</div><div class="anatomy-text"><strong>Body</strong> — 14px/400. Supporting detail, max 2–3 lines for inline alerts.</div></div>
+      <div class="anatomy-item"><div class="anatomy-num">4</div><div class="anatomy-text"><strong>Action</strong> — Optional link or button. One action per alert.</div></div>
+      <div class="anatomy-item"><div class="anatomy-num">5</div><div class="anatomy-text"><strong>Dismiss</strong> — 24px icon button. Only shown when <code>dismissible</code> is true.</div></div>
+    </div>
+  </section>
+
+  <!-- ── Visual Styles ── -->
+  <section class="section" id="styles">
+    <h2 class="section-title">Styles</h2>
+
+    <!-- Default (border-left) -->
+    <div class="variant-heading">Default — Border-left only</div>
+    <div class="demo-box">
+      <div class="alert alert-info alert-notitle" role="status" style="margin-bottom:0;">
+        <div class="alert-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="alert-body"><div class="alert-message">A scheduled maintenance window is planned for this weekend.</div></div>
+      </div>
+    </div>
+
+    <!-- Filled -->
+    <div class="variant-heading">Filled — Darker background tint</div>
+    <div class="demo-box">
+      <div class="alert alert-success alert-filled alert-notitle" role="status" style="margin-bottom:0;">
+        <div class="alert-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="alert-body"><div class="alert-message">Your data export is ready to download.</div></div>
+      </div>
+    </div>
+
+    <!-- Outlined -->
+    <div class="variant-heading">Outlined — Full border</div>
+    <div class="demo-box">
+      <div class="alert alert-error alert-outlined alert-notitle" role="alert" style="margin-bottom:0;">
+        <div class="alert-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="alert-body"><div class="alert-message">Two-factor authentication is required before proceeding.</div></div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="variant-heading">Toast — Floating card</div>
+    <div class="demo-box" style="background:#e8eaed; padding:32px; display:flex; justify-content:center;">
+      <div class="alert alert-success alert-toast" role="status" style="margin-bottom:0;">
+        <div class="alert-icon"><svg fill="none" viewBox="0 0 24 24" stroke="#039855"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="alert-body">
+          <div class="alert-title" style="color:#027a48;">File uploaded</div>
+          <div class="alert-message" style="color:#475467; font-size:13px;">design-final.fig has been uploaded successfully.</div>
+        </div>
+        <button class="alert-dismiss" style="color:#98a2b3;" aria-label="Dismiss toast">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Banner -->
+    <div class="variant-heading">Banner — Full-width page-level</div>
+    <div class="demo-box" style="padding:0; overflow:hidden; border-radius:8px;">
+      <div class="alert alert-warning alert-banner" role="status" style="margin-bottom:0;">
+        <div class="alert-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
+        <div class="alert-body" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <span style="font-size:13px;font-weight:600;color:#b54708;">Scheduled downtime:</span>
+          <span style="font-size:13px;color:#92400e;">Services will be unavailable on Sunday 2–4 AM UTC.</span>
+          <button style="font-size:12px;font-weight:600;color:#b54708;background:none;border:none;cursor:pointer;text-decoration:underline;font-family:inherit;">Details</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Sizes ── -->
+  <section class="section" id="sizes">
+    <h2 class="section-title">Sizes</h2>
+
+    <div class="variant-heading">Small (sm) — 12px text, compact padding</div>
+    <div class="demo-box">
+      <div class="alert alert-info alert-sm alert-notitle" role="status" style="margin-bottom:0;">
+        <div class="alert-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="alert-body"><div class="alert-message" style="font-size:12px;">You are viewing a read-only snapshot of this document.</div></div>
+        <button class="alert-dismiss" aria-label="Dismiss"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+
+    <div class="variant-heading">Medium (default) — 14px text</div>
+    <div class="demo-box">
+      <div class="alert alert-info alert-notitle" role="status" style="margin-bottom:0;">
+        <div class="alert-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="alert-body"><div class="alert-message">You are viewing a read-only snapshot of this document.</div></div>
+        <button class="alert-dismiss" aria-label="Dismiss"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Dismissible Demo ── -->
+  <section class="section" id="dismissible">
+    <h2 class="section-title">Dismissible Alerts</h2>
+    <p class="section-desc">Clicking the × button triggers a fade-out animation and removes the alert from the DOM.</p>
+
+    <div class="demo-box" id="dismissible-container">
+      <div class="alert alert-success" role="status" id="dis-1">
+        <div class="alert-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="alert-body"><div class="alert-title">Report generated</div><div class="alert-message">Your monthly analytics report is ready.</div></div>
+        <button class="alert-dismiss" onclick="dismissAlert('dis-1')" aria-label="Dismiss"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="alert alert-error" role="alert" id="dis-2">
+        <div class="alert-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="alert-body"><div class="alert-title">Sync failed</div><div class="alert-message">Could not sync with external service. Retrying in 60s.</div></div>
+        <button class="alert-dismiss" onclick="dismissAlert('dis-2')" aria-label="Dismiss"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div style="text-align:center;margin-top:4px;">
+        <button onclick="restoreDismissible()" style="font-size:12px;color:#6941c6;background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:underline;">Restore dismissed alerts</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Props Table ── -->
+  <section class="section" id="props">
+    <h2 class="section-title">Props</h2>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead>
+          <tr>
+            <th>Prop</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>type</code></td><td><code>'success' | 'warning' | 'error' | 'info'</code></td><td><code>'info'</code></td><td>Semantic variant controlling color and icon</td></tr>
+          <tr><td><code>title</code></td><td><code>string</code></td><td>—</td><td>Bold heading line. Optional but recommended</td></tr>
+          <tr><td><code>message</code></td><td><code>string</code></td><td>—</td><td>Supporting body text content</td></tr>
+          <tr><td><code>dismissible</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show the × dismiss button</td></tr>
+          <tr><td><code>action</code></td><td><code>{ label: string, onClick: fn }</code></td><td>—</td><td>Optional inline action link or button</td></tr>
+          <tr><td><code>variant</code></td><td><code>'default' | 'filled' | 'outlined' | 'toast' | 'banner'</code></td><td><code>'default'</code></td><td>Visual style variant</td></tr>
+          <tr><td><code>size</code></td><td><code>'sm' | 'md'</code></td><td><code>'md'</code></td><td>Compact or default text/padding size</td></tr>
+          <tr><td><code>onDismiss</code></td><td><code>function</code></td><td>—</td><td>Callback fired after alert is dismissed</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── Do's & Don'ts ── -->
+  <section class="section" id="do-dont">
+    <h2 class="section-title">Do's &amp; Don'ts</h2>
+    <div class="do-dont">
+      <div class="do-card">
+        <div class="do-header"><div class="do-icon">✓</div> Do</div>
+        <ul>
+          <li>Use the correct semantic type (don't use info for errors)</li>
+          <li>Keep messages short and actionable</li>
+          <li>Use <code>role="alert"</code> for errors to announce immediately</li>
+          <li>Provide a single, clear action if needed</li>
+          <li>Place inline alerts near the content they describe</li>
+          <li>Auto-dismiss success toasts after 4–6 seconds</li>
+        </ul>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><div class="dont-icon">✕</div> Don't</div>
+        <ul>
+          <li>Don't stack more than 3 alerts at once</li>
+          <li>Don't use error styling for warnings or neutral messages</li>
+          <li>Don't make critical error alerts dismissible without resolution</li>
+          <li>Don't put long paragraphs in alerts — link out instead</li>
+          <li>Don't use alerts for loading or progress states</li>
+          <li>Don't auto-dismiss error alerts</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Accessibility ── -->
+  <section class="section" id="accessibility">
+    <h2 class="section-title">Accessibility</h2>
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          ARIA Roles
+        </h4>
+        <ul>
+          <li>Use <code>role="alert"</code> for <strong>error</strong> alerts — announces immediately to screen readers</li>
+          <li>Use <code>role="status"</code> for <strong>success</strong> and <strong>info</strong> — polite announcement</li>
+          <li>Use <code>role="status"</code> for <strong>warning</strong> unless action is required</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          Color & Icons
+        </h4>
+        <ul>
+          <li>Never use color alone to convey meaning — always pair with an icon</li>
+          <li>All color combinations meet WCAG AA 4.5:1 contrast ratio</li>
+          <li>Icons are decorative (<code>aria-hidden="true"</code>); meaning is in the text</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6.364 1.636l-.707.707M20 12h-1M17.657 17.657l-.707-.707M12 20v-1m-5.657-1.636l.707-.707M4 12h1m2.343-5.657l.707.707"/></svg>
+          Keyboard
+        </h4>
+        <ul>
+          <li>Dismiss button must be reachable by keyboard (Tab)</li>
+          <li>Dismiss button activated with Enter or Space</li>
+          <li>After dismissal, focus should move to a logical next element</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Motion
+        </h4>
+        <ul>
+          <li>Dismiss animation respects <code>prefers-reduced-motion</code></li>
+          <li>Auto-dismiss toasts pause on hover and keyboard focus</li>
+          <li>Animations are &lt;300ms to avoid distraction</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Code ── -->
+  <section class="section" id="code">
+    <h2 class="section-title">Code</h2>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">alert.html — Basic dismissible alert</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">&lt;!-- Error alert with dismiss --&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"alert alert-error"</span>
+     <span class="c-attr">role</span>=<span class="c-val">"alert"</span><span class="c-tag">&gt;</span>
+
+  <span class="c-comment">&lt;!-- Icon (aria-hidden) --&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"alert-icon"</span> <span class="c-attr">aria-hidden</span>=<span class="c-val">"true"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;svg&gt;</span>...<span class="c-tag">&lt;/svg&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+
+  <span class="c-comment">&lt;!-- Content --&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"alert-body"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"alert-title"</span><span class="c-tag">&gt;</span>
+      Payment failed
+    <span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"alert-message"</span><span class="c-tag">&gt;</span>
+      Please update your payment method.
+    <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+
+  <span class="c-comment">&lt;!-- Dismiss --&gt;</span>
+  <span class="c-tag">&lt;button</span>
+    <span class="c-attr">class</span>=<span class="c-val">"alert-dismiss"</span>
+    <span class="c-attr">aria-label</span>=<span class="c-val">"Dismiss alert"</span>
+    <span class="c-attr">onclick</span>=<span class="c-val">"this.closest('.alert').remove()"</span><span class="c-tag">&gt;</span>
+    ✕
+  <span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">CSS — Core alert tokens</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">/* Success */</span>
+<span class="c-tag">.alert-success</span> {
+  <span class="c-attr">background</span>: <span class="c-val">#ecfdf3</span>;
+  <span class="c-attr">border-left</span>: <span class="c-val">4px solid #039855</span>;
+}
+
+<span class="c-comment">/* Warning */</span>
+<span class="c-tag">.alert-warning</span> {
+  <span class="c-attr">background</span>: <span class="c-val">#fffaeb</span>;
+  <span class="c-attr">border-left</span>: <span class="c-val">4px solid #f79009</span>;
+}
+
+<span class="c-comment">/* Error */</span>
+<span class="c-tag">.alert-error</span> {
+  <span class="c-attr">background</span>: <span class="c-val">#fef3f2</span>;
+  <span class="c-attr">border-left</span>: <span class="c-val">4px solid #d92d20</span>;
+}
+
+<span class="c-comment">/* Info */</span>
+<span class="c-tag">.alert-info</span> {
+  <span class="c-attr">background</span>: <span class="c-val">#f0f9ff</span>;
+  <span class="c-attr">border-left</span>: <span class="c-val">4px solid #0ba5ec</span>;
+}</pre></div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<script>
+function dismissAlert(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add('dismissing');
+  setTimeout(() => { el.style.display = 'none'; }, 220);
+}
+
+function restoreAlerts() {
+  ['ov-success','ov-warning','ov-error','ov-info'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.style.display = ''; el.classList.remove('dismissing'); }
+  });
+}
+
+function restoreDismissible() {
+  ['dis-1','dis-2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.style.display = ''; el.classList.remove('dismissing'); }
+  });
+}
+
+function copyCode(btn) {
+  const code = btn.closest('.code-block').querySelector('pre').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// Respect reduced-motion
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const style = document.createElement('style');
+  style.textContent = '.alert, .alert.dismissing { animation: none !important; transition: none !important; }';
+  document.head.appendChild(style);
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

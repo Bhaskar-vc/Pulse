@@ -1,0 +1,78 @@
+.card {
+  @apply flex flex-col max-w-[385px] w-full p-lg rounded-sm;
+  // @apply flex flex-col max-w-[385px] w-full p-lg rounded-sm shadow-[-2px_4px_12px_0px_rgba(24,24,24,0.08)];
+  box-shadow:
+    0px 2px 4px -2px rgba(16, 24, 40, 0.06),
+    0px 4px 8px -2px rgba(16, 24, 40, 0.1);
+
+  &.full-width {
+    @apply max-w-full;
+  }
+}
+
+::ng-deep .card-vertical {
+  @apply flex-col;
+}
+
+::ng-deep .card-img {
+  @apply w-full h-[194px] object-cover rounded-xs;
+}
+
+::ng-deep .card-title {
+  @apply text-primary-600 text-lg font-medium leading-[24px] mt-[20px] capitalize;
+}
+
+::ng-deep .card-body {
+  @apply text-base font-normal text-primary-300 mt-[12px];
+}
+
+::ng-deep .cta-container {
+  @apply w-full flex flex-row items-center gap-sm mt-[20px];
+}
+
+::ng-deep .card-horizontal {
+  @apply max-w-[600px] flex flex-row gap-lg;
+  // @apply max-w-[600px] grid grid-cols-2 gap-lg;
+  //   @apply w-[740px] min-w-[300px] grid grid-cols-2 gap-lg;
+}
+
+// ::ng-deep .card-horizontal {
+//   @apply w-[600px] min-w-[300px] grid grid-cols-2 gap-lg;
+//   //   @apply w-[740px] min-w-[300px] grid grid-cols-2 gap-lg;
+// }
+
+::ng-deep .card-horizontal .card-img {
+  //   @apply min-w-[200px] h-[160px];
+}
+
+::ng-deep .card-horizontal .card-info-container {
+  @apply flex flex-col;
+}
+
+::ng-deep .card-horizontal .cta-container {
+  @apply mt-auto;
+}
+
+::ng-deep .card-horizontal .card-title {
+  @apply mt-0;
+}
+
+::ng-deep .cta-left {
+  @apply justify-start;
+}
+
+::ng-deep .cta-right {
+  @apply justify-end;
+}
+
+::ng-deep .cta-center {
+  @apply justify-center;
+}
+
+::ng-deep .cta-full vc-button {
+  @apply w-full;
+}
+
+::ng-deep .cta-full button {
+  @apply w-full;
+}

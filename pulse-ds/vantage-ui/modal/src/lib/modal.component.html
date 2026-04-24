@@ -1,0 +1,53 @@
+<div [ngClass]="{ 'modal-container': visible === false, 'show-modal-container': visible === true }">
+  <div
+    [ngClass]="{
+      'modal-backdrop': visible === false,
+      'show-modal-backdrop': visible === true
+    }"
+    (click)="close()"
+  ></div>
+  <div [ngClass]="{ modal: visible === false, 'show-modal': visible === true }">
+    <div class="w-full h-full relative p-[24px]">
+      <!-- <div [ngClass]="{'modal-header-default': modalType==='default', 'modal-header': modalType==='confirm'}">
+      <div [ngClass]="{ 'hidden': modalType==='default' }">
+        <div [ngClass]="{ 'icon-class': icon!== undefined }"><i class="{{ icon }}"></i></div>
+      </div>
+    </div> -->
+    <!-- <div [ngClass]="{ 'hidden': modalType==='default' }">
+    <div class="modal-content-title">
+      {{ title }}
+    </div>
+  </div>
+  <div class="modal-content">
+    <ng-content></ng-content>
+  </div>
+  <div [ngClass]="{ 'hidden': modalType==='default' }">
+    <div class="modal-footer">
+      <vc-button label="Deny" (click)="submit()" type="ghost"></vc-button>
+      <vc-button label="Confirm" (click)="submit()"></vc-button>
+    </div>
+  </div> -->
+  @if (showCloseButton) {
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      class="absolute cursor-pointer top-[24px] right-[24px] mt-1.5 mr-3"
+      style="z-index: 1"
+      (click)="close()"
+      >
+      <g id="close-line">
+        <path
+          id="Vector"
+          d="M12 11.0862L16.95 6.13623L18.364 7.55023L13.414 12.5002L18.364 17.4502L16.95 18.8642L12 13.9142L7.05002 18.8642L5.63602 17.4502L10.586 12.5002L5.63602 7.55023L7.05002 6.13623L12 11.0862Z"
+          fill="#5C6C7C"
+          />
+      </g>
+    </svg>
+  }
+  <ng-content></ng-content>
+</div>
+</div>
+</div>

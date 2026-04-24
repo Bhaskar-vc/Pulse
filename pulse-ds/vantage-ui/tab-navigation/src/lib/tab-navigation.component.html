@@ -1,0 +1,51 @@
+<div>
+  <ul class="flex gap-[30px] text-nowrap">
+    @for (tab of tabs; track $index) {
+      <li
+        [ngClass]="{
+          'tab-highlight':
+            tab.label === selectedTab?.label || tab.label === activeTab?.label,
+          'flex gap-[8px] items-center border-b-2 border-transparent pb-[2px]': true,
+          'label-size-sm': labelSize === 'sm',
+          'label-size-default': labelSize === 'default',
+        }"
+        (click)="selectTab(tab)"
+      >
+        @if (tab.iconLeft) {
+          <i class="{{ tab.iconLeft }}"></i>
+        }
+
+        @if (tab.routerLink) {
+          <a
+            [routerLink]="tab.routerLink"
+            [routerLinkActive]="
+              'text-secondary-700 border-b-2 border-secondary-600 pb-[2px]'
+            "
+          >
+            <ng-container>
+              <!-- @if (tab.icon) {} -->
+
+              @if (tab.label) {
+                <span>{{ tab.label }}</span>
+              }
+            </ng-container>
+          </a>
+        } @else {
+          <a>
+            <ng-container>
+              <!-- @if (tab.icon) {} -->
+
+              @if (tab.label) {
+                <span>{{ tab.label }}</span>
+              }
+            </ng-container>
+          </a>
+        }
+
+        @if (tab.iconRight) {
+          <i class="{{ tab.iconRight }}"></i>
+        }
+      </li>
+    }
+  </ul>
+</div>

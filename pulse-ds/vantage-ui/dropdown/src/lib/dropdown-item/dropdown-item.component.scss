@@ -1,0 +1,24 @@
+.dropdown-item {
+  @apply w-full;
+  // @apply text-primary-500 flex flex-row justify-between items-center gap-sm px-lg py-[10px] hover:bg-neutral-100 cursor-pointer;
+
+  .dropdown-item-inner {
+    @apply text-primary-500 flex flex-row justify-between items-center gap-sm px-lg py-sm hover:bg-neutral-100 cursor-pointer;
+
+    .dropdown-item-left-content {
+      @apply flex flex-row items-center gap-md;
+
+      .dropdown-item-text {
+        @apply text-[13px];
+      }
+    }
+
+    .dropdown-item-right-content {
+      @apply text-primary-300;
+    }
+
+    &.hovered {
+      @apply bg-neutral-100;
+    }
+  }
+}

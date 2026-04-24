@@ -1,0 +1,99 @@
+@mixin innerRadioRing($spreadRadius, $color: transparent) {
+  -webkit-box-shadow: inset 0px 0px 0px $spreadRadius $color;
+  -moz-box-shadow: inset 0px 0px 0px $spreadRadius $color;
+  box-shadow: inset 0px 0px 0px $spreadRadius $color;
+}
+
+.radio-btn {
+  @apply flex-shrink-0 relative border-[1px] mt-3xs border-neutral-300 rounded-full hover:border-secondary-600 hover:bg-secondary-50 cursor-pointer;
+
+  & .radio-hidden {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 cursor-pointer;
+  }
+
+  & .radio-visible {
+    @apply w-full h-full rounded-full transition duration-200;
+    @include innerRadioRing(8px, white);
+  }
+
+  & ~ .radio-input-label {
+    @apply flex flex-col cursor-pointer;
+  }
+
+  &[data-disabled='false'] {
+    &:hover,
+    &[data-hovered='true'] {
+      @apply border-secondary-600;
+
+      & .radio-visible {
+        @include innerRadioRing(8px, #f9f5ff);
+      }
+    }
+
+    &[data-focused='true'] {
+      @apply border-secondary-300 shadow-[0_0_0_4px_#f4ebff];
+    }
+
+    &[data-checked='true'] {
+      @apply bg-secondary-600 border-secondary-600;
+
+      & .radio-visible {
+        @include innerRadioRing(4px, #f9f5ff);
+      }
+    }
+  }
+
+  &[data-disabled='true'] {
+    @apply border-neutral-300 bg-neutral-50 pointer-events-none;
+
+    & ~ .radio-input-label {
+      @apply text-neutral-300 stroke-neutral-300 pointer-events-none;
+    }
+
+    &[data-checked='true'] {
+      & .radio-visible {
+        @apply bg-neutral-300;
+        @include innerRadioRing(4px, white);
+      }
+    }
+  }
+}
+
+.radio-size-sm {
+  @apply w-lg h-lg;
+}
+
+.radio-size-md {
+  @apply w-[20px] h-[20px];
+
+  .radio-visible {
+    @include innerRadioRing(12px, white);
+  }
+
+  .radio-input-label {
+    @apply text-lg;
+  }
+
+  &[data-disabled='false'] {
+    &:hover,
+    &[data-hovered='true'] {
+      & .radio-visible {
+        @include innerRadioRing(12px, #f9f5ff);
+      }
+    }
+
+    &[data-checked='true'] {
+      & .radio-visible {
+        @include innerRadioRing(5px, #f9f5ff);
+      }
+    }
+  }
+
+  &[data-disabled='true'] {
+    &[data-checked='true'] {
+      & .radio-visible {
+        @include innerRadioRing(5px, white);
+      }
+    }
+  }
+}

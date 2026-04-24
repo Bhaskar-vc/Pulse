@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tag – Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --primary-700: #29294c;
+  --primary-500: #707087;
+  --primary-400: #9d9dad;
+  --primary-300: #bdbdc8;
+  --primary-200: #eaeaed;
+  --primary-100: #f4f4f6;
+  --primary-50:  #f9fafb;
+  --secondary-700: #6941c6;
+  --secondary-600: #7f56d9;
+  --secondary-500: #9e77ed;
+  --secondary-400: #b692f6;
+  --secondary-100: #f4ebff;
+  --secondary-50:  #f9f5ff;
+  --success-800: #027a48;
+  --success-700: #039855;
+  --success-600: #12b76a;
+  --success-200: #d1fadf;
+  --success-100: #ecfdf3;
+  --warning-800: #b54708;
+  --warning-600: #f79009;
+  --warning-50:  #fffaeb;
+  --error-800: #b42318;
+  --error-700: #d92d20;
+  --error-600: #f04438;
+  --error-100: #fef3f2;
+  --info-800: #026aa2;
+  --info-600: #0ba5ec;
+  --info-100: #f0f9ff;
+  --text-primary: #29294c;
+  --text-secondary: #707087;
+  --text-tertiary: #9d9dad;
+  --border-default: #eaeaed;
+  --border-strong: #bdbdc8;
+  --bg-page: #f9fafb;
+  --sidebar-w: 240px;
+  --font: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--text-primary);
+  background: var(--bg-page);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: #fff;
+  border-right: 1px solid var(--border-default);
+  padding: 24px 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid var(--border-default);
+  margin-bottom: 16px;
+}
+.sidebar-logo span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--primary-700);
+}
+.sidebar-logo sub {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  font-weight: 400;
+  display: block;
+  margin-top: 2px;
+}
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title {
+  padding: 6px 20px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+}
+.sidebar-link {
+  display: block;
+  padding: 7px 20px;
+  font-size: 13px;
+  color: #4a4a68;
+  border-radius: 0;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 48px 56px;
+  max-width: 1100px;
+}
+
+/* ── Breadcrumb ── */
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text-primary); }
+.breadcrumb-sep { opacity: 0.4; }
+
+/* ── Page Header ── */
+.page-header { margin-bottom: 40px; }
+.page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+.page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 600px; }
+.page-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.ptag {
+  font-size: 11px; font-weight: 500; padding: 3px 10px;
+  border-radius: 99px; border: 1px solid;
+}
+.ptag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+.ptag-a11y   { background: #e0f2fe; color: #026aa2; border-color: #b9e6fe; }
+.ptag-figma  { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+
+/* ── Section ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; padding-bottom: 12px; border-bottom: 1px solid var(--border-default); }
+.section-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; margin-top: 10px; }
+.divider { border: none; border-top: 1px solid var(--border-default); margin: 48px 0; }
+
+/* ── Demo Box ── */
+.demo-box {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.demo-label {
+  font-size: 11px; font-weight: 600; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.07em;
+  margin-bottom: 14px;
+}
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.demo-section { margin-bottom: 24px; }
+.demo-section:last-child { margin-bottom: 0; }
+
+/* ── Variant Heading ── */
+.variant-heading {
+  font-size: 13px; font-weight: 600; color: #344054;
+  margin: 20px 0 10px;
+}
+
+/* ── Props Table ── */
+.ds-table-wrap { border: 1px solid var(--border-default); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-table thead { background: var(--primary-50); }
+.ds-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .05em; }
+.ds-table td { padding: 11px 16px; border-top: 1px solid #f2f4f7; color: #344054; }
+.ds-table tr:hover td { background: #fafbff; }
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; background: var(--primary-50);
+  padding: 2px 6px; border-radius: 4px; color: var(--secondary-700);
+}
+
+/* ── Do / Don't ── */
+.do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.do-card, .dont-card { border-radius: 12px; overflow: hidden; border: 1px solid var(--border-default); }
+.do-card .card-header { background: #ecfdf3; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #039855; display: flex; align-items: center; gap: 6px; }
+.dont-card .card-header { background: #fef3f2; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #d92d20; display: flex; align-items: center; gap: 6px; }
+.card-body { padding: 20px; background: #fff; }
+.card-body ul { padding-left: 18px; }
+.card-body li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ── Code Block ── */
+.code-block { background: #0f172a; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.code-block-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155;
+}
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.copy-btn {
+  font-size: 11px; font-weight: 600; color: #94a3b8;
+  background: none; border: 1px solid #334155; border-radius: 6px;
+  padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif;
+  transition: background .15s, color .15s;
+}
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; }
+.c-tag     { color: #7dd3fc; }
+.c-attr    { color: #a5b4fc; }
+.c-val     { color: #86efac; }
+.c-str     { color: #fde68a; }
+
+/* ── Accessibility ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: #101828; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: #475467; line-height: 1.7; }
+
+/* ══════════════════════════════════════
+   TAG / BADGE COMPONENT
+══════════════════════════════════════ */
+
+/* Base tag */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  line-height: 1;
+  cursor: default;
+  vertical-align: middle;
+  transition: opacity 0.12s;
+}
+
+/* ── Sizes ── */
+.tag-sm {
+  font-size: 12px;
+  padding: 0 8px;
+  height: 20px;
+  gap: 4px;
+}
+.tag-sm .tag-icon { width: 10px; height: 10px; }
+.tag-sm .tag-remove { width: 14px; height: 14px; font-size: 11px; }
+.tag-sm .tag-dot  { width: 6px; height: 6px; }
+
+.tag-md {
+  font-size: 13px;
+  padding: 0 10px;
+  height: 24px;
+  gap: 5px;
+}
+.tag-md .tag-icon { width: 12px; height: 12px; }
+.tag-md .tag-remove { width: 16px; height: 16px; font-size: 12px; }
+.tag-md .tag-dot  { width: 7px; height: 7px; }
+
+.tag-lg {
+  font-size: 14px;
+  padding: 0 12px;
+  height: 28px;
+  gap: 6px;
+}
+.tag-lg .tag-icon { width: 14px; height: 14px; }
+.tag-lg .tag-remove { width: 18px; height: 18px; font-size: 13px; }
+.tag-lg .tag-dot  { width: 8px; height: 8px; }
+
+/* ── Dot ── */
+.tag-dot {
+  display: inline-block;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Remove button ── */
+.tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  color: inherit;
+  opacity: 0.65;
+  transition: background 0.12s, opacity 0.12s;
+  font-family: 'Inter', sans-serif;
+  line-height: 1;
+}
+.tag-remove:hover {
+  opacity: 1;
+  background: rgba(180,35,24,0.12);
+  color: #b42318;
+}
+
+/* ── PRIMARY / DEFAULT ── */
+/* solid */
+.tag-primary-solid          { background: #29294c; color: #fff; border-color: #29294c; }
+/* light */
+.tag-primary-light          { background: #f4f4f6; color: #29294c; border-color: transparent; }
+/* outlined */
+.tag-primary-outlined       { background: transparent; color: #29294c; border-color: #bdbdc8; }
+/* tinted */
+.tag-primary-tinted { background: #f4f4f6; color: #29294c; border-color: #bdbdc8; }
+
+/* ── SECONDARY / PURPLE ── */
+.tag-secondary-solid          { background: #7f56d9; color: #fff; border-color: #7f56d9; }
+.tag-secondary-light          { background: #f9f5ff; color: #6941c6; border-color: transparent; }
+.tag-secondary-outlined       { background: transparent; color: #6941c6; border-color: #b692f6; }
+.tag-secondary-tinted { background: #f9f5ff; color: #6941c6; border-color: #b692f6; }
+
+/* ── SUCCESS ── */
+.tag-success-solid          { background: #039855; color: #fff; border-color: #039855; }
+.tag-success-light          { background: #ecfdf3; color: #027a48; border-color: transparent; }
+.tag-success-outlined       { background: transparent; color: #027a48; border-color: #12b76a; }
+.tag-success-tinted { background: #ecfdf3; color: #027a48; border-color: #12b76a; }
+
+/* ── WARNING ── */
+.tag-warning-solid          { background: #f79009; color: #fff; border-color: #f79009; }
+.tag-warning-light          { background: #fffaeb; color: #b54708; border-color: transparent; }
+.tag-warning-outlined       { background: transparent; color: #b54708; border-color: #f79009; }
+.tag-warning-tinted { background: #fffaeb; color: #b54708; border-color: #f79009; }
+
+/* ── ERROR ── */
+.tag-error-solid          { background: #f04438; color: #fff; border-color: #f04438; }
+.tag-error-light          { background: #fef3f2; color: #b42318; border-color: transparent; }
+.tag-error-outlined       { background: transparent; color: #b42318; border-color: #f04438; }
+.tag-error-tinted { background: #fef3f2; color: #b42318; border-color: #f04438; }
+
+/* ── INFO ── */
+.tag-info-solid          { background: #0ba5ec; color: #fff; border-color: #0ba5ec; }
+.tag-info-light          { background: #f0f9ff; color: #026aa2; border-color: transparent; }
+.tag-info-outlined       { background: transparent; color: #026aa2; border-color: #0ba5ec; }
+.tag-info-tinted { background: #f0f9ff; color: #026aa2; border-color: #0ba5ec; }
+
+/* Dot colors for each semantic */
+.dot-primary   { background: #29294c; }
+.dot-secondary { background: #7f56d9; }
+.dot-success   { background: #039855; }
+.dot-warning   { background: #f79009; }
+.dot-error     { background: #f04438; }
+.dot-info      { background: #0ba5ec; }
+
+/* ── Filter tag (toggle) ── */
+.tag-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  padding: 0 12px;
+  height: 28px;
+  border: 1.5px solid var(--border-strong);
+  background: #fff;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.tag-filter:hover {
+  border-color: var(--secondary-500);
+  color: var(--secondary-700);
+  background: var(--secondary-50);
+}
+.tag-filter.selected {
+  border-color: var(--secondary-600);
+  background: var(--secondary-50);
+  color: var(--secondary-700);
+  font-weight: 600;
+}
+.tag-filter-check {
+  display: none;
+  width: 12px; height: 12px;
+}
+.tag-filter.selected .tag-filter-check { display: inline-block; }
+
+/* ── Status badge ── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  height: auto;
+  white-space: nowrap;
+}
+.status-active   { background: #ecfdf3; color: #027a48; }
+.status-inactive { background: #f4f4f6; color: #707087; }
+.status-pending  { background: #fffaeb; color: #b54708; }
+.status-draft    { background: #f0f9ff; color: #026aa2; }
+.status-archived { background: #fef3f2; color: #b42318; }
+
+/* Status dot */
+.s-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.s-dot-active   { background: #039855; }
+.s-dot-inactive { background: #9d9dad; }
+.s-dot-pending  { background: #f79009; }
+.s-dot-draft    { background: #0ba5ec; }
+.s-dot-archived { background: #f04438; }
+
+/* ── Removable demo area ── */
+.removable-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 36px;
+  padding: 12px;
+  background: var(--primary-50);
+  border-radius: 8px;
+  border: 1px dashed var(--border-strong);
+}
+.empty-hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+}
+
+/* ── Overview grid ── */
+.overview-color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+.overview-color-card {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.overview-color-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.overview-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ── Variants matrix ── */
+.variants-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.variants-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+}
+.variants-row-label {
+  width: 100px;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.variants-row-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle" style="display:block"/></a>
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link active">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Components</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Tag</span>
+  </div>
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">TAG</span>
+    </div>
+  </div>
+    
+    <h1 class="page-title">Tag</h1>
+    <p class="page-subtitle">Tags are compact labels used to categorize, filter, or describe content. They support semantic color variants, multiple styles, sizes, icons, and removable states for interactive use cases.</p>
+    <div class="page-tags">
+      <span class="ptag ptag-stable">Stable</span>
+      <span class="ptag ptag-a11y">WCAG AA</span>
+      <span class="ptag ptag-figma">Figma 230-4908</span>
+    </div>
+  </div>
+
+  <!-- ── Section 1: Overview ── -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">Tags communicate status, category, or metadata. The six semantic colors map directly to system states, and each supports four visual styles: solid, light, outlined, and tinted.</p>
+
+    <div class="demo-box">
+      <div class="overview-color-grid">
+
+        <div class="overview-color-card">
+          <div class="overview-color-name">Primary</div>
+          <div class="overview-tag-row">
+            <span class="tag tag-md tag-primary-solid">Default</span>
+            <span class="tag tag-md tag-primary-light">Light</span>
+            <span class="tag tag-md tag-primary-outlined">Outlined</span>
+            <span class="tag tag-md tag-primary-tinted">Tinted</span>
+          </div>
+        </div>
+
+        <div class="overview-color-card">
+          <div class="overview-color-name">Secondary</div>
+          <div class="overview-tag-row">
+            <span class="tag tag-md tag-secondary-solid">Purple</span>
+            <span class="tag tag-md tag-secondary-light">Light</span>
+            <span class="tag tag-md tag-secondary-outlined">Outlined</span>
+            <span class="tag tag-md tag-secondary-tinted">Tinted</span>
+          </div>
+        </div>
+
+        <div class="overview-color-card">
+          <div class="overview-color-name">Success</div>
+          <div class="overview-tag-row">
+            <span class="tag tag-md tag-success-solid">Active</span>
+            <span class="tag tag-md tag-success-light">Light</span>
+            <span class="tag tag-md tag-success-outlined">Outlined</span>
+            <span class="tag tag-md tag-success-tinted">Tinted</span>
+          </div>
+        </div>
+
+        <div class="overview-color-card">
+          <div class="overview-color-name">Warning</div>
+          <div class="overview-tag-row">
+            <span class="tag tag-md tag-warning-solid">Caution</span>
+            <span class="tag tag-md tag-warning-light">Light</span>
+            <span class="tag tag-md tag-warning-outlined">Outlined</span>
+            <span class="tag tag-md tag-warning-tinted">Tinted</span>
+          </div>
+        </div>
+
+        <div class="overview-color-card">
+          <div class="overview-color-name">Error</div>
+          <div class="overview-tag-row">
+            <span class="tag tag-md tag-error-solid">Error</span>
+            <span class="tag tag-md tag-error-light">Light</span>
+            <span class="tag tag-md tag-error-outlined">Outlined</span>
+            <span class="tag tag-md tag-error-tinted">Tinted</span>
+          </div>
+        </div>
+
+        <div class="overview-color-card">
+          <div class="overview-color-name">Info</div>
+          <div class="overview-tag-row">
+            <span class="tag tag-md tag-info-solid">Info</span>
+            <span class="tag tag-md tag-info-light">Light</span>
+            <span class="tag tag-md tag-info-outlined">Outlined</span>
+            <span class="tag tag-md tag-info-tinted">Tinted</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 2: Semantic Colors × Styles ── -->
+  <div class="section">
+    <h2 class="section-title">Variants</h2>
+    <p class="section-desc">Four visual styles are available: <strong>Solid</strong> for prominent badges, <strong>Light</strong> for subtle inline labels, <strong>Outlined</strong> for low-visual-weight contexts, and <strong>Tinted</strong> — a combination of tinted background and semantic border for emphasis without full fill.</p>
+
+    <div class="variant-heading">Solid — filled background, white text</div>
+    <div class="demo-box">
+      <div class="demo-row">
+        <span class="tag tag-md tag-primary-solid">Primary</span>
+        <span class="tag tag-md tag-secondary-solid">Secondary</span>
+        <span class="tag tag-md tag-success-solid">Success</span>
+        <span class="tag tag-md tag-warning-solid">Warning</span>
+        <span class="tag tag-md tag-error-solid">Error</span>
+        <span class="tag tag-md tag-info-solid">Info</span>
+      </div>
+    </div>
+
+    <div class="variant-heading">Light — tint background, semantic text, no border</div>
+    <div class="demo-box">
+      <div class="demo-row">
+        <span class="tag tag-md tag-primary-light">Primary</span>
+        <span class="tag tag-md tag-secondary-light">Secondary</span>
+        <span class="tag tag-md tag-success-light">Success</span>
+        <span class="tag tag-md tag-warning-light">Warning</span>
+        <span class="tag tag-md tag-error-light">Error</span>
+        <span class="tag tag-md tag-info-light">Info</span>
+      </div>
+    </div>
+
+    <div class="variant-heading">Outlined — transparent background, semantic border</div>
+    <div class="demo-box">
+      <div class="demo-row">
+        <span class="tag tag-md tag-primary-outlined">Primary</span>
+        <span class="tag tag-md tag-secondary-outlined">Secondary</span>
+        <span class="tag tag-md tag-success-outlined">Success</span>
+        <span class="tag tag-md tag-warning-outlined">Warning</span>
+        <span class="tag tag-md tag-error-outlined">Error</span>
+        <span class="tag tag-md tag-info-outlined">Info</span>
+      </div>
+    </div>
+
+    <div class="variant-heading">Tinted — tint background + semantic border</div>
+    <div class="demo-box">
+      <div class="demo-row">
+        <span class="tag tag-md tag-primary-tinted">Primary</span>
+        <span class="tag tag-md tag-secondary-tinted">Secondary</span>
+        <span class="tag tag-md tag-success-tinted">Success</span>
+        <span class="tag tag-md tag-warning-tinted">Warning</span>
+        <span class="tag tag-md tag-error-tinted">Error</span>
+        <span class="tag tag-md tag-info-tinted">Info</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 3: Sizes ── -->
+  <div class="section">
+    <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">Three sizes adapt to different density contexts. Use <code>sm</code> in dense data tables, <code>md</code> as the default in most contexts, and <code>lg</code> for standalone labels with more visual weight.</p>
+
+    <div class="demo-box">
+      <div class="variants-matrix">
+
+        <div class="variants-row">
+          <span class="variants-row-label"><code>sm</code> — 20px</span>
+          <div class="variants-row-tags">
+            <span class="tag tag-sm tag-primary-solid">Primary</span>
+            <span class="tag tag-sm tag-secondary-light">Secondary</span>
+            <span class="tag tag-sm tag-success-light">Success</span>
+            <span class="tag tag-sm tag-warning-light">Warning</span>
+            <span class="tag tag-sm tag-error-light">Error</span>
+            <span class="tag tag-sm tag-info-light">Info</span>
+          </div>
+        </div>
+
+        <div class="variants-row">
+          <span class="variants-row-label"><code>md</code> — 24px</span>
+          <div class="variants-row-tags">
+            <span class="tag tag-md tag-primary-solid">Primary</span>
+            <span class="tag tag-md tag-secondary-light">Secondary</span>
+            <span class="tag tag-md tag-success-light">Success</span>
+            <span class="tag tag-md tag-warning-light">Warning</span>
+            <span class="tag tag-md tag-error-light">Error</span>
+            <span class="tag tag-md tag-info-light">Info</span>
+          </div>
+        </div>
+
+        <div class="variants-row">
+          <span class="variants-row-label"><code>lg</code> — 28px</span>
+          <div class="variants-row-tags">
+            <span class="tag tag-lg tag-primary-solid">Primary</span>
+            <span class="tag tag-lg tag-secondary-light">Secondary</span>
+            <span class="tag tag-lg tag-success-light">Success</span>
+            <span class="tag tag-lg tag-warning-light">Warning</span>
+            <span class="tag tag-lg tag-error-light">Error</span>
+            <span class="tag tag-lg tag-info-light">Info</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 4: With Icons ── -->
+  <div class="section">
+    <h2 class="section-title">With Icons</h2>
+    <p class="section-desc">Tags support leading dots, leading icons, and trailing remove (×) buttons. Use dots for status, icons for category context, and the remove button for dismissible filter chips.</p>
+
+    <div class="variant-heading">Leading dot</div>
+    <div class="demo-box">
+      <div class="demo-row">
+        <span class="tag tag-md tag-primary-light">
+          <span class="tag-dot dot-primary"></span>
+          Primary
+        </span>
+        <span class="tag tag-md tag-secondary-light">
+          <span class="tag-dot dot-secondary"></span>
+          Secondary
+        </span>
+        <span class="tag tag-md tag-success-light">
+          <span class="tag-dot dot-success"></span>
+          Success
+        </span>
+        <span class="tag tag-md tag-warning-light">
+          <span class="tag-dot dot-warning"></span>
+          Warning
+        </span>
+        <span class="tag tag-md tag-error-light">
+          <span class="tag-dot dot-error"></span>
+          Error
+        </span>
+        <span class="tag tag-md tag-info-light">
+          <span class="tag-dot dot-info"></span>
+          Info
+        </span>
+      </div>
+    </div>
+
+    <div class="variant-heading">Leading icon (SVG)</div>
+    <div class="demo-box">
+      <div class="demo-row">
+        <span class="tag tag-md tag-secondary-light">
+          <svg class="tag-icon" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <circle cx="6" cy="6" r="5" stroke="#6941c6" stroke-width="1.5"/>
+            <path d="M4 6l1.5 1.5L8 4" stroke="#6941c6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Verified
+        </span>
+        <span class="tag tag-md tag-success-light">
+          <svg class="tag-icon" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <path d="M6 1l1.5 3h3.5l-2.75 2 1 3.5L6 8 2.75 9.5l1-3.5L1 4h3.5z" fill="#039855"/>
+          </svg>
+          Featured
+        </span>
+        <span class="tag tag-md tag-info-light">
+          <svg class="tag-icon" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <circle cx="6" cy="6" r="5" stroke="#0ba5ec" stroke-width="1.5"/>
+            <path d="M6 5.5v3M6 3.5v.5" stroke="#0ba5ec" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          New
+        </span>
+        <span class="tag tag-md tag-warning-light">
+          <svg class="tag-icon" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <path d="M6 1L11 11H1L6 1z" stroke="#b54708" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M6 5v2.5M6 9v.2" stroke="#b54708" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Beta
+        </span>
+        <span class="tag tag-md tag-primary-light">
+          <svg class="tag-icon" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <rect x="1" y="1" width="10" height="10" rx="2" stroke="#29294c" stroke-width="1.5"/>
+            <path d="M4 6h4M6 4v4" stroke="#29294c" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Add label
+        </span>
+      </div>
+    </div>
+
+    <div class="variant-heading">Trailing remove (×) — removable tags</div>
+    <div class="demo-box">
+      <div class="demo-row" id="inlineRemovable">
+        <span class="tag tag-md tag-primary-solid">
+          Primary
+          <button class="tag-remove" aria-label="Remove Primary tag" onclick="removeTag(this)">×</button>
+        </span>
+        <span class="tag tag-md tag-secondary-light">
+          Secondary
+          <button class="tag-remove" aria-label="Remove Secondary tag" onclick="removeTag(this)">×</button>
+        </span>
+        <span class="tag tag-md tag-success-light">
+          Success
+          <button class="tag-remove" aria-label="Remove Success tag" onclick="removeTag(this)">×</button>
+        </span>
+        <span class="tag tag-md tag-warning-light">
+          Warning
+          <button class="tag-remove" aria-label="Remove Warning tag" onclick="removeTag(this)">×</button>
+        </span>
+        <span class="tag tag-md tag-error-light">
+          Error
+          <button class="tag-remove" aria-label="Remove Error tag" onclick="removeTag(this)">×</button>
+        </span>
+        <span class="tag tag-md tag-info-light">
+          Info
+          <button class="tag-remove" aria-label="Remove Info tag" onclick="removeTag(this)">×</button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 5: Interactive Removable Demo ── -->
+  <div class="section">
+    <h2 class="section-title">Interactive Removable Tags</h2>
+    <p class="section-desc">Click the × on any tag to dismiss it. Use for selected filter chips, applied labels, or email recipients. Removed tags animate out and the area collapses gracefully.</p>
+
+    <div class="demo-box">
+      <div class="demo-label">Applied filters — click × to remove</div>
+      <div class="removable-demo" id="removableDemo">
+        <span class="tag tag-md tag-secondary-light">
+          <span class="tag-dot dot-secondary"></span>
+          Design
+          <button class="tag-remove" aria-label="Remove Design filter" onclick="removeTag(this)">×</button>
+        </span>
+        <span class="tag tag-md tag-success-light">
+          <span class="tag-dot dot-success"></span>
+          Published
+          <button class="tag-remove" aria-label="Remove Published filter" onclick="removeTag(this)">×</button>
+        </span>
+        <span class="tag tag-md tag-warning-light">
+          <span class="tag-dot dot-warning"></span>
+          In Review
+          <button class="tag-remove" aria-label="Remove In Review filter" onclick="removeTag(this)">×</button>
+        </span>
+        <span class="tag tag-md tag-info-light">
+          <span class="tag-dot dot-info"></span>
+          Q4 2025
+          <button class="tag-remove" aria-label="Remove Q4 2025 filter" onclick="removeTag(this)">×</button>
+        </span>
+        <span class="tag tag-md tag-primary-light">
+          <span class="tag-dot dot-primary"></span>
+          Frontend
+          <button class="tag-remove" aria-label="Remove Frontend filter" onclick="removeTag(this)">×</button>
+        </span>
+        <span class="tag tag-md tag-error-light">
+          <span class="tag-dot dot-error"></span>
+          High Priority
+          <button class="tag-remove" aria-label="Remove High Priority filter" onclick="removeTag(this)">×</button>
+        </span>
+      </div>
+      <div style="margin-top:10px;">
+        <button onclick="resetRemovableDemo()" style="font-size:12px; color:var(--secondary-700); background:none; border:none; cursor:pointer; font-family:'Inter',sans-serif; text-decoration:underline;">Reset demo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 6: Filter Tags Group ── -->
+  <div class="section">
+    <h2 class="section-title">Filter Tags</h2>
+    <p class="section-desc">Filter tags toggle between selected and unselected states. Use them as a group to let users narrow results by category. Multiple can be selected simultaneously.</p>
+
+    <div class="demo-box">
+      <div class="demo-label">Category filters — click to toggle</div>
+      <div class="demo-row" id="filterGroup">
+        <button class="tag-filter selected" onclick="toggleFilter(this)">
+          <svg class="tag-filter-check" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <path d="M2 6l2.5 2.5L10 3.5" stroke="#6941c6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          All
+        </button>
+        <button class="tag-filter" onclick="toggleFilter(this)">
+          <svg class="tag-filter-check" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <path d="M2 6l2.5 2.5L10 3.5" stroke="#6941c6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Design
+        </button>
+        <button class="tag-filter" onclick="toggleFilter(this)">
+          <svg class="tag-filter-check" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <path d="M2 6l2.5 2.5L10 3.5" stroke="#6941c6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Engineering
+        </button>
+        <button class="tag-filter" onclick="toggleFilter(this)">
+          <svg class="tag-filter-check" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <path d="M2 6l2.5 2.5L10 3.5" stroke="#6941c6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Marketing
+        </button>
+        <button class="tag-filter" onclick="toggleFilter(this)">
+          <svg class="tag-filter-check" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <path d="M2 6l2.5 2.5L10 3.5" stroke="#6941c6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Research
+        </button>
+        <button class="tag-filter" onclick="toggleFilter(this)">
+          <svg class="tag-filter-check" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <path d="M2 6l2.5 2.5L10 3.5" stroke="#6941c6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Product
+        </button>
+        <button class="tag-filter" onclick="toggleFilter(this)">
+          <svg class="tag-filter-check" viewBox="0 0 12 12" fill="none" width="12" height="12">
+            <path d="M2 6l2.5 2.5L10 3.5" stroke="#6941c6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Operations
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 7: Status Badges ── -->
+  <div class="section">
+    <h2 class="section-title">Status Badges</h2>
+    <p class="section-desc">Pre-configured semantic combinations for common record statuses. Each pairs a dot with a descriptive label in the appropriate semantic color.</p>
+
+    <div class="demo-box">
+      <div class="demo-row" style="gap:10px;">
+        <span class="status-badge status-active">
+          <span class="s-dot s-dot-active"></span>
+          Active
+        </span>
+        <span class="status-badge status-inactive">
+          <span class="s-dot s-dot-inactive"></span>
+          Inactive
+        </span>
+        <span class="status-badge status-pending">
+          <span class="s-dot s-dot-pending"></span>
+          Pending
+        </span>
+        <span class="status-badge status-draft">
+          <span class="s-dot s-dot-draft"></span>
+          Draft
+        </span>
+        <span class="status-badge status-archived">
+          <span class="s-dot s-dot-archived"></span>
+          Archived
+        </span>
+      </div>
+    </div>
+
+    <div class="variant-heading">In a table context</div>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Last updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Aria Chen</td>
+            <td>Product Designer</td>
+            <td><span class="status-badge status-active"><span class="s-dot s-dot-active"></span>Active</span></td>
+            <td>Mar 15, 2026</td>
+          </tr>
+          <tr>
+            <td>Marcus Reyes</td>
+            <td>Frontend Engineer</td>
+            <td><span class="status-badge status-pending"><span class="s-dot s-dot-pending"></span>Pending</span></td>
+            <td>Mar 12, 2026</td>
+          </tr>
+          <tr>
+            <td>Selin Kaya</td>
+            <td>UX Researcher</td>
+            <td><span class="status-badge status-draft"><span class="s-dot s-dot-draft"></span>Draft</span></td>
+            <td>Mar 10, 2026</td>
+          </tr>
+          <tr>
+            <td>James Park</td>
+            <td>Brand Strategist</td>
+            <td><span class="status-badge status-inactive"><span class="s-dot s-dot-inactive"></span>Inactive</span></td>
+            <td>Feb 28, 2026</td>
+          </tr>
+          <tr>
+            <td>Nina Okafor</td>
+            <td>Content Lead</td>
+            <td><span class="status-badge status-archived"><span class="s-dot s-dot-archived"></span>Archived</span></td>
+            <td>Jan 14, 2026</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Section 8: Props Table ── -->
+  <div class="section">
+    <h2 class="section-title">Props</h2>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead>
+          <tr>
+            <th>Prop</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>color</code></td>
+            <td><code>'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'</code></td>
+            <td><code>'primary'</code></td>
+            <td>Semantic color variant. Applies background, text, and border token set.</td>
+          </tr>
+          <tr>
+            <td><code>variant</code></td>
+            <td><code>'solid' | 'light' | 'outlined'</code></td>
+            <td><code>'light'</code></td>
+            <td>Visual style. Solid = filled bg; Light = tint bg; Outlined = border only.</td>
+          </tr>
+          <tr>
+            <td><code>size</code></td>
+            <td><code>'sm' | 'md' | 'lg'</code></td>
+            <td><code>'md'</code></td>
+            <td>Tag height and font size. sm = 20px/12px, md = 24px/13px, lg = 28px/14px.</td>
+          </tr>
+          <tr>
+            <td><code>removable</code></td>
+            <td><code>boolean</code></td>
+            <td><code>false</code></td>
+            <td>When true, renders a × dismiss button at the trailing end.</td>
+          </tr>
+          <tr>
+            <td><code>onRemove</code></td>
+            <td><code>() => void</code></td>
+            <td><code>—</code></td>
+            <td>Callback fired when the × button is clicked. Required when removable is true.</td>
+          </tr>
+          <tr>
+            <td><code>icon</code></td>
+            <td><code>ReactNode | 'dot'</code></td>
+            <td><code>—</code></td>
+            <td>Leading element. Pass <code>'dot'</code> for a semantic dot, or a custom SVG node.</td>
+          </tr>
+          <tr>
+            <td><code>children</code></td>
+            <td><code>string</code></td>
+            <td><code>—</code></td>
+            <td>The visible label text inside the tag. Keep short (1–3 words).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Section 9: Do's and Don'ts ── -->
+  <div class="section">
+    <h2 class="section-title">Do's &amp; Don'ts</h2>
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Do
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>Keep tag labels concise — 1 to 3 words maximum.</li>
+            <li>Use semantic colors consistently: green for active/success, red for errors, yellow for warnings.</li>
+            <li>Use the <code>light</code> style for inline labels within dense content like tables or cards.</li>
+            <li>Provide <code>aria-label</code> on the remove button ("Remove [label] tag").</li>
+            <li>Use <code>outlined</code> style when tags appear on colored or patterned backgrounds.</li>
+            <li>Group filter tags horizontally with consistent size and spacing.</li>
+            <li>Use status badges with a dot for records in a table.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="dont-card">
+        <div class="card-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3L3 11" stroke="#d92d20" stroke-width="2" stroke-linecap="round"/></svg>
+          Don't
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>Don't use long labels or wrap text — tags should always be single-line.</li>
+            <li>Don't mix solid and light variants in the same horizontal row without clear intent.</li>
+            <li>Don't use tags as primary call-to-action buttons — use the Button component instead.</li>
+            <li>Don't use more than 5–6 tags in a single line without a scroll or wrap strategy.</li>
+            <li>Don't rely solely on color to convey status — always include text.</li>
+            <li>Don't place removable tags in read-only contexts (e.g. inside view-only detail panels).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 10: Code ── -->
+  <div class="section">
+    <h2 class="section-title">Code</h2>
+
+    <div class="variant-heading">Basic tag (light, md)</div>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">HTML</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">&lt;!-- Light tag (default) --&gt;</span>
+<span class="c-tag">&lt;span</span> <span class="c-attr">class</span>=<span class="c-val">"tag tag-md tag-success-light"</span><span class="c-tag">&gt;</span>Success<span class="c-tag">&lt;/span&gt;</span>
+
+<span class="c-comment">&lt;!-- Solid tag --&gt;</span>
+<span class="c-tag">&lt;span</span> <span class="c-attr">class</span>=<span class="c-val">"tag tag-md tag-error-solid"</span><span class="c-tag">&gt;</span>Error<span class="c-tag">&lt;/span&gt;</span>
+
+<span class="c-comment">&lt;!-- Outlined tag --&gt;</span>
+<span class="c-tag">&lt;span</span> <span class="c-attr">class</span>=<span class="c-val">"tag tag-md tag-info-outlined"</span><span class="c-tag">&gt;</span>Info<span class="c-tag">&lt;/span&gt;</span></pre></div>
+    </div>
+
+    <div class="variant-heading">Tag with leading dot</div>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">HTML</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-tag">&lt;span</span> <span class="c-attr">class</span>=<span class="c-val">"tag tag-md tag-success-light"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;span</span> <span class="c-attr">class</span>=<span class="c-val">"tag-dot dot-success"</span><span class="c-tag">&gt;&lt;/span&gt;</span>
+  Active
+<span class="c-tag">&lt;/span&gt;</span></pre></div>
+    </div>
+
+    <div class="variant-heading">Removable tag</div>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">HTML</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-tag">&lt;span</span> <span class="c-attr">class</span>=<span class="c-val">"tag tag-md tag-secondary-light"</span><span class="c-tag">&gt;</span>
+  Design
+  <span class="c-tag">&lt;button</span>
+    <span class="c-attr">class</span>=<span class="c-val">"tag-remove"</span>
+    <span class="c-attr">aria-label</span>=<span class="c-val">"Remove Design tag"</span>
+    <span class="c-attr">type</span>=<span class="c-val">"button"</span>
+    <span class="c-attr">onclick</span>=<span class="c-val">"removeTag(this)"</span>
+  <span class="c-tag">&gt;</span>×<span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;/span&gt;</span></pre></div>
+    </div>
+
+    <div class="variant-heading">Filter tag (toggle)</div>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">HTML + JS</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-tag">&lt;button</span>
+  <span class="c-attr">class</span>=<span class="c-val">"tag-filter"</span>
+  <span class="c-attr">aria-pressed</span>=<span class="c-val">"false"</span>
+  <span class="c-attr">onclick</span>=<span class="c-val">"this.classList.toggle('selected');
+           this.setAttribute('aria-pressed', this.classList.contains('selected'))"</span>
+<span class="c-tag">&gt;</span>
+  <span class="c-comment">&lt;!-- checkmark icon (hidden by default, shown when .selected) --&gt;</span>
+  Engineering
+<span class="c-tag">&lt;/button&gt;</span></pre></div>
+    </div>
+
+    <div class="variant-heading">CSS token map</div>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">CSS</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">/* Pill shape (shared) */</span>
+<span class="c-attr">.tag</span> {
+  <span class="c-val">border-radius: 999px;</span>
+  <span class="c-val">display: inline-flex;</span>
+  <span class="c-val">align-items: center;</span>
+  <span class="c-val">font-weight: 500;</span>
+  <span class="c-val">white-space: nowrap;</span>
+  <span class="c-val">line-height: 1;</span>
+}
+
+<span class="c-comment">/* Solid variants */</span>
+<span class="c-attr">.tag-primary-solid</span>   { <span class="c-val">background: #29294c; color: #fff; border-color: #29294c;</span> }
+<span class="c-attr">.tag-secondary-solid</span> { <span class="c-val">background: #7f56d9; color: #fff; border-color: #7f56d9;</span> }
+<span class="c-attr">.tag-success-solid</span>   { <span class="c-val">background: #039855; color: #fff; border-color: #039855;</span> }
+<span class="c-attr">.tag-warning-solid</span>   { <span class="c-val">background: #f79009; color: #fff; border-color: #f79009;</span> }
+<span class="c-attr">.tag-error-solid</span>     { <span class="c-val">background: #f04438; color: #fff; border-color: #f04438;</span> }
+<span class="c-attr">.tag-info-solid</span>      { <span class="c-val">background: #0ba5ec; color: #fff; border-color: #0ba5ec;</span> }
+
+<span class="c-comment">/* Light variants */</span>
+<span class="c-attr">.tag-primary-light</span>   { <span class="c-val">background: #f4f4f6; color: #29294c;</span> }
+<span class="c-attr">.tag-secondary-light</span> { <span class="c-val">background: #f9f5ff; color: #6941c6;</span> }
+<span class="c-attr">.tag-success-light</span>   { <span class="c-val">background: #ecfdf3; color: #027a48;</span> }
+<span class="c-attr">.tag-warning-light</span>   { <span class="c-val">background: #fffaeb; color: #b54708;</span> }
+<span class="c-attr">.tag-error-light</span>     { <span class="c-val">background: #fef3f2; color: #b42318;</span> }
+<span class="c-attr">.tag-info-light</span>      { <span class="c-val">background: #f0f9ff; color: #026aa2;</span> }
+
+<span class="c-comment">/* Remove button */</span>
+<span class="c-attr">.tag-remove:hover</span> {
+  <span class="c-val">background: rgba(180,35,24,0.12);</span>
+  <span class="c-val">color: #b42318;</span>
+}</pre></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── Remove tag ──
+function removeTag(btn) {
+  const tag = btn.closest('.tag, span[class*="tag"]');
+  if (tag) {
+    tag.style.transition = 'opacity 0.2s, transform 0.2s';
+    tag.style.opacity = '0';
+    tag.style.transform = 'scale(0.8)';
+    setTimeout(() => tag.remove(), 200);
+
+    // Show empty hint in removable demo if no tags left
+    const parent = tag.parentElement;
+    if (parent && parent.id === 'removableDemo') {
+      setTimeout(() => {
+        const remaining = parent.querySelectorAll('.tag');
+        if (remaining.length === 0) {
+          parent.innerHTML = '<span class="empty-hint">All filters removed — reset to restore</span>';
+        }
+      }, 250);
+    }
+  }
+}
+
+// ── Reset removable demo ──
+const originalRemovableDemoHTML = `
+  <span class="tag tag-md tag-secondary-light">
+    <span class="tag-dot dot-secondary"></span>
+    Design
+    <button class="tag-remove" aria-label="Remove Design filter" onclick="removeTag(this)">×</button>
+  </span>
+  <span class="tag tag-md tag-success-light">
+    <span class="tag-dot dot-success"></span>
+    Published
+    <button class="tag-remove" aria-label="Remove Published filter" onclick="removeTag(this)">×</button>
+  </span>
+  <span class="tag tag-md tag-warning-light">
+    <span class="tag-dot dot-warning"></span>
+    In Review
+    <button class="tag-remove" aria-label="Remove In Review filter" onclick="removeTag(this)">×</button>
+  </span>
+  <span class="tag tag-md tag-info-light">
+    <span class="tag-dot dot-info"></span>
+    Q4 2025
+    <button class="tag-remove" aria-label="Remove Q4 2025 filter" onclick="removeTag(this)">×</button>
+  </span>
+  <span class="tag tag-md tag-primary-light">
+    <span class="tag-dot dot-primary"></span>
+    Frontend
+    <button class="tag-remove" aria-label="Remove Frontend filter" onclick="removeTag(this)">×</button>
+  </span>
+  <span class="tag tag-md tag-error-light">
+    <span class="tag-dot dot-error"></span>
+    High Priority
+    <button class="tag-remove" aria-label="Remove High Priority filter" onclick="removeTag(this)">×</button>
+  </span>
+`;
+
+function resetRemovableDemo() {
+  document.getElementById('removableDemo').innerHTML = originalRemovableDemoHTML;
+}
+
+// ── Toggle filter ──
+function toggleFilter(btn) {
+  btn.classList.toggle('selected');
+  btn.setAttribute('aria-pressed', btn.classList.contains('selected').toString());
+}
+
+// ── Copy code ──
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

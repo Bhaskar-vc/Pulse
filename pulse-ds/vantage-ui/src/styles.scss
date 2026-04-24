@@ -1,0 +1,330 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import '@angular/cdk/overlay-prebuilt.css';
+
+/* Vantage Circle UI Theme Configuration */
+
+@layer base {
+  * {
+    @apply transition duration-200;
+  }
+
+  body {
+    @apply text-primary-300 text-base-normal font-inter leading-6;
+  }
+
+  input:read-only {
+    @apply bg-transparent;
+  }
+
+  a {
+    @apply cursor-pointer;
+
+    &:hover {
+      @apply text-secondary-600;
+
+      & svg path {
+        // @apply fill-secondary-500;
+      }
+    }
+  }
+}
+
+.text-link {
+  @apply text-secondary-600 underline cursor-pointer;
+}
+
+.input-label {
+  @apply cursor-pointer select-none;
+}
+
+.line-wave {
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(8%, rgba(92, 108, 124, 0.1)),
+    color-stop(18%, rgba(92, 108, 124, 0.2)),
+    color-stop(33%, rgba(92, 108, 124, 0.1))
+  );
+  background: linear-gradient(
+    to right,
+    rgba(92, 108, 124, 0.1) 8%,
+    rgba(92, 108, 124, 0.2) 18%,
+    rgba(92, 108, 124, 0.1) 33%
+  );
+  background-size: 800px 100px;
+  animation: wave-lines 2s infinite ease-out;
+}
+
+.fade-in-out {
+  animation: fade-in-out 2s infinite ease-out;
+}
+
+@keyframes fade-in-out {
+  0% {
+    @apply bg-neutral-200;
+  }
+  25% {
+    @apply bg-neutral-100;
+  }
+  50% {
+    @apply bg-neutral-50;
+  }
+  75% {
+    @apply bg-neutral-100;
+  }
+  100% {
+    @apply bg-neutral-200;
+  }
+}
+
+/* Utilities Classes */
+
+// @layer utilities {
+//   // Icon Colors
+
+//   .icon-primary {
+//     @apply stroke-primary-400;
+//   }
+
+//   .icon-secondary {
+//     @apply stroke-secondary-600;
+//   }
+
+//   .icon-info {
+//     @apply stroke-info-600;
+//   }
+
+//   .icon-success {
+//     @apply stroke-success-600;
+//   }
+
+//   .icon-warning {
+//     @apply stroke-warning-600;
+//   }
+
+//   .icon-error {
+//     @apply stroke-error-600;
+//   }
+
+//   .icon-action {
+//     @apply stroke-primary-500;
+//   }
+
+//   .icon-disable {
+//     @apply stroke-neutral-300;
+//   }
+
+//   // Typography
+
+//   .heading-1 {
+//     @apply text-[35px] font-medium leading-[105px] tracking-[-0.525px] capitalize;
+//   }
+
+//   .heading-2 {
+//     @apply text-[29px] font-medium leading-[72.5px] tracking-[-0.145px] capitalize;
+//   }
+
+//   .heading-3 {
+//     @apply text-[24px] font-medium leading-[48px] capitalize;
+//   }
+
+//   .heading-4 {
+//     @apply text-[20px] font-medium leading-[40px] tracking-[0.05px] capitalize;
+//   }
+
+//   .heading-5 {
+//     @apply text-[18px] font-medium leading-[27px] capitalize;
+//   }
+
+//   .heading-6 {
+//     @apply text-[16px] font-medium leading-[24px] tracking-[0.024px] capitalize;
+//   }
+
+//   .subheading-1 {
+//     @apply text-lg font-medium;
+//   }
+
+//   .subheading-2 {
+//     @apply text-base font-medium;
+//   }
+
+//   .heading-1,
+//   .heading-2,
+//   .heading-3,
+//   .heading-4,
+//   .heading-5,
+//   .heading-6,
+//   .subheading-1,
+//   .subheading-2 {
+//     @apply text-primary-500;
+//   }
+
+//   .text-xs-light {
+//     @apply text-xs font-light;
+//   }
+
+//   .text-xs-normal {
+//     @apply text-xs font-normal;
+//   }
+
+//   .text-xs-medium {
+//     @apply text-xs font-medium;
+//   }
+
+//   .text-xs-semibold {
+//     @apply text-xs font-semibold;
+//   }
+
+//   .text-xs-bold {
+//     @apply text-xs font-bold;
+//   }
+
+//   .text-xs-extrabold {
+//     @apply text-xs font-extrabold;
+//   }
+
+//   .text-sm-light {
+//     @apply text-sm font-light;
+//   }
+
+//   .text-sm-normal {
+//     @apply text-sm font-normal;
+//   }
+
+//   .text-sm-medium {
+//     @apply text-sm font-medium;
+//   }
+
+//   .text-sm-semibold {
+//     @apply text-sm font-semibold;
+//   }
+
+//   .text-sm-bold {
+//     @apply text-sm font-bold;
+//   }
+
+//   .text-sm-extrabold {
+//     @apply text-sm font-extrabold;
+//   }
+
+//   .text-base-light {
+//     @apply text-base font-light;
+//   }
+
+//   .text-base-normal {
+//     @apply text-base font-normal;
+//   }
+
+//   .text-base-medium {
+//     @apply text-base font-medium;
+//   }
+
+//   .text-base-semibold {
+//     @apply text-base font-semibold;
+//   }
+
+//   .text-base-bold {
+//     @apply text-base font-bold;
+//   }
+
+//   .text-lg-light {
+//     @apply text-lg font-light;
+//   }
+
+//   .text-lg-normal {
+//     @apply text-lg font-normal;
+//   }
+
+//   .text-lg-medium {
+//     @apply text-lg font-medium;
+//   }
+
+//   .text-lg-semibold {
+//     @apply text-lg font-semibold;
+//   }
+
+//   .text-lg-bold {
+//     @apply text-lg font-bold;
+//   }
+
+//   .text-xl-light {
+//     @apply text-xl font-light;
+//   }
+
+//   .text-xl-normal {
+//     @apply text-xl font-normal;
+//   }
+
+//   .text-xl-medium {
+//     @apply text-xl font-medium;
+//   }
+
+//   .text-xl-semibold {
+//     @apply text-xl font-semibold;
+//   }
+
+//   .text-xl-bold {
+//     @apply text-xl font-bold;
+//   }
+
+//   .text-link {
+//     @apply text-secondary-600 underline cursor-pointer;
+//   }
+
+//   .subtext-1 {
+//     @apply text-primary-200 text-sm;
+//   }
+
+//   .subtext-2 {
+//     @apply text-primary-200 text-xs;
+//   }
+
+//   .label-1 {
+//     @apply text-primary-500 text-base font-medium;
+//   }
+
+//   .label-2 {
+//     @apply text-primary-500 text-base;
+//   }
+
+//   .label-3 {
+//     @apply text-primary-300 text-sm;
+//   }
+
+//   // Grid System
+
+//   .grid-xs {
+//     @include grid(6, 24px, 16px);
+//   }
+
+//   .grid-sm {
+//     @include grid(6, 24px, 16px);
+//   }
+
+//   .grid-md {
+//     @include grid(12, 24px, 32px);
+//   }
+
+//   .grid-lg {
+//     @include grid(12, 24px, 32px);
+//   }
+
+//   .grid-xl {
+//     @include grid(12, 24px, 32px);
+//   }
+
+//   Inputs
+
+//   .input-label {
+//     @apply cursor-pointer select-none;
+//   }
+// }

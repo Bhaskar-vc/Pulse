@@ -1,0 +1,33 @@
+:host {
+  position: relative;
+  display: inline-block;
+}
+
+.ds-dp-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown panel — positioned below trigger */
+.ds-dp-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 200;
+  display: none;
+
+  &.is-open {
+    display: flex;
+  }
+}
+
+/* Right side: stacks the dual calendars above the footer */
+.ds-dp-right {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Side-by-side month panels */
+.ds-dp-panels {
+  display: flex;
+}

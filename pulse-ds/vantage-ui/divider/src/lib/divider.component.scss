@@ -1,0 +1,27 @@
+.divider {
+    display: flex;
+    align-self: center;
+    width: 100%;
+}
+
+.divider.solid {
+    border-top: 1px rgba(0, 0, 0, 0.06) solid;
+}
+
+.divider.dashed {
+    border-top: 1px rgba(0, 0, 0, 0.06) dashed;
+}
+
+.small-divider {
+    display: flex;
+    align-self: center;
+    width: 21px;
+}
+
+.small-divider.solid {
+    border-top: 1px rgba(0, 0, 0, 0.06) solid;
+}
+
+.small-divider.dashed {
+    border-top: 1px rgba(0, 0, 0, 0.06) dashed;
+}

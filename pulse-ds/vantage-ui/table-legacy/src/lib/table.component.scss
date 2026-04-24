@@ -1,0 +1,35 @@
+table {
+  @apply w-full;
+
+  th,
+  td {
+    @apply px-6;
+    text-align: left;
+    border-bottom: 1px #eaecf0 solid;
+  }
+
+  th {
+    @apply py-md text-sm font-medium;
+  }
+
+  td {
+    @apply py-lg;
+  }
+}
+
+.table-container {
+  @apply w-full rounded overflow-y-auto overflow-x-auto;
+}
+
+.header {
+  @apply flex flex-row gap-sm px-6 py-5;
+}
+
+th.fixed-column,
+td.fixed-column {
+  @apply sticky left-0 bg-inherit z-[1];
+}
+
+th.fixed-column {
+  @apply bg-inherit z-[2];
+}

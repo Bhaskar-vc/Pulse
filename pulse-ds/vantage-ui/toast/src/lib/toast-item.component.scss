@@ -1,0 +1,154 @@
+.toast-item-container {
+  @apply w-[25rem] h-fit rounded-lg shadow-lg p-lg;
+
+  &-default {
+    @extend .toast-item-container;
+    @apply bg-white;
+  }
+
+  &-success {
+    @extend .toast-item-container;
+    @apply bg-success-25;
+  }
+
+  &-warning {
+    @extend .toast-item-container;
+    @apply bg-warning-50;
+  }
+
+  &-error {
+    @extend .toast-item-container;
+    @apply bg-error-25;
+  }
+
+  &-info {
+    @extend .toast-item-container;
+    @apply bg-info-50;
+  }
+}
+
+.toast-item-heading {
+  @apply text-base font-medium;
+
+  &-default {
+    @extend .toast-item-heading;
+    @apply text-primary-500;
+  }
+
+  &-success {
+    @extend .toast-item-heading;
+    @apply text-success-600;
+  }
+
+  &-warning {
+    @extend .toast-item-heading;
+    @apply text-warning-600;
+  }
+
+  &-error {
+    @extend .toast-item-heading;
+    @apply text-error-600;
+  }
+
+  &-info {
+    @extend .toast-item-heading;
+    @apply text-info-600;
+  }
+}
+
+.toast-item-message {
+  @apply text-base font-normal;
+
+  &-default {
+    @extend .toast-item-message;
+    @apply text-primary-300;
+  }
+
+  &-success {
+    @extend .toast-item-message;
+    @apply text-success-600;
+  }
+
+  &-warning {
+    @extend .toast-item-message;
+    @apply text-warning-600;
+  }
+
+  &-error {
+    @extend .toast-item-message;
+    @apply text-error-600;
+  }
+
+  &-info {
+    @extend .toast-item-message;
+    @apply text-info-600;
+  }
+}
+
+.link {
+  &-default {
+    @apply text-success-600;
+  }
+
+  &-success {
+    @apply text-success-600;
+  }
+
+  &-warning {
+    @apply text-warning-600;
+  }
+
+  &-error {
+    @apply text-error-600;
+  }
+
+  &-info {
+    @apply text-info-600;
+  }
+}
+
+.link-arrow {
+  &-success {
+    @apply text-success-600;
+  }
+
+  &-warning {
+    @apply text-warning-600;
+  }
+
+  &-error {
+    @apply text-error-600;
+  }
+
+  &-info {
+    @apply text-info-600;
+  }
+}
+
+.toast-accent-border-true {
+  @apply border-l-[16px];
+  &-default {
+    @extend .toast-accent-border-true;
+    @apply border-success-600;
+  }
+
+  &-success {
+    @extend .toast-accent-border-true;
+    @apply border-success-600;
+  }
+
+  &-warning {
+    @extend .toast-accent-border-true;
+    @apply border-warning-600;
+  }
+
+  &-error {
+    @extend .toast-accent-border-true;
+    @apply border-error-600;
+  }
+
+  &-info {
+    @extend .toast-accent-border-true;
+    @apply border-info-600;
+  }
+}

@@ -1,0 +1,14 @@
+/* Colors */
+@each $color, $shades in $palette {
+  @each $shade, $value in $shades {
+    $variable-name: #{$color}-#{$shade};
+    --#{$variable-name}: $value;
+  }
+}
+
+/* Colors */
+// @each $color, $shades in $palette {
+//   @each $shade, $value in $shades {
+//     --#{"" + $color}-#{$shade}: #{$value};
+//   }
+// }

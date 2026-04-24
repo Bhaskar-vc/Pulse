@@ -1,0 +1,685 @@
+/* ══════════════════════════════════════════════════════════
+   PULSE DS — Micro-interactions  v1.0
+   Purposeful motion: fast, subtle, never distracting.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Respect user preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ════════════════════════════════════════════
+   0. ICON MICRO-INTERACTIONS
+   ════════════════════════════════════════════ */
+
+/* Component card icons: float + color swap on hover */
+.component-icon {
+  transition: background 0.2s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.2s ease;
+}
+.component-card:hover .component-icon {
+  background: #ede9fe;
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 6px 16px rgba(109,40,217,.14);
+}
+.component-icon svg {
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+.component-card:hover .component-icon svg {
+  transform: scale(1.1);
+}
+
+/* Foundation card icons */
+.foundation-icon {
+  transition: background 0.2s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.2s ease;
+}
+.foundation-card:hover .foundation-icon {
+  background: #ede9fe;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(109,40,217,.12);
+}
+.foundation-icon svg {
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+.foundation-card:hover .foundation-icon svg {
+  transform: scale(1.12) rotate(-3deg);
+}
+
+/* Sidebar links — icon nudge */
+.sidebar-link svg {
+  transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+}
+.sidebar-link:hover svg { transform: translateX(2px); }
+
+/* Hero badge icons / inline icons */
+.hero-badge svg {
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  display: inline-block;
+}
+.hero-badge:hover svg { transform: scale(1.2); }
+
+/* Theme toggle icon spin on click */
+.theme-btn svg {
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
+}
+.theme-btn:active svg { transform: rotate(30deg) scale(0.9); }
+
+/* Hamburger button bars */
+.sidebar-ham {
+  transition: background 0.15s ease, border-color 0.15s ease,
+              transform 0.1s ease;
+}
+.sidebar-ham:active { transform: scale(0.92); }
+
+/* Alert icon pulse on appearance */
+.alert-icon svg {
+  animation: iconPop 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes iconPop {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* Modal close button */
+.modal-close {
+  transition: background 0.12s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
+}
+.modal-close:hover { transform: scale(1.1) rotate(8deg); }
+.modal-close:active { transform: scale(0.9) rotate(-8deg); }
+
+/* Accordion icon — springy rotate */
+.accordion-icon {
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+
+/* Tag close (×) */
+.tag-close, .dd-tag-x {
+  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1),
+              background 0.12s ease, color 0.12s ease;
+}
+.tag-close:hover, .dd-tag-x:hover { transform: scale(1.3) rotate(90deg); }
+
+/* Pagination prev/next arrows */
+.pgn-btn--prev svg, .pgn-btn--next svg {
+  transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+}
+.pgn-btn--prev:not(:disabled):hover svg { transform: translateX(-3px); }
+.pgn-btn--next:not(:disabled):hover svg { transform: translateX(3px); }
+
+/* Table sort icon */
+.sortable svg, .sort-icon {
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), opacity 0.15s ease;
+}
+th.asc .sort-icon   { transform: rotate(0deg); }
+th.desc .sort-icon  { transform: rotate(180deg); }
+
+/* Upload zone icon */
+.upload-icon svg {
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.upload-zone:hover .upload-icon svg,
+.upload-zone.is-dragover .upload-icon svg {
+  transform: translateY(-5px) scale(1.15);
+}
+
+/* Empty state illustration */
+.empty-img {
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.empty:hover .empty-img { transform: translateY(-4px) scale(1.03); }
+
+/* Step node check icon */
+.step-node svg {
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
+}
+.step.is-done .step-node svg { transform: scale(1); }
+
+/* Input clear / trailing icons */
+.clear-btn, .input-trailing-btn {
+  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), color 0.12s ease;
+}
+.clear-btn:hover, .input-trailing-btn:hover { transform: scale(1.2); }
+
+/* Password toggle eye icon */
+.pw-toggle {
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), color 0.12s ease;
+}
+.pw-toggle:hover { transform: scale(1.15); }
+
+/* Checkbox check animation */
+.cb-check-svg {
+  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
+}
+.is-checked .cb-check-svg { transform: scale(1); }
+
+/* Toggle thumb emoji / icon */
+.toggle-icon {
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* Stat card number value */
+.stat-value {
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.stat-card:hover .stat-value { transform: scale(1.04); }
+
+
+/* ════════════════════════════════════════════
+   1. BUTTON  — press scale + ripple
+   ════════════════════════════════════════════ */
+.btn {
+  transition: background 0.12s ease, color 0.12s ease,
+              border-color 0.12s ease, box-shadow 0.12s ease,
+              transform 0.08s ease, opacity 0.12s ease;
+  will-change: transform;
+}
+.btn:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: scale(0.97);
+}
+/* Icon inside button spins on loading */
+.btn.is-loading svg { animation: spin 0.7s linear infinite; }
+
+
+/* ════════════════════════════════════════════
+   2. INPUT / FIELD  — focus glow + label float
+   ════════════════════════════════════════════ */
+.input-wrap,
+.field input,
+.field textarea,
+.field select {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+              background 0.15s ease;
+}
+/* Subtle bg tint on focus */
+.input-wrap:focus-within {
+  background: #fdfcff;
+}
+html[data-theme="dark"] .input-wrap:focus-within {
+  background: #17172a;
+}
+/* Icon color transition inside input */
+.input-icon,
+.input-trailing {
+  transition: color 0.15s ease;
+}
+.input-wrap:focus-within .input-icon {
+  color: #7c3aed;
+}
+
+
+/* ════════════════════════════════════════════
+   3. CHECKBOX  — checkmark draw animation
+   ════════════════════════════════════════════ */
+.cb-check-svg path,
+.cb-check-svg polyline {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.is-checked .cb-check-svg path,
+.is-checked .cb-check-svg polyline {
+  stroke-dashoffset: 0;
+}
+/* Box scale pulse on check */
+.checkbox-wrap:not(.is-disabled) .cb-control {
+  transition: background 0.12s ease, border-color 0.12s ease,
+              box-shadow 0.12s ease, transform 0.1s ease;
+}
+.checkbox-wrap:not(.is-disabled):active .cb-control {
+  transform: scale(0.93);
+}
+
+
+/* ════════════════════════════════════════════
+   4. TOGGLE  — smooth thumb + track
+   ════════════════════════════════════════════ */
+.toggle-control {
+  transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.15s ease;
+}
+.toggle-control::after {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+              width 0.12s ease, box-shadow 0.15s ease;
+}
+/* Squish thumb on press */
+.toggle-wrap:not(.is-disabled):active .toggle-control::after {
+  width: calc(var(--toggle-thumb) + 4px);
+}
+
+
+/* ════════════════════════════════════════════
+   5. DROPDOWN  — menu fade+slide in
+   ════════════════════════════════════════════ */
+.dd-menu {
+  transform-origin: top center;
+  transition: opacity 0.14s ease, transform 0.14s ease;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.98);
+  pointer-events: none;
+}
+.dd-menu.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.dd-item {
+  transition: background 0.1s ease, color 0.1s ease;
+}
+/* Chevron spin */
+.dd-chevron {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.dd-trigger.is-open .dd-chevron {
+  transform: rotate(180deg);
+}
+
+
+/* ════════════════════════════════════════════
+   6. CARD  — lift on hover
+   ════════════════════════════════════════════ */
+.card,
+.component-card,
+.stat-card,
+.foundation-card {
+  transition: border-color 0.15s ease, box-shadow 0.2s ease,
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ════════════════════════════════════════════
+   7. ACCORDION  — smooth expand with easing
+   ════════════════════════════════════════════ */
+.accordion-content-wrap {
+  transition: height 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease;
+  overflow: hidden;
+}
+.accordion-icon {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+/* ════════════════════════════════════════════
+   8. TABS  — indicator slide
+   ════════════════════════════════════════════ */
+.tabs .tab {
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.tab::after {
+  transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.15s ease;
+}
+
+
+/* ════════════════════════════════════════════
+   9. MODAL  — backdrop + panel entrance
+   ════════════════════════════════════════════ */
+.modal-overlay {
+  transition: opacity 0.2s ease;
+  opacity: 0;
+}
+.modal-overlay.is-open {
+  opacity: 1;
+}
+.modal {
+  transition: opacity 0.22s ease,
+              transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+}
+.modal-overlay.is-open .modal {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+/* Drawer slides in from side */
+.modal--drawer {
+  transform: translateX(100%);
+}
+.modal-overlay.is-open .modal--drawer {
+  transform: translateX(0);
+}
+
+
+/* ════════════════════════════════════════════
+   10. ALERT  — slide-down entrance + fade-out
+   ════════════════════════════════════════════ */
+.alert {
+  animation: alertSlideIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.alert.dismissing {
+  animation: alertFadeOut 0.2s ease forwards;
+}
+@keyframes alertSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes alertFadeOut {
+  from { opacity: 1; transform: translateY(0); max-height: 200px; }
+  to   { opacity: 0; transform: translateY(-4px); max-height: 0; padding: 0; margin: 0; }
+}
+
+
+/* ════════════════════════════════════════════
+   11. TAG  — pop in, slide out on remove
+   ════════════════════════════════════════════ */
+.tag {
+  transition: background 0.12s ease, border-color 0.12s ease,
+              color 0.12s ease, transform 0.1s ease,
+              box-shadow 0.12s ease;
+  animation: tagPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.tag.removing {
+  animation: tagFade 0.18s ease forwards;
+}
+@keyframes tagPop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes tagFade {
+  from { opacity: 1; transform: scale(1); max-width: 200px; }
+  to   { opacity: 0; transform: scale(0.8); max-width: 0; padding: 0; margin: 0; overflow: hidden; }
+}
+
+
+/* ════════════════════════════════════════════
+   12. TOOLTIP  — fade + offset
+   ════════════════════════════════════════════ */
+[data-tooltip]::before,
+[data-tooltip]::after,
+.tooltip-content {
+  transition: opacity 0.14s ease, transform 0.14s ease;
+}
+
+
+/* ════════════════════════════════════════════
+   13. AVATAR  — ring pulse on hover
+   ════════════════════════════════════════════ */
+.av {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.av-wrap:hover .av,
+a .av:hover {
+  transform: scale(1.06);
+}
+/* Status dot breathe */
+.av-online {
+  animation: breathe 2.4s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(18,183,106, 0.6); }
+  50%       { box-shadow: 0 0 0 4px rgba(18,183,106, 0); }
+}
+
+
+/* ════════════════════════════════════════════
+   14. PROGRESS BAR  — shimmer on indeterminate
+   ════════════════════════════════════════════ */
+.progress-fill {
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+/* Hide shimmer when complete */
+.progress-fill[style*="100%"]::after { display: none; }
+
+
+/* ════════════════════════════════════════════
+   15. SIDEBAR LINK  — left border slide
+   ════════════════════════════════════════════ */
+.sidebar-link {
+  transition: background 0.12s ease, color 0.12s ease,
+              border-right-width 0.15s ease,
+              padding-left 0.15s ease;
+  position: relative;
+}
+.sidebar-link::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: #7c3aed;
+  transform: scaleY(0);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sidebar-link.active::before,
+.sidebar-link:hover::before {
+  transform: scaleY(1);
+}
+.sidebar-link:hover:not(.active)::before {
+  background: #a78bfa;
+  opacity: 0.5;
+}
+
+
+/* ════════════════════════════════════════════
+   16. STAT COUNTER  — number count up
+   ════════════════════════════════════════════ */
+.stat-value {
+  transition: color 0.3s ease;
+}
+/* Apply with JS: element.classList.add('counting') */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.stat-value { animation: countUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+
+/* ════════════════════════════════════════════
+   17. PAGE LOAD  — fade-in sections
+   ════════════════════════════════════════════ */
+.page-header {
+  animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.section {
+  animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.section:nth-child(2) { animation-delay: 0.05s; }
+.section:nth-child(3) { animation-delay: 0.1s; }
+.section:nth-child(4) { animation-delay: 0.15s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ════════════════════════════════════════════
+   18. FOCUS VISIBLE  — universal ring style
+   ════════════════════════════════════════════ */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.4);
+  border-radius: 4px;
+}
+/* Don't override components that have their own focus rings */
+.btn:focus-visible,
+.dd-trigger:focus-visible,
+.input-wrap:focus-within {
+  box-shadow: inherit;
+}
+
+
+/* ════════════════════════════════════════════
+   19. SPINNER UTILITY
+   ════════════════════════════════════════════ */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spin { animation: spin 0.7s linear infinite; }
+
+
+/* ════════════════════════════════════════════
+   20. SKELETON LOADER
+   ════════════════════════════════════════════ */
+.skeleton {
+  background: linear-gradient(90deg,
+    #f0f0f8 25%, #e4e4f0 50%, #f0f0f8 75%);
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.6s ease-in-out infinite;
+  border-radius: 6px;
+  color: transparent;
+  user-select: none;
+}
+@keyframes skeletonPulse {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+html[data-theme="dark"] .skeleton {
+  background: linear-gradient(90deg,
+    #1e1e30 25%, #252540 50%, #1e1e30 75%);
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.6s ease-in-out infinite;
+}
+
+
+/* ════════════════════════════════════════════
+   21. RATING STAR  — wobble on hover
+   ════════════════════════════════════════════ */
+.star {
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+              fill 0.12s ease, color 0.12s ease;
+  cursor: pointer;
+}
+.star:hover {
+  transform: scale(1.2);
+}
+
+
+/* ════════════════════════════════════════════
+   22. UPLOAD ZONE  — bounce on dragover
+   ════════════════════════════════════════════ */
+.upload-zone {
+  transition: background 0.15s ease, border-color 0.15s ease,
+              transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.upload-zone.is-dragover {
+  transform: scale(1.015);
+}
+
+
+/* ════════════════════════════════════════════
+   23. TABLE ROW  — highlight slide
+   ════════════════════════════════════════════ */
+.ds-table tbody tr {
+  transition: background 0.1s ease;
+}
+
+
+/* ════════════════════════════════════════════
+   24. PAGINATION BUTTON
+   ════════════════════════════════════════════ */
+.pgn-btn {
+  transition: background 0.1s ease, color 0.1s ease,
+              border-color 0.1s ease, transform 0.1s ease;
+}
+.pgn-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+
+/* ════════════════════════════════════════════
+   25. SEGMENT CONTROL  — sliding indicator
+   ════════════════════════════════════════════ */
+.segment-indicator {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.segment-btn {
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+
+/* ════════════════════════════════════════════
+   26. STEPS  — connector fill animation
+   ════════════════════════════════════════════ */
+.step-node {
+  transition: background 0.2s ease, border-color 0.2s ease,
+              transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease;
+}
+.step.is-active .step-node {
+  transform: scale(1.1);
+}
+
+
+/* ════════════════════════════════════════════
+   27. SLIDER THUMB
+   ════════════════════════════════════════════ */
+input[type="range"]::-webkit-slider-thumb {
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.15s ease;
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.3);
+}
+
+
+/* ════════════════════════════════════════════
+   28. CALENDAR CELL
+   ════════════════════════════════════════════ */
+.cal-cell {
+  transition: background 0.12s ease, color 0.12s ease,
+              transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.12s ease;
+}
+.cal-cell:hover:not(.is-out):not(.is-disabled) {
+  transform: scale(1.08);
+}
+.cal-cell.is-selected {
+  animation: calPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes calPop {
+  from { transform: scale(0.85); }
+  to   { transform: scale(1); }
+}
+
+
+/* ════════════════════════════════════════════
+   29. SCROLL REVEAL  (add .reveal to elements)
+   ════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ════════════════════════════════════════════
+   30. HOVER LINK UNDERLINE SLIDE
+   ════════════════════════════════════════════ */
+.link-anim {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1.5px;
+  transition: background-size 0.2s ease, color 0.15s ease;
+}
+.link-anim:hover {
+  background-size: 100% 1.5px;
+}

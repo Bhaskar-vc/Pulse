@@ -1,0 +1,79 @@
+<div class="field">
+  @if (label) {
+    <label class="field-label" [attr.for]="inputId">{{ label }}</label>
+  }
+
+  <div
+    class="input-wrap"
+    [class.is-error]="!!error"
+    [class.is-disabled]="disabled"
+    [class.is-textarea]="type === 'textarea'"
+  >
+    @if (prefixText || prefixIcon) {
+      <span class="input-prefix">
+        @if (prefixIcon) {
+          <span class="input-icon" [innerHTML]="prefixIcon"></span>
+        }
+        @if (prefixText) {
+          {{ prefixText }}
+        }
+      </span>
+    } @else if (leadingIcon) {
+      <span class="input-icon">
+        <span [innerHTML]="leadingIcon"></span>
+      </span>
+    }
+
+    @if (type === 'textarea') {
+      <textarea
+        [id]="inputId"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [readonly]="readonly"
+        [rows]="rows"
+        [value]="value"
+        [attr.maxlength]="maxLength || null"
+        (input)="onInput($event)"
+        (blur)="onBlur()"
+      ></textarea>
+    } @else {
+      <input
+        [id]="inputId"
+        [type]="type"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [readonly]="readonly"
+        [value]="value"
+        [attr.maxlength]="maxLength || null"
+        (input)="onInput($event)"
+        (blur)="onBlur()"
+      />
+    }
+
+    @if (trailingIcon || error) {
+      <span class="input-trailing">
+        @if (error) {
+          <span class="input-alert">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 5v3M8 11h.01" stroke="#f97066" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="8" cy="8" r="6.5" stroke="#f97066" stroke-width="1.5"/>
+            </svg>
+          </span>
+        }
+        @if (trailingIcon && !error) {
+          <span class="input-icon" [innerHTML]="trailingIcon"></span>
+        }
+      </span>
+    }
+
+    @if (suffixText) {
+      <span class="input-suffix">{{ suffixText }}</span>
+    }
+  </div>
+
+  @if (error) {
+    <span class="field-hint is-error">{{ error }}</span>
+  } @else if (hint) {
+    <span class="field-hint">{{ hint }}</span>
+  }
+</div>

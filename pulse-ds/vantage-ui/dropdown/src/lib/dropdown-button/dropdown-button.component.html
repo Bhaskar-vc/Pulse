@@ -1,0 +1,25 @@
+<!-- @switch (type) {
+  @case (buttonTypes.BUTTON) {
+    <button class="dropdown-btn" (click)="handleClick($event)">
+      {{ label }}
+      <i class="vc-arrow-down dropdown-arrow-icon"></i>
+    </button>
+  }
+
+  @case (buttonTypes.ICON) {
+    <button class="dropdown-icon-btn">
+      <i class="vc-dot-menu"></i>
+    </button>
+  }
+
+  @case (buttonTypes.AVATAR) {
+    <button class="dropdown-avatar-btn">
+      <img [src]="avatarUrl" alt="Dropdown avatar button image" />
+    </button>
+  }
+} -->
+
+<button class="dropdown-btn" (click)="handleClick($event)">
+  {{ label }}
+  <i class="vc-arrow-down dropdown-arrow-icon"></i>
+</button>

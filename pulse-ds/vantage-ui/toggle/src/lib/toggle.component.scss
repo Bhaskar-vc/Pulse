@@ -1,0 +1,84 @@
+.toggle-btn {
+  @apply flex flex-row relative bg-[#00000017] p-3xs cursor-pointer select-none;
+  box-shadow:
+    0px 0.5px 1.5px 0px rgba(0, 0, 0, 0.12) inset,
+    0px 0px 1px 0px rgba(0, 0, 0, 0.02) inset;
+
+  .toggle-hidden {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 cursor-pointer;
+  }
+
+  .toggle-tip {
+    @apply absolute top-1/2 left-3xs -translate-y-1/2 bg-white stroke-[0.5px] stroke-[#00000033] rounded-full;
+    filter: drop-shadow(0px 0.25px 0.5px rgba(0, 0, 0, 0.12));
+    transition: 0.4s;
+  }
+
+  // & ~ .toggle-input-label {
+  //   @apply text-primary-500 font-medium cursor-pointer;
+
+  & ~ .toggle-label {
+    @apply text-primary-500 cursor-pointer;
+  }
+
+  &[data-checked='true'] {
+    @apply bg-success-500;
+    box-shadow: 0px 0.5px 2.5px 0px rgba(102, 102, 102, 0.4) inset;
+
+    // & .toggle-tip {
+    //   transform: translate(calc(16px), -50%);
+    // }
+  }
+
+  &[data-disabled='true'] {
+    @apply border-neutral-300 bg-neutral-50 pointer-events-none bg-[#00000017] opacity-40;
+    box-shadow:
+      0px 0px 1.5px 0.35px rgba(0, 0, 0, 0.12) inset,
+      0px 0px 2px 2px rgba(0, 0, 0, 0.02) inset;
+
+    & .toggle-tip {
+      @apply border-[#00000005];
+      filter: drop-shadow(0px 0.25px 0.5px rgba(0, 0, 0, 0.12));
+    }
+    
+    & ~ .toggle-label {
+      @apply text-neutral-300 stroke-neutral-300 pointer-events-none;
+    }
+  }
+}
+
+.toggle-btn-size-sm {
+  @apply w-[28px] h-[16px] rounded-[11px];
+
+  & .toggle-tip {
+    @apply w-md h-md;
+  }
+
+  &[data-checked='true'] .toggle-tip {
+    transform: translate(calc(12px), -50%);
+  }
+}
+
+.toggle-btn-size-md {
+  @apply w-[36px] h-[20px] rounded-[12px];
+
+  & .toggle-tip {
+    @apply w-lg h-lg;
+  }
+
+  &[data-checked='true'] .toggle-tip {
+    transform: translate(calc(16px), -50%);
+  }
+}
+
+.toggle-btn-size-lg {
+  @apply w-[44px] h-[24px] rounded-[15px];
+
+  & .toggle-tip {
+    @apply w-[20px] h-[20px];
+  }
+
+  &[data-checked='true'] .toggle-tip {
+    transform: translate(calc(20px), -50%);
+  }
+}

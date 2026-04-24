@@ -1,0 +1,25 @@
+<span
+  class="tag"
+  [class.tag-sm]="size === 'sm'"
+  [class.tag-md]="size === 'md'"
+  [class.tag-lg]="size === 'lg'"
+  [class]="colorVariantClass"
+  [attr.aria-label]="ariaLabel || null"
+>
+  @if (showDot) {
+    <span class="tag-dot" [class]="'dot-' + color"></span>
+  }
+  <ng-content></ng-content>
+  @if (dismissible) {
+    <button
+      type="button"
+      class="tag-remove"
+      [attr.aria-label]="'Remove ' + (ariaLabel || 'tag')"
+      (click)="onDismiss($event)"
+    >
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+        <path d="M1 1l8 8M9 1L1 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  }
+</span>

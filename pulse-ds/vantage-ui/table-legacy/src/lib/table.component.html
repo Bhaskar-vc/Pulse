@@ -1,0 +1,79 @@
+<div
+  class="table-container"
+  [style.max-height.px]="maxHeight"
+  [ngClass]="{ 'shadow-md': shadow }"
+>
+  @if (header === true) {
+    <div class="header">
+      <div class="text-xl font-500 text-[#101828]">{{ heading }}</div>
+      @if (headingTag === true) {
+        <vc-tag>{{ headingTagText }}</vc-tag>
+      }
+    </div>
+  }
+  <table>
+    <thead class="sticky top-0">
+      <tr
+        [ngClass]="{
+          'bg-white': striped === true,
+          'bg-neutral-50': striped === false
+        }"
+      >
+        @for (column of columns; track column; let index = $index) {
+          <th
+            (click)="sortData(column)"
+            [ngClass]="{
+              'cursor-pointer': sortingEnabled,
+              'fixed-column': fixFirstColumn && index === 0
+            }"
+          >
+            <div class="flex flex-row items-center gap-2">
+              <span>{{ capitalizeService.capitalize(column) }}</span>
+              @if (sortingEnabled) {
+                @if (sortedColumn !== column) {
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 7.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"
+                    />
+                  </svg>
+                } @else {
+                  @if (sortDirection === 'asc') {
+                    <i class="vc-arrow-up2"></i>
+                  } @else {
+                    <i class="vc-arrow-down2"></i>
+                  }
+                }
+              }
+            </div>
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of sortedData; track row; let i = $index) {
+        <tr
+          [ngClass]="{
+            'bg-neutral-50': striped === true && i % 2 === 0,
+            'bg-white': striped === (true && i % 2 !== 0) || striped === false
+          }"
+        >
+          @for (key of dataKeys; track dataKeys; let index = $index) {
+            <td
+              [ngClass]="{ 'fixed-column': fixFirstColumn && index === 0 }"
+              [innerHTML]="row[key]"
+            ></td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

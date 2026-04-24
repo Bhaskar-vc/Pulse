@@ -1,0 +1,45 @@
+<label
+  class="cb-wrap"
+  [class.is-disabled]="disabled"
+  (click)="toggle()"
+  (keydown.space)="toggle()"
+>
+  <input
+    type="checkbox"
+    [checked]="checked"
+    [disabled]="disabled"
+    [indeterminate]="indeterminate"
+    [attr.aria-checked]="indeterminate ? 'mixed' : checked"
+    [attr.aria-label]="label"
+    (change)="$event.stopPropagation()"
+  />
+  <span
+    class="cb-control is-checkbox"
+    [class.size-sm]="size === 'sm'"
+    [class.size-md]="size === 'md'"
+    [class.is-checked]="checked && !indeterminate"
+    [class.is-indeterminate]="indeterminate"
+  >
+    <!-- Checkmark -->
+    <svg class="cb-check-svg" [attr.width]="size === 'sm' ? 10 : 12" [attr.height]="size === 'sm' ? 10 : 12" viewBox="0 0 12 12" fill="none">
+      <path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <!-- Dash (indeterminate) -->
+    <svg class="cb-dash-svg" [attr.width]="size === 'sm' ? 8 : 10" height="2" viewBox="0 0 10 2" fill="none">
+      <path d="M1 1h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </span>
+
+  @if (label || supporting) {
+    <span class="cb-label-wrap">
+      @if (label) {
+        <span class="cb-label">{{ label }}</span>
+      }
+      @if (supporting) {
+        <span class="cb-supporting">{{ supporting }}</span>
+      }
+    </span>
+  } @else {
+    <ng-content></ng-content>
+  }
+</label>

@@ -1,0 +1,22 @@
+<div class="rating-container">
+  @if(type==="star") {
+    @for (star of starsArray; track star; let i = $index) {
+      <div
+        class="w-[22px] cursor-pointer"
+        (click)="onStarClick(star+1)"
+      >
+        @if (!value || i>=value) {
+          <vc-star-icon></vc-star-icon>
+        } @else if (value && i<value) {
+          <vc-star-icon-filled></vc-star-icon-filled>
+        }
+      </div>
+    }
+  } @else if (type==="smiley5") {
+    <div class="smiley5wrapper">
+      @for (rating of ratingScale5; track $index) {
+        <lib-smiley-button [buttonValue]=rating.value [selected]="value == rating.id" (onClick)="onStarClick(rating.id)" />
+      }
+    </div>
+  }
+</div>

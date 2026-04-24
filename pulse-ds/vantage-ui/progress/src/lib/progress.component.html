@@ -1,0 +1,67 @@
+@if (shape === 'bar') {
+  <div
+    [style.width]="barWidth ? 'fit-content' : ''"
+    class="flex items-center"
+    [ngClass]="{
+      'flex-row gap-3': label === 'right',
+      'flex-col gap-2': label === 'bottom'
+    }"
+  >
+    <div
+      class="bg-neutral-100 rounded-[4px] overflow-hidden h-[8px]"
+      [style.width]="barWidth ? barWidth + 'px' : '100%'"
+    >
+      <div
+        [style.width]="progress + '%'"
+        [style.background-color]="progressColor ? progressColor : ''"
+        class="h-full rounded-[4px]"
+        [ngClass]="{
+          'bg-secondary-600': type === 'default',
+          'bg-success-600': type === 'success',
+          'bg-error-600': type === 'error',
+          'bg-warning-600': type === 'warning'
+        }"
+      ></div>
+    </div>
+    @if (label === 'right') {
+      <div class="text-base font-medium text-[#344054]">{{ progress }}%</div>
+    } @else if (label === 'bottom') {
+      <div class="w-full text-base font-medium text-[#344054] flex justify-end">{{ progress }}%</div>
+    }
+  </div>
+} @else if (shape === 'circle') {
+  <div class="relative w-fit h-fit">
+    <svg [attr.width]="dimension" [attr.height]="dimension">
+      <circle
+        [attr.cx]="dimension / 2"
+        [attr.cy]="dimension / 2"
+        [attr.r]="radius"
+        [attr.stroke-width]="strokeWidth"
+        stroke="#F2F4F7"
+        fill="none"
+      ></circle>
+      <circle
+        [attr.cx]="dimension / 2"
+        [attr.cy]="dimension / 2"
+        [attr.r]="radius"
+        [attr.stroke-width]="strokeWidth"
+        [attr.stroke-dasharray]="circumference"
+        [attr.stroke-dashoffset]="
+          circleDirection === 'clockwise' ? circumference * (1 - progress / 100) : -circumference * (1 - progress / 100)
+        "
+        [style.stroke]="progressColor ? progressColor : ''"
+        [ngClass]="{
+          'stroke-secondary-600': type === 'default',
+          'stroke-success-600': type === 'success',
+          'stroke-error-600': type === 'error',
+          'stroke-warning-600': type === 'warning'
+        }"
+        fill="none"
+        stroke-linecap="round"
+      ></circle>
+    </svg>
+    <div class="progress-text" [ngStyle]="{ 'font-size': fontSize + 'px' }" [ngClass]="getProgressTextColor()">
+      {{ progress }}%
+    </div>
+  </div>
+}

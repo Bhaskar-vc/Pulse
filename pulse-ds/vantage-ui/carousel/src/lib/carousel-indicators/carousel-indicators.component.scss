@@ -1,0 +1,48 @@
+.carousel-indicators {
+  @apply w-fit flex items-center gap-md;
+
+  .indicator {
+    @apply transition duration-300;
+
+    &.dot-indicator {
+      @apply w-sm h-sm rounded-full;
+    }
+
+    &.line-indicator {
+      @apply w-[42px] h-[6px] rounded-pill;
+    }
+  }
+
+  &.light {
+    background-color: rgba(255, 255, 255, 0.9);
+
+    .indicator {
+      @apply bg-neutral-300 hover:bg-neutral-400;
+
+      &.active {
+        @apply bg-primary-500;
+      }
+    }
+  }
+
+  &.dark {
+    @apply bg-primary-500;
+
+    .indicator {
+      // @apply bg-primary-400;
+      @apply bg-neutral-500 hover:bg-neutral-400;
+
+      &.active {
+        @apply bg-white;
+      }
+    }
+  }
+
+  &.framed {
+    @apply p-sm rounded-pill;
+  }
+
+  &:not(.framed) {
+    @apply bg-transparent;
+  }
+}

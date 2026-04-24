@@ -1,0 +1,70 @@
+.vc-stepper-horizontal,
+.vc-stepper-vertical {
+  @apply block;
+}
+
+.vc-horizontal-stepper-wrapper {
+  @apply flex flex-col;
+}
+
+.vc-horizontal-stepper-header-container {
+  // @apply flex items-center;
+  @apply flex flex-row justify-between cursor-pointer;
+}
+
+.vc-stepper-horizontal-line {
+  @apply w-full;
+  border: 2px #d0d5dd solid;
+}
+
+.vc-horizontal-stepper-wrapper {
+  @apply flex flex-col;
+}
+
+.vc-horizontal-stepper-content {
+  &.vc-horizontal-stepper-content-inactive {
+    @apply h-0 overflow-hidden;
+  }
+
+  &:not(.vc-horizontal-stepper-content-inactive) {
+    visibility: inherit !important;
+  }
+}
+
+.vc-horizontal-content-container {
+  @apply overflow-hidden px-4 py-8;
+}
+
+.horizontal-connector-container {
+  @apply flex flex-col w-full h-[31px] justify-center;
+}
+
+.vc-step:last-child {
+  .vc-vertical-content-container {
+    border: none;
+  }
+}
+
+.vc-vertical-stepper-content {
+  &.vc-vertical-stepper-content-inactive {
+    @apply h-0 overflow-hidden;
+  }
+
+  &:not(.vc-vertical-stepper-content-inactive) {
+    visibility: inherit !important;
+  }
+}
+
+.vc-stepper-vertical-line {
+    @apply flex items-stretch;
+    border: 2px #d0d5dd solid;
+}
+
+.vc-vertical-connector-container {
+    // @apply h-full w-8;
+    @apply flex flex-row w-8 justify-center items-stretch;
+}
+
+.vc-vertical-content-container {
+    @apply p-8 w-full;
+}

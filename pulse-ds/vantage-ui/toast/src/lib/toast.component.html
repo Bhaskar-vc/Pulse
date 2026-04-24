@@ -1,0 +1,10 @@
+<div class="toast-container" [ngClass]="'vc-toast-' + _position">
+    <!-- @for (msg of messages; track $index) {
+        <vc-toast-item [message]="msg" [index]="$index" [life]="life" (onClose)="onMessageClose($event)"></vc-toast-item>
+    } -->
+    @for (msg of messages; track msg; let i = $index) {
+      <vc-toast-item @animateToastContainer [message]="msg" [index]="i" [life]="life" (onClose)="onMessageClose($event)"></vc-toast-item>
+  }
+  <!-- <vc-toast-item *ngFor="let msg of messages; let i = index" [message]="msg" [index]="i" [life]="life" (onClose)="onMessageClose($event)"></vc-toast-item> -->
+  <!-- <vc-toast-item *ngFor="let msg of messages; index as i" [message]="msg" [index]="i" [life]="life" (onClose)="onMessageClose($event)"></vc-toast-item> -->
+</div>

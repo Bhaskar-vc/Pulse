@@ -1,0 +1,121 @@
+.avatar-container {
+  .avatar {
+    @apply relative flex justify-center items-center bg-secondary-50 rounded-full;
+
+    .avatar-image,
+    .avatar-placeholder {
+      @apply object-cover rounded-full;
+      width: calc(100%);
+      height: calc(100%);
+    }
+
+    .avatar-name {
+      @apply text-center text-secondary-600;
+    }
+
+    .avatar-status-icon-container {
+      @apply absolute right-0 bottom-0 shadow-[0_0_0_1.5px_rgba(255,255,255,1)] rounded-full overflow-hidden;
+
+      .avatar-online-indicator {
+        @apply w-full h-full bg-success-600;
+        // @apply w-[6px] h-[6px] bg-success-600 border-[1.5px] border-white rounded-full;
+      }
+    }
+
+    &.avatar-size-xs {
+      @apply w-6 h-6;
+
+      .avatar-placeholder {
+        @apply w-lg h-lg;
+      }
+
+      .avatar-name {
+        @apply text-xs-medium;
+      }
+
+      .avatar-status-icon-container {
+        @apply w-xs h-xs;
+      }
+    }
+
+    &.avatar-size-sm {
+      @apply w-8 h-8;
+
+      .avatar-placeholder {
+        @apply w-5 h-5;
+      }
+
+      .avatar-name {
+        @apply text-base-medium;
+      }
+
+      .avatar-status-icon-container {
+        @apply w-sm h-sm;
+      }
+    }
+
+    &.avatar-size-md {
+      @apply w-10 h-10;
+
+      .avatar-placeholder {
+        @apply w-6 h-6;
+      }
+
+      .avatar-name {
+        @apply text-lg-medium;
+      }
+
+      .avatar-status-icon-container {
+        @apply w-[10px] h-[10px];
+      }
+    }
+
+    &.avatar-size-lg {
+      @apply w-12 h-12;
+
+      .avatar-placeholder {
+        @apply w-7 h-7;
+      }
+
+      .avatar-name {
+        @apply text-xl-medium;
+      }
+
+      .avatar-status-icon-container {
+        @apply w-md h-md;
+      }
+    }
+
+    &.avatar-size-xl {
+      @apply w-14 h-14;
+
+      .avatar-placeholder {
+        @apply w-8 h-8;
+      }
+
+      .avatar-name {
+        @apply text-2xl-medium;
+      }
+
+      .avatar-status-icon-container {
+        @apply w-[14px] h-[14px];
+      }
+    }
+
+    &.avatar-size-2xl {
+      @apply w-16 h-16;
+
+      .avatar-placeholder {
+        @apply w-8 h-8;
+      }
+
+      .avatar-name {
+        @apply text-3xl-medium;
+      }
+
+      .avatar-status-icon-container {
+        @apply w-lg h-lg;
+      }
+    }
+  }
+}

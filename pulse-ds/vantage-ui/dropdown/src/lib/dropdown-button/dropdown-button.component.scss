@@ -1,0 +1,20 @@
+.dropdown-btn {
+  @apply w-[240px] text-primary-500 font-medium flex flex-row justify-between items-center gap-sm px-lg py-sm bg-white border border-neutral-300 rounded-sm outline-none cursor-pointer;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+
+  &:focus,
+  &:focus-visible {
+    box-shadow:
+      0px 0px 0px 4px #f2f4f7,
+      0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+
+  .dropdown-arrow-icon {
+    @apply text-sm;
+  }
+}
+
+.dropdown-icon-btn {
+  @apply w-[20px] h-[20px] cursor-pointer;
+  // @apply w-[26px] h-[26px] flex flex-row justify-center items-center p-sm rounded-sm hover:bg-neutral-100 focus-visible:bg-neutral-100 active:bg-transparent cursor-pointer;
+}

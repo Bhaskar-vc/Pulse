@@ -1,0 +1,179 @@
+// @import url("libs/vantage-ui/src/assets/icon-packs/ico-vc-10jul/style.css");
+
+// top most wrapper for the tag component
+.tag {
+  @apply rounded-full w-fit h-fit outline-none;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  text-wrap: nowrap;
+}
+
+// width for the first grid when there is no element, which acts as left padding for the text
+.first-grid-sm {
+  @apply w-[8px];
+}
+
+.first-grid-md {
+  @apply w-[10px];
+}
+
+.first-grid-lg {
+  @apply w-[12px];
+}
+
+// width for the third grid when there is no element, which acts as right padding for the text
+.third-grid-sm {
+  @apply w-[8px];
+}
+
+.third-grid-md {
+  @apply w-[10px];
+}
+
+.third-grid-lg {
+  @apply w-[12px];
+}
+
+// styling based on the type of tag
+.type-primary {
+  @apply text-secondary-700 bg-neutral-100;
+
+  &.focusable {
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      @apply bg-[#e1e5ea];
+    }
+  }
+}
+
+.type-error {
+  @apply text-error-600 bg-error-50;
+}
+
+.type-warning {
+  @apply text-warning-600 bg-warning-50;
+}
+
+.type-success {
+  @apply text-success-600 bg-success-50;
+}
+
+.type-blue-gray {
+  @apply text-primary-500 bg-neutral-50;
+}
+
+.type-blue-light {
+  @apply text-info-600 bg-info-50;
+}
+
+.type-purple {
+  @apply text-secondary-700 bg-secondary-50;
+}
+
+.type-border {
+  @apply text-primary-500 border-[1px] border-neutral-300 bg-white;
+
+  &.focusable {
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      @apply bg-neutral-100;
+    }
+  }
+}
+
+// styling based on the size of the tag
+.size-small {
+  @apply my-[2px] text-[12px] font-medium leading-[16.8px];
+}
+
+.size-medium {
+  @apply py-[2px] text-[14px] font-medium leading-[19.6px];
+}
+
+.size-large {
+  @apply py-[4px] text-[14px] font-medium leading-[19.6px];
+}
+
+// stylings for the dot elements
+.dot-wrapper-sm {
+  @apply w-[8px] h-[8px] flex flex-row justify-center items-center self-center mx-[6px] my-[2px];
+}
+
+.dot-wrapper-md {
+  @apply w-[8px] h-[8px] flex flex-row justify-center items-center self-center ml-[8px] mr-[6px] my-[2px];
+}
+
+.dot-wrapper-lg {
+  @apply w-[8px] h-[8px] flex flex-row justify-center items-center self-center ml-[10px] mr-[6px] my-[4px];
+}
+
+.dot {
+  @apply w-[6px] h-[6px] rounded-full;
+}
+
+// wrapper for the cross icon on the right hand side of the text, i.e. in the third grid
+.cross-wrapper-sm {
+  @apply w-[12px] h-[12px] flex flex-row justify-center items-center self-center ml-[4px] mr-[6px] my-[2px] cursor-pointer;
+}
+
+.cross-wrapper-md {
+  @apply w-[12px] h-[12px] flex flex-row justify-center items-center self-center ml-[4px] mr-[8px] my-[2px] cursor-pointer;
+}
+
+.cross-wrapper-lg {
+  @apply w-[12px] h-[12px] flex flex-row justify-center items-center self-center ml-[4px] mr-[10px] my-[4px] cursor-pointer;
+}
+
+// wrapper for image on left hand side of text
+.image-wrapper-sm {
+  @apply w-[16px] h-[16px] flex justify-self-center self-center justify-center items-center rounded-full overflow-hidden my-[2px] ml-[3px] mr-[6px];
+}
+
+.image-wrapper-md {
+  @apply w-[16px] h-[16px] flex justify-self-center self-center justify-center items-center rounded-full overflow-hidden my-[2px] ml-[4px] mr-[6px];
+}
+
+.image-wrapper-lg {
+  @apply w-[16px] h-[16px] flex justify-self-center self-center justify-center items-center rounded-full overflow-hidden my-[4px] mx-[6px];
+}
+
+//wrapper for the left hand side icon
+.left-icon-wrapper-sm {
+  @apply w-[12px] h-[12px] flex justify-self-center self-center justify-center items-center my-[2px] ml-[6px] mr-[4px] text-[12px];
+}
+
+.left-icon-wrapper-md {
+  @apply w-[12px] h-[12px] flex justify-self-center self-center justify-center items-center my-[2px] ml-[10px] mr-[4px] text-[12px];
+}
+
+.left-icon-wrapper-lg {
+  @apply w-[12px] h-[12px] flex justify-self-center self-center justify-center items-center my-[4px] ml-[12px] mr-[4px] text-[12px];
+}
+
+// wrapper for the icons on the right hand side of the text, i.e. in the third grid
+.right-icon-wrapper-sm {
+  @apply w-[12px] h-[12px] flex flex-row justify-center items-center self-center ml-[4px] mr-[6px] my-[2px] text-[12px];
+}
+
+.right-icon-wrapper-md {
+  @apply w-[12px] h-[12px] flex flex-row justify-center items-center self-center ml-[4px] mr-[8px] my-[2px] text-[12px];
+}
+
+.right-icon-wrapper-lg {
+  @apply w-[12px] h-[12px] flex flex-row justify-center items-center self-center ml-[4px] mr-[10px] my-[4px] text-[12px];
+}
+
+// wrapper for icon only
+.icon-wrapper-sm {
+  @apply flex flex-row justify-center items-center w-[12px] h-[12px] m-[4px] text-[10px] rounded-full;
+}
+
+.icon-wrapper-md {
+  @apply flex flex-row justify-center items-center w-[12px] h-[12px] m-[6px] text-[10px] rounded-full;
+}
+
+.icon-wrapper-lg {
+  @apply flex flex-row justify-center items-center w-[12px] h-[12px] m-[8px] text-[10px] rounded-full;
+}

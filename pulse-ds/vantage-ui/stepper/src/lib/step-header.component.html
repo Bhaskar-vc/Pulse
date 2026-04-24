@@ -1,0 +1,107 @@
+@switch (orientation) {
+  @case ('horizontal') {
+    <div class="flex flex-col">
+      <div class="flex flex-row items-center">
+        @if (isFirst) {
+          <div class="w-full"></div>
+        }
+
+        @if ((!isFirst && !isLast) || isLast) {
+          <div class="vc-horizontal-line"></div>
+        }
+        <div
+          class="vc-step-icon-state-{{ state }} vc-step-icon"
+          [class.vc-step-icon-selected]="selected"
+        >
+          <div
+            class="rounded-full w-[32px] h-[31px] flex flex-row justify-center items-center"
+            [ngClass]="{ 'bg-gray-100': !selected, 'bg-success-100': selected }"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="25"
+              viewBox="0 0 24 25"
+              fill="none"
+            >
+              <g id="check-fill">
+                @if (selected) {
+                  <path
+                    id="Vector"
+                    d="M10.0002 15.672L19.1922 6.479L20.6072 7.893L10.0002 18.5L3.63623 12.136L5.05023 10.722L10.0002 15.672Z"
+                    fill="#039855"
+                  />
+                } @else {
+                  <path
+                    id="Vector"
+                    d="M10.0002 15.672L19.1922 6.479L20.6072 7.893L10.0002 18.5L3.63623 12.136L5.05023 10.722L10.0002 15.672Z"
+                    fill="#D0D5DD"
+                  />
+                }
+              </g>
+            </svg>
+          </div>
+        </div>
+        @if ((!isFirst && !isLast) || isFirst) {
+          <div class="vc-horizontal-line"></div>
+        }
+
+        @if (isLast) {
+          <div class="w-full"></div>
+        }
+      </div>
+      <div
+        class="vc-step-label"
+        [class.vc-step-label-active]="active"
+        [class.vc-step-label-selected]="selected"
+      >
+        {{ label }}
+      </div>
+    </div>
+  }
+
+  @case ('vertical') {
+    <div class="flex flex-row gap-2 items-center">
+      <div
+        class="vc-step-icon-state-{{ state }} vc-step-icon"
+        [class.vc-step-icon-selected]="selected"
+      >
+        <div
+          class="rounded-full w-[32px] h-[31px] flex flex-row justify-center items-center"
+          [ngClass]="{ 'bg-gray-100': !selected, 'bg-success-100': selected }"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="25"
+            viewBox="0 0 24 25"
+            fill="none"
+          >
+            <g id="check-fill">
+              @if (selected) {
+                <path
+                  id="Vector"
+                  d="M10.0002 15.672L19.1922 6.479L20.6072 7.893L10.0002 18.5L3.63623 12.136L5.05023 10.722L10.0002 15.672Z"
+                  fill="#039855"
+                />
+              } @else {
+                <path
+                  id="Vector"
+                  d="M10.0002 15.672L19.1922 6.479L20.6072 7.893L10.0002 18.5L3.63623 12.136L5.05023 10.722L10.0002 15.672Z"
+                  fill="#D0D5DD"
+                />
+              }
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div
+        class="vc-step-label"
+        [class.vc-step-label-active]="active"
+        [class.vc-step-label-selected]="selected"
+      >
+        {{ label }}
+      </div>
+    </div>
+  }
+}

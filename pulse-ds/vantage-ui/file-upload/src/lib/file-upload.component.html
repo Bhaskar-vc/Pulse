@@ -1,0 +1,166 @@
+<div class="file-upload-main-container">
+  @switch (type) {
+    @case ('default') {
+      <label
+        class="file-upload-btn"
+        [style]="uploadButtonStyle"
+        [ngClass]="getFileUploadBtnClass()"
+        [attr.for]="elementId"
+      >
+        <span class="file-upload-icon">
+          <ng-container *ngTemplateOutlet="uploadIcon"></ng-container>
+        </span>
+        <span class="file-upload-label">{{ label }}</span>
+      </label>
+    }
+    @case ('drag-drop') {
+      @if (showOnlyDropArea) {
+        <div
+          class="file-drag-drop-container"
+          [ngClass]="{ 'hide-wrapper': showOnlyDropArea }"
+        >
+          <ng-container *ngTemplateOutlet="dropArea"></ng-container>
+          <div class="flex flex-col gap-sm">
+            @for (file of uploadedFiles; track file) {
+              <vc-file-upload-item
+                [name]="file.name"
+                [size]="file.size"
+                [fullWidth]="true"
+                [progress]="uploadProgresses[$index]"
+                [showUploadStatusIcon]="showUploadStatusIcon"
+                (onRemove)="handleRemoveFile($index)"
+              ></vc-file-upload-item>
+            }
+          </div>
+        </div>
+      } @else {
+        <div class="file-drag-drop-container">
+          <div class="file-drag-drop-header-container">
+            <h6 class="heading-6">Upload and attach files</h6>
+            <p class="text-base-normal">
+              Qorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+          <ng-container *ngTemplateOutlet="dropArea"></ng-container>
+          @if (uploadedFiles.length) {
+            <div class="flex flex-col gap-sm">
+              @for (file of uploadedFiles; track $index) {
+                <vc-file-upload-item
+                  [name]="file.name"
+                  [size]="file.size"
+                  [fullWidth]="true"
+                  [progress]="uploadProgresses[$index]"
+                  [showUploadStatusIcon]="showUploadStatusIcon"
+                  (onRemove)="handleRemoveFile($index)"
+                ></vc-file-upload-item>
+              }
+            </div>
+          }
+        </div>
+      }
+    }
+  }
+  <input
+    #fileInput
+    type="file"
+    [id]="elementId"
+    [name]="name"
+    [accept]="accept"
+    [multiple]="multiple"
+    [disabled]="disabled"
+    (change)="handleFileChosen($event)"
+  />
+</div>
+
+<ng-template #uploadIcon>
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M4 16V17C4 17.7956 4.31607 18.5587 4.87868 19.1213C5.44129 19.6839 6.20435 20 7 20H17C17.7956 20 18.5587 19.6839 19.1213 19.1213C19.6839 18.5587 20 17.7956 20 17V16M16 8L12 4M12 4L8 8M12 4V16"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</ng-template>
+
+<ng-template #dropArea>
+  <div
+    class="file-drop-area"
+    [style.width.px]="dropAreaWidth"
+    [style.height.px]="dropAreaHeight"
+    [ngClass]="{ 'highlight-drop-area': isDragging }"
+    (dragover)="handleDragOver($event)"
+    (dragleave)="handleDragLeave($event)"
+    (drop)="handleDrop($event)"
+  >
+    <div class="file-drop-area-icon-container">
+      <ng-container *ngTemplateOutlet="dropAreaIcon"></ng-container>
+    </div>
+    <div class="file-drop-area-text-container">
+      <p class="text-center">
+        <label
+          class="subheading-2 !text-secondary-600 !font-semibold cursor-pointer"
+          [attr.for]="elementId"
+          >Click to upload</label
+        >
+        <span> or drag and drop</span>
+      </p>
+      @if(dropAreaHintTemplate) {
+        <ng-container *ngTemplateOutlet="dropAreaHintTemplate"></ng-container>
+      }
+      <ng-container></ng-container>
+      <!-- <p class="text-sm-normal" [innerHTML]="dropAreaHintText"></p> -->
+    </div>
+  </div>
+</ng-template>
+
+<!-- <ng-template #uploadIcon>
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M18.22 20.75H5.78C5.43322 20.7358 5.09262 20.6535 4.77771 20.5075C4.4628 20.3616 4.17975 20.155 3.94476 19.8996C3.70977 19.6442 3.52745 19.3449 3.40824 19.019C3.28903 18.693 3.23525 18.3468 3.25 18V15C3.25 14.8011 3.32902 14.6103 3.46967 14.4697C3.61033 14.329 3.80109 14.25 4 14.25C4.19892 14.25 4.38968 14.329 4.53033 14.4697C4.67099 14.6103 4.75 14.8011 4.75 15V18C4.72419 18.2969 4.81365 18.5924 4.99984 18.8251C5.18602 19.0579 5.45465 19.21 5.75 19.25H18.22C18.5154 19.21 18.784 19.0579 18.9702 18.8251C19.1564 18.5924 19.2458 18.2969 19.22 18V15C19.22 14.8011 19.299 14.6103 19.4397 14.4697C19.5803 14.329 19.7711 14.25 19.97 14.25C20.1689 14.25 20.3597 14.329 20.5003 14.4697C20.641 14.6103 20.72 14.8011 20.72 15V18C20.75 18.6954 20.5041 19.3744 20.0359 19.8894C19.5677 20.4044 18.9151 20.7137 18.22 20.75ZM16 8.75C15.9015 8.75046 15.8038 8.73124 15.7128 8.69346C15.6218 8.65568 15.5392 8.60011 15.47 8.53L12 5.06L8.53 8.53C8.38783 8.66248 8.19978 8.7346 8.00548 8.73117C7.81118 8.72774 7.6258 8.64903 7.48838 8.51162C7.35097 8.3742 7.27226 8.18882 7.26883 7.99452C7.2654 7.80022 7.33752 7.61217 7.47 7.47L11.47 3.47C11.6106 3.32955 11.8013 3.25066 12 3.25066C12.1988 3.25066 12.3894 3.32955 12.53 3.47L16.53 7.47C16.6705 7.61062 16.7493 7.80125 16.7493 8C16.7493 8.19875 16.6705 8.38937 16.53 8.53C16.4608 8.60011 16.3782 8.65568 16.2872 8.69346C16.1962 8.73124 16.0985 8.75046 16 8.75Z"
+      fill="currentColor"
+    />
+    <path
+      d="M12 15.75C11.8019 15.7474 11.6126 15.6676 11.4725 15.5275C11.3324 15.3874 11.2526 15.1981 11.25 15V4C11.25 3.80109 11.329 3.61032 11.4697 3.46967C11.6103 3.32902 11.8011 3.25 12 3.25C12.1989 3.25 12.3897 3.32902 12.5303 3.46967C12.671 3.61032 12.75 3.80109 12.75 4V15C12.7474 15.1981 12.6676 15.3874 12.5275 15.5275C12.3874 15.6676 12.1981 15.7474 12 15.75Z"
+      fill="currentColor"
+    />
+  </svg>
+</ng-template> -->
+
+<ng-template #dropAreaIcon>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <g clip-path="url(#clip0_4417_1191)">
+      <path
+        d="M13.3334 13.3334L10 10M10 10L6.66669 13.3334M10 10V17.5M16.9917 15.325C17.8045 14.8819 18.4466 14.1808 18.8166 13.3322C19.1866 12.4837 19.2635 11.5361 19.0352 10.6389C18.8069 9.74182 18.2863 8.94629 17.5556 8.3779C16.8249 7.80951 15.9257 7.50064 15 7.50003H13.95C13.6978 6.5244 13.2277 5.61864 12.575 4.85085C11.9223 4.08307 11.1041 3.47324 10.1818 3.0672C9.25949 2.66116 8.25715 2.46949 7.25013 2.5066C6.2431 2.5437 5.25758 2.80861 4.36768 3.28142C3.47777 3.75422 2.70662 4.42261 2.11221 5.23635C1.5178 6.05008 1.1156 6.98797 0.935844 7.97952C0.756086 8.97107 0.803449 9.99047 1.07437 10.9611C1.3453 11.9317 1.83273 12.8282 2.50003 13.5834"
+        stroke="currentColor"
+        stroke-width="1.66667"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_4417_1191">
+        <rect width="20" height="20" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+</ng-template>

@@ -1,0 +1,72 @@
+:host {
+  @apply block w-fit;
+}
+
+.btn {
+  @apply min-w-[100px] inline-flex justify-center items-center gap-x-sm text-white px-lg py-[5px] border border-transparent;
+}
+
+.disabled {
+  @apply pointer-events-none cursor-not-allowed;
+}
+
+.file-upload-main-container {
+  @apply w-full;
+
+  .file-upload-btn {
+    @extend .btn;
+    @apply text-primary-500 border-neutral-300 hover:bg-primary-50 hover:border-primary-500 focus-visible:bg-primary-50 focus-visible:border-primary-500 active:bg-transparent active:border-neutral-300 rounded-sm cursor-pointer;
+
+    .file-upload-icon svg {
+      @apply w-5 h-5 text-neutral-500;
+    }
+
+    &.btn-disabled {
+      @extend .disabled;
+      @apply text-neutral-300;
+
+      .file-upload-icon svg {
+        @apply text-neutral-300;
+      }
+    }
+  }
+
+  .file-drag-drop-container {
+    @apply w-full min-h-[245px] p-[24px] flex flex-col gap-[20px] rounded-lg;
+    box-shadow:
+      0px 20px 24px -4px rgba(16, 24, 40, 0.08),
+      0px 8px 8px -4px rgba(16, 24, 40, 0.03);
+
+    &.hide-wrapper {
+      @apply p-0 rounded-none;
+      box-shadow: unset;
+    }
+
+    .file-drag-drop-header-container {
+      @apply flex flex-col gap-2xs;
+    }
+
+    .file-drop-area {
+      @apply px-[24px] py-lg flex flex-col gap-3 justify-center items-center border border-neutral-300 border-dashed rounded-[8px] duration-300;
+
+      &.highlight-drop-area {
+        @apply bg-neutral-50 border-secondary-600;
+      }
+
+      .file-drop-area-icon-container {
+        @apply w-[60px] h-[60px] flex justify-center items-center bg-neutral-100 p-[5px] border-[6px] border-neutral-50 rounded-full;
+
+        svg {
+          @apply w-2xl h-2xl text-neutral-600;
+        }
+      }
+
+      .file-drop-area-text-container {
+      }
+    }
+  }
+
+  input[type='file'] {
+    @apply hidden;
+  }
+}

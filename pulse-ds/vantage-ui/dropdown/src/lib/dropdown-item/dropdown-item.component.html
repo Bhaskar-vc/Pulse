@@ -1,0 +1,25 @@
+<li class="dropdown-item" (click)="handleClick($event)">
+  @if (customTemplate) {
+    <ng-container
+      *ngTemplateOutlet="
+        customTemplate;
+        context: {
+          $implicit: item,
+          hovered: hovered
+        }
+      "
+    ></ng-container>
+  } @else if (item) {
+    <div class="dropdown-item-inner" [ngClass]="{ hovered }">
+      <div class="dropdown-item-left-content">
+        @if (showIcon && item.icon) {
+          <i [class]="item.icon"></i>
+        }
+        <span class="dropdown-item-text">{{ item.text }}</span>
+      </div>
+      @if (showShortcut && item.shortcut) {
+        <span class="dropdown-item-right-content">{{ item.shortcut }}</span>
+      }
+    </div>
+  }
+</li>

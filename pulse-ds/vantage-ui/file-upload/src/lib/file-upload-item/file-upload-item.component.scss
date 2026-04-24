@@ -1,0 +1,51 @@
+.file-upload-item {
+  @apply max-w-[450px] flex gap-2xs p-lg border border-neutral-100 rounded;
+
+  .left-content {
+    @apply flex flex-1 gap-lg;
+
+    .file-icon-container {
+      @apply w-10 h-10 flex justify-center items-center bg-secondary-100 p-[5px] border-[6px] border-secondary-50 rounded-full;
+
+      svg {
+        @apply text-secondary-700;
+      }
+    }
+
+    .file-info-container {
+      @apply w-full flex flex-col gap-2xs;
+
+      .file-upload-progress-container {
+        @apply flex items-center gap-3;
+
+        .file-upload-progress-bar {
+          @apply w-full h-sm bg-neutral-100 rounded-xs;
+
+          .file-upload-progress {
+            @apply w-2/5 h-full bg-secondary-600 rounded-xs;
+          }
+        }
+      }
+    }
+  }
+
+  .right-content {
+    @apply flex flex-row gap-sm;
+
+    .file-action-container {
+      @apply w-lg h-lg;
+
+      &.file-upload-status-icon-container {
+        @apply bg-secondary-600 flex justify-center items-center p-[3px] rounded-full;
+
+        svg {
+          @apply text-white;
+        }
+      }
+    }
+  }
+
+  .right-content {
+    // @apply flex flex-1 gap-lg;
+  }
+}

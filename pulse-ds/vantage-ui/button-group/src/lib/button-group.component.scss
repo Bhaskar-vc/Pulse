@@ -1,0 +1,34 @@
+::ng-deep .btn-group-item {
+  // @apply bg-black rounded-none;
+  border-radius: 0 !important;
+}
+
+::ng-deep .btn-group vc-button:first-child .btn-group-item {
+  // @apply bg-black rounded-none;
+  border-top-left-radius: 6px !important;
+  border-bottom-left-radius: 6px !important;
+}
+::ng-deep .btn-group vc-button:last-child .btn-group-item {
+  // @apply bg-black rounded-none;
+  border-top-right-radius: 6px !important;
+  border-bottom-right-radius: 6px !important;
+}
+
+::ng-deep .btn-group vc-button:not(:last-child) .btn-group-item {
+  // @apply bg-black rounded-none;
+  border-right-color: transparent;
+}
+
+// .button-group-content:first-child {
+//   @apply rounded-l-md;
+// }
+
+// .button-group-content:last-child {
+//   @apply rounded-r-md;
+// }
+
+// .btn-group {
+//   .btn-group-item {
+//     border-radius: 0 !important;
+//   }
+// }

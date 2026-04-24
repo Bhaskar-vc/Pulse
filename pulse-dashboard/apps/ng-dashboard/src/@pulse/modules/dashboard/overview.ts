@@ -2,6 +2,7 @@ import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, HostListene
 import Chart from 'chart.js/auto';
 import { SurveyItem } from '../../shared/components/survey-carousel/survey-carousel';
 import { ExpandableCardComponent } from '../../shared/components/expandable-card/expandable-card';
+import { DateRange } from '../../shared/components/date-picker/date-picker';
 
 @Component({
   standalone: false,
@@ -31,7 +32,7 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
   popoverTexts: Record<string, string> = {
     enps: 'Employee Net Promoter Score measures how likely employees are to recommend your organization as a great place to work. Scores range from -100 to +100.',
     participation: 'Participation Rate shows the percentage of invited employees who completed the survey. Higher participation yields more reliable insights.',
-    category: 'Category scores track performance across key engagement drivers like leadership, communication, and work-life balance over time.',
+    category: 'Category Trend scores track performance across key engagement drivers like leadership, communication, and work-life balance over time.',
     engagement_time: 'Engagement Over Time visualizes how overall engagement, eNPS, and participation trends have changed across survey cycles.',
     engagement_index: 'The Engagement Index is a composite score (0–100) reflecting overall employee engagement based on all survey responses.',
   };
@@ -41,44 +42,26 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
     this.activePopover = this.activePopover === key ? null : key;
   }
 
-  datePickerOpen = false;
-  dateRangeLabel = 'Last week';
-  dateRangeDisplay = 'Jan 6 – Jan 13, 2026';
-  datePresets = [
-    { label: 'Today', range: 'Apr 24, 2026' },
-    { label: 'Yesterday', range: 'Apr 23, 2026' },
-    { label: 'This week', range: 'Apr 21 – Apr 27, 2026' },
-    { label: 'Last week', range: 'Jan 6 – Jan 13, 2026' },
-    { label: 'This month', range: 'Apr 1 – Apr 30, 2026' },
-    { label: 'Last month', range: 'Mar 1 – Mar 31, 2026' },
-    { label: 'This year', range: 'Jan 1 – Dec 31, 2026' },
-    { label: 'Last year', range: 'Jan 1 – Dec 31, 2025' },
-    { label: 'All time', range: 'All data' },
-  ];
+  dateRangeLabel = 'This month';
+  dateRangeDisplay = '';
 
-  toggleDatePicker(event: MouseEvent) {
-    event.stopPropagation();
-    this.datePickerOpen = !this.datePickerOpen;
-  }
-
-  selectDatePreset(preset: { label: string; range: string }) {
-    this.dateRangeLabel = preset.label;
-    this.dateRangeDisplay = preset.range;
-    this.datePickerOpen = false;
+  onRangeApplied(range: DateRange) {
+    this.dateRangeLabel = range.label;
+    this.dateRangeDisplay = range.display;
   }
 
   @HostListener('document:click')
   closeDropdowns() {
     this.activePopover = null;
-    this.datePickerOpen = false;
   }
 
   countryOptions = [
-    { code: 'in', name: 'IND', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/in.svg' },
-    { code: 'us', name: 'USA', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/us.svg' },
-    { code: 'gb', name: 'UK', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/gb.svg' },
-    { code: 'de', name: 'GER', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/de.svg' },
-    { code: 'sg', name: 'SGP', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/sg.svg' },
+    { code: 'all', name: 'All Countries', flag: '' },
+    { code: 'in',  name: 'IND', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/in.svg' },
+    { code: 'us',  name: 'USA', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/us.svg' },
+    { code: 'gb',  name: 'UK',  flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/gb.svg' },
+    { code: 'de',  name: 'GER', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/de.svg' },
+    { code: 'sg',  name: 'SGP', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/sg.svg' },
   ];
   selectedCountry = this.countryOptions[0];
 

@@ -1,0 +1,115 @@
+// ::ng-deep .carousel-slides-container > * {
+//   flex: 0 0 100%;
+//   height: 100%;
+// }
+
+.disabled {
+  @apply pointer-events-none cursor-not-allowed text-neutral-300 bg-neutral-50 hover:bg-neutral-50 focus:bg-neutral-50 focus-visible:bg-neutral-50;
+}
+
+.btn-default {
+  @apply text-white bg-primary-500 hover:bg-primary-400 focus-visible:bg-primary-400 active:bg-primary-500 data-[pressed=true]:bg-primary-500;
+
+  &:disabled {
+    @extend .disabled;
+  }
+}
+
+.btn-light {
+  @apply text-primary-400 bg-white hover:bg-gray-50 focus-visible:bg-gray-50 active:bg-white data-[pressed=true]:bg-white;
+
+  &:disabled {
+    @extend .disabled;
+  }
+}
+
+.carousel-outer-container {
+  @apply w-fit flex flex-col items-center gap-lg relative;
+
+  &.gap-none {
+    @apply gap-0;
+  }
+
+  .carousel-body {
+    @apply relative grid items-center gap-lg;
+    grid-template-columns: auto 1fr auto;
+
+    &.gap-none {
+      @apply gap-0;
+    }
+
+    &.carousel-body-overflow-hidden {
+      @apply overflow-hidden;
+    }
+
+    .carousel-current-slide-window {
+      @apply w-full rounded overflow-hidden;
+      height: calc(100%);
+
+      .carousel-slides-container {
+        @apply flex h-full transition;
+        transition-duration: 800ms;
+
+        // &.slides-gap {
+        //   @apply gap-lg;
+        // }
+
+        .carousel-slide {
+          @apply grow-0 shrink-0 basis-full w-full h-full grid items-center;
+        }
+      }
+    }
+
+    .carousel-arrow {
+      @apply w-[36px] h-[36px] inline-flex justify-center items-center rounded-full transition duration-300;
+
+      &.show-inside {
+        @apply absolute top-1/2 -translate-y-1/2 z-10;
+
+        &.hover-visible {
+          @apply opacity-0;
+
+          &.left-arrow {
+            @apply -left-[38px];
+          }
+
+          &.right-arrow {
+            @apply -right-[38px];
+          }
+        }
+
+        &:not(.hover-visible) {
+          &.left-arrow {
+            @apply left-[16px];
+          }
+
+          &.right-arrow {
+            @apply right-[16px];
+          }
+        }
+      }
+
+      .arrow-icon {
+        @apply text-sm;
+      }
+    }
+
+    &:hover .carousel-arrow.show-inside.hover-visible {
+      &.left-arrow {
+        @apply opacity-100 translate-x-[54px];
+      }
+
+      &.right-arrow {
+        @apply opacity-100 -translate-x-[54px];
+      }
+    }
+  }
+
+  .carousel-footer {
+    &.show-inside {
+      .carousel-indicators-container {
+        @apply absolute left-1/2 -translate-x-1/2 bottom-4;
+      }
+    }
+  }
+}

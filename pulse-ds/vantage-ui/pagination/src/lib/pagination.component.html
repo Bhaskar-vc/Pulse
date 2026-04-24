@@ -1,0 +1,71 @@
+<div class="pagination-container">
+  @if (showPageSizeOptions) {
+    <div class="flex flex-row gap-md items-center">
+      <label class="text-primary-500">Rows per page:</label>
+      <vc-select
+        width="fit-content"
+        minWidth="80px"
+        [(ngModel)]="selectedRowsPerPage"
+        [disabled]="count <= 0"
+        (onSelect)="handleSelectPageSize($event)"
+      >
+        @for (pageSize of pageSizeOptions; track $index) {
+          <vc-option
+            [value]="{ id: pageSize.toString(), text: pageSize.toString() }"
+            >{{ pageSize }}</vc-option
+          >
+        }
+      </vc-select>
+    </div>
+  }
+
+  @if (totalPages > 1 && showGoTo) {
+    <div class="flex flex-row gap-md items-center">
+      <label class="text-primary-500">Go to</label>
+      <vc-input-field
+        class="go-to-input-container"
+        type="number"
+        componentStyle="width:45px; padding-left: 8px; padding-right: 8px;"
+        [(ngModel)]="goToInput"
+        (keyDown)="handleInputKeyDown($event)"
+      ></vc-input-field>
+    </div>
+  }
+  <div class="pagination-range">
+    <div class="current-page-rows">
+      <span>{{ start }}</span>
+      <span>-</span>
+      <span>{{ end }}</span>
+    </div>
+    <span>of</span>
+    <span>{{ count }}</span>
+  </div>
+  <div class="pagination-btn-group">
+    <!-- <vc-button
+      type="ghost"
+      icon="vc-arrow-left"
+      [iconOnly]="true"
+      size="sm"
+    ></vc-button>
+    <vc-button
+      type="ghost"
+      icon="vc-arrow-right"
+      [iconOnly]="true"
+      size="sm"
+    ></vc-button> -->
+    <i
+      class="pagination-btn vc-arrow-left"
+      [ngClass]="{
+        'pagination-btn-disabled': currentPage === 1 || count === 0
+      }"
+      (click)="handlePrev($event)"
+    ></i>
+    <i
+      class="pagination-btn vc-arrow-right"
+      [ngClass]="{
+        'pagination-btn-disabled': currentPage === totalPages || count === 0
+      }"
+      (click)="handleNext($event)"
+    ></i>
+  </div>
+</div>

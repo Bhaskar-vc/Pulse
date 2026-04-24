@@ -1,0 +1,41 @@
+<div class="flex flex-row gap-sm items-center">
+  <div
+    class="toggle-btn"
+    [ngClass]="{
+      'toggle-btn-size-sm': size === 'sm',
+      'toggle-btn-size-md': size === 'md',
+      'toggle-btn-size-lg': size === 'lg'
+    }"
+    [attr.data-checked]="model"
+    [attr.data-focused]="focused"
+    [attr.data-disabled]="disabled"
+    (click)="handleClick($event)"
+    (mouseenter)="handleMouseEnter()"
+    (mouseleave)="handleMouseLeave()"
+    (keydown.space)="handleClick($event)"
+    tabindex="0"
+  >
+    <input
+      role="switch"
+      type="checkbox"
+      class="toggle-hidden"
+      [id]="elementId"
+      [attr.checked]="model"
+      [attr.aria-label]="ariaLabel"
+      [attr.aria-labelledby]="ariaLabelledBy"
+      [attr.aria-checked]="model"
+      (focus)="handleFocus($event)"
+      (blur)="handleBlur($event)"
+    />
+    <span class="toggle-tip"></span>
+  </div>
+  @if (label) {
+    <label
+      class="toggle-label"
+      [attr.for]="elementId"
+      (mouseenter)="handleMouseEnter()"
+      (mouseleave)="handleMouseLeave()"
+      >{{ label }}</label
+    >
+  }
+</div>

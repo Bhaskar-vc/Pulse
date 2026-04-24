@@ -1,0 +1,90 @@
+/* Tag / Badge — Pulse Design System */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  line-height: 1;
+  cursor: default;
+  vertical-align: middle;
+  transition: opacity 0.12s;
+}
+
+/* Sizes */
+.tag-sm { font-size: 12px; padding: 0 8px; height: 20px; gap: 4px; }
+.tag-sm .tag-icon   { width: 10px; height: 10px; }
+.tag-sm .tag-remove { width: 14px; height: 14px; font-size: 11px; }
+.tag-sm .tag-dot    { width: 6px; height: 6px; }
+
+.tag-md { font-size: 13px; padding: 0 10px; height: 24px; gap: 5px; }
+.tag-md .tag-icon   { width: 12px; height: 12px; }
+.tag-md .tag-remove { width: 16px; height: 16px; font-size: 12px; }
+.tag-md .tag-dot    { width: 7px; height: 7px; }
+
+.tag-lg { font-size: 14px; padding: 0 12px; height: 28px; gap: 6px; }
+.tag-lg .tag-icon   { width: 14px; height: 14px; }
+.tag-lg .tag-remove { width: 18px; height: 18px; font-size: 13px; }
+.tag-lg .tag-dot    { width: 8px; height: 8px; }
+
+/* Dot */
+.tag-dot { display: inline-block; border-radius: 50%; flex-shrink: 0; }
+
+/* Remove button */
+.tag-remove {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; border: none; background: transparent;
+  cursor: pointer; flex-shrink: 0; padding: 0;
+  color: inherit; opacity: 0.65;
+  transition: background 0.12s, opacity 0.12s;
+  line-height: 1;
+}
+.tag-remove:hover { opacity: 1; background: rgba(180,35,24,0.12); color: #b42318; }
+
+/* Primary */
+.tag-primary-solid    { background: #29294c; color: #fff; border-color: #29294c; }
+.tag-primary-light    { background: #f4f4f6; color: #29294c; border-color: transparent; }
+.tag-primary-outlined { background: transparent; color: #29294c; border-color: #bdbdc8; }
+.tag-primary-tinted   { background: #f4f4f6; color: #29294c; border-color: #bdbdc8; }
+
+/* Secondary */
+.tag-secondary-solid    { background: #7f56d9; color: #fff; border-color: #7f56d9; }
+.tag-secondary-light    { background: #f9f5ff; color: #6941c6; border-color: transparent; }
+.tag-secondary-outlined { background: transparent; color: #6941c6; border-color: #b692f6; }
+.tag-secondary-tinted   { background: #f9f5ff; color: #6941c6; border-color: #b692f6; }
+
+/* Success */
+.tag-success-solid    { background: #039855; color: #fff; border-color: #039855; }
+.tag-success-light    { background: #ecfdf3; color: #027a48; border-color: transparent; }
+.tag-success-outlined { background: transparent; color: #027a48; border-color: #12b76a; }
+.tag-success-tinted   { background: #ecfdf3; color: #027a48; border-color: #12b76a; }
+
+/* Warning */
+.tag-warning-solid    { background: #f79009; color: #fff; border-color: #f79009; }
+.tag-warning-light    { background: #fffaeb; color: #b54708; border-color: transparent; }
+.tag-warning-outlined { background: transparent; color: #b54708; border-color: #f79009; }
+.tag-warning-tinted   { background: #fffaeb; color: #b54708; border-color: #f79009; }
+
+/* Error */
+.tag-error-solid    { background: #f04438; color: #fff; border-color: #f04438; }
+.tag-error-light    { background: #fef3f2; color: #b42318; border-color: transparent; }
+.tag-error-outlined { background: transparent; color: #b42318; border-color: #f04438; }
+.tag-error-tinted   { background: #fef3f2; color: #b42318; border-color: #f04438; }
+
+/* Info */
+.tag-info-solid    { background: #0ba5ec; color: #fff; border-color: #0ba5ec; }
+.tag-info-light    { background: #f0f9ff; color: #026aa2; border-color: transparent; }
+.tag-info-outlined { background: transparent; color: #026aa2; border-color: #0ba5ec; }
+.tag-info-tinted   { background: #f0f9ff; color: #026aa2; border-color: #0ba5ec; }
+
+/* Dot colors */
+.dot-primary   { background: #29294c; }
+.dot-secondary { background: #7f56d9; }
+.dot-success   { background: #039855; }
+.dot-warning   { background: #f79009; }
+.dot-error     { background: #f04438; }
+.dot-info      { background: #0ba5ec; }

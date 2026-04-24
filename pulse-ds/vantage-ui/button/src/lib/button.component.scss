@@ -1,0 +1,218 @@
+button {
+  @apply h-9 font-medium inline-flex justify-center items-center gap-x-sm text-white px-lg py-sm bg-primary-500 border border-transparent focus-visible:outline-none;
+
+  & svg {
+    @apply w-lg h-lg;
+  }
+
+  span {
+    @apply font-medium;
+  }
+
+  .icon {
+    @apply font-medium;
+  }
+}
+
+.disabled {
+  @apply pointer-events-none cursor-not-allowed;
+}
+
+.btn-size-sm {
+  @extend button;
+  @apply text-sm min-w-[80px] px-[18px] py-[4px] gap-x-xs rounded-sm;
+
+  .icon {
+    @apply text-base;
+  }
+
+  &:not(.btn-icon) {
+    @apply min-h-[34px];
+  }
+}
+
+.btn-size-default {
+  @extend button;
+  @apply px-lg py-sm rounded;
+
+  // &:not(.btn-icon) {
+  //   @apply min-h-[42px];
+  // }
+}
+
+.btn-size-md {
+  @extend button;
+  @apply min-w-[120px] px-[28px] py-[12px] gap-x-[10px] rounded;
+
+  .icon {
+    @apply text-lg;
+  }
+
+  &:not(.btn-icon) {
+    @apply min-h-[50px];
+  }
+}
+
+.btn-size-lg {
+  @extend button;
+  @apply text-lg min-w-[140px] px-[32px] py-[14px] gap-x-[10px] rounded-md;
+
+  .icon {
+    @apply text-xl;
+  }
+
+  &:not(.btn-icon) {
+    @apply min-h-[56px];
+  }
+}
+
+.btn-type-pill {
+  @extend button;
+  @apply rounded-pill;
+}
+
+.btn-type-link {
+  @extend button;
+  @apply border-transparent hover:border-transparent;
+}
+
+.btn-type-primary {
+  @extend button;
+
+  &.btn-variant-default {
+    @apply bg-primary-500 hover:bg-primary-400 focus-visible:bg-primary-400 active:bg-primary-500 data-[pressed=true]:bg-primary-500;
+  }
+
+  &.btn-variant-secondary {
+    @apply bg-secondary-600 hover:bg-secondary-500 focus-visible:bg-secondary-500 active:bg-secondary-600 data-[pressed=true]:bg-secondary-600;
+  }
+
+  &.btn-variant-success {
+    @apply bg-success-600 hover:bg-success-500 focus-visible:bg-success-500 active:bg-success-600;
+  }
+
+  &.btn-variant-info {
+    @apply bg-info-600 hover:bg-info-500 focus-visible:bg-info-500 active:bg-info-600;
+  }
+
+  &.btn-variant-warning {
+    @apply bg-warning-600 hover:bg-warning-500 focus-visible:bg-warning-500 active:bg-warning-600;
+  }
+
+  &.btn-variant-error {
+    @apply bg-error-600 hover:bg-error-500 focus-visible:bg-error-500 active:bg-error-600;
+  }
+
+  &.btn-disabled {
+    @extend .disabled;
+    @apply text-neutral-300 bg-neutral-50 hover:bg-neutral-50 focus:bg-neutral-50 focus-visible:bg-neutral-50;
+  }
+}
+
+.btn-type-ghost {
+  @extend button;
+  @apply bg-transparent border-neutral-300;
+
+  &.btn-variant-default {
+    @apply text-primary-500 hover:bg-primary-50 hover:border-primary-500 focus-visible:bg-primary-50 focus-visible:border-primary-500 active:bg-transparent active:border-neutral-300;
+  }
+
+  &.btn-variant-secondary {
+    @apply text-secondary-700 hover:bg-secondary-50 hover:border-secondary-500 focus-visible:bg-secondary-50 focus-visible:border-secondary-500 active:bg-transparent active:border-neutral-300;
+  }
+
+  &.btn-variant-success {
+    @apply text-success-600 hover:bg-success-50 hover:border-success-500 focus-visible:bg-success-50 focus-visible:border-success-500 active:bg-transparent active:border-neutral-300;
+  }
+
+  &.btn-variant-info {
+    @apply text-info-600 hover:bg-info-50 hover:border-info-500 focus-visible:bg-info-50 focus-visible:border-info-500 active:bg-transparent active:border-neutral-300;
+  }
+
+  &.btn-variant-warning {
+    @apply text-warning-600 hover:bg-warning-50 hover:border-warning-500 focus-visible:bg-warning-50 focus-visible:border-warning-500 active:bg-transparent active:border-neutral-300;
+  }
+
+  &.btn-variant-error {
+    @apply text-error-600 hover:bg-error-50 hover:border-error-500 focus-visible:bg-error-50 focus-visible:border-error-500 active:bg-transparent active:border-neutral-300;
+  }
+
+  &.btn-variant-cancel {
+    @apply text-primary-500 hover:bg-neutral-200 focus-visible:bg-neutral-200 focus-visible:border-primary-500 active:bg-transparent active:border-neutral-300;
+  }
+
+  &.btn-disabled {
+    @extend .disabled;
+    @apply text-neutral-300 bg-neutral-50 hover:bg-neutral-50 hover:border-neutral-300 focus:bg-neutral-50 focus:border-neutral-300 focus-visible:border-neutral-300 focus-visible:bg-neutral-50;
+  }
+}
+
+.btn-type-pill {
+  @extend .btn-type-primary;
+  @apply rounded-pill;
+}
+
+.btn-type-link {
+  @extend .btn-type-ghost;
+  @apply border-transparent;
+
+  &.btn-variant-default {
+    @apply text-secondary-700 hover:bg-primary-50 focus-visible:bg-primary-50 active:bg-transparent;
+  }
+
+  &:hover,
+  &:focus,
+  &:focus-visible {
+    border-color: transparent !important;
+  }
+}
+
+.btn-icon {
+  @extend button;
+  @apply min-w-fit w-[28px] h-[28px] p-[6px];
+
+  .icon {
+    @apply text-lg font-medium;
+  }
+}
+
+.btn-icon svg {
+  @apply w-[16px] h-[16px];
+}
+
+.spinner-container {
+  @apply flex justify-center items-center;
+}
+
+.spinner {
+  animation: rotate 2s linear infinite;
+  width: 20px;
+  height: 20px;
+
+  & .path {
+    @apply stroke-white/60;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}

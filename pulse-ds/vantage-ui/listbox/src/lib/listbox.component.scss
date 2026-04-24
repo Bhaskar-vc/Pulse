@@ -1,0 +1,44 @@
+:host {
+  @apply w-fit;
+}
+
+.listbox {
+  @apply w-full max-h-[288px] flex flex-col transition-none;
+
+  &.light {
+    @apply bg-white;
+  }
+
+  &.dark {
+    @apply bg-primary-600;
+  }
+
+  &.fit-content {
+    @apply w-fit;
+  }
+
+  .listbox-header {
+    @apply flex justify-between items-center px-lg py-sm;
+
+    .listbox-header-left-content {
+      @apply flex flex-col;
+
+      .listbox-header-main-heading {
+        @apply text-sm font-medium text-success-600 leading-[140%] tracking-[0.03px];
+      }
+
+      .listbox-header-subtext {
+        @apply text-xs text-primary-300 leading-[140%] tracking-[0.025px];
+      }
+    }
+  }
+
+  .listbox-body {
+    @apply flex-1 overflow-auto;
+
+    .listbox-body-viewport {
+      width: 100%;
+      height: 300px;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<label
+  class="cb-wrap"
+  [class.is-disabled]="disabled"
+  (click)="select()"
+>
+  <input
+    type="radio"
+    [name]="name"
+    [value]="value"
+    [checked]="checked"
+    [disabled]="disabled"
+    [attr.aria-label]="label"
+    (change)="$event.stopPropagation()"
+  />
+  <span
+    class="cb-control is-radio"
+    [class.size-sm]="size === 'sm'"
+    [class.size-md]="size === 'md'"
+    [class.is-checked]="checked"
+  >
+    <span class="cb-radio-dot"></span>
+  </span>
+
+  @if (label || supporting) {
+    <span class="cb-label-wrap">
+      @if (label) {
+        <span class="cb-label">{{ label }}</span>
+      }
+      @if (supporting) {
+        <span class="cb-supporting">{{ supporting }}</span>
+      }
+    </span>
+  } @else {
+    <ng-content></ng-content>
+  }
+</label>

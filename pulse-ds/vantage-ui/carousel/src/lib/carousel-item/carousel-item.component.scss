@@ -1,0 +1,7 @@
+.carousel-item {
+  @apply w-auto h-full;
+}
+
+::ng-deep img {
+  @apply w-full h-full object-cover;
+}

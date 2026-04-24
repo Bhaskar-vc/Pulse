@@ -1,0 +1,35 @@
+@if (title===undefined) {
+    @if (dashed === true) {
+        <div class="divider dashed"></div>
+    } @else {
+        <div class="divider solid"></div>
+    }
+} @else {
+    @if (orientation === 'left') {
+        <div class="flex flex-row justify-between">
+            <div [ngClass]="{'small-divider': true, 'solid': dashed===false, 'dashed': dashed===true }"></div>
+            <div class="m-[16px] text-[16px] font-[400] text-[#000000d9] text-nowrap">{{ title }}</div>
+            <div [ngClass]="{'divider': true, 'solid': dashed===false, 'dashed': dashed===true}"></div>
+        </div>
+    } @else if (orientation === 'right') {
+        <div class="flex flex-row justify-between">
+            <div [ngClass]="{'divider': true, 'solid': dashed===false, 'dashed': dashed===true }"></div>
+            <div class="m-[16px] text-[16px] font-[400] text-[#000000d9] text-nowrap">{{ title }}</div>
+            <div [ngClass]="{'small-divider': true, 'solid': dashed===false, 'dashed': dashed===true}"></div>
+        </div>
+    } @else {
+        <div class="flex flex-row justify-between">
+            @if (dashed === true) {
+                <div class="divider dashed"></div>
+            } @else {
+                <div class="divider solid"></div>
+            }
+            <div class="m-[16px] text-[16px] font-[400] text-[#000000d9] text-nowrap">{{ title }}</div>
+            @if (dashed === true) {
+                <div class="divider dashed"></div>
+            } @else {
+                <div class="divider solid"></div>
+            }
+        </div>
+    }
+}

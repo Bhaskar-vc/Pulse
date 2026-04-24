@@ -1,0 +1,99 @@
+.dropdown-container {
+  @apply w-[240px] relative outline-none;
+
+  &:focus,
+  &:focus-visible {
+    .dropdown-btn {
+      box-shadow:
+        0px 0px 0px 4px #f2f4f7,
+        0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    }
+  }
+
+  .dropdown-btn {
+    @apply flex flex-row justify-between items-center gap-sm px-lg py-[10px] border border-neutral-300 rounded-sm cursor-pointer;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+
+    &:focus,
+    &:focus-visible {
+      box-shadow:
+        0px 0px 0px 4px #f2f4f7,
+        0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    }
+
+    &.borderless {
+      @apply border-none;
+      box-shadow: none;
+    }
+  }
+
+  .dropdown-placeholder {
+    @apply text-primary-300;
+  }
+
+  .dropdown-selected-text {
+    @apply text-primary-500;
+  }
+
+  .dropdown-icon {
+    @apply text-primary-500 text-sm;
+  }
+
+  .dropdown-menu {
+    @apply w-full max-h-[300px] bg-white border border-neutral-100 rounded z-10 overflow-auto;
+    box-shadow:
+      0px 8px 8px -4px rgba(16, 24, 40, 0.03),
+      0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+
+    .dropdown-list-item {
+      @apply flex flex-row justify-between items-center gap-sm px-lg py-[10px] hover:bg-neutral-100 cursor-pointer;
+    }
+  }
+
+  .dropdown-selected-item {
+    @apply bg-neutral-100;
+
+    .check-icon {
+      @apply w-lg h-lg -mr-2xs text-secondary-600;
+    }
+  }
+
+  .dropdown-hovered-item {
+    @apply bg-neutral-100;
+  }
+
+  // &[data-collapsed='true'] {
+  //   & .dropdown-menu {
+  //     @apply hidden;
+  //   }
+  // }
+
+  // &[data-collapsed='false'] {
+  //   & .dropdown-menu {
+  //     @apply block rotate-0;
+  //   }
+
+  //   & .dropdown-icon {
+  //     @apply rotate-180;
+  //   }
+  // }
+}
+
+.dropdown-menu {
+  @apply w-[240px] max-h-[300px] bg-white border border-neutral-100 rounded z-10 overflow-auto duration-100;
+  box-shadow:
+    0px 8px 8px -4px rgba(16, 24, 40, 0.03),
+    0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+
+  .dropdown-list-item {
+    @apply flex flex-row justify-between items-center gap-sm px-lg py-[10px] hover:bg-neutral-100 cursor-pointer;
+  }
+
+  // &[data-show='true'] {
+  //   @apply block;
+  // }
+
+  // &[data-show='false'] {
+  //   @apply hidden;
+  // }
+}

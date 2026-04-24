@@ -1,0 +1,11 @@
+svg {
+  transform: rotate(-90deg);
+}
+
+.progress-text {
+  @apply font-medium;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

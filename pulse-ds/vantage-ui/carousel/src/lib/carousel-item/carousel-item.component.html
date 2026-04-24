@@ -1,0 +1,5 @@
+<ng-template #carouselItemTemplate let-cols="cols" let-columnGap="columnGap">
+  <div class="carousel-item" [style]="getCarouselItemStyle(cols, columnGap)">
+    <ng-content></ng-content>
+  </div>
+</ng-template>

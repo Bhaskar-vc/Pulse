@@ -1,0 +1,11 @@
+import { Component } from '@angular/core';
+
+
+@Component({
+    selector: 'vc-card-footer',
+    standalone: true,
+    imports: [],
+    templateUrl: './card-footer.component.html',
+    styleUrl: './card-footer.component.scss'
+})
+export class CardFooterComponent {}

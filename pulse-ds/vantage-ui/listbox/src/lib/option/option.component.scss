@@ -1,0 +1,94 @@
+.option {
+  // @apply text-primary-500 flex flex-row justify-between items-center gap-sm px-lg py-sm;
+
+  // &:not(.disabled-option) {
+  //   // @apply hover:bg-neutral-100 cursor-pointer;
+  //   @apply cursor-pointer;
+
+  //   &.light {
+  //     @apply hover:bg-neutral-100;
+  //   }
+
+  //   &.dark {
+  //     @apply hover:bg-primary-400;
+  //   }
+  // }
+
+  // &:not(.disabled-option) {
+  //   @apply cursor-pointer;
+  // }
+
+  // &.light {
+  //   &:not(.disabled-option) {
+  //     @apply hover:bg-neutral-100;
+  //   }
+
+  //   &.active, &.selected {
+  //     @apply bg-neutral-100;
+  //   }
+
+  //   .check-icon {
+  //     @apply text-secondary-600;
+  //   }
+  // }
+
+  // &.dark {
+  //   &:not(.disabled-option) {
+  //     @apply hover:bg-white/10;
+  //   }
+
+  //   &.active, &.selected {
+  //     @apply bg-white/10;
+  //   }
+
+  //   .check-icon {
+  //     @apply text-[#b692f6];
+  //   }
+  // }
+
+  .left-content {
+    @apply flex flex-row gap-md;
+
+    & .left-content-img {
+      @apply w-xl h-lg mt-[3px] object-cover;
+    }
+
+    & .left-content-icon {
+      @apply mt-[3px];
+    }
+
+    & .child-content {
+      @apply w-full overflow-hidden text-ellipsis whitespace-nowrap;
+    }
+  }
+
+  .supporting-text {
+    @apply text-primary-300;
+  }
+
+  .right-content {
+    @apply text-primary-300;
+
+    // .check-icon {
+    //   @apply w-lg h-lg -mr-2xs text-secondary-600;
+    // }
+  }
+
+  .check-icon {
+    @apply w-lg h-lg text-secondary-600;
+  }
+
+  // .check-icon {
+  //   @apply w-lg h-lg;
+  // }
+
+  .active, .selected {
+    &.light {
+      @apply bg-neutral-100;
+    }
+
+    &.dark {
+      @apply bg-white/10;
+    }
+  }
+}

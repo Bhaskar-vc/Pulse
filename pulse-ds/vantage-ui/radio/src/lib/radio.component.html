@@ -1,0 +1,53 @@
+<div class="flex flex-row" [ngClass]="getMainContainerClass()">
+  <div
+    class="radio-btn"
+    [class]="size === sizes.MEDIUM ? 'radio-size-md' : 'radio-size-sm'"
+    [attr.data-hovered]="hovered"
+    [attr.data-focused]="focused"
+    [attr.data-checked]="checked"
+    [attr.data-disabled]="disabled"
+    (click)="handleClick($event)"
+    (mouseenter)="handleMouseEnter()"
+    (mouseleave)="handleMouseLeave()"
+  >
+    <!-- <input
+      #radio
+      [id]="elementId"
+      class="radio-hidden"
+      type="radio"
+      [value]="value"
+      [attr.aria-label]="ariaLabel"
+      [attr.aria-labelledby]="ariaLabelledBy"
+      [attr.aria-checked]="checked"
+      (focus)="handleFocus($event)"
+      (blur)="handleBlur($event)"
+    /> -->
+    <input
+      #radio
+      role="radio"
+      [id]="elementId"
+      class="radio-hidden"
+      type="radio"
+      [value]="value"
+      [name]="name"
+      [attr.name]="name"
+      [attr.aria-label]="ariaLabel"
+      [attr.aria-labelledby]="ariaLabelledBy"
+      [attr.aria-checked]="checked"
+      (focus)="handleFocus($event)"
+      (blur)="handleBlur($event)"
+    />
+    <div class="radio-visible"></div>
+  </div>
+  <label
+    class="radio-input-label"
+    [attr.for]="elementId"
+    (mouseenter)="handleMouseEnter()"
+    (mouseleave)="handleMouseLeave()"
+  >
+    <span class="leading-normal" [ngClass]="getLabelClass()">{{ label }}</span>
+    <span class="text-xs-normal leading-[140%] tracking-[0.025px]">{{
+      subtext
+    }}</span>
+  </label>
+</div>

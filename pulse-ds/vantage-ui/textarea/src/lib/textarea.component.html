@@ -1,0 +1,56 @@
+<div class="flex flex-col">
+  @if (label) {
+    <vc-label [labelFor]="generatedId" [text]="label" [required]="required"></vc-label>
+  }
+  <textarea
+    [id]="textareaId || generatedId"
+    [required]="required"
+    [disabled]="disabled"
+    class="text-primary-500 border w-[320px] h-[105px] rounded px-md py-sm outline-none focus:border-neutral-300 focus:shadow-[0px_0px_0px_4px_#F2F4F7] disabled:text-neutral-400 disabled:bg-neutral-100"
+    [ngClass]="{
+      'border-neutral-200':
+        (required === true &&
+          (model === '' || model === undefined) &&
+          touched === false) ||
+        required === false ||
+        (required === true && model !== '' && touched === true),
+      'border-error-300':
+        required === true &&
+        (model === '' || model === undefined) &&
+        touched === true,
+        'resize': resize === true,
+        'resize-none': resize === false,
+      'hover:border-neutral-300': !disabled,
+      'cursor-not-allowed': disabled,
+    }"
+    [placeholder]="placeholder"
+    [minlength]="minLength"
+    [maxlength]="maxLength"
+    [(ngModel)]="model"
+    (ngModelChange)="onModelChange($event)"
+    (input)="onInputChange($event)"
+    [style]="textareaStyle"
+    (blur)="handleBlur()"
+    [maxlength]="maxLength ?? null"
+  ></textarea>
+
+  @if (
+    required === true &&
+    (model === '' || model === undefined) &&
+    touched === true
+  ) {
+    <label
+      [for]="textareaId || generatedId"
+      class="text-error-600 text-sm-normal mt-xs"
+      >{{ errorText }}</label
+    >
+  }
+
+  @if (hintText) {
+    <label
+      [for]="textareaId || generatedId"
+      class="text-primary-200 text-sm-normal mt-xs"
+      >{{ hintText }}</label
+    >
+  }
+</div>

@@ -1,0 +1,17 @@
+<ng-template>
+  <div #vcAutocompleteMenu class="autocomplete-menu" @panelAnimation>
+    <vc-listbox
+      [width]="menuWidth"
+      [loading]="loading"
+      [multiple]="multiple"
+      [showSelectAllCheckbox]="showSelectAllCheckbox"
+      [selected]="selected"
+      [options]="listboxOptions"
+      [hintText]="panelHintText"
+      (onSelectionChange)="handleSelectionChange($event)"
+      (onSelectAllCheckboxChange)="handleSelectAllChange($event)"
+    >
+      <ng-content></ng-content>
+    </vc-listbox>
+  </div>
+</ng-template>

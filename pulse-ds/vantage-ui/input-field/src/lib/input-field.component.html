@@ -1,0 +1,131 @@
+<div class="flex flex-col">
+  @if (label) {
+    <vc-label [labelFor]="generatedId" [text]="label" [required]="required"></vc-label>
+  }
+  <div
+    class="flex flex-row items-center gap-2xs border rounded w-[320px] min-h-9"
+    [ngClass]="getInputContainerClass()"
+    [style]="componentStyle"
+    (click)="setFocus()"
+  >
+    @if (iconLeft) {
+      @if (isIconLeftString()) {
+        <div class="flex w-xl h-xl text-2xl items-center">
+          <i class="text-xl-normal text-neutral-400" [class]="iconLeft"></i>
+        </div>
+      } @else if (isIconLeftTemplateRef()) {
+        <ng-container *ngTemplateOutlet="getIconLeftAsTemplateRef()"></ng-container>
+      }
+    } @else if (tags.length) {
+      @for (tag of tags; track $index) {
+        <vc-tag
+          #tagElement
+          size="sm"
+          color="primary"
+          componentStyle="display: flex; align-items: center; height: 26px; border-radius: 5px;"
+          [image]="tag.imageUrl"
+          [focusable]="true"
+          [showX]="true"
+          (keydown)="handleTagKeyDown($event)"
+          (onRemove)="handleRemoveTag($event, $index)"
+          >{{ tag.text }}</vc-tag
+        >
+      }
+    }
+
+    <input
+      #inputField
+      class="flex-1 text-primary-500 placeholder:text-neutral-400 !outline-none disabled:text-neutral-400 disabled:bg-neutral-100 disabled:cursor-not-allowed border-none !p-0"
+      [id]="inputfieldId || generatedId"
+      [type]="type"
+      [ngClass]="getInputClass()"
+      [placeholder]="placeholder"
+      [required]="required"
+      [disabled]="disabled"
+      [(ngModel)]="displayValue"
+      (ngModelChange)="onModelChange($event)"
+      (input)="handleInputChange($event)"
+      (focus)="handleFocus($event)"
+      (blur)="handleBlur($event)"
+      (keyup)="handleInputKeyUp($event)"
+      (keydown)="handleInputKeyDown($event)"
+      [min]="min"
+      [max]="max"
+      [minlength]="minLength ?? null"
+      [maxlength]="maxLength ?? null"
+      [readonly]="readOnly"
+    />
+
+    @if (iconRight) {
+      @if (isIconRightString()) {
+        <div class="flex w-xl h-xl text-2xl items-center" (click)="handleIconRightClick($event)">
+          <i class="text-xl-normal text-neutral-400" [class]="iconRight"></i>
+        </div>
+      } @else if (isIconRightTemplateRef()) {
+        <ng-container
+          (click)="handleIconRightClick($event)"
+          *ngTemplateOutlet="getIconRightAsTemplateRef()"
+        ></ng-container>
+      }
+    }
+
+    @if (customValidation && customValidation === 'invalid') {
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6 text-error-600"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+        />
+      </svg>
+    } @else if (
+      this.customValidation
+        ? this.customValidation === 'invalid'
+        : this.required === true &&
+          (this.displayValue === '' || this.displayValue === undefined) &&
+          this.touched === true
+    ) {
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6 text-error-600"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+        />
+      </svg>
+    }
+  </div>
+
+  @if (customValidation && customValidation === 'invalid') {
+    <label [for]="inputfieldId || generatedId" class="text-error-600 text-sm-normal mt-xs">{{ errorText }}</label>
+  } @else if (
+    this.customValidation
+      ? this.customValidation === 'invalid'
+      : this.required === true &&
+        (this.displayValue === '' || this.displayValue === undefined) &&
+        this.touched === true &&
+        showErrorText
+  ) {
+    <label [for]="inputfieldId || generatedId" class="text-error-600 text-sm-normal mt-xs">{{ errorText }}</label>
+  }
+
+  @if (hintText) {
+    <label
+      [for]="inputfieldId || generatedId"
+      class="text-primary-200 text-sm-normal mt-xs"
+      [innerHTML]="hintText"
+    ></label>
+  }
+</div>

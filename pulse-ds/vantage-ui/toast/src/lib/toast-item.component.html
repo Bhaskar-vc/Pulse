@@ -1,0 +1,53 @@
+<div
+  class="flex flex-row justify-between"
+  [ngClass]="[
+    'toast-item-container-' + message?.status,
+    'toast-accent-border-' + message?.accentBorder + '-' + message?.status
+  ]"
+  [attr.id]="message?.id"
+  @animateToastItem
+>
+  <!-- @if (message?.accentBorder) {
+  <div class="w-sm" [ngClass]="['accent-border-' + message?.status]"></div>
+} -->
+  <div class="flex flex-row gap-sm">
+    <div>
+      @if (message?.status === 'default' || message?.status === 'success') {
+        <i class="vc-checkmark text-success-600"></i>
+      } @else if (message?.status === 'warning') {
+        <i class="vc-warning text-warning-600"></i>
+      } @else if (message?.status === 'error') {
+        <i class="vc-blocked text-error-600"></i>
+      } @else if (message?.status === 'info') {
+        <i class="vc-info1 text-info-600"></i>
+      }
+    </div>
+    <div class="flex flex-col gap-2xs">
+      @if (message?.heading) {
+        <div [ngClass]="['toast-item-heading-' + message?.status]">
+          {{ message?.heading }}
+        </div>
+      }
+      @if (message?.description) {
+        <div [ngClass]="['toast-item-message-' + message?.status]">
+          {{ message?.description }}
+        </div>
+      }
+    </div>
+  </div>
+  @if (message?.link) {
+    <div class="flex justify-center items-center gap-sm">
+      <div class="cursor-pointer" (click)="handleLinkClick($event)" [ngClass]="['link-' + message?.status]">
+        {{ message?.link }}
+      </div>
+      <div class="cursor-pointer" (click)="handleLinkClick($event)" [ngClass]="['link-arrow-' + message?.status]">
+        <i class="vc-arrow-right2"></i>
+      </div>
+    </div>
+  }
+  @if (message?.dismiss) {
+    <div class="flex justify-center items-center">
+      <i class="vc-close text-xs font-bold cursor-pointer" (click)="onCloseIconClick($event)"></i>
+    </div>
+  }
+</div>

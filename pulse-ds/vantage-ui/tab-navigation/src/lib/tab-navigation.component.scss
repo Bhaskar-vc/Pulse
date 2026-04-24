@@ -1,0 +1,13 @@
+li {
+  &.label-size-sm {
+    @apply text-sm-normal;
+  }
+
+  &.label-size-default {
+    @apply text-base-normal;
+  }
+
+  &.tab-highlight {
+    @apply font-medium text-secondary-700 border-b-2 border-secondary-600 pb-[2px];
+  }
+}

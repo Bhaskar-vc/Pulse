@@ -1,0 +1,41 @@
+<label
+  class="toggle-wrap"
+  [class.is-disabled]="disabled"
+  (click)="toggle()"
+>
+  <span
+    class="toggle"
+    [class.size-sm]="size === 'sm'"
+    [class.size-md]="size === 'md'"
+    [class.size-lg]="size === 'lg'"
+    [class.is-on]="checked"
+    [class.is-disabled]="disabled"
+    [class.color-primary]="color === 'primary'"
+    [class.color-secondary]="color === 'secondary'"
+    [class.color-success]="color === 'success'"
+    [attr.role]="'switch'"
+    [attr.aria-checked]="checked"
+    [attr.aria-disabled]="disabled || null"
+  >
+    <input
+      type="checkbox"
+      [checked]="checked"
+      [disabled]="disabled"
+      (change)="$event.stopPropagation()"
+    />
+    <span class="toggle-track">
+      <span class="toggle-thumb"></span>
+    </span>
+  </span>
+
+  @if (label) {
+    <span class="cb-label-wrap">
+      <span class="toggle-label">{{ label }}</span>
+      @if (supporting) {
+        <span class="toggle-supporting">{{ supporting }}</span>
+      }
+    </span>
+  } @else {
+    <ng-content></ng-content>
+  }
+</label>

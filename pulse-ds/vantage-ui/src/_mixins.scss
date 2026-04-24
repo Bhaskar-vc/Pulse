@@ -1,0 +1,20 @@
+@mixin typography(
+  $fontSize: var(--font-size-base),
+  $weight: var(--font-weight-base),
+  $lineHeight: var(--leading-normal),
+  $letterSpacing: 0,
+  $textTransform: none
+) {
+  font-size: $fontSize;
+  font-weight: $weight;
+  line-height: $lineHeight;
+  letter-spacing: $letterSpacing;
+  text-transform: $textTransform;
+}
+
+@mixin grid($cols, $gutter, $margin) {
+  display: grid;
+  grid-template-columns: repeat($cols, 1fr);
+  gap: $gutter;
+  margin: 0 $margin;
+}

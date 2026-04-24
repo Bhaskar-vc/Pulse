@@ -1,0 +1,86 @@
+<li
+  role="option"
+  class="option"
+  [title]="value && value.text"
+  [style]="componentStyle"
+  [tabindex]="-1"
+  [ngClass]="{
+    'disabled-option': value?.disabled || loading
+  }"
+  [attr.data-selected]="selected"
+  [attr.aria-selected]="selected"
+  (click)="handleClick($event)"
+>
+  @if (value?.['customTemplate']) {
+    <div class="w-full">
+      <ng-container
+        *ngTemplateOutlet="
+          value['customTemplate'];
+          context: {
+            $implicit: value,
+            active: active,
+            selected: selected,
+            loading: loading
+          }
+        "
+      ></ng-container>
+    </div>
+  } @else {
+    <div
+      class="text-primary-500 w-full flex justify-between items-center gap-sm px-lg py-sm"
+      [ngClass]="{
+        light: theme === 'light',
+        dark: theme === 'dark',
+        active: active && !value?.disabled,
+        selected: selected && !multiple,
+        'cursor-pointer': !value?.disabled && !loading,
+        'hover:bg-neutral-100': !value?.disabled && !loading && theme === 'light',
+        'hover:bg-white/10': !value?.disabled && !loading && theme === 'dark',
+      }"
+    >
+      @if (loading) {
+        <ng-container *ngTemplateOutlet="multiLineSkeleton"></ng-container>
+      } @else {
+        <div class="left-content" [ngClass]="{ 'max-w-[100%]': multiple, 'max-w-[85%]': !multiple }">
+          @if (multiple) {
+            <div>
+              <vc-checkbox [checked]="selected"></vc-checkbox>
+            </div>
+          }
+          @if (value) {
+            @if (value.imageURL) {
+              <img class="left-content-img" [src]="value.imageURL" alt="Option image" />
+            } @else if (value.icon) {
+              <i class="left-content-icon" [class]="value.icon"></i>
+            }
+          }
+          <div class="child-content">
+            <ng-content></ng-content>
+          </div>
+        </div>
+        @if (selected && !multiple) {
+          <ng-container *ngTemplateOutlet="checkIcon"></ng-container>
+        }
+      }
+    </div>
+  }
+</li>
+
+<ng-template #checkIcon>
+  <svg class="check-icon" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M16.6668 5.5L7.50016 14.6667L3.3335 10.5"
+      stroke="currentColor"
+      stroke-width="1.66667"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</ng-template>
+
+<ng-template #multiLineSkeleton>
+  <div class="flex flex-col gap-[5px] w-[100px]">
+    <div class="h-[6px] rounded-[4px] fade-in-out"></div>
+    <div class="h-[6px] rounded-[4px] fade-in-out w-3/4"></div>
+  </div>
+</ng-template>

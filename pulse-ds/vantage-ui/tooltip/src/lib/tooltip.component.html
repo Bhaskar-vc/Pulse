@@ -1,0 +1,9 @@
+@if (VcTooltip != null) {
+  <div class="vc-tooltip"
+       [ngClass]="['vc-tooltip--'+position, 'vc-tooltip--'+theme]"
+       [class.vc-tooltip--visible]="visible"
+       [style.left]="left + 'px'"
+       [style.top]="top + 'px'">
+    {{VcTooltip}}
+  </div>
+}
