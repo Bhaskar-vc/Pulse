@@ -42,13 +42,18 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
   }
 
   datePickerOpen = false;
-  dateRangeLabel = '01 Jan - 31 Dec 2026';
-  dateRangeOptions = [
-    { label: '01 Jan - 31 Mar 2026' },
-    { label: '01 Apr - 30 Jun 2026' },
-    { label: '01 Jul - 30 Sep 2026' },
-    { label: '01 Oct - 31 Dec 2026' },
-    { label: '01 Jan - 31 Dec 2026' },
+  dateRangeLabel = 'Last week';
+  dateRangeDisplay = 'Jan 6 – Jan 13, 2026';
+  datePresets = [
+    { label: 'Today', range: 'Apr 24, 2026' },
+    { label: 'Yesterday', range: 'Apr 23, 2026' },
+    { label: 'This week', range: 'Apr 21 – Apr 27, 2026' },
+    { label: 'Last week', range: 'Jan 6 – Jan 13, 2026' },
+    { label: 'This month', range: 'Apr 1 – Apr 30, 2026' },
+    { label: 'Last month', range: 'Mar 1 – Mar 31, 2026' },
+    { label: 'This year', range: 'Jan 1 – Dec 31, 2026' },
+    { label: 'Last year', range: 'Jan 1 – Dec 31, 2025' },
+    { label: 'All time', range: 'All data' },
   ];
 
   toggleDatePicker(event: MouseEvent) {
@@ -56,8 +61,9 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
     this.datePickerOpen = !this.datePickerOpen;
   }
 
-  selectDateRange(opt: { label: string }) {
-    this.dateRangeLabel = opt.label;
+  selectDatePreset(preset: { label: string; range: string }) {
+    this.dateRangeLabel = preset.label;
+    this.dateRangeDisplay = preset.range;
     this.datePickerOpen = false;
   }
 

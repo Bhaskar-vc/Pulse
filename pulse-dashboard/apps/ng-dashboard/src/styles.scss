@@ -474,28 +474,72 @@ pulse-root > router-outlet + * { display: flex; flex-direction: column; flex: 1;
 .more-btn:hover { background: #f4f4f6; }
 .more-btn svg { width: 20px; height: 20px; }
 
-/* Date range picker */
+/* Date range picker — DS style */
 .date-range-wrap { position: relative; }
 .date-range-btn {
   display: flex; align-items: center; gap: 8px;
   background: #fff; border: 1px solid #e1e5ea; border-radius: 8px;
-  padding: 5px 12px; font-size: 13px; font-weight: 500; color: #374151;
+  padding: 5px 12px; font-size: 13px; font-weight: 500; color: #344054;
   font-family: inherit; cursor: pointer; transition: border-color 0.15s;
 }
 .date-range-btn:hover { border-color: #c4b5fd; }
-.date-range-menu {
-  position: absolute; top: calc(100% + 6px); right: 0; z-index: 50;
-  background: #fff; border: 1px solid #e5e7eb; border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1); padding: 6px 0; min-width: 200px;
-  display: none;
+
+/* DS Date picker dropdown */
+.ds-datepicker {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 1000;
+  background: #fff; border-radius: 8px;
+  box-shadow: 0 12px 16px -4px rgba(16,24,40,0.08), 0 4px 6px -2px rgba(16,24,40,0.03);
+  display: none; flex-direction: row;
 }
-.date-range-menu.is-open { display: block; }
-.date-range-option {
-  padding: 9px 16px; font-size: 13px; font-weight: 500; color: #374151;
-  cursor: pointer; transition: background 0.1s;
+.ds-datepicker.is-open { display: flex; }
+
+/* Left preset sidebar */
+.ds-dp-presets {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 12px 16px; border-right: 1px solid #eaecf0;
+  width: 160px; flex-shrink: 0;
 }
-.date-range-option:hover { background: #f9fafb; }
-.date-range-option.is-selected { color: #7c3aed; font-weight: 600; background: #f5f3ff; }
+.ds-dp-preset {
+  padding: 8px 16px; border-radius: 6px;
+  font-size: 14px; font-weight: 400; color: #344054;
+  cursor: pointer; white-space: nowrap; transition: background 0.1s;
+}
+.ds-dp-preset:hover { background: #f9fafb; }
+.ds-dp-preset.is-active {
+  background: #fcfaff; color: #6941c6; font-weight: 500;
+}
+
+/* Right detail panel */
+.ds-dp-detail {
+  display: flex; flex-direction: column;
+  padding: 20px 24px; width: 240px;
+}
+.ds-dp-selected-label {
+  font-size: 14px; font-weight: 600; color: #29294c;
+  margin-bottom: 4px;
+}
+.ds-dp-selected-range {
+  font-size: 13px; font-weight: 400; color: #667085;
+  flex: 1;
+}
+.ds-dp-actions {
+  display: flex; gap: 12px; justify-content: flex-end;
+  padding-top: 16px; border-top: 1px solid #eaecf0; margin-top: 16px;
+}
+.ds-dp-cancel {
+  padding: 6px 16px; border-radius: 8px; border: 1px solid #d0d5dd;
+  background: #fff; font-size: 14px; font-weight: 500; color: #29294c;
+  font-family: inherit; cursor: pointer; transition: background 0.15s;
+  min-width: 80px;
+}
+.ds-dp-cancel:hover { background: #f9fafb; }
+.ds-dp-apply {
+  padding: 6px 16px; border-radius: 6px; border: none;
+  background: #29294c; font-size: 14px; font-weight: 600; color: #fff;
+  font-family: inherit; cursor: pointer; transition: background 0.15s;
+  min-width: 80px;
+}
+.ds-dp-apply:hover { background: #1e1e3a; }
 
 /* SCROLLABLE CONTENT */
 .page-scroll {
@@ -799,19 +843,24 @@ app-ai-hub .main-card {
     #eef0f8;
   overflow-y: auto;
 }
-app-ai-hub .main-card { position: relative; }
-app-ai-hub .aihub-bottom-fade {
-  position: fixed;
+app-ai-hub .main-card {
+  position: relative;
+}
+app-ai-hub .main-card::after {
+  content: '';
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 180px;
+  height: 200px;
   pointer-events: none;
-  background: linear-gradient(to top, #eef0f8 0%, rgba(238,240,248,0.8) 40%, transparent 100%);
+  background: linear-gradient(to top, #eef0f8 0%, rgba(238,240,248,0.85) 35%, transparent 100%);
   z-index: 10;
+  opacity: 1;
   transition: opacity 0.3s ease;
 }
-app-ai-hub .aihub-bottom-fade.fade-hidden { opacity: 0; }
+app-ai-hub .main-card.chat-active::after { display: none; }
+app-ai-hub .main-card.scrolled-bottom::after { opacity: 0; }
 @keyframes aihubFadeUp {
   from { opacity: 0; transform: translateY(22px); }
   to { opacity: 1; transform: translateY(0); }

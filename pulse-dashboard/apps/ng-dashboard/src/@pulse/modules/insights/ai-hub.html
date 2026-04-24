@@ -2,7 +2,7 @@
 <div class="shadow-rect shadow-rect-1"></div>
 <div class="shadow-rect shadow-rect-2"></div>
 
-<div class="main-card">
+<div class="main-card" [class.chat-active]="chatMode" [class.scrolled-bottom]="scrolledToBottom">
   <div class="aihub-wrap" [class.chat-mode]="chatMode" id="aihubWrap">
 
     <button class="aihub-close-btn" *ngIf="chatMode" (click)="exitChatMode()" title="Close chat">
@@ -124,5 +124,4 @@
     </div>
 
   </div>
-</div>
-<div class="aihub-bottom-fade" *ngIf="!chatMode" [class.fade-hidden]="scrolledToBottom"></div>
+  </div>

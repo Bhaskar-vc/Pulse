@@ -241,7 +241,8 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
   private checkScroll() {
     const el = document.querySelector('app-ai-hub .main-card') as HTMLElement;
     if (!el) return;
-    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 50;
+    const hasScroll = el.scrollHeight > el.clientHeight + 10;
+    const atBottom = hasScroll && el.scrollTop + el.clientHeight >= el.scrollHeight - 50;
     if (atBottom !== this.scrolledToBottom) {
       this.scrolledToBottom = atBottom;
       this.cdr.detectChanges();
