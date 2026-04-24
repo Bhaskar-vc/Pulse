@@ -1,7 +1,7 @@
 {
   "buildCommand": "npx nx build ng-dashboard --configuration=production",
   "outputDirectory": "dist/apps/ng-dashboard/browser",
-  "installCommand": "npm install --legacy-peer-deps",
+  "installCommand": "NODE_OPTIONS=--max-old-space-size=4096 npm install --legacy-peer-deps",
   "framework": null,
   "rewrites": [
     { "source": "/api/survey/getSurveysForReport", "destination": "/api/survey/getSurveysForReport" },
