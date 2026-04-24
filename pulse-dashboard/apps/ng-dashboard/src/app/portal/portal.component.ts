@@ -30,9 +30,7 @@ export class PortalComponent implements OnInit {
   setupSteps: SetupStep[] = [
     { label: 'Connect HRIS', desc: 'Workday \u00b7 synced 1,074 employees', done: true, current: false },
     { label: 'Invite admins', desc: '3 co-admins added', done: true, current: false },
-    { label: 'Set org hierarchy', desc: 'Map departments and managers', done: false, current: true },
-    { label: 'Launch first survey', desc: 'Pick a template or use AI', done: false, current: false },
-    { label: 'Enable Slack / Teams', desc: 'Send surveys where people already work', done: false, current: false },
+    { label: 'Launch first survey', desc: 'Pick a template or use AI', done: false, current: true },
   ];
 
   templateCards: TemplateCard[] = [
