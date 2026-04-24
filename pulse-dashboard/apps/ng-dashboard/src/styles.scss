@@ -484,62 +484,36 @@ pulse-root > router-outlet + * { display: flex; flex-direction: column; flex: 1;
 }
 .date-range-btn:hover { border-color: #c4b5fd; }
 
-/* DS Date picker dropdown */
-.ds-datepicker {
+/* DS Date picker dropdown — positioned wrapper */
+.cal-wrap--picker {
   position: absolute; top: calc(100% + 6px); right: 0; z-index: 1000;
-  background: #fff; border-radius: 8px;
-  box-shadow: 0 12px 16px -4px rgba(16,24,40,0.08), 0 4px 6px -2px rgba(16,24,40,0.03);
-  display: none; flex-direction: row;
+  display: none; flex-direction: row; overflow: hidden;
 }
-.ds-datepicker.is-open { display: flex; }
+.cal-wrap--picker.is-open { display: flex; }
 
-/* Left preset sidebar */
-.ds-dp-presets {
+/* Preset shortcuts sidebar */
+.cal-shortcuts {
   display: flex; flex-direction: column; gap: 2px;
-  padding: 12px 16px; border-right: 1px solid #eaecf0;
-  width: 160px; flex-shrink: 0;
+  padding: 8px; border-right: 1px solid #eaecf0;
+  width: 156px; flex-shrink: 0; background: #f9fafb;
 }
-.ds-dp-preset {
-  padding: 8px 16px; border-radius: 6px;
+.cal-shortcut {
+  padding: 7px 12px; border-radius: 6px;
   font-size: 14px; font-weight: 400; color: #344054;
   cursor: pointer; white-space: nowrap; transition: background 0.1s;
 }
-.ds-dp-preset:hover { background: #f9fafb; }
-.ds-dp-preset.is-active {
-  background: #fcfaff; color: #6941c6; font-weight: 500;
-}
+.cal-shortcut:hover { background: #eaecf0; }
+.cal-shortcut.is-active { background: #f5f3ff; color: #6941c6; font-weight: 500; }
 
 /* Right detail panel */
-.ds-dp-detail {
-  display: flex; flex-direction: column;
-  padding: 20px 24px; width: 240px;
+.cal-dp-detail {
+  display: flex; flex-direction: column; justify-content: space-between;
+  width: 224px;
 }
-.ds-dp-selected-label {
-  font-size: 14px; font-weight: 600; color: #29294c;
-  margin-bottom: 4px;
-}
-.ds-dp-selected-range {
-  font-size: 13px; font-weight: 400; color: #667085;
-  flex: 1;
-}
-.ds-dp-actions {
-  display: flex; gap: 12px; justify-content: flex-end;
-  padding-top: 16px; border-top: 1px solid #eaecf0; margin-top: 16px;
-}
-.ds-dp-cancel {
-  padding: 6px 16px; border-radius: 8px; border: 1px solid #d0d5dd;
-  background: #fff; font-size: 14px; font-weight: 500; color: #29294c;
-  font-family: inherit; cursor: pointer; transition: background 0.15s;
-  min-width: 80px;
-}
-.ds-dp-cancel:hover { background: #f9fafb; }
-.ds-dp-apply {
-  padding: 6px 16px; border-radius: 6px; border: none;
-  background: #29294c; font-size: 14px; font-weight: 600; color: #fff;
-  font-family: inherit; cursor: pointer; transition: background 0.15s;
-  min-width: 80px;
-}
-.ds-dp-apply:hover { background: #1e1e3a; }
+.cal-dp-info { padding: 20px 20px 12px; }
+.cal-dp-label { font-size: 14px; font-weight: 600; color: #101828; margin-bottom: 3px; }
+.cal-dp-range { font-size: 13px; font-weight: 400; color: #667085; }
+.cal-dp-detail .cal-footer { padding: 12px 20px; justify-content: flex-end; border-radius: 0; background: transparent; }
 
 /* SCROLLABLE CONTENT */
 .page-scroll {
