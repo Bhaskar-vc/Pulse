@@ -9,6 +9,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        redirectTo: 'ai-hub',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
         loadChildren: () =>
           import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule),
       },

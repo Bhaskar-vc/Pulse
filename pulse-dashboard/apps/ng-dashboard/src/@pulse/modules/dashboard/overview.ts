@@ -496,9 +496,9 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
   private initChart() {
     const ctx = this.lineChartRef.nativeElement.getContext('2d')!;
 
-    const makeGrad = (c1: string, c2: string) => {
-      const g = ctx.createLinearGradient(0, 0, 0, 240);
-      g.addColorStop(0, c1); g.addColorStop(1, c2);
+    const makeGrad = (stops: [number, string][]) => {
+      const g = ctx.createLinearGradient(0, 0, 0, 260);
+      stops.forEach(([pos, col]) => g.addColorStop(pos, col));
       return g;
     };
 
@@ -511,56 +511,61 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
           {
             label: 'Engagement',
             data: defaultData.engagement,
-            borderColor: '#5b9bd5',
-            backgroundColor: makeGrad('rgba(91,155,213,0.18)', 'rgba(91,155,213,0)'),
-            borderWidth: 2.5, tension: 0.45, fill: true,
-            pointBackgroundColor: '#5b9bd5', pointRadius: 3.5, pointHoverRadius: 5.5, pointBorderWidth: 0,
+            borderColor: '#98a2b3',
+            backgroundColor: 'transparent',
+            borderWidth: 1.8, tension: 0.45, fill: false,
+            pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#98a2b3', pointHoverBorderColor: '#fff', pointHoverBorderWidth: 2.5,
           },
           {
             label: 'eNPS',
             data: defaultData.enps,
-            borderColor: '#9b72cf',
-            backgroundColor: makeGrad('rgba(155,114,207,0.15)', 'rgba(155,114,207,0)'),
-            borderWidth: 2.5, tension: 0.45, fill: true,
-            pointBackgroundColor: '#9b72cf', pointRadius: 3.5, pointHoverRadius: 5.5, pointBorderWidth: 0,
+            borderColor: '#344054',
+            backgroundColor: 'transparent',
+            borderWidth: 1.8, tension: 0.45, fill: false,
+            pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#344054', pointHoverBorderColor: '#fff', pointHoverBorderWidth: 2.5,
           },
           {
             label: 'Participants',
             data: defaultData.participants,
-            borderColor: '#1f2937', backgroundColor: 'transparent',
-            borderWidth: 2, tension: 0.45, fill: false,
-            pointBackgroundColor: '#1f2937', pointRadius: 3.5, pointHoverRadius: 5.5, pointBorderWidth: 0,
+            borderColor: '#c4b5fd',
+            backgroundColor: makeGrad([[0, 'rgba(196,181,253,0.14)'], [0.7, 'rgba(196,181,253,0.02)'], [1, 'rgba(196,181,253,0)']]),
+            borderWidth: 1.8, tension: 0.45, fill: true,
+            pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#c4b5fd', pointHoverBorderColor: '#fff', pointHoverBorderWidth: 2.5,
           }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: true,
+        layout: { padding: { top: 6, right: 4 } },
         plugins: {
           legend: { display: false },
           tooltip: {
             mode: 'index', intersect: false,
-            backgroundColor: '#fff', titleColor: '#29294c', bodyColor: '#545470',
-            borderColor: '#e5e7eb', borderWidth: 1, padding: 12, cornerRadius: 10,
-            titleFont: { family: 'Poppins', weight: '600', size: 12 },
-            bodyFont: { family: 'Poppins', size: 12 },
+            backgroundColor: '#fff', titleColor: '#1e1b4b', bodyColor: '#4b5563',
+            borderColor: '#e5e7eb', borderWidth: 1, padding: 14, cornerRadius: 12,
+            titleFont: { family: 'Inter', weight: '600', size: 13 },
+            bodyFont: { family: 'Inter', size: 12 },
+            bodySpacing: 6, boxPadding: 6, usePointStyle: true, caretSize: 6,
+            displayColors: true,
           }
         },
         scales: {
           x: {
             grid: { display: false },
             border: { display: false },
-            ticks: { font: { family: 'Poppins', size: 12 }, color: '#707070', padding: 8 }
+            ticks: { font: { family: 'Inter', size: 12, weight: '500' }, color: '#b0b0b8', padding: 10 }
           },
           y: {
             min: 0, max: 100,
-            grid: { color: 'rgba(0,0,0,0.05)' },
-            border: { display: false },
-            ticks: { font: { family: 'Poppins', size: 12 }, color: '#707070', stepSize: 20, padding: 8 }
+            grid: { color: 'rgba(0,0,0,0.04)', lineWidth: 1, tickBorderDash: [3, 3] },
+            border: { display: false, dash: [3, 3] },
+            ticks: { font: { family: 'Inter', size: 12, weight: '500' }, color: '#b0b0b8', stepSize: 20, padding: 12 }
           }
         },
         interaction: { mode: 'index', intersect: false },
-        animation: { duration: 1300, easing: 'easeInOutQuart', delay: 1700 }
+        animation: { duration: 1400, easing: 'easeInOutQuart', delay: 1700 },
+        hover: { mode: 'index', intersect: false }
       }
     } as any);
   }

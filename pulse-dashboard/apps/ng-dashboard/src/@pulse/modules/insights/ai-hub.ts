@@ -17,6 +17,26 @@ interface SurveyDraft {
   audience: string;
 }
 
+interface SetupStep {
+  label: string;
+  desc: string;
+  done: boolean;
+  current: boolean;
+}
+
+interface TemplateCard {
+  title: string;
+  questions: number;
+  teams: number;
+  icon: string;
+}
+
+interface InFlightSurvey {
+  name: string;
+  progress: number;
+  timeLeft: string;
+}
+
 @Component({
   standalone: false,
   selector: 'app-ai-hub',
@@ -42,6 +62,25 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
   placeholderHiding = false;
   statCounter = 0;
   private statTimer: ReturnType<typeof setInterval> | null = null;
+
+  // Live pulse dashboard
+  livePulseTab = 0;
+  livePulseTabs = ['Right now', 'Live pulse', 'Sentiment', 'Needs attention'];
+  livePulseBadges = [0, 0, 0, 2];
+
+  activeSurveys = 2;
+  activeSurveyNote = '1 closes in 3 days';
+  responsesToday = 345;
+  responsesNote = '12 in last hour';
+  orgEnps = 38;
+  enpsNote = '3 vs last quarter';
+  participation = 72;
+  participationTarget = 80;
+
+  inFlightSurveys: InFlightSurvey[] = [
+    { name: 'Q2 Engagement Pulse', progress: 72, timeLeft: '3d left' },
+    { name: 'Manager Effectiveness', progress: 41, timeLeft: '6d left' },
+  ];
 
   // Survey creation flow
   surveyFlowActive = false;

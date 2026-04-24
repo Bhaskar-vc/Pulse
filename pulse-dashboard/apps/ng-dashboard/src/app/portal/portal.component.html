@@ -1,3 +1,103 @@
+<!-- First-time onboarding overlay — fullscreen, covers everything -->
+<div class="onboard-overlay" *ngIf="showOnboarding">
+  <div class="onboard-split">
+
+    <!-- Left 30% — welcome text + illustration -->
+    <div class="onboard-left">
+      <div class="onboard-left-inner">
+        <div class="aihub-hero-illus">
+          <svg class="pulse-illus" viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ddd6fe"/><stop offset="100%" stop-color="#ede9fe"/></linearGradient>
+              <linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c4b5fd"/><stop offset="100%" stop-color="#ddd6fe"/></linearGradient>
+              <linearGradient id="gC" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#c4b5fd"/></linearGradient>
+              <linearGradient id="gD" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient>
+            </defs>
+            <ellipse class="illus-shadow" cx="110" cy="190" rx="68" ry="7" fill="#e0daf5" opacity="0.4"/>
+            <g class="illus-clipboard">
+              <rect x="42" y="24" width="136" height="156" rx="20" fill="#fff" stroke="#ede9fe" stroke-width="1.5"/>
+              <rect x="78" y="14" width="64" height="20" rx="10" fill="#f5f3ff" stroke="#e5e1f0" stroke-width="1"/>
+              <circle cx="110" cy="24" r="4" fill="#c4b5fd"/>
+              <g class="illus-check illus-check-1"><circle cx="64" cy="50" r="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2"/><path d="M61.5 50l1.8 1.8 3.2-3.2" stroke="#22c55e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="78" y="47" width="60" height="5" rx="2.5" fill="#ede9fe"/></g>
+              <g class="illus-check illus-check-2"><circle cx="64" cy="68" r="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2"/><path d="M61.5 68l1.8 1.8 3.2-3.2" stroke="#22c55e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><rect x="78" y="65" width="46" height="5" rx="2.5" fill="#ede9fe"/></g>
+              <g class="illus-check illus-check-3"><circle cx="64" cy="86" r="6" fill="#faf5ff" stroke="#d8b4fe" stroke-width="1.2"/><rect x="78" y="83" width="52" height="5" rx="2.5" fill="#f3f0ff"/></g>
+              <rect class="illus-bar illus-bar-1" x="58" y="118" width="18" height="38" rx="5" fill="url(#gA)"/>
+              <rect class="illus-bar illus-bar-2" x="82" y="104" width="18" height="52" rx="5" fill="url(#gB)"/>
+              <rect class="illus-bar illus-bar-3" x="106" y="112" width="18" height="44" rx="5" fill="url(#gC)"/>
+              <rect class="illus-bar illus-bar-4" x="130" y="96" width="18" height="60" rx="5" fill="url(#gD)"/>
+              <polyline class="illus-pulse-line" points="50,130 66,122 80,130 90,106 100,134 110,88 120,130 134,116 148,130 162,122" stroke="#7c3aed" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.4"/>
+            </g>
+            <circle class="illus-orb illus-orb-1" cx="26" cy="50" r="5" fill="#c4b5fd" opacity="0.35"/>
+            <circle class="illus-orb illus-orb-2" cx="194" cy="42" r="6" fill="#ddd6fe" opacity="0.3"/>
+            <circle class="illus-orb illus-orb-3" cx="190" cy="158" r="4" fill="#a78bfa" opacity="0.25"/>
+            <circle class="illus-orb illus-orb-4" cx="22" cy="146" r="3.5" fill="#e0daf5" opacity="0.35"/>
+            <circle class="illus-orb illus-orb-5" cx="36" cy="98" r="2.5" fill="#c4b5fd" opacity="0.3"/>
+            <circle class="illus-orb illus-orb-6" cx="186" cy="100" r="3" fill="#ddd6fe" opacity="0.25"/>
+            <g class="illus-badge"><rect x="152" y="34" width="36" height="22" rx="11" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="0.8"/><path d="M160 48l6-6 5 4 6-6" stroke="#059669" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right 70% — checklist + templates -->
+    <div class="onboard-right">
+      <div class="onboard-right-inner">
+        <div class="onboard-right-header">
+          <h1 class="aihub-hi">Welcome Kristin, <span>let's</span></h1>
+          <h1 class="aihub-big">Launch your first Pulse Survey.</h1>
+        </div>
+
+        <!-- Setup checklist -->
+        <div class="setup-checklist">
+          <div class="setup-header">
+            <div class="setup-header-left">
+              <h3 class="setup-title">Get set up in {{ setupSteps.length }} steps</h3>
+              <span class="setup-meta">{{ setupComplete }} of {{ setupSteps.length }} complete &middot; Est. {{ setupEstMin }} min</span>
+            </div>
+          </div>
+          <div class="setup-steps">
+            <div class="setup-step" *ngFor="let step of setupSteps" [class.done]="step.done" [class.current]="step.current">
+              <div class="setup-step-icon">
+                <svg *ngIf="step.done" viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="10" cy="10" r="10" fill="#7c3aed"/><path d="M6.5 10.5l2.5 2.5 5-5.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="setup-ring" *ngIf="step.current"><div class="setup-ring-inner"></div></div>
+                <div class="setup-empty" *ngIf="!step.done && !step.current"></div>
+              </div>
+              <div class="setup-step-text">
+                <span class="setup-step-label">{{ step.label }}</span>
+                <span class="setup-step-desc">{{ step.desc }}</span>
+              </div>
+              <button class="setup-continue-btn" [class.setup-finish-btn]="isLastStep(step)" *ngIf="step.current" (click)="continueSetup()">{{ isLastStep(step) ? 'Finish' : 'Continue' }} <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 3 11 8 6 13"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Templates -->
+        <div class="template-section">
+          <div class="template-header">
+            <h3 class="template-title">Or start from a template</h3>
+            <button class="template-browse" (click)="dismissOnboarding()">Browse all 24 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg></button>
+          </div>
+          <div class="template-cards">
+            <div class="template-card" *ngFor="let tpl of templateCards" (click)="dismissOnboarding()">
+              <div class="template-icon">
+                <svg *ngIf="tpl.icon === 'engagement'" viewBox="0 0 40 40" fill="none" width="36" height="36"><rect width="40" height="40" rx="12" fill="#f3f0ff"/><rect x="8" y="22" width="6" height="10" rx="2" fill="#c4b5fd"/><rect x="17" y="16" width="6" height="16" rx="2" fill="#a78bfa"/><rect x="26" y="10" width="6" height="22" rx="2" fill="#7c3aed"/></svg>
+                <svg *ngIf="tpl.icon === 'manager'" viewBox="0 0 40 40" fill="none" width="36" height="36"><rect width="40" height="40" rx="12" fill="#eef2ff"/><circle cx="20" cy="15" r="6" fill="#818cf8"/><path d="M10 32c0-5.523 4.477-10 10-10s10 4.477 10 10" fill="#c7d2fe"/></svg>
+                <svg *ngIf="tpl.icon === 'onboarding'" viewBox="0 0 40 40" fill="none" width="36" height="36"><rect width="40" height="40" rx="12" fill="#fef3c7"/><rect x="10" y="10" width="20" height="22" rx="4" fill="#fbbf24"/><rect x="14" y="15" width="12" height="2" rx="1" fill="#fff"/><rect x="14" y="20" width="8" height="2" rx="1" fill="#fff" opacity="0.7"/><rect x="14" y="25" width="10" height="2" rx="1" fill="#fff" opacity="0.5"/></svg>
+                <svg *ngIf="tpl.icon === 'enps'" viewBox="0 0 40 40" fill="none" width="36" height="36"><rect width="40" height="40" rx="12" fill="#ecfdf5"/><circle cx="20" cy="20" r="10" stroke="#34d399" stroke-width="3" fill="none"/><path d="M20 12v8l5 3" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h4 class="template-card-title">{{ tpl.title }}</h4>
+              <span class="template-card-meta">{{ tpl.questions }} questions &middot; {{ tpl.teams }} teams</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Normal app shell -->
 <header class="topnav">
   <app-top-nav (sidebarToggle)="toggleNav()"></app-top-nav>
 </header>

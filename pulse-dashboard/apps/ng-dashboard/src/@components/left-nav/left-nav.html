@@ -8,9 +8,20 @@
 
 <div class="ln-items">
 
-  <!-- Overview -->
-  <button class="ln-btn" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" title="Overview">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="20" height="20" color="currentColor">
+  <!-- ═══ WORKSPACE ═══ -->
+  <span class="ln-section-label">Workspace</span>
+
+  <!-- 1. Home -->
+  <button class="ln-btn" [routerLink]="['/ai-hub']" routerLinkActive="active" title="Home">
+    <svg viewBox="0 0 24 24" fill="none" width="20" height="20" color="currentColor">
+      <path d="M12 3L4 9v11a1 1 0 001 1h4a1 1 0 001-1v-5a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 001 1h4a1 1 0 001-1V9l-8-6z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="ln-label">Home</span>
+  </button>
+
+  <!-- 2. Overview -->
+  <button class="ln-btn" [routerLink]="['/dashboard']" routerLinkActive="active" title="Overview">
+    <svg viewBox="0 0 24 24" fill="none" width="20" height="20" color="currentColor">
       <path d="M2.5 12c0-4.478 0-6.717 1.391-8.109C5.282 2.5 7.521 2.5 12 2.5c4.478 0 6.718 0 8.109 1.391S21.5 7.521 21.5 12c0 4.478 0 6.718-1.391 8.109S16.479 21.5 12 21.5c-4.478 0-6.718 0-8.109-1.391S2.5 16.479 2.5 12Z" stroke="currentColor" stroke-width="1.3"/>
       <path stroke-linejoin="round" d="M2.5 9h19" stroke="currentColor" stroke-width="1.3"/>
       <path stroke-linecap="round" stroke-linejoin="round" d="M7 6h.009M11 6h.009" stroke="currentColor" stroke-width="1.3"/>
@@ -20,28 +31,7 @@
     <span class="ln-label">Overview</span>
   </button>
 
-  <!-- Insights -->
-  <div class="ln-nav-item" [class.surveys-open]="insightsOpen">
-    <button class="ln-btn ln-btn-has-sub" title="Insights" (click)="toggleNavItem('insights')">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="20" height="20" color="currentColor">
-        <path d="M21 21H10C6.70017 21 5.05025 21 4.02513 19.9749C3 18.9497 3 17.2998 3 14V3" stroke-linecap="round" stroke="currentColor" stroke-width="1.3"/>
-        <path d="M6 12H6.00898M8.9982 12H9.00718M11.9964 12H12.0054M14.9946 12H15.0036M17.9928 12H18.0018M20.991 12H21" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" stroke-width="1.3"/>
-        <path d="M6 7C6.67348 5.87847 7.58712 5 8.99282 5C14.9359 5 11.5954 17 17.9819 17C19.3976 17 20.3057 16.1157 21 15" stroke-linecap="round" stroke="currentColor" stroke-width="1.3"/>
-      </svg>
-      <span class="ln-label">Insights</span>
-      <svg class="ln-chevron" viewBox="0 0 16 16" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7l3 3 3-3"/></svg>
-      <span class="ln-sub-dot"></span>
-    </button>
-    <div class="ln-submenu">
-      <a class="ln-sub-item" href="#">Categories</a>
-      <a class="ln-sub-item" href="#">Questions</a>
-      <a class="ln-sub-item" href="#">Comments</a>
-      <a class="ln-sub-item" href="#">Heat-map</a>
-      <a class="ln-sub-item" href="#">Employee Lifecycle</a>
-    </div>
-  </div>
-
-  <!-- Surveys -->
+  <!-- 3. Surveys -->
   <div class="ln-nav-item" [class.surveys-open]="surveysOpen">
     <button class="ln-btn ln-btn-has-sub" title="Surveys" (click)="toggleNavItem('surveys')">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1">
@@ -57,23 +47,80 @@
       <a class="ln-sub-item" [routerLink]="['/create-survey']">Create</a>
       <a class="ln-sub-item" href="#">Manage</a>
       <a class="ln-sub-item" href="#">Questions</a>
-      <a class="ln-sub-item" href="#">Template</a>
     </div>
   </div>
 
-  <!-- Action Planning -->
-  <button class="ln-btn" title="Action Planning">
+  <!-- 3. Reports -->
+  <button class="ln-btn" [routerLink]="['/reports']" routerLinkActive="active" title="Reports">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1">
+      <path d="M12 2H5a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V8z"/>
+      <polyline points="12 2 12 8 18 8"/>
+      <line x1="7" y1="11" x2="13" y2="11"/>
+      <line x1="7" y1="14" x2="10" y2="14"/>
+    </svg>
+    <span class="ln-label">Reports</span>
+  </button>
+
+  <!-- 4. Insights -->
+  <div class="ln-nav-item" [class.surveys-open]="insightsOpen">
+    <button class="ln-btn ln-btn-has-sub" title="Insights" (click)="toggleNavItem('insights')">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1">
+        <path d="M10 2a6 6 0 00-3 11.2V15a1 1 0 001 1h4a1 1 0 001-1v-1.8A6 6 0 0010 2z"/>
+        <line x1="8" y1="18" x2="12" y2="18" stroke-linecap="round"/>
+      </svg>
+      <span class="ln-label">Insights</span>
+      <svg class="ln-chevron" viewBox="0 0 16 16" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7l3 3 3-3"/></svg>
+      <span class="ln-sub-dot"></span>
+    </button>
+    <div class="ln-submenu">
+      <a class="ln-sub-item" href="#">Categories</a>
+      <a class="ln-sub-item" href="#">Questions</a>
+      <a class="ln-sub-item" href="#">Comments</a>
+      <a class="ln-sub-item" href="#">Heat-map</a>
+      <a class="ln-sub-item" href="#">Employee Lifecycle</a>
+    </div>
+  </div>
+
+  <!-- ═══ MANAGE ═══ -->
+  <span class="ln-section-label">Manage</span>
+
+  <!-- 1. Template -->
+  <button class="ln-btn" title="Template">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1">
+      <rect x="3" y="3" width="14" height="14" rx="3"/>
+      <line x1="3" y1="8" x2="17" y2="8"/>
+      <line x1="8" y1="8" x2="8" y2="17"/>
+    </svg>
+    <span class="ln-label">Template</span>
+  </button>
+
+  <!-- 2. People & Teams -->
+  <button class="ln-btn" title="People & Teams">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1">
+      <circle cx="7" cy="7" r="3"/>
+      <path d="M2 17c0-3.314 2.239-6 5-6s5 2.686 5 6"/>
+      <circle cx="14" cy="7" r="2.5"/>
+      <path d="M13 11c1.5 0 4.5 1.5 4.5 4.5"/>
+    </svg>
+    <span class="ln-label">People & Teams</span>
+  </button>
+
+  <!-- 3. Action Plans -->
+  <button class="ln-btn" title="Action Plans">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1">
       <circle cx="10" cy="10" r="8"/>
       <path d="M7 10l2 2 4-4"/>
     </svg>
-    <span class="ln-label">Action Planning</span>
+    <span class="ln-label">Action Plans</span>
   </button>
+
+  <!-- ═══ ADMIN ═══ -->
+  <span class="ln-section-label">Admin</span>
 
   <!-- Settings -->
   <div class="ln-nav-item" [class.surveys-open]="settingsOpen">
     <button class="ln-btn ln-btn-has-sub" title="Settings" (click)="toggleNavItem('settings')">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="20" height="20" color="currentColor">
+      <svg viewBox="0 0 24 24" fill="none" width="20" height="20" color="currentColor">
         <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" stroke-linejoin="round" stroke="currentColor" stroke-width="1.3"/>
         <path d="M10 15.5C10 16.3284 9.32843 17 8.5 17C7.67157 17 7 16.3284 7 15.5C7 14.6716 7.67157 14 8.5 14C9.32843 14 10 14.6716 10 15.5Z" stroke="currentColor" stroke-width="1.3"/>
         <path d="M17 8.5C17 7.67157 16.3284 7 15.5 7C14.6716 7 14 7.67157 14 8.5C14 9.32843 14.6716 10 15.5 10C16.3284 10 17 9.32843 17 8.5Z" stroke="currentColor" stroke-width="1.3"/>
@@ -87,30 +134,9 @@
     <div class="ln-submenu">
       <a class="ln-sub-item" href="#">Profile</a>
       <a class="ln-sub-item" href="#">Team</a>
-      <a class="ln-sub-item" href="#">Integrations</a>
       <a class="ln-sub-item" href="#">Notifications</a>
     </div>
   </div>
-
-  <!-- Reports -->
-  <button class="ln-btn" [routerLink]="['/reports']" routerLinkActive="active" title="Reports">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1">
-      <path d="M12 2H5a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V8z"/>
-      <polyline points="12 2 12 8 18 8"/>
-      <line x1="7" y1="11" x2="13" y2="11"/>
-      <line x1="7" y1="14" x2="10" y2="14"/>
-    </svg>
-    <span class="ln-label">Reports</span>
-  </button>
-
-  <!-- AI Hub -->
-  <button class="ln-btn" [routerLink]="['/ai-hub']" routerLinkActive="active" title="AI Hub">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1">
-      <path d="M10 2l1.5 4.5L16 8l-4.5 1.5L10 14l-1.5-4.5L4 8l4.5-1.5L10 2z"/>
-      <path d="M4 14l.75 2.25L7 17l-2.25.75L4 20l-.75-2.25L1 17l2.25-.75L4 14z"/>
-    </svg>
-    <span class="ln-label">AI Hub</span>
-  </button>
 
 </div>
 
