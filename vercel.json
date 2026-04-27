@@ -1,0 +1,9 @@
+{
+  "buildCommand": "cd pulse-dashboard && npm ci && npx nx build ng-dashboard --configuration=production",
+  "outputDirectory": "pulse-dashboard/dist/apps/ng-dashboard/browser",
+  "installCommand": "echo 'skip global install'",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
