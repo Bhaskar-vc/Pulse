@@ -1,0 +1,53 @@
+.spinner {
+  animation: rotate 2s linear infinite;
+  width: 20px;
+  height: 20px;
+
+  &.spinner-xs      { width: 12px; height: 12px; }
+  &.spinner-sm      { width: 16px; height: 16px; }
+  &.spinner-default { width: 20px; height: 20px; }
+  &.spinner-md      { width: 24px; height: 24px; }
+  &.spinner-lg      { width: 32px; height: 32px; }
+
+  // Light theme — for solid/colored-bg buttons (spinner shows on dark bg)
+  &.spinner-primary-light   { color: #eaeaed; }
+  &.spinner-secondary-light { color: #b692f6; }
+  &.spinner-success-light   { color: #6ce9a6; }
+  &.spinner-info-light      { color: #7cd4fd; }
+  &.spinner-warning-light   { color: #fec84b; }
+  &.spinner-danger-light    { color: #fda29b; }
+
+  // Dark theme — for outlined/ghost/light-bg buttons
+  &.spinner-primary-dark    { color: #707087; }
+  &.spinner-secondary-dark  { color: #7f56d9; }
+  &.spinner-success-dark    { color: #12b76a; }
+  &.spinner-info-dark       { color: #0ba5ec; }
+  &.spinner-warning-dark    { color: #f79009; }
+  &.spinner-danger-dark     { color: #f04438; }
+
+  & .path {
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}

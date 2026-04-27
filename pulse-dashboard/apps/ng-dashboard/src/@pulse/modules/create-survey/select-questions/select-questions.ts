@@ -20,6 +20,13 @@ interface Category {
   styleUrl: './select-questions.scss',
 })
 export class SelectQuestionsComponent {
+  wizardSteps = [
+    { title: 'Get Started' },
+    { title: 'Select Questions' },
+    { title: 'Configure' },
+    { title: 'Preview & Launch' },
+  ];
+
   categories: Category[] = [
     {
       name: 'Recognition',

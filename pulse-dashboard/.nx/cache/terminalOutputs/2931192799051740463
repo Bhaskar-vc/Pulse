@@ -1,0 +1,301 @@
+[33m❯[39m Building...
+[32m✔[39m Building...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m               [2m | [22m [1mRaw size[22m[39m
+[37m[32mstyles.css[39m[37m         [2m | [22m[2mstyles[22m              [2m | [22m[36m108.93 kB[39m[37m[2m | [22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m                [2m | [22m  [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-QLDMMZF6.js[39m[37m  [2m | [22m[2m-[22m                   [2m | [22m  [36m6.83 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-CZJLB7T5.js[39m[37m  [2m | [22m[2m-[22m                   [2m | [22m  [36m1.08 kB[39m[37m[2m | [22m[39m
+[37m[32mpolyfills.js[39m[37m       [2m | [22m[2mpolyfills[22m           [2m | [22m [36m95 bytes[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1m [22m                  [2m | [22m[1mInitial total[22m       [2m | [22m[1m126.49 kB[22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m               [2m | [22m [1mRaw size[22m[39m
+[37m[32mchunk-DHS4VOIE.js[39m[37m  [2m | [22m[2mcreate-survey-module[22m[2m | [22m[36m467.09 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-JKXDU6KS.js[39m[37m  [2m | [22m[2mreports-module[22m      [2m | [22m[36m294.81 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-DI6UXZPY.js[39m[37m  [2m | [22m[2mdashboard-module[22m    [2m | [22m[36m227.81 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-VYBHDOR4.js[39m[37m  [2m | [22m[2minsights-module[22m     [2m | [22m [36m87.60 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-JNMFR5SR.js[39m[37m  [2m | [22m[2mportal-module[22m       [2m | [22m [36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-GNMNJU4W.js[39m[37m  [2m | [22m[2mmanage-surveys[22m      [2m | [22m [36m63.05 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-LUE4X32C.js[39m[37m  [2m | [22m[2mcoming-soon[22m         [2m | [22m  [36m7.24 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-ZVRJFOEK.js[39m[37m  [2m | [22m[2mroutes[22m              [2m | [22m  [36m6.35 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-26GMEEZX.js[39m[37m  [2m | [22m[2mpulse-module[22m        [2m | [22m  [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [3.215 seconds] - 2026-04-27T09:02:01.224Z[39m
+[37m[39m
+[37mWatch mode enabled. Watching for file changes...[39m
+[37mNOTE: Raw file sizes do not reflect development server per-request transformations.[39m
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4200[22m/[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-FZXLWVIA.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-3Y53UZSY.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m63.05 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-WQZOC6IT.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [1.753 seconds] - 2026-04-27T09:03:25.228Z[39m
+[37m[39m
+[37mComponent update sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-P5SO4KQA.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-MMEQT7GU.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m63.10 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-YKYTN7JO.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.252 seconds] - 2026-04-27T09:03:30.913Z[39m
+[37m[39m
+[37mComponent update sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-MBHTAZ7D.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-XV6LDPKX.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m63.16 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-XW7TG5N3.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.337 seconds] - 2026-04-27T09:04:27.835Z[39m
+[37m[39m
+[37mComponent update sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-GFZ74BY3.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-2CT7FNQ6.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m63.23 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-U4CR3DEI.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.306 seconds] - 2026-04-27T09:04:33.858Z[39m
+[37m[39m
+[37mComponent update sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-IQFOA7M7.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-TFZLVHGI.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m63.67 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-LWU6X73T.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.271 seconds] - 2026-04-27T09:05:26.041Z[39m
+[37m[39m
+[37mComponent update sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-YFQNGY6B.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-IQIXT3YV.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m63.85 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-V7IACDH5.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.417 seconds] - 2026-04-27T09:07:53.695Z[39m
+[37m[39m
+[37mPage reload sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-5WYFFSYV.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-KF4IEYDY.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m64.23 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-JVGNOWUX.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.342 seconds] - 2026-04-27T09:08:03.048Z[39m
+[37m[39m
+[37mComponent update sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-4IO7CHFJ.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-JALNHSIN.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m73.19 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-OLBYOY5T.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.339 seconds] - 2026-04-27T09:08:22.802Z[39m
+[37m[39m
+[37mComponent update sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-DEISGHFP.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-KXVJ7MF4.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m78.03 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-HSN66GTR.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.440 seconds] - 2026-04-27T09:08:39.384Z[39m
+[37m[39m
+[37mComponent update sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-NQXDRMW6.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-CM4UOSTJ.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m78.28 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-GCNDXCFI.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.271 seconds] - 2026-04-27T09:09:46.743Z[39m
+[37m[39m
+[37mComponent update sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-SRNQ3JOS.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-ZMTQG5U3.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m78.82 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-5PMXCU5S.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.359 seconds] - 2026-04-27T09:09:55.719Z[39m
+[37m[39m
+[37mComponent update sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-V4IQG2XF.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-PG7YLAOO.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m78.84 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-UTRN2ORE.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.231 seconds] - 2026-04-27T09:10:17.498Z[39m
+[37m[39m
+[37mPage reload sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37mApplication bundle generation failed. [0.376 seconds] - 2026-04-27T09:11:52.926Z[39m
+[37m[39m
+[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'frequency' does not exist in type 'Survey'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/ng-dashboard/src/@pulse/modules/manage-surveys/manage-surveys.ts:184:6:[39m[22m
+[1m[31m[37m      184 │       [32mfrequency[37m: 'Weekly',[39m[22m
+[1m[31m          ╵       [32m~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'frequency' does not exist in type 'Survey'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/ng-dashboard/src/@pulse/modules/manage-surveys/manage-surveys.ts:198:6:[39m[22m
+[1m[31m[37m      198 │       [32mfrequency[37m: 'One-time',[39m[22m
+[1m[31m          ╵       [32m~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'frequency' does not exist in type 'Survey'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/ng-dashboard/src/@pulse/modules/manage-surveys/manage-surveys.ts:212:6:[39m[22m
+[1m[31m[37m      212 │       [32mfrequency[37m: 'One-time',[39m[22m
+[1m[31m          ╵       [32m~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'frequency' does not exist in type 'Survey'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/ng-dashboard/src/@pulse/modules/manage-surveys/manage-surveys.ts:226:6:[39m[22m
+[1m[31m[37m      226 │       [32mfrequency[37m: 'Weekly',[39m[22m
+[1m[31m          ╵       [32m~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'frequency' does not exist in type 'Survey'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/ng-dashboard/src/@pulse/modules/manage-surveys/manage-surveys.ts:240:6:[39m[22m
+[1m[31m[37m      240 │       [32mfrequency[37m: 'One-time',[39m[22m
+[1m[31m          ╵       [32m~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'frequency' does not exis[39m[22m[1m[31mt in type 'Survey'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/ng-dashboard/src/@pulse/modules/manage-surveys/manage-surveys.ts:254:6:[39m[22m
+[1m[31m[37m      254 │       [32mfrequency[37m: 'One-time',[39m[22m
+[1m[31m          ╵       [32m~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m               [2m | [22m [1mRaw size[22m[39m
+[37m[32mstyles.css[39m[37m         [2m | [22m[2mstyles[22m              [2m | [22m[36m108.93 kB[39m[37m[2m | [22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m                [2m | [22m  [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-QLDMMZF6.js[39m[37m  [2m | [22m[2m-[22m                   [2m | [22m  [36m6.83 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-CZJLB7T5.js[39m[37m  [2m | [22m[2m-[22m                   [2m | [22m  [36m1.08 kB[39m[37m[2m | [22m[39m
+[37m[32mpolyfills.js[39m[37m       [2m | [22m[2mpolyfills[22m           [2m | [22m [36m95 bytes[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1m [22m                  [2m | [22m[1mInitial total[22m       [2m | [22m[1m126.49 kB[22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m               [2m | [22m [1mRaw size[22m[39m
+[37m[32mchunk-DHS4VOIE.js[39m[37m  [2m | [22m[2mcreate-survey-module[22m[2m | [22m[36m467.09 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-JKXDU6KS.js[39m[37m  [2m | [22m[2mreports-module[22m      [2m | [22m[36m294.81 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-DI6UXZPY.js[39m[37m  [2m | [22m[2mdashboard-module[22m    [2m | [22m[36m227.81 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-VYBHDOR4.js[39m[37m  [2m | [22m[2minsights-module[22m     [2m | [22m [36m87.60 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-XO64WLMH.js[39m[37m  [2m | [22m[2mportal-module[22m       [2m | [22m [36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-QQJSFEGZ.js[39m[37m  [2m | [22m[2mmanage-surveys[22m      [2m | [22m [36m77.86 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-LUE4X32C.js[39m[37m  [2m | [22m[2mcoming-soon[22m         [2m | [22m  [36m7.24 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-ZVRJFOEK.js[39m[37m  [2m | [22m[2mroutes[22m              [2m | [22m  [36m6.35 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-LL3LCSP4.js[39m[37m  [2m | [22m[2mpulse-module[22m        [2m | [22m  [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.317 seconds] - 2026-04-27T09:11:59.734Z[39m
+[37m[39m
+[37mPage reload sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m          [2m | [22m [36m9.56 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m         [2m | [22m[1mRaw size[22m[39m
+[37m[32mchunk-VBODLTNZ.js[39m[37m  [2m | [22m[2mportal-module[22m [2m | [22m[36m82.33 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-FPOXGGX4.js[39m[37m  [2m | [22m[2mmanage-surveys[22m[2m | [22m[36m78.56 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-XTPSE7LL.js[39m[37m  [2m | [22m[2mpulse-module[22m  [2m | [22m [36m5.29 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.277 seconds] - 2026-04-27T09:12:08.383Z[39m
+[37m[39m
+[37mPage reload sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37mApplication bundle generation failed. [0.315 seconds] - 2026-04-27T09:12:29.588Z[39m
+[37m[39m
+[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/ng-dashboard/src/@pulse/modules/manage-surveys/manage-surveys.html:60:35:[39m[22m
+[1m[31m[37m      60 │ ...="ms-table-name" [32m[routerLink]="['/dashboard']"[37m>{{ survey.name }...[39m[22m
+[1m[31m         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m  Error occurs in the template of component ManageSurveysComponent.[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/ng-dashboard/src/@pulse/modules/manage-surveys/manage-surveys.ts:38:15:[39m[22m
+[1m[31m[37m      38 │   templateUrl: [32m'./manage-surveys.html'[37m,[39m[22m
+[1m[31m         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37mApplication bundle generation failed. [0.460 seconds] - 2026-04-27T09:12:41.590Z[39m
+[37m[39m
+[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/ng-dashboard/src/@pulse/modules/manage-surveys/manage-surveys.html:60:35:[39m[22m
+[1m[31m[37m      60 │ ...="ms-table-name" [32m[routerLink]="['/dashboard']"[37m>{{ survey.name }...[39m[22m
+[1m[31m         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m  Error occurs in the template of component ManageSurveysComponent.[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/ng-dashboard/src/@pulse/modules/manage-surveys/manage-surveys.ts:38:15:[39m[22m
+[1m[31m[37m      38 │   templateUrl: [32m'./manage-surveys.html'[37m,[39m[22m
+[1m[31m         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m

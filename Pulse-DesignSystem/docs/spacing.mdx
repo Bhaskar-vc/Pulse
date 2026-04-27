@@ -1,0 +1,305 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design Tokens/Spacing" tags={['hidden']} parameters={{ docs: { toc: { disable: true } } }} />
+
+<style>{`
+  /* ── Scale table ── */
+  .sp-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+  .sp-table th {
+    text-align: left; padding: 10px 16px;
+    background: #f9fafb; color: #707087;
+    font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    border-bottom: 1px solid #eaeaed;
+  }
+  .sp-table td { padding: 10px 16px; border-bottom: 1px solid #eaeaed; vertical-align: middle; }
+  .sp-table tr:last-child td { border-bottom: none; }
+  .sp-table tr:hover td { background: #fafafa; }
+  .sp-token { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #6941c6;
+    background: #f9f5ff; padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+  .sp-px { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #29294c; font-weight: 500; }
+  .sp-rem { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #9d9dad; }
+  .sp-use { font-size: 12px; color: #707087; }
+  .sp-bar-wrap { display: flex; align-items: center; }
+  .sp-bar { height: 16px; border-radius: 3px; background: #1570EF; opacity: 0.18; min-width: 2px; flex-shrink: 0; }
+  .sp-bar-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #9d9dad; margin-left: 8px; }
+
+  /* ── Range chips ── */
+  .sp-ranges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+  .sp-range-card {
+    border-radius: 12px; padding: 20px 22px; border: 1px solid #eaeaed;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .sp-range-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .sp-range-values { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: #29294c; }
+  .sp-range-desc { font-size: 12px; color: #707087; line-height: 1.5; }
+  .sp-range-dots { display: flex; align-items: flex-end; gap: 4px; margin-top: 6px; }
+  .sp-range-dot { border-radius: 3px; background: currentColor; }
+
+  /* ── Principles ── */
+  .sp-principles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 40px; }
+  .sp-principle-card {
+    border-radius: 12px; padding: 20px 22px; border: 1px solid #eaeaed; display: flex; flex-direction: column; gap: 8px;
+  }
+  .sp-principle-num { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+  .sp-principle-title { font-size: 14px; font-weight: 600; color: #29294c; }
+  .sp-principle-desc { font-size: 12px; color: #707087; line-height: 1.5; }
+
+  /* ── Demo strip ── */
+  .sp-demo { display: flex; align-items: flex-end; gap: 0; margin-bottom: 40px; overflow-x: auto; padding-bottom: 4px; }
+  .sp-demo-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; }
+  .sp-demo-block { background: #1570EF; border-radius: 3px; width: 32px; }
+  .sp-demo-label { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: #9d9dad; text-align: center; white-space: nowrap; }
+  .sp-demo-sep { width: 8px; }
+
+  /* ── Dark mode ── */
+  [data-theme="dark"] .sp-table th { background: #2a2f40 !important; color: #9aa3be !important; border-bottom-color: #353858 !important; }
+  [data-theme="dark"] .sp-table td { border-bottom-color: #353858 !important; }
+  [data-theme="dark"] .sp-table tr:hover td { background: #2f3548 !important; }
+  [data-theme="dark"] .sp-token { background: #1e1b38 !important; color: #b39ff7 !important; }
+  [data-theme="dark"] .sp-px    { color: #e9ecf5 !important; }
+  [data-theme="dark"] .sp-rem   { color: #6e7798 !important; }
+  [data-theme="dark"] .sp-use   { color: #9aa3be !important; }
+  [data-theme="dark"] .sp-bar   { background: #4a8fff !important; }
+  [data-theme="dark"] .sp-bar-label { color: #6e7798 !important; }
+  [data-theme="dark"] .sp-range-card { background: #2a2f40 !important; border-color: #353858 !important; }
+  [data-theme="dark"] .sp-range-values { color: #e9ecf5 !important; }
+  [data-theme="dark"] .sp-range-desc   { color: #9aa3be !important; }
+  [data-theme="dark"] .sp-principle-card { background: #2a2f40 !important; border-color: #353858 !important; }
+  [data-theme="dark"] .sp-principle-title { color: #e9ecf5 !important; }
+  [data-theme="dark"] .sp-principle-desc  { color: #9aa3be !important; }
+  [data-theme="dark"] .sp-demo-label { color: #6e7798 !important; }
+`}</style>
+
+## Spacing Scale
+
+Built on an **8 px base unit**. Every token is a multiple of 4 px, keeping layouts on a consistent visual grid.
+
+{/* Visual bar chart */}
+<div className="sp-demo">
+  {[
+    {label:'0',px:0},
+    {label:'025',px:2},
+    {label:'050',px:4},
+    {label:'075',px:6},
+    {label:'100',px:8},
+    {label:'150',px:12},
+    {label:'200',px:16},
+    {label:'250',px:20},
+    {label:'300',px:24},
+    {label:'400',px:32},
+    {label:'500',px:40},
+    {label:'600',px:48},
+    {label:'800',px:64},
+    {label:'1000',px:80},
+  ].map(({label, px}) => (
+    <div key={label} className="sp-demo-col">
+      <div className="sp-demo-block" style={{height: px === 0 ? 2 : px, opacity: 0.15 + (px/80)*0.7}}></div>
+      <div className="sp-demo-label">{label}</div>
+    </div>
+  ))}
+</div>
+
+<table className="sp-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Pixels</th>
+      <th>REM</th>
+      <th>Visual</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span className="sp-token">--space-0</span></td>
+      <td><span className="sp-px">0 px</span></td>
+      <td><span className="sp-rem">0 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:2,opacity:0.1}}></div></div></td>
+      <td><span className="sp-use">Reset, flush flush edges</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-025</span></td>
+      <td><span className="sp-px">2 px</span></td>
+      <td><span className="sp-rem">0.125 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:2}}></div><span className="sp-bar-label">2</span></div></td>
+      <td><span className="sp-use">Icon-to-label nudge, pixel-precise tweaks</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-050</span></td>
+      <td><span className="sp-px">4 px</span></td>
+      <td><span className="sp-rem">0.25 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:4}}></div><span className="sp-bar-label">4</span></div></td>
+      <td><span className="sp-use">Badge padding, tight icon gaps</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-075</span></td>
+      <td><span className="sp-px">6 px</span></td>
+      <td><span className="sp-rem">0.375 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:6}}></div><span className="sp-bar-label">6</span></div></td>
+      <td><span className="sp-use">Small tag padding, compact chip gaps</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-100</span></td>
+      <td><span className="sp-px">8 px</span></td>
+      <td><span className="sp-rem">0.5 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:8}}></div><span className="sp-bar-label">8</span></div></td>
+      <td><span className="sp-use">Base unit · input padding, list item gaps</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-150</span></td>
+      <td><span className="sp-px">12 px</span></td>
+      <td><span className="sp-rem">0.75 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:12}}></div><span className="sp-bar-label">12</span></div></td>
+      <td><span className="sp-use">Card inner gap, avatar-to-label spacing</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-200</span></td>
+      <td><span className="sp-px">16 px</span></td>
+      <td><span className="sp-rem">1 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:16}}></div><span className="sp-bar-label">16</span></div></td>
+      <td><span className="sp-use">Default component padding, form field gaps</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-250</span></td>
+      <td><span className="sp-px">20 px</span></td>
+      <td><span className="sp-rem">1.25 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:20}}></div><span className="sp-bar-label">20</span></div></td>
+      <td><span className="sp-use">Larger component padding, modal headers</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-300</span></td>
+      <td><span className="sp-px">24 px</span></td>
+      <td><span className="sp-rem">1.5 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:24}}></div><span className="sp-bar-label">24</span></div></td>
+      <td><span className="sp-use">Section gaps, card padding</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-400</span></td>
+      <td><span className="sp-px">32 px</span></td>
+      <td><span className="sp-rem">2 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:32}}></div><span className="sp-bar-label">32</span></div></td>
+      <td><span className="sp-use">Layout column gaps, large component padding</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-500</span></td>
+      <td><span className="sp-px">40 px</span></td>
+      <td><span className="sp-rem">2.5 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:40}}></div><span className="sp-bar-label">40</span></div></td>
+      <td><span className="sp-use">Page section spacing, drawer padding</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-600</span></td>
+      <td><span className="sp-px">48 px</span></td>
+      <td><span className="sp-rem">3 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:48}}></div><span className="sp-bar-label">48</span></div></td>
+      <td><span className="sp-use">Hero sections, page-level vertical rhythm</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-800</span></td>
+      <td><span className="sp-px">64 px</span></td>
+      <td><span className="sp-rem">4 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:64}}></div><span className="sp-bar-label">64</span></div></td>
+      <td><span className="sp-use">Major page divisions, top navigation offset</span></td>
+    </tr>
+    <tr>
+      <td><span className="sp-token">--space-1000</span></td>
+      <td><span className="sp-px">80 px</span></td>
+      <td><span className="sp-rem">5 rem</span></td>
+      <td><div className="sp-bar-wrap"><div className="sp-bar" style={{width:80}}></div><span className="sp-bar-label">80</span></div></td>
+      <td><span className="sp-use">Full-bleed page gutters, hero vertical padding</span></td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Spacing Ranges
+
+<div className="sp-ranges">
+  <div className="sp-range-card">
+    <div className="sp-range-label" style={{color:'#1570EF'}}>Small</div>
+    <div className="sp-range-values">2 – 8 px</div>
+    <div className="sp-range-desc">Tight gaps between icons and text, component internal padding, compact input chrome.</div>
+    <div className="sp-range-dots" style={{color:'#1570EF'}}>
+      <div className="sp-range-dot" style={{width:2, height:10}}></div>
+      <div className="sp-range-dot" style={{width:4, height:10}}></div>
+      <div className="sp-range-dot" style={{width:6, height:10}}></div>
+      <div className="sp-range-dot" style={{width:8, height:10}}></div>
+    </div>
+  </div>
+  <div className="sp-range-card">
+    <div className="sp-range-label" style={{color:'#6941c6'}}>Medium</div>
+    <div className="sp-range-values">12 – 24 px</div>
+    <div className="sp-range-desc">Card padding, spacing between avatars and labels, form field groups, modal content areas.</div>
+    <div className="sp-range-dots" style={{color:'#6941c6'}}>
+      <div className="sp-range-dot" style={{width:12, height:10}}></div>
+      <div className="sp-range-dot" style={{width:16, height:10}}></div>
+      <div className="sp-range-dot" style={{width:20, height:10}}></div>
+      <div className="sp-range-dot" style={{width:24, height:10}}></div>
+    </div>
+  </div>
+  <div className="sp-range-card">
+    <div className="sp-range-label" style={{color:'#0e9f6e'}}>Large</div>
+    <div className="sp-range-values">32 – 80 px</div>
+    <div className="sp-range-desc">Page layout gutters, major content divisions, hero sections and top-level navigation offset.</div>
+    <div className="sp-range-dots" style={{color:'#0e9f6e'}}>
+      <div className="sp-range-dot" style={{width:32, height:10}}></div>
+      <div className="sp-range-dot" style={{width:40, height:10}}></div>
+      <div className="sp-range-dot" style={{width:48, height:10}}></div>
+      <div className="sp-range-dot" style={{width:64, height:10}}></div>
+    </div>
+  </div>
+</div>
+
+---
+
+## Layout Principles
+
+<div className="sp-principles">
+  <div className="sp-principle-card">
+    <div className="sp-principle-num">01</div>
+    <div className="sp-principle-title">Group by similarity</div>
+    <div className="sp-principle-desc">Use consistent spacing between elements that belong to the same group. Uniform gaps signal that items are related, creating visual cohesion without needing borders or labels.</div>
+  </div>
+  <div className="sp-principle-card">
+    <div className="sp-principle-num">02</div>
+    <div className="sp-principle-title">Group by proximity</div>
+    <div className="sp-principle-desc">The distance between elements creates semantic meaning. Elements that are closer together are perceived as more related — use tighter spacing within components and larger gaps between them.</div>
+  </div>
+  <div className="sp-principle-card">
+    <div className="sp-principle-num">03</div>
+    <div className="sp-principle-title">Create hierarchy</div>
+    <div className="sp-principle-desc">Use scale and whitespace to rank importance. More whitespace around an element elevates its visual weight — headlines, CTAs, and hero sections deserve larger breathing room.</div>
+  </div>
+  <div className="sp-principle-card">
+    <div className="sp-principle-num">04</div>
+    <div className="sp-principle-title">Introduce rhythm</div>
+    <div className="sp-principle-desc">Repeating spacing patterns across a layout guide the user's eye. Alternating dense and open areas create a natural reading cadence, making content feel intentional rather than crowded.</div>
+  </div>
+  <div className="sp-principle-card">
+    <div className="sp-principle-num">05</div>
+    <div className="sp-principle-title">Use optical adjustment</div>
+    <div className="sp-principle-desc">Minor deviations from the standard scale are sometimes necessary to maintain visual harmony — for example, icons often need 1–2 px nudges to appear optically centred despite being mathematically centred.</div>
+  </div>
+</div>
+
+---
+
+## CSS Custom Properties
+
+| Token | Value | REM |
+|-------|-------|-----|
+| `--space-0`    | `0px`  | `0` |
+| `--space-025`  | `2px`  | `0.125rem` |
+| `--space-050`  | `4px`  | `0.25rem` |
+| `--space-075`  | `6px`  | `0.375rem` |
+| `--space-100`  | `8px`  | `0.5rem` |
+| `--space-150`  | `12px` | `0.75rem` |
+| `--space-200`  | `16px` | `1rem` |
+| `--space-250`  | `20px` | `1.25rem` |
+| `--space-300`  | `24px` | `1.5rem` |
+| `--space-400`  | `32px` | `2rem` |
+| `--space-500`  | `40px` | `2.5rem` |
+| `--space-600`  | `48px` | `3rem` |
+| `--space-800`  | `64px` | `4rem` |
+| `--space-1000` | `80px` | `5rem` |

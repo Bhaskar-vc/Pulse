@@ -3,6 +3,7 @@ import Chart from 'chart.js/auto';
 import { SurveyItem } from '../../shared/components/survey-carousel/survey-carousel';
 import { ExpandableCardComponent } from '../../shared/components/expandable-card/expandable-card';
 import { DateRange } from '../../shared/components/date-picker/date-picker';
+import type { DropdownItem } from '@pulse-ds/ui/dropdown';
 
 @Component({
   standalone: false,
@@ -25,8 +26,6 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
   private engChartExpanded: Chart | null = null;
   activeSeg: 'top' | 'needs' = 'top';
   activeTimeSegment: string = '12m';
-  surveyDropdownOpen = false;
-  countryDropdownOpen = false;
 
   activePopover: string | null = null;
   popoverTexts: Record<string, string> = {
@@ -55,15 +54,20 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
     this.activePopover = null;
   }
 
-  countryOptions = [
-    { code: 'all', name: 'All Countries', flag: '' },
-    { code: 'in',  name: 'IND', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/in.svg' },
-    { code: 'us',  name: 'USA', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/us.svg' },
-    { code: 'gb',  name: 'UK',  flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/gb.svg' },
-    { code: 'de',  name: 'GER', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/de.svg' },
-    { code: 'sg',  name: 'SGP', flag: 'https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/sg.svg' },
+  private readonly GLOBE_SVG = '<svg viewBox="0 0 20 20" fill="none" stroke="#667085" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><ellipse cx="10" cy="10" rx="3.5" ry="8"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="2.5" y1="6.5" x2="17.5" y2="6.5"/><line x1="2.5" y1="13.5" x2="17.5" y2="13.5"/></svg>';
+  private flagIcon(code: string): string {
+    return `<img src="https://cdn.jsdelivr.net/gh/HatScripts/circle-flags@2.7.0/flags/${code}.svg" width="16" height="16" style="border-radius:50%" />`;
+  }
+
+  countryItems: DropdownItem[] = [
+    { value: 'all', label: 'All Countries', icon: this.GLOBE_SVG },
+    { value: 'in',  label: 'IND', icon: this.flagIcon('in') },
+    { value: 'us',  label: 'USA', icon: this.flagIcon('us') },
+    { value: 'gb',  label: 'UK',  icon: this.flagIcon('gb') },
+    { value: 'de',  label: 'GER', icon: this.flagIcon('de') },
+    { value: 'sg',  label: 'SGP', icon: this.flagIcon('sg') },
   ];
-  selectedCountry = this.countryOptions[0];
+  selectedCountryValue = 'all';
 
   // Calendar state
   calendarOpen = false;
@@ -199,7 +203,7 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  surveyOptions = [
+  private surveyData = [
     {
       id: 0, name: 'All Surveys', dateRange: '01 Jan - 31 Dec 2026', active: true,
       enps: { score: 67, promoter: 21, passive: 34, detractor: 45, delta: 4, benchmarkGap: 36, benchmark: 100 },
@@ -232,7 +236,18 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
     },
   ];
 
-  selectedSurvey = this.surveyOptions[0];
+  surveyItems: DropdownItem[] = this.surveyData.map(s => ({
+    value: String(s.id),
+    label: s.name,
+    description: s.dateRange,
+    badge: s.active ? 'Live' : undefined,
+  }));
+
+  selectedSurveyValue = '0';
+
+  get selectedSurvey() {
+    return this.surveyData.find(s => String(s.id) === this.selectedSurveyValue) ?? this.surveyData[0];
+  }
 
   surveys: SurveyItem[] = [
     { id: 1, name: 'Q1 Engagement Survey 2025', responses: 36, total: 100, endDate: 'Jun 2026', active: true },
@@ -256,25 +271,13 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
     this.engChartExpanded?.destroy();
   }
 
-  toggleSurveyDropdown(event: Event) {
-    event.stopPropagation();
-    this.surveyDropdownOpen = !this.surveyDropdownOpen;
-  }
-
-  selectSurvey(survey: typeof this.surveyOptions[0]) {
-    this.selectedSurvey = survey;
-    this.surveyDropdownOpen = false;
+  onSurveyChange(value: string) {
+    this.selectedSurveyValue = value;
     this.updateDonutArc();
   }
 
-  toggleCountryDropdown(event: Event) {
-    event.stopPropagation();
-    this.countryDropdownOpen = !this.countryDropdownOpen;
-  }
-
-  selectCountry(country: typeof this.countryOptions[0]) {
-    this.selectedCountry = country;
-    this.countryDropdownOpen = false;
+  onCountryChange(value: string) {
+    this.selectedCountryValue = value;
   }
 
   get donutDasharray(): string {
@@ -291,11 +294,6 @@ export class OverviewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  @HostListener('document:click')
-  closeSurveyDropdown() {
-    this.surveyDropdownOpen = false;
-    this.countryDropdownOpen = false;
-  }
 
   scrollFeedback(direction: number) {
     const container = this.feedbackCardsRef?.nativeElement;

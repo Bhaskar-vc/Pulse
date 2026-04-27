@@ -1,0 +1,21 @@
+{
+  "run": {
+    "command": "nx serve ng-dashboard --configuration=development",
+    "startTime": "2026-04-27T09:01:56.921Z",
+    "endTime": "2026-04-27T09:12:51.902Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "ng-dashboard:serve:development",
+      "target": "serve",
+      "projectName": "ng-dashboard",
+      "hash": "2931192799051740463",
+      "startTime": "2026-04-27T09:01:57.000Z",
+      "endTime": "2026-04-27T09:12:51.899Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 1
+    }
+  ]
+}

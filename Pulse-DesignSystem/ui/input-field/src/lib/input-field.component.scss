@@ -1,0 +1,136 @@
+:host {
+  display: block;
+  width: 320px;
+}
+
+// ── Field wrapper ──────────────────────────────────
+.input-field-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+// ── Input container ────────────────────────────────
+.input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  border-radius: 6px;
+  height: 36px;
+  padding: 0 12px;
+  gap: 8px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  cursor: text;
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  &:hover:not(.is-disabled):not(.is-error) {
+    border-color: var(--ds-brand-hover);
+  }
+
+  &:focus-within:not(.is-error):not(.is-disabled) {
+    border-color: var(--ds-brand);
+    box-shadow: 0 0 0 3px var(--ds-brand-focus-shadow);
+  }
+
+  &.is-error {
+    border-color: #fda29b;
+  }
+  &.is-error:hover:not(.is-disabled) {
+    border-color: #f97066;
+  }
+  &.is-error:focus-within:not(.is-disabled) {
+    border-color: var(--ds-danger);
+    box-shadow: 0 0 0 3px rgba(240, 68, 56, 0.12);
+  }
+
+  &.is-disabled {
+    background: var(--ds-bg-hover);
+    border-color: var(--ds-border-strong);
+    cursor: not-allowed;
+  }
+
+  &.has-tags {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 36px;
+    padding: 4px 8px;
+    align-content: center;
+  }
+}
+
+// ── Native input ───────────────────────────────────
+.input-wrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ds-text);
+  line-height: 1.4;
+  min-width: 0;
+  padding: 0;
+
+  &::placeholder         { color: var(--ds-text-placeholder); }
+  &:focus,
+  &:focus-visible        { outline: none; box-shadow: none; border: none; }
+  &:disabled             { cursor: not-allowed; color: var(--ds-text-placeholder); }
+  &[readonly]            { cursor: default; }
+
+  &.has-tags-input       { margin-left: 4px; }
+}
+
+// ── Hide number spinner ────────────────────────────
+input[type='number'].hide-arrow-button::-webkit-inner-spin-button,
+input[type='number'].hide-arrow-button::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+// ── Icon slots ─────────────────────────────────────
+.input-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--ds-text-placeholder);
+  cursor: pointer;
+
+  .is-error &    { color: #fda29b; }
+  .is-disabled & { color: var(--ds-border-strong); }
+
+  i { font-size: 18px; }
+}
+
+// ── Alert icon (error trailing) ────────────────────
+.input-alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: #f97066;
+
+  svg { width: 16px; height: 16px; }
+}
+
+// ── Hint / error text ──────────────────────────────
+.field-hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ds-text-faint);
+  line-height: 1.4;
+
+  &.is-error { color: var(--ds-danger-dark); }
+}

@@ -1,0 +1,120 @@
+<!-- Shadow rectangles -->
+<div class="shadow-rect shadow-rect-1"></div>
+<div class="shadow-rect shadow-rect-2"></div>
+
+<div class="main-card" [class.chat-active]="chatMode" [class.scrolled-bottom]="scrolledToBottom">
+  <div class="aihub-wrap" [class.chat-mode]="chatMode" id="aihubWrap">
+
+    <button class="aihub-close-btn" *ngIf="chatMode" (click)="exitChatMode()" title="Close chat">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" stroke-linecap="round"><line x1="5" y1="5" x2="15" y2="15"/><line x1="15" y1="5" x2="5" y2="15"/></svg>
+    </button>
+
+    <!-- Top: headline -->
+    <div class="aihub-top aihub-top--center">
+      <div class="aihub-headline">
+        <p class="aihub-hi">Hi Kristin,</p>
+        <h1 class="aihub-big" [class.aihub-big--out]="headlineState === 'out'" [class.aihub-big--entering]="headlineState === 'entering'">{{ HEADLINES[currentHeadlineIndex] }}</h1>
+      </div>
+    </div>
+
+    <!-- Input section -->
+    <div class="aihub-input-section">
+      <div class="aihub-input-wrap">
+        <div class="ai-chat-container" #chatContainer [class.expanded]="chatExpanded" (click)="activateInput()">
+          <div class="ai-chat-row">
+            <div class="ai-chat-field">
+              <input type="text" class="ai-chat-input" #chatInput [(ngModel)]="inputValue" (input)="onInputChange()" (keydown)="onKeydown($event)" autocomplete="off" spellcheck="false">
+              <div class="ai-chat-placeholder" #chatPlaceholder [class.hiding]="placeholderHiding" [style.display]="showPlaceholder ? '' : 'none'" aria-hidden="true">
+                <span class="pl-letter" *ngFor="let l of placeholderLetters" [style.animationDelay]="l.delay">{{ l.ch }}</span>
+              </div>
+            </div>
+            <button class="ai-chat-send" title="Send" type="button" (click)="$event.stopPropagation(); send()">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17"><line x1="4" y1="10" x2="16" y2="10"/><polyline points="11 5 16 10 11 15"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="onboard-chips" *ngIf="!chatMode">
+        <button class="onboard-chip" (click)="cardClick('Summarise last month\'s pulse survey results')">Summarise last month's pulse survey results</button>
+        <button class="onboard-chip" (click)="cardClick('Which teams have the lowest manager scores?')">Which teams have the lowest manager scores?</button>
+        <button class="onboard-chip" (click)="cardClick('Draft a pulse survey for remote workers')">Draft a pulse survey for remote workers</button>
+        <button class="onboard-chip" (click)="cardClick('What\'s driving the sentiment dip in Engineering?')">What's driving the sentiment dip in Engineering?</button>
+      </div>
+    </div>
+
+    <!-- Hero cards -->
+    <div class="aihub-hero-row">
+      <div class="aihub-survey-card" (click)="startSurveyFlow()">
+        <span class="survey-card-tag">AI-Powered</span>
+        <h2 class="survey-card-headline">Create Survey</h2>
+        <div class="survey-card-bar"></div>
+        <p class="survey-card-desc">Design intelligent pulse surveys with AI-generated questions tailored to your organisation's needs.</p>
+        <a class="hero-card-link">Create survey <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg></a>
+      </div>
+      <div class="aihub-survey-card aihub-report-card" [routerLink]="['/reports']">
+        <span class="survey-card-tag survey-card-tag--blue">Analytics</span>
+        <h2 class="survey-card-headline">Generate Report</h2>
+        <div class="survey-card-bar report-bar"></div>
+        <p class="survey-card-desc">View AI-powered reports with category scores, sentiment analysis, and actionable insights.</p>
+        <a class="hero-card-link">Open reports <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg></a>
+      </div>
+      <div class="aihub-survey-card aihub-stats-card" [routerLink]="['/dashboard']">
+        <span class="survey-card-tag survey-card-tag--pink">Data</span>
+        <h2 class="survey-card-headline">View Statistics</h2>
+        <div class="survey-card-bar stats-bar"></div>
+        <p class="survey-card-desc">Explore participation rates, eNPS scores, and engagement trends across your organisation.</p>
+        <a class="hero-card-link">See dashboard <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Live pulse dashboard -->
+    <div class="live-pulse">
+      <div class="lp-tabs-row">
+        <a class="lp-go-link" [routerLink]="['/dashboard']">Go to dashboard <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg></a>
+      </div>
+      <div class="lp-stats">
+        <div class="lp-stat"><span class="lp-stat-label">Active surveys</span><span class="lp-stat-value">{{ activeSurveys }}</span><span class="lp-stat-note"><svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M6 1v6M6 9.5v.5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg>{{ activeSurveyNote }}</span></div>
+        <div class="lp-stat"><span class="lp-stat-label">Responses today</span><span class="lp-stat-value">{{ responsesToday }}</span><span class="lp-stat-note lp-stat-note--up"><svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M6 9V3m-3 3l3-3 3 3" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>{{ responsesNote }}</span></div>
+        <div class="lp-stat"><span class="lp-stat-label">Org eNPS</span><span class="lp-stat-value lp-stat-value--green">+{{ orgEnps }}</span><span class="lp-stat-note lp-stat-note--up"><svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M6 9V3m-3 3l3-3 3 3" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>{{ enpsNote }}</span></div>
+        <div class="lp-stat lp-stat--highlight"><span class="lp-stat-label">Participation</span><div class="lp-participation"><span class="lp-stat-value lp-stat-value--big">{{ participation }}%</span><div class="lp-participation-ring"><svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="20" fill="none" stroke="#e5e7eb" stroke-width="4"/><circle cx="24" cy="24" r="20" fill="none" stroke="#f97316" stroke-width="4" stroke-linecap="round" [attr.stroke-dasharray]="(participation / 100) * 125.6 + ' ' + 125.6" transform="rotate(-90 24 24)"/></svg></div></div><span class="lp-stat-target">of {{ participationTarget }}% target</span></div>
+      </div>
+    </div>
+
+    <!-- Chat + Live Preview layout -->
+    <div class="aihub-chat-layout" [class.has-preview]="surveyFlowActive && surveyStep >= 1">
+      <div class="aihub-chat-col">
+        <div class="aihub-chat-messages" #messagesEl [class.active]="chatMode">
+          <ng-container *ngFor="let msg of messages">
+            <div class="ai-msg" [class.user]="msg.isUser" *ngIf="!msg.isTyping"><div class="ai-msg-avatar">{{ msg.isUser ? 'KW' : 'AI' }}</div><div class="ai-msg-bubble" [innerHTML]="msg.html"></div></div>
+            <div class="ai-msg bot" *ngIf="msg.isTyping"><div class="ai-msg-avatar">AI</div><div class="ai-msg-bubble ai-typing-bubble"><div class="ai-typing-dot"></div><div class="ai-typing-dot"></div><div class="ai-typing-dot"></div></div></div>
+            <div class="ai-suggestions" *ngIf="!msg.isUser && !msg.isTyping && msg.chips?.length"><button class="ai-suggestion-chip" *ngFor="let chip of msg.chips" (click)="chipClick(chip)">{{ chip }}</button></div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="survey-preview" *ngIf="surveyFlowActive && surveyStep >= 1">
+        <div class="sp-device">
+          <div class="sp-browser-bar"><span class="sp-dot"></span><span class="sp-dot"></span><span class="sp-dot"></span><span class="sp-url">pulse.yourcompany.com/survey</span></div>
+          <div class="sp-screen">
+            <div class="sp-empty-state" *ngIf="!surveyDraft.name"><svg viewBox="0 0 48 48" fill="none" width="48" height="48"><rect x="6" y="8" width="36" height="34" rx="6" fill="#ede9fe"/><rect x="12" y="16" width="24" height="3" rx="1.5" fill="#c4b5fd"/><rect x="12" y="22" width="18" height="2" rx="1" fill="#ddd6fe"/><circle cx="15" cy="30" r="2" fill="#c4b5fd"/><rect x="20" y="29" width="16" height="2" rx="1" fill="#ddd6fe"/><circle cx="15" cy="36" r="2" fill="#c4b5fd"/><rect x="20" y="35" width="14" height="2" rx="1" fill="#ddd6fe"/></svg><p>Your survey preview will<br>appear here as you build it</p></div>
+            <div class="sp-survey" *ngIf="surveyDraft.name">
+              <div class="sp-survey-header"><div class="sp-logo"><svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="10" fill="#7c3aed"/><path d="M8 12l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="sp-survey-title">{{ surveyDraft.name }}</h3><p class="sp-survey-desc" *ngIf="surveyDraft.description">{{ surveyDraft.description }}</p></div>
+              <div class="sp-survey-progress" *ngIf="surveyDraft.questions.length > 0"><div class="sp-survey-progress-bar"><div class="sp-survey-progress-fill" [style.width.%]="previewQuestionProgress"></div></div><span class="sp-survey-progress-text">Question {{ previewQIndex + 1 }} of {{ surveyDraft.questions.length }}</span></div>
+              <div class="sp-question-card" *ngIf="surveyDraft.questions.length > 0">
+                <div class="sp-q-category">{{ previewCurrentQ?.category || surveyDraft.categories[0] }}</div>
+                <p class="sp-q-title">{{ previewCurrentQ?.text }}</p>
+                <div class="sp-q-rating" *ngIf="isPreviewRating(previewCurrentQ)"><div class="sp-rating-option" *ngFor="let n of getPreviewRatingRange(previewCurrentQ)" [class.selected]="previewSelectedRating === n" (click)="previewSelectedRating = n">{{ n }}</div><div class="sp-rating-labels"><span>Strongly Disagree</span><span>Strongly Agree</span></div></div>
+                <div class="sp-q-mcq" *ngIf="previewCurrentQ?.type === 'MCQ'"><label class="sp-mcq-option" *ngFor="let opt of ['Option A','Option B','Option C','Option D']; let i = index" [class.selected]="previewSelectedMcq === i" (click)="previewSelectedMcq = i"><span class="sp-radio"></span>{{ opt }}</label></div>
+                <div class="sp-q-yesno" *ngIf="previewCurrentQ?.type === 'Yes/No'"><button class="sp-yn-btn" [class.selected]="previewSelectedYn === 'yes'" (click)="previewSelectedYn = 'yes'"><svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="8" stroke="#22c55e" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Yes</button><button class="sp-yn-btn" [class.selected]="previewSelectedYn === 'no'" (click)="previewSelectedYn = 'no'"><svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="8" stroke="#ef4444" stroke-width="1.5"/><path d="M7 7l6 6M13 7l-6 6" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/></svg>No</button></div>
+                <div class="sp-q-text" *ngIf="previewCurrentQ?.type === 'Text'"><div class="sp-textarea-mock">Type your answer here...</div></div>
+              </div>
+              <div class="sp-nav" *ngIf="surveyDraft.questions.length > 0"><button class="sp-nav-btn sp-nav-prev" [disabled]="previewQIndex === 0" (click)="previewQIndex = previewQIndex - 1; resetPreviewSelections()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><polyline points="10 3 5 8 10 13"/></svg>Back</button><button class="sp-nav-btn sp-nav-next" [disabled]="previewQIndex >= surveyDraft.questions.length - 1" (click)="previewQIndex = previewQIndex + 1; resetPreviewSelections()">{{ previewQIndex >= surveyDraft.questions.length - 1 ? 'Submit' : 'Next' }}<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><polyline points="6 3 11 8 6 13"/></svg></button></div>
+              <div class="sp-no-questions" *ngIf="surveyDraft.questions.length === 0"><p>Questions will appear here once you select a category</p></div>
+              <div class="sp-survey-footer"><span>Powered by</span><svg viewBox="0 0 60 16" width="50" height="14"><text x="0" y="12" font-size="11" font-weight="700" fill="#7c3aed" font-family="Inter,sans-serif">Pulse</text></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>

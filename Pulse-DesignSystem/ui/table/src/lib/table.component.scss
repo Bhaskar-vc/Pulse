@@ -1,0 +1,56 @@
+/* Data Table — Pulse Design System */
+
+:host { display: block; }
+
+.table-container {
+  overflow-x: auto; border-radius: 10px; border: 1px solid var(--ds-border);
+}
+
+.data-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13px; color: var(--ds-text); background: var(--ds-bg);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header */
+.data-table thead { background: var(--ds-bg-subtle); position: sticky; top: 0; z-index: 2; }
+.data-table thead th {
+  padding: 12px 16px; text-align: left;
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--ds-text-faint);
+  border-bottom: 1px solid var(--ds-border);
+  white-space: nowrap; user-select: none;
+}
+.data-table thead th.sortable { cursor: pointer; }
+.data-table thead th.sortable:hover { background: var(--ds-bg-muted); color: var(--ds-text); }
+.data-table thead th.sort-asc .chevron-down,
+.data-table thead th.sort-desc .chevron-up { opacity: 0; }
+.data-table thead th.sort-asc,
+.data-table thead th.sort-desc { color: var(--ds-brand-dark); }
+
+.th-inner { display: flex; align-items: center; gap: 6px; }
+.sort-icon { display: flex; flex-direction: column; gap: 1px; opacity: .35; color: var(--ds-text-disabled); }
+.sort-icon svg { width: 10px; height: 10px; }
+.data-table thead th.sort-asc .sort-icon,
+.data-table thead th.sort-desc .sort-icon { opacity: 1; color: var(--ds-brand-dark); }
+
+/* Rows */
+.data-table tbody tr { transition: background .1s; }
+.data-table tbody tr:hover    { background: var(--ds-bg-muted); }
+.data-table tbody tr.selected { background: var(--ds-brand-subtle); }
+
+/* Cells */
+.data-table td {
+  padding: 12px 16px; border-bottom: 1px solid var(--ds-border);
+  font-size: 13px; color: var(--ds-text);
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table td.num, .data-table th.num { text-align: right; }
+.data-table th.col-check, .data-table td.col-check { width: 44px; padding: 12px 8px 12px 16px; }
+
+/* Variants */
+.data-table.striped tbody tr:nth-child(even)  { background: var(--ds-bg-subtle); }
+.data-table.striped tbody tr:nth-child(even):hover { background: var(--ds-bg-muted); }
+.data-table.bordered td, .data-table.bordered th { border: 1px solid var(--ds-border); }
+.data-table.minimal thead th { border-bottom: 2px solid var(--ds-border); }
+.data-table.minimal td { border: none; }

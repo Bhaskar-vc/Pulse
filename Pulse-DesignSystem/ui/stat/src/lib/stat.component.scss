@@ -1,0 +1,128 @@
+/* Stat — Pulse Design System
+   Mirrors DaisyUI stat anatomy: title → value → trend → desc → actions */
+
+:host { display: block; }
+
+/* ── Stat box ── */
+.stat {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  font-family: 'Inter', sans-serif;
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  border-radius: 12px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.stat:hover {
+  box-shadow: 0 4px 16px rgba(16,24,40,.07);
+  border-color: var(--ds-border-strong);
+}
+
+/* Centered variant */
+.stat--centered {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ── Content column ── */
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Typography ── */
+.stat-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ds-text-muted);
+  line-height: 1.4;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ds-text-heading);
+  line-height: 1.1;
+  letter-spacing: -.5px;
+}
+
+.stat-desc {
+  font-size: 13px;
+  color: var(--ds-text-placeholder);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+/* ── Trend ── */
+.stat-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ds-text-secondary);
+  margin-top: 2px;
+}
+.stat-trend--up   { color: var(--ds-success-darkest); }
+.stat-trend--down { color: var(--ds-danger-darkest); }
+
+/* ── Figure (icon container) ── */
+.stat-figure {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-figure-purple { background: var(--ds-brand-light); color: var(--ds-brand-dark); }
+.stat-figure-green  { background: var(--ds-success-subtle); color: var(--ds-success-dark); }
+.stat-figure-blue   { background: var(--ds-info-subtle); color: var(--ds-info); }
+.stat-figure-orange { background: #fff6ed; color: var(--ds-warning); }
+.stat-figure-red    { background: var(--ds-danger-subtle); color: var(--ds-danger-darkest); }
+
+/* ══════════════════════════════════════
+   STAT GROUP WRAPPER
+   Usage: <div class="stat-group"> or <div class="stat-group stat-group--vertical">
+   ══════════════════════════════════════ */
+:host-context(.stat-group) .stat {
+  border-radius: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+/* ── Horizontal group ── */
+.stat-group {
+  display: flex;
+  border: 1px solid var(--ds-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ds-bg);
+}
+.stat-group v-stat:first-child .stat { border-radius: 12px 0 0 12px; }
+.stat-group v-stat:last-child  .stat { border-radius: 0 12px 12px 0; border-right: 1px solid var(--ds-border); }
+.stat-group v-stat:not(:last-child) .stat { border-right: 1px solid var(--ds-border); }
+
+/* ── Vertical group ── */
+.stat-group--vertical {
+  flex-direction: column;
+}
+.stat-group--vertical v-stat:first-child .stat { border-radius: 12px 12px 0 0; }
+.stat-group--vertical v-stat:last-child  .stat { border-radius: 0 0 12px 12px; border-bottom: 1px solid var(--ds-border); border-right: none; }
+.stat-group--vertical v-stat:not(:last-child) .stat { border-bottom: 1px solid var(--ds-border); border-right: none; }
+
+/* ── Actions slot ── */
+::ng-deep [actions] {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}

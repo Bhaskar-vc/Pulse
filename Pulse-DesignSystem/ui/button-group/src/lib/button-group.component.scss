@@ -1,0 +1,65 @@
+/* Button Group — Pulse Design System */
+
+:host {
+  display: inline-flex;
+}
+
+.btn-group {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+/* ── Flatten all inner buttons ──────────────────────────── */
+::ng-deep .btn-group v-button button.btn {
+  border-radius: 0;
+  position: relative;
+}
+
+/* First child: round left corners */
+::ng-deep .btn-group v-button:first-child button.btn {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+/* Last child: round right corners */
+::ng-deep .btn-group v-button:last-child button.btn {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* Collapse adjacent borders — overlap by border-width (1.5px) */
+::ng-deep .btn-group v-button:not(:first-child) {
+  margin-left: -1.5px;
+}
+
+/* Bring hovered/focused button to front so its border renders on top */
+::ng-deep .btn-group v-button button.btn:hover,
+::ng-deep .btn-group v-button button.btn:focus-visible {
+  z-index: 1;
+}
+
+/* ── Size variants (match VButton radii per size) ───────── */
+
+/* xs: base radius 6px */
+::ng-deep .btn-group v-button button.btn.btn-xs:first-child,
+::ng-deep .btn-group v-button:first-child button.btn.btn-xs {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+::ng-deep .btn-group v-button button.btn.btn-xs:last-child,
+::ng-deep .btn-group v-button:last-child button.btn.btn-xs {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/* lg: base radius 10px */
+::ng-deep .btn-group v-button button.btn.btn-lg:first-child,
+::ng-deep .btn-group v-button:first-child button.btn.btn-lg {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+::ng-deep .btn-group v-button button.btn.btn-lg:last-child,
+::ng-deep .btn-group v-button:last-child button.btn.btn-lg {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}

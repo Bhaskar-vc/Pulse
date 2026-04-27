@@ -1,0 +1,182 @@
+/* Accordion — Pulse Design System */
+
+:host { display: block; }
+
+/* ── Base accordion ──────────────────────────── */
+.accordion { width: 100%; font-family: 'Inter', sans-serif; }
+
+.accordion-item { border-bottom: 1px solid var(--ds-border); }
+.accordion-item:last-child { border-bottom: none; }
+
+.accordion-trigger {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 0 16px; height: 48px;
+  background: transparent; border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+  color: var(--ds-text); text-align: left;
+  transition: background 0.15s, color 0.15s, border-left 0.15s;
+  border-left: 3px solid transparent;
+}
+.accordion-trigger:hover { background: var(--ds-bg-subtle); }
+.accordion-trigger.is-open {
+  background: var(--ds-brand-subtle); color: var(--ds-brand-dark);
+  border-left: 3px solid var(--ds-brand);
+}
+.accordion-trigger:disabled {
+  color: var(--ds-text-disabled); cursor: not-allowed; background: transparent;
+}
+
+.accordion-icon {
+  flex-shrink: 0; width: 20px; height: 20px; color: var(--ds-text-faint);
+  transition: transform 0.25s ease;
+}
+.accordion-trigger.is-open .accordion-icon { transform: rotate(180deg); }
+.accordion-trigger:disabled .accordion-icon { opacity: 0.4; }
+
+.accordion-leading-icon {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  color: var(--ds-text-faint);
+  display: flex; align-items: center; justify-content: center;
+  line-height: 0;
+  svg { display: block; width: 18px; height: 18px; }
+}
+.accordion-trigger.is-open .accordion-leading-icon { color: var(--ds-brand); }
+
+.accordion-trigger-content {
+  display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0;
+}
+
+.accordion-content-wrap {
+  overflow: hidden; max-height: 0;
+  transition: max-height 0.25s ease;
+}
+.accordion-content-wrap.is-open { max-height: 600px; }
+.accordion-content {
+  padding: 4px 16px 16px;
+  font-size: 14px; color: var(--ds-text-faint); line-height: 1.7;
+}
+
+/* ── Badges ──────────────────────────────────── */
+.acc-badge {
+  font-size: 11px; font-weight: 600; padding: 2px 8px;
+  border-radius: 99px; background: var(--ds-brand-light); color: var(--ds-brand-dark);
+  border: 1px solid var(--ds-brand-border);
+}
+.acc-badge-success { background: var(--ds-success-subtle); color: var(--ds-success-dark); border-color: var(--ds-success-border); }
+.acc-badge-warning { background: var(--ds-warning-subtle); color: var(--ds-warning);      border-color: var(--ds-warning-light); }
+
+/* ── Sizes ───────────────────────────────────── */
+.accordion--sm .accordion-trigger { height: 40px; font-size: 13px; }
+.accordion--lg .accordion-trigger { height: 56px; font-size: 15px; }
+
+/* ── Bordered variant ────────────────────────── */
+.accordion--bordered {
+  border: 1px solid var(--ds-border); border-radius: 10px; overflow: hidden;
+}
+.accordion--bordered .accordion-item { border-bottom: 1px solid var(--ds-border); }
+.accordion--bordered .accordion-item:last-child { border-bottom: none; }
+
+/* Remove radius when nested inside accordion content */
+:host-context(.accordion-content) .accordion--bordered { border-radius: 0; }
+
+/* ── Flush variant ───────────────────────────── */
+.accordion--flush .accordion-item { border-bottom: 1px solid var(--ds-border); }
+.accordion--flush .accordion-item:last-child { border-bottom: none; }
+.accordion--flush .accordion-trigger {
+  border-left: 3px solid transparent !important;
+  padding-left: 0; padding-right: 0;
+}
+.accordion--flush .accordion-content { padding-left: 0; padding-right: 0; }
+
+/* Cross-component: strip bg + border when item lives inside a flush accordion */
+:host-context(.accordion--flush) .accordion-trigger.is-open {
+  background: transparent;
+  border-left-color: transparent;
+}
+
+/* ── Status-bordered variant (acc-sb-*) ──────── */
+.accordion--status {
+  display: flex; flex-direction: column; gap: 0; width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.acc-sb-item {
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border-medium);
+  border-radius: 0;
+}
+
+/* Use :host position selectors — safe across Angular component boundaries */
+:host:only-child .acc-sb-item                        { border-radius: 6px; }
+:host:first-child:not(:last-child) .acc-sb-item      { border-radius: 6px 6px 0 0; }
+:host:last-child:not(:first-child) .acc-sb-item      { border-radius: 0 0 6px 6px; }
+:host:not(:first-child) .acc-sb-item                 { border-top: none; }
+
+.acc-sb-trigger {
+  width: 100%; display: flex; align-items: center; gap: 12px;
+  padding: 10px 24px; min-height: 67px;
+  background: transparent; border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif; text-align: left;
+  transition: background 0.15s;
+}
+.acc-sb-trigger:hover:not(:disabled) { background: var(--ds-bg-subtle); }
+.acc-sb-item.is-disabled .acc-sb-trigger { cursor: not-allowed; pointer-events: none; }
+
+.acc-check-icon {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: #d1fadf; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.acc-sb-item.is-disabled .acc-check-icon { background: var(--ds-bg-muted); }
+
+.acc-sb-text { flex: 1; min-width: 0; }
+.acc-sb-title    { font-size: 14px; font-weight: 500; color: var(--ds-text); line-height: 20px; }
+.acc-sb-subtitle { font-size: 12px; color: var(--ds-text-muted); line-height: 1.4; margin-top: 2px; }
+.acc-sb-item.is-disabled .acc-sb-title,
+.acc-sb-item.is-disabled .acc-sb-subtitle { color: var(--ds-text-disabled); }
+
+.acc-sb-right {
+  display: flex; align-items: center; gap: 6px;
+  flex-shrink: 0; min-width: 100px; justify-content: flex-end;
+}
+.acc-sb-label { font-size: 12px; color: var(--ds-text-muted); text-align: right; }
+.acc-sb-item.is-disabled .acc-sb-label { color: var(--ds-text-disabled); }
+
+.acc-sb-chevron {
+  width: 24px; height: 24px; flex-shrink: 0; color: var(--ds-text-muted);
+  transition: transform 0.25s ease;
+}
+.acc-sb-trigger.is-open .acc-sb-chevron { transform: rotate(180deg); }
+.acc-sb-item.is-disabled .acc-sb-chevron { color: var(--ds-text-disabled); }
+
+.acc-sb-panel {
+  overflow: hidden; max-height: 0;
+  transition: max-height 0.3s ease;
+  border-top: 0 solid var(--ds-border-medium);
+}
+.acc-sb-panel.is-open { max-height: 600px; border-top-width: 1px; }
+
+.acc-sb-content {
+  padding: 24px; font-size: 14px; color: var(--ds-text-faint); line-height: 1.7;
+}
+.acc-sb-footer {
+  display: flex; justify-content: flex-end; gap: 12px;
+  padding: 0 24px 24px;
+}
+
+/* ── Status-gap variant (grey bg, card gaps) ─── */
+.accordion--status-gap {
+  display: flex; flex-direction: column; gap: 8px; width: 100%;
+  background: var(--ds-bg-muted); border-radius: 10px; padding: 12px;
+  font-family: 'Inter', sans-serif;
+}
+.accordion--status-gap .acc-sb-item {
+  border-radius: 6px !important;
+  border: 1px solid var(--ds-border-medium) !important;
+}
+.accordion--status-gap .acc-sb-item + .acc-sb-item {
+  border-top: 1px solid var(--ds-border-medium) !important;
+  border-radius: 6px !important;
+}

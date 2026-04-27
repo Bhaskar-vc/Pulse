@@ -1,0 +1,69 @@
+<div
+  class="carousel-outer-container"
+  [ngClass]="getCarouselOuterContainerClass()"
+>
+  <div class="carousel-body" [ngClass]="getCarouselBodyContainerClass()">
+    @if (showPrevBtn()) {
+      <ng-container *ngTemplateOutlet="prevBtn"></ng-container>
+    }
+    <div
+      class="carousel-current-slide-window"
+      [style]="getCarouselCurrentSlideWindowStyle()"
+    >
+      <div
+        class="carousel-slides-container"
+        [style]="getCarouselSlidesContainerStaticStyle()"
+        [ngStyle]="getCarouselSlidesContainerDynamicStyle()"
+      >
+        @for (_ of getCarouselSlidesIterable(); track $index) {
+          <div class="carousel-slide" [ngStyle]="getCarouselSlideStyle()">
+            @for (item of getCarouselSlideContent($index); track item) {
+              <ng-container
+                *ngTemplateOutlet="item.template; context: { cols, columnGap }"
+              ></ng-container>
+            }
+          </div>
+        }
+      </div>
+    </div>
+    @if (showNextBtn()) {
+      <ng-container *ngTemplateOutlet="nextBtn"></ng-container>
+    }
+  </div>
+  @if (showCarouselIndicators) {
+    <div class="carousel-footer" [ngClass]="getCarouselFooterClass()">
+      <div class="carousel-indicators-container">
+        <vc-carousel-indicators
+          [type]="indicatorType"
+          [framed]="indicatorsFramed"
+          [color]="
+            showCarouselControlsInside || indicatorsFramed ? theme : 'light'
+          "
+          [count]="getCarouselSlidesCount()"
+          [active]="currentIndex"
+          (onSelectCarouselSlide)="handleSlideSelected($event)"
+        ></vc-carousel-indicators>
+      </div>
+    </div>
+  }
+</div>
+
+<ng-template #prevBtn>
+  <button
+    class="carousel-arrow left-arrow"
+    [ngClass]="getCarouselSlideControlClass()"
+    (click)="prev()"
+  >
+    <i class="vc-arrow-left arrow-icon"></i>
+  </button>
+</ng-template>
+
+<ng-template #nextBtn>
+  <button
+    class="carousel-arrow right-arrow"
+    [ngClass]="getCarouselSlideControlClass()"
+    (click)="next()"
+  >
+    <i class="vc-arrow-right arrow-icon"></i>
+  </button>
+</ng-template>

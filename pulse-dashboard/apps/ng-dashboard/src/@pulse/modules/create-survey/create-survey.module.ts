@@ -8,6 +8,8 @@ import { SelectQuestionsComponent } from './select-questions/select-questions';
 import { ConfigureComponent } from './configure/configure';
 import { PreviewLaunchComponent } from './preview-launch/preview-launch';
 import { AddCustomQuestionComponent } from './add-custom-question/add-custom-question';
+import { VToggle } from '@pulse-ds/ui/toggle';
+import { VSteps } from '@pulse-ds/ui/steps';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,6 @@ import { AddCustomQuestionComponent } from './add-custom-question/add-custom-que
     PreviewLaunchComponent,
     AddCustomQuestionComponent,
   ],
-  imports: [CommonModule, FormsModule, CreateSurveyRoutingModule],
+  imports: [CommonModule, FormsModule, CreateSurveyRoutingModule, VToggle, VSteps],
 })
 export class CreateSurveyModule {}

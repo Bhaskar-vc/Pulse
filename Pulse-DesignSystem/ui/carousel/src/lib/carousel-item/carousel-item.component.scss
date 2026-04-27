@@ -1,0 +1,12 @@
+/* Carousel Item — Pulse Design System */
+
+.carousel-item {
+  width: auto;
+  height: 100%;
+}
+
+::ng-deep img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

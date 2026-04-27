@@ -1,0 +1,44 @@
+<nav class="pgn" [attr.aria-label]="'Pagination'">
+  <!-- Prev -->
+  <button
+    type="button"
+    class="pgn-btn"
+    [disabled]="page <= 1 || null"
+    (click)="go(page - 1)"
+    aria-label="Previous page"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <!-- Pages -->
+  <div class="pgn-pages">
+    @for (p of visiblePages; track p) {
+      @if (p === 0) {
+        <span class="pgn-ellipsis">…</span>
+      } @else {
+        <button
+          type="button"
+          class="pgn-btn"
+          [class.is-active]="p === page"
+          [attr.aria-current]="p === page ? 'page' : null"
+          (click)="go(p)"
+        >{{ p }}</button>
+      }
+    }
+  </div>
+
+  <!-- Next -->
+  <button
+    type="button"
+    class="pgn-btn"
+    [disabled]="page >= totalPages || null"
+    (click)="go(page + 1)"
+    aria-label="Next page"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</nav>

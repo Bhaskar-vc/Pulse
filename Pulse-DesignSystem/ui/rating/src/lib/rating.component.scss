@@ -1,0 +1,50 @@
+/* Rating — Pulse Design System */
+
+:host { display: inline-flex; }
+
+.rating {
+  display: inline-flex; align-items: center;
+  gap: 2px; position: relative;
+  font-family: 'Inter', sans-serif;
+}
+.rating.rating-sm { gap: 1px; }
+.rating.rating-lg { gap: 3px; }
+
+.star-wrap {
+  display: inline-flex; align-items: center; justify-content: center;
+  position: relative; cursor: default; flex-shrink: 0;
+}
+.star-wrap svg { display: block; }
+
+/* Fills */
+.star-empty        { fill: none; stroke: var(--ds-border); stroke-width: 1.5; }
+.star-filled       { fill: var(--ds-warning); stroke: var(--ds-warning); stroke-width: 0.5; }
+.star-filled-purple { fill: var(--ds-brand); stroke: var(--ds-brand); stroke-width: 0.5; }
+.star-filled-gray  { fill: var(--ds-text-disabled); stroke: var(--ds-text-disabled); stroke-width: 0.5; }
+
+/* Half star */
+.star-half-wrap { position: relative; display: inline-flex; }
+.star-half-wrap .star-bg { position: absolute; top: 0; left: 0; }
+.star-half-wrap .star-fg { position: relative; clip-path: inset(0 50% 0 0); }
+
+/* Sizes */
+.rating-sm .star-wrap svg  { width: 16px; height: 16px; }
+.rating-md .star-wrap svg  { width: 20px; height: 20px; }
+.rating-lg .star-wrap svg  { width: 28px; height: 28px; }
+.rating-sm .star-half-wrap svg { width: 16px; height: 16px; }
+.rating-md .star-half-wrap svg { width: 20px; height: 20px; }
+.rating-lg .star-half-wrap svg { width: 28px; height: 28px; }
+
+/* Interactive */
+.rating-interactive .star-wrap { cursor: pointer; border-radius: 3px; transition: transform 0.1s; }
+.rating-interactive .star-wrap:hover { transform: scale(1.15); }
+.rating-interactive .star-wrap:focus-visible { outline: 2px solid var(--ds-brand); outline-offset: 2px; }
+
+/* Count & value labels */
+.rating-count {
+  font-size: 13px; color: var(--ds-text-faint); margin-left: 6px;
+  font-weight: 500; white-space: nowrap;
+}
+.rating-sm .rating-count { font-size: 11px; margin-left: 4px; }
+.rating-lg .rating-count { font-size: 15px; margin-left: 8px; }
+.rating-value { font-size: 13px; font-weight: 600; color: var(--ds-text); margin-left: 8px; }

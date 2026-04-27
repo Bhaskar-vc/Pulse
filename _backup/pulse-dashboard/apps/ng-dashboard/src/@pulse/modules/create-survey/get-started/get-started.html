@@ -1,0 +1,233 @@
+<div class="shadow-rect shadow-rect-1"></div>
+<div class="shadow-rect shadow-rect-2"></div>
+<div class="main-card">
+
+  <!-- Top bar: Back + Stepper -->
+  <div class="top-bar">
+    <button class="back-btn" [routerLink]="['/create-survey']">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M5 12l7 7M5 12l7-7"/>
+      </svg>
+      Back
+    </button>
+
+    <div class="steps-check">
+      <div class="steps-check-item is-active">
+        <div class="steps-check-pill"><span class="steps-check-num">1</span></div>
+        <span class="steps-check-label">Get Started</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item">
+        <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+        <span class="steps-check-label">Select Questions</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item">
+        <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+        <span class="steps-check-label">Configure</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item">
+        <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+        <span class="steps-check-label">Preview &amp; Launch</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-area">
+    <div class="content-inner">
+      <div class="content-card">
+
+        <div>
+          <div class="form-heading">Create your Pulse Survey</div>
+          <div class="form-subheading">Follow these simple steps to create and launch your employee pulse survey</div>
+        </div>
+
+        <div class="content-card-row">
+
+          <!-- Survey Illustration -->
+          <div class="illustration-col" style="order:2">
+            <svg viewBox="0 0 340 400" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
+              <!-- Soft background blob -->
+              <ellipse cx="170" cy="200" rx="145" ry="160" fill="#ede9fe" opacity=".35"/>
+
+              <!-- MAIN CLIPBOARD -->
+              <rect class="illu-clipboard" x="60" y="48" width="180" height="232" rx="16" fill="#fff" stroke="#e4e7ec" stroke-width="1.3" filter="url(#shadow)"/>
+              <defs>
+                <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#7f56d9" flood-opacity=".1"/>
+                </filter>
+              </defs>
+
+              <!-- Clip tab -->
+              <rect x="120" y="38" width="60" height="24" rx="7" fill="#7f56d9"/>
+              <rect x="132" y="43" width="36" height="14" rx="5" fill="#6941c6"/>
+              <circle cx="150" cy="50" r="4" fill="#fff" opacity=".4"/>
+
+              <!-- Header band -->
+              <rect x="60" y="62" width="180" height="36" rx="0" fill="#f9f5ff"/>
+              <rect x="76" y="73" width="60" height="7" rx="3.5" fill="#7f56d9" opacity=".7"/>
+              <rect x="144" y="75" width="36" height="5" rx="2.5" fill="#c4b5fd"/>
+
+              <!-- Divider -->
+              <line x1="76" y1="105" x2="224" y2="105" stroke="#f2f4f7" stroke-width="1"/>
+
+              <!-- Question 1 -->
+              <rect x="76" y="114" width="148" height="6" rx="3" fill="#344054" opacity=".7"/>
+              <rect x="76" y="124" width="110" height="5" rx="2.5" fill="#d0d5dd"/>
+              <!-- Rating pills -->
+              <rect class="illu-pill-1" x="76" y="135" width="22" height="18" rx="5" fill="#f4f3ff" stroke="#7f56d9" stroke-width="1.2"/>
+              <rect class="illu-pill-1" x="76" y="137" width="22" height="14" rx="4" fill="#7f56d9"/>
+              <rect class="illu-pill-2" x="102" y="135" width="22" height="18" rx="5" fill="#f9fafb" stroke="#e4e7ec" stroke-width="1"/>
+              <rect class="illu-pill-3" x="128" y="135" width="22" height="18" rx="5" fill="#f9fafb" stroke="#e4e7ec" stroke-width="1"/>
+              <rect class="illu-pill-4" x="154" y="135" width="22" height="18" rx="5" fill="#f9fafb" stroke="#e4e7ec" stroke-width="1"/>
+              <rect class="illu-pill-5" x="180" y="135" width="22" height="18" rx="5" fill="#f9fafb" stroke="#e4e7ec" stroke-width="1"/>
+
+              <!-- Divider -->
+              <line x1="76" y1="162" x2="224" y2="162" stroke="#f2f4f7" stroke-width="1"/>
+
+              <!-- Question 2 - checkbox list -->
+              <rect x="76" y="170" width="120" height="6" rx="3" fill="#344054" opacity=".7"/>
+              <!-- cb row 1 -->
+              <rect x="76" y="182" width="13" height="13" rx="3" fill="#e9d7fe" stroke="#7f56d9" stroke-width="1.2"/>
+              <path class="illu-check" d="M78.5 188.5l3 3 5-5" stroke="#7f56d9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="95" y="185" width="72" height="5" rx="2.5" fill="#d0d5dd"/>
+              <!-- cb row 2 -->
+              <rect x="76" y="200" width="13" height="13" rx="3" fill="#fff" stroke="#d0d5dd" stroke-width="1.2"/>
+              <rect x="95" y="203" width="88" height="5" rx="2.5" fill="#d0d5dd"/>
+              <!-- cb row 3 -->
+              <rect x="76" y="218" width="13" height="13" rx="3" fill="#e9d7fe" stroke="#7f56d9" stroke-width="1.2"/>
+              <path class="illu-check2" d="M78.5 224.5l3 3 5-5" stroke="#7f56d9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="95" y="221" width="60" height="5" rx="2.5" fill="#d0d5dd"/>
+
+              <!-- Divider -->
+              <line x1="76" y1="238" x2="224" y2="238" stroke="#f2f4f7" stroke-width="1"/>
+
+              <!-- Progress bar -->
+              <rect x="76" y="246" width="148" height="8" rx="4" fill="#f2f4f7"/>
+              <rect class="illu-progress" x="76" y="246" width="95" height="8" rx="4" fill="url(#prog)"/>
+              <defs>
+                <linearGradient id="prog" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#7f56d9"/>
+                  <stop offset="100%" stop-color="#a78bfa"/>
+                </linearGradient>
+              </defs>
+              <rect x="76" y="258" width="30" height="5" rx="2.5" fill="#7f56d9" opacity=".5"/>
+              <rect x="194" y="258" width="30" height="5" rx="2.5" fill="#d0d5dd"/>
+
+              <!-- FLOATING RESPONSE CARD (top-right) -->
+              <rect x="208" y="72" width="112" height="68" rx="10" fill="#fff" stroke="#e4e7ec" stroke-width="1" filter="url(#shadow2)"/>
+              <defs>
+                <filter id="shadow2" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity=".08"/>
+                </filter>
+              </defs>
+              <circle cx="223" cy="90" r="10" fill="#e9d7fe"/>
+              <circle cx="223" cy="88" r="4" fill="#7f56d9"/>
+              <path d="M218 94c0-2.76 2.24-5 5-5s5 2.24 5 5" fill="#7f56d9" opacity=".5"/>
+              <rect x="238" y="83" width="48" height="6" rx="3" fill="#344054" opacity=".6"/>
+              <rect x="238" y="93" width="36" height="5" rx="2.5" fill="#d0d5dd"/>
+              <!-- mini stars -->
+              <path d="M223 102l1 2.5h2.5l-2 1.5.8 2.5-2.3-1.5-2.3 1.5.8-2.5-2-1.5H222z" fill="#f79009"/>
+              <path d="M230 102l1 2.5h2.5l-2 1.5.8 2.5-2.3-1.5-2.3 1.5.8-2.5-2-1.5H229z" fill="#f79009"/>
+              <path d="M237 102l1 2.5h2.5l-2 1.5.8 2.5-2.3-1.5-2.3 1.5.8-2.5-2-1.5H236z" fill="#f79009"/>
+              <path d="M244 102l1 2.5h2.5l-2 1.5.8 2.5-2.3-1.5-2.3 1.5.8-2.5-2-1.5H243z" fill="#d0d5dd"/>
+              <path d="M251 102l1 2.5h2.5l-2 1.5.8 2.5-2.3-1.5-2.3 1.5.8-2.5-2-1.5H250z" fill="#d0d5dd"/>
+
+              <!-- FLOATING ANALYTICS CARD (bottom-left) -->
+              <rect x="10" y="272" width="110" height="80" rx="10" fill="#fff" stroke="#e4e7ec" stroke-width="1" filter="url(#shadow2)"/>
+              <rect x="22" y="284" width="50" height="6" rx="3" fill="#344054" opacity=".6"/>
+              <rect x="22" y="294" width="35" height="5" rx="2.5" fill="#d0d5dd"/>
+              <!-- bar chart -->
+              <rect x="22" y="322" width="10" height="20" rx="2" fill="#c4b5fd"/>
+              <rect x="36" y="312" width="10" height="30" rx="2" fill="#7f56d9"/>
+              <rect x="50" y="318" width="10" height="24" rx="2" fill="#a78bfa"/>
+              <rect x="64" y="308" width="10" height="34" rx="2" fill="#6941c6"/>
+              <rect x="78" y="315" width="10" height="27" rx="2" fill="#c4b5fd"/>
+              <line x1="18" y1="344" x2="100" y2="344" stroke="#e4e7ec" stroke-width="1"/>
+
+              <!-- FLOATING PULSE TAG (bottom-right) -->
+              <rect x="222" y="298" width="100" height="36" rx="18" fill="#7f56d9"/>
+              <circle cx="241" cy="316" r="8" fill="#fff" opacity=".2"/>
+              <circle cx="241" cy="316" r="4" fill="#fff"/>
+              <!-- pulse line -->
+              <polyline points="251,316 256,316 259,308 263,324 267,312 271,316 276,316 280,316 283,310 287,322 291,316 298,316 308,316" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+              <!-- Decorative dots -->
+              <circle cx="42" cy="72" r="5" fill="#7f56d9" opacity=".2"/>
+              <circle cx="30" cy="88" r="3" fill="#a78bfa" opacity=".3"/>
+              <circle cx="295" cy="200" r="7" fill="#7f56d9" opacity=".15"/>
+              <circle cx="308" cy="218" r="4" fill="#a78bfa" opacity=".25"/>
+              <circle cx="20" cy="200" r="5" fill="#6941c6" opacity=".15"/>
+
+              <!-- Sparkle top-left -->
+              <path d="M36 130l2 6 2-6-2-6z" fill="#7f56d9" opacity=".4"/>
+              <path d="M30 136h12M36 130v12" stroke="#7f56d9" stroke-width="1" opacity=".3" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <!-- Form -->
+          <div class="form-col" style="order:1">
+            <div class="form-box">
+
+              <!-- Survey name -->
+              <div class="field">
+                <div class="field-label">
+                  Survey name
+                  <span class="required">*</span>
+                </div>
+                <input
+                  #surveyName
+                  type="text"
+                  placeholder="Enter survey name"
+                  [class.error]="nameError"
+                  (input)="onNameInput()"
+                />
+                <div class="field-error" [class.show]="nameError">
+                  <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" stroke="#f04438"/><line x1="6" y1="4" x2="6" y2="6.5" stroke="#f04438" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="8.5" r=".6" fill="#f04438"/></svg>
+                  Survey name is required.
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="field">
+                <div class="field-label">
+                  Description
+                  <span class="optional">(optional)</span>
+                </div>
+                <textarea placeholder="Enter a description..."></textarea>
+              </div>
+
+              <!-- QR Codes toggle -->
+              <div class="toggle-row">
+                <input type="checkbox" id="qr-toggle" class="check-btn"/>
+                <label for="qr-toggle" class="check-label">
+                  <svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg>
+                </label>
+                <label for="qr-toggle" class="toggle-row-text" style="cursor:pointer">
+                  <div class="toggle-row-title">QR Codes or Kiosks</div>
+                  <div class="toggle-row-sub">For deskless employees</div>
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+        </div><!-- /.content-card-row -->
+      </div><!-- /.content-card -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <button class="btn-cancel" [routerLink]="['/create-survey']">Cancel</button>
+    <button class="btn-proceed" (click)="proceed()">
+      Save &amp; Proceed
+      <svg viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,334 @@
+<!-- Shadow rectangles -->
+<div class="shadow-rect shadow-rect-1"></div>
+<div class="shadow-rect shadow-rect-2"></div>
+
+<!-- Main white card -->
+<div class="main-card" (click)="closeMenu()">
+
+<!-- Page Header -->
+<div class="ms-header">
+  <h1 class="ms-title">Manage Surveys</h1>
+  <p class="ms-subtitle">Manage ongoing, scheduled, and completed surveys</p>
+</div>
+
+<!-- Tabs (dynamic counts) -->
+<div class="ms-tabs">
+  <button
+    *ngFor="let tab of tabs"
+    class="ms-tab"
+    [class.active]="activeTab === tab.key"
+    (click)="switchTab(tab.key)">
+    {{ tab.label }}
+    <span class="ms-tab-badge" [class.active]="activeTab === tab.key">{{ tabCount(tab.key) }}</span>
+  </button>
+</div>
+
+<!-- Empty state -->
+<div class="ms-empty" *ngIf="filteredSurveys.length === 0 && activeTab !== 'completed'">
+  <p>No surveys in this category yet.</p>
+</div>
+<div class="ms-empty" *ngIf="sortedCompletedSurveys.length === 0 && activeTab === 'completed'">
+  <p>No surveys in this category yet.</p>
+</div>
+
+<!-- Completed Table View -->
+<div class="ms-table-wrap" *ngIf="activeTab === 'completed'">
+  <table class="ms-table">
+    <thead>
+      <tr>
+        <th class="ms-th">Survey Name</th>
+        <th class="ms-th">Date Range</th>
+        <th class="ms-th">Frequency</th>
+        <th class="ms-th ms-th-sort" (click)="toggleSort('participation')">
+          Participation
+          <svg class="ms-sort-icon" viewBox="0 0 12 12" fill="none" stroke="#98a2b3" stroke-width="1.5" width="12" height="12">
+            <path d="M6 2v8" stroke-linecap="round"/><path d="M3 7l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </th>
+        <th class="ms-th ms-th-sort" (click)="toggleSort('responseRate')">
+          Response Rate
+          <svg class="ms-sort-icon" viewBox="0 0 12 12" fill="none" stroke="#98a2b3" stroke-width="1.5" width="12" height="12">
+            <path d="M6 2v8" stroke-linecap="round"/><path d="M3 7l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </th>
+        <th class="ms-th ms-th-actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="ms-tr" *ngFor="let survey of sortedCompletedSurveys">
+        <td class="ms-td">
+          <a class="ms-table-name" [routerLink]="['/dashboard']">{{ survey.name }}</a>
+          <span class="ms-table-questions">{{ survey.questions }} questions</span>
+        </td>
+        <td class="ms-td ms-td-date">{{ survey.startDate }} – {{ survey.endDate }}</td>
+        <td class="ms-td">{{ survey.frequency || '—' }}</td>
+        <td class="ms-td">{{ survey.employees }} employees</td>
+        <td class="ms-td">{{ survey.responseRate }}%</td>
+        <td class="ms-td ms-td-actions">
+          <div class="ms-more-wrap">
+            <button class="ms-btn-more" (click)="toggleMenu(survey.id, $event)">
+              <svg viewBox="0 0 16 16" fill="#98a2b3" width="16" height="16">
+                <circle cx="8" cy="3" r="1.2"/><circle cx="8" cy="8" r="1.2"/><circle cx="8" cy="13" r="1.2"/>
+              </svg>
+            </button>
+            <div class="ms-menu" *ngIf="openMenuId === survey.id">
+              <button class="ms-menu-item" (click)="viewQuestions(survey, $event)">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="16" height="16">
+                  <circle cx="8" cy="8" r="6.5"/><line x1="8" y1="7" x2="8" y2="11" stroke-linecap="round"/>
+                  <circle cx="8" cy="5" r="0.7" fill="currentColor" stroke="none"/>
+                </svg>
+                View Questions
+              </button>
+              <button class="ms-menu-item" (click)="downloadReport(survey, $event)">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="16" height="16">
+                  <path d="M2.5 10.5v2a1.5 1.5 0 001.5 1.5h8a1.5 1.5 0 001.5-1.5v-2" stroke-linecap="round"/>
+                  <path d="M8 2v8" stroke-linecap="round"/><path d="M5 7.5L8 10.5 11 7.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Download Report
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Survey Cards (non-completed tabs) -->
+<div class="ms-cards" *ngIf="activeTab !== 'completed'">
+  <div class="ms-card" *ngFor="let survey of filteredSurveys" [class.is-expanded]="survey.expanded">
+
+    <!-- Card Header -->
+    <div class="ms-card-header" (click)="toggleExpand(survey)">
+      <div class="ms-card-info">
+        <div class="ms-card-top">
+          <h3 class="ms-card-name">{{ survey.name }}</h3>
+          <span class="ms-status-badge" [ngClass]="'ms-status--' + survey.status">
+            {{ statusLabel(survey.status) }}
+          </span>
+          <span class="ms-freq-badge" *ngIf="survey.automationFrequency">{{ survey.automationFrequency }}</span>
+        </div>
+        <div class="ms-card-meta">
+          <span class="ms-meta-item">
+            <svg viewBox="0 0 16 16" fill="none" stroke="#98a2b3" stroke-width="1.3" width="14" height="14">
+              <rect x="2" y="3" width="12" height="11" rx="1.5"/><line x1="2" y1="6.5" x2="14" y2="6.5"/>
+              <line x1="5.5" y1="1.5" x2="5.5" y2="4.5"/><line x1="10.5" y1="1.5" x2="10.5" y2="4.5"/>
+            </svg>
+            {{ survey.startDate }} – {{ survey.endDate }}
+          </span>
+          <span class="ms-meta-item">
+            <svg viewBox="0 0 16 16" fill="none" stroke="#98a2b3" stroke-width="1.3" width="14" height="14">
+              <path d="M4 2h8a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z"/>
+              <line x1="6" y1="6" x2="10" y2="6"/><line x1="6" y1="9" x2="9" y2="9"/>
+            </svg>
+            {{ survey.questions }} questions
+          </span>
+          <span class="ms-meta-item">
+            <svg viewBox="0 0 16 16" fill="none" stroke="#98a2b3" stroke-width="1.3" width="14" height="14">
+              <circle cx="6" cy="5.5" r="2.5"/><path d="M1.5 14c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5"/>
+              <circle cx="11" cy="5.5" r="2"/><path d="M11 9.5c1.8 0 3.5 1.5 3.5 3.5"/>
+            </svg>
+            {{ survey.employees }} employees
+          </span>
+        </div>
+      </div>
+      <div class="ms-card-actions">
+        <button class="ms-btn-insights" *ngIf="survey.status !== 'scheduled'" (click)="viewInsights(survey, $event)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+            <path d="M4 12V7"/><path d="M8 12V4"/><path d="M12 12V9"/>
+          </svg>
+          View Insights
+        </button>
+        <!-- More menu -->
+        <div class="ms-more-wrap">
+          <button class="ms-btn-more" (click)="toggleMenu(survey.id, $event)">
+            <svg viewBox="0 0 16 16" fill="#98a2b3" width="16" height="16">
+              <circle cx="8" cy="3" r="1.2"/><circle cx="8" cy="8" r="1.2"/><circle cx="8" cy="13" r="1.2"/>
+            </svg>
+          </button>
+          <div class="ms-menu" *ngIf="openMenuId === survey.id">
+            <button class="ms-menu-item" (click)="viewQuestions(survey, $event)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="16" height="16">
+                <circle cx="8" cy="8" r="6.5"/><line x1="8" y1="7" x2="8" y2="11" stroke-linecap="round"/>
+                <circle cx="8" cy="5" r="0.7" fill="currentColor" stroke="none"/>
+              </svg>
+              View Questions
+            </button>
+            <button class="ms-menu-item" (click)="sendReminder(survey, $event)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="16" height="16">
+                <path d="M8 2a4.5 4.5 0 00-4.5 4.5c0 1.5-.5 3-1.5 4h12c-1-1-1.5-2.5-1.5-4A4.5 4.5 0 008 2z"/>
+                <path d="M6 12a2 2 0 004 0"/>
+              </svg>
+              Send Reminders
+            </button>
+            <button class="ms-menu-item" (click)="extendDeadline(survey, $event)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="16" height="16">
+                <circle cx="8" cy="8" r="6.5"/><path d="M8 4.5v3.5l2.5 1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Extend Deadline
+            </button>
+            <button class="ms-menu-item" *ngIf="!survey.paused && survey.status === 'ongoing'" (click)="pauseSurvey(survey, $event)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="16" height="16">
+                <circle cx="8" cy="8" r="6.5"/><line x1="6.5" y1="5.5" x2="6.5" y2="10.5" stroke-linecap="round"/>
+                <line x1="9.5" y1="5.5" x2="9.5" y2="10.5" stroke-linecap="round"/>
+              </svg>
+              Pause Survey
+            </button>
+            <button class="ms-menu-item" *ngIf="survey.paused && survey.status === 'ongoing'" (click)="resumeSurvey(survey, $event)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="16" height="16">
+                <circle cx="8" cy="8" r="6.5"/><path d="M6.5 5l5 3-5 3z" stroke-linejoin="round"/>
+              </svg>
+              Resume Survey
+            </button>
+            <button class="ms-menu-item" *ngIf="survey.status === 'completed' || survey.status === 'automation'" (click)="downloadReport(survey, $event)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="16" height="16">
+                <path d="M2.5 10.5v2a1.5 1.5 0 001.5 1.5h8a1.5 1.5 0 001.5-1.5v-2" stroke-linecap="round"/>
+                <path d="M8 2v8" stroke-linecap="round"/><path d="M5 7.5L8 10.5 11 7.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Download Report
+            </button>
+          </div>
+        </div>
+        <svg class="ms-chevron" viewBox="0 0 16 16" fill="none" stroke="#98a2b3" stroke-width="1.8" width="16" height="16">
+          <polyline points="4 10 8 6 12 10"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Expanded Content -->
+    <div class="ms-card-body" *ngIf="survey.expanded">
+
+      <!-- Response Rate (ongoing / completed / automation) -->
+      <div class="ms-response-bar" *ngIf="survey.status !== 'scheduled'">
+        <div class="ms-response-rate">
+          <span class="ms-rate-value">{{ survey.responseRate }}%</span>
+          <div class="ms-rate-text">
+            <span class="ms-rate-label">Response Rate</span>
+            <span class="ms-rate-detail">{{ survey.responded }} of {{ survey.employees }} employees responded</span>
+          </div>
+        </div>
+        <div class="ms-response-fill" [style.width.%]="survey.responseRate"></div>
+      </div>
+
+      <!-- Scheduled: begin date info bar -->
+      <div class="ms-scheduled-bar" *ngIf="survey.status === 'scheduled'">
+        <svg viewBox="0 0 18 18" fill="none" stroke="#0369a1" stroke-width="1.3" width="18" height="18">
+          <circle cx="9" cy="9" r="7.5"/><path d="M9 5v4l2.5 1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="ms-scheduled-bar-text">
+          <span class="ms-scheduled-label">Scheduled to begin</span>
+          <span class="ms-scheduled-detail">{{ survey.startDate }}  |  {{ survey.questions }} Questions</span>
+        </div>
+      </div>
+
+      <!-- Pulse Progress -->
+      <div class="ms-pulse-section">
+        <div class="ms-pulse-header">
+          <span class="ms-pulse-title">Pulse Progress</span>
+          <button class="ms-how-link" (click)="openDrawer($event)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="#7c3aed" stroke-width="1.3" width="14" height="14">
+              <circle cx="8" cy="8" r="6.5"/><line x1="8" y1="7" x2="8" y2="11" stroke-linecap="round"/>
+              <circle cx="8" cy="5" r="0.8" fill="#7c3aed" stroke="none"/>
+            </svg>
+            How it works
+          </button>
+        </div>
+        <div class="ms-pulse-list">
+          <div class="ms-pulse-item" *ngFor="let pulse of survey.pulses" [class.is-pending]="pulse.responses === 0">
+            <div class="ms-pulse-left">
+              <span class="ms-pulse-dot" [class.is-done]="pulse.responses > 0"></span>
+              <span class="ms-pulse-name">{{ pulse.name }}</span>
+              <span class="ms-pulse-meta">( {{ pulse.date }} - {{ pulse.questions }} questions )</span>
+            </div>
+            <span class="ms-pulse-responses" *ngIf="pulse.responses > 0">{{ pulse.responses }}/{{ pulse.total }} responses</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next Reminder -->
+      <div class="ms-reminder" *ngIf="survey.nextReminder">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#f79009" stroke-width="1.3" width="15" height="15">
+          <path d="M8 2a4.5 4.5 0 00-4.5 4.5c0 1.5-.5 3-1.5 4h12c-1-1-1.5-2.5-1.5-4A4.5 4.5 0 008 2z"/>
+          <path d="M6 12a2 2 0 004 0"/>
+        </svg>
+        <span>Next automatic reminder: <strong>{{ survey.nextReminder }}</strong></span>
+        <span class="ms-reminder-sep">|</span>
+        <span>{{ survey.reminderEmployees }} employees</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div> <!-- /main-card -->
+
+<!-- How it works — Side drawer -->
+<div class="drawer-overlay" [class.is-open]="drawerOpen" (click)="closeDrawer()"></div>
+<div class="drawer" [class.is-open]="drawerOpen">
+  <div class="drawer-header">
+    <h2 class="drawer-title">Understanding Survey Behavior</h2>
+    <button class="drawer-close" (click)="closeDrawer()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round">
+        <line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="drawer-body">
+    <!-- Section 1 -->
+    <div class="drawer-section">
+      <div class="drawer-section-header">
+        <span class="drawer-section-icon" style="color:#7c3aed; background:#f4ebff;">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.3" width="18" height="18">
+            <path d="M15 3l-6 6"/><path d="M15 3h-4"/><path d="M15 3v4"/>
+            <path d="M9 3H5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V9"/>
+          </svg>
+        </span>
+        <h3 class="drawer-section-title">Pulse Delivery &amp; Rollover</h3>
+      </div>
+      <ul class="drawer-list">
+        <li>Questions are delivered in smaller pulses based on frequency (daily/weekly/fortnightly/monthly)</li>
+        <li>Missed questions roll over to the next pulse automatically</li>
+        <li>Questions are randomly sampled for each employee</li>
+        <li>Surveys close at 23:59:59 on the end date</li>
+      </ul>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="drawer-section">
+      <div class="drawer-section-header">
+        <span class="drawer-section-icon" style="color:#dc6803; background:#fef0c7;">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.3" width="18" height="18">
+            <circle cx="9" cy="9" r="7"/><path d="M9 5v4l2.5 1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <h3 class="drawer-section-title">Reminder System</h3>
+      </div>
+      <ul class="drawer-list">
+        <li>Automatic reminders: Day 3 (first), Day 7 (second)</li>
+        <li>Only sent to employees who have not started the pulse</li>
+        <li>Manual reminders can be triggered anytime</li>
+        <li>No reminders sent if survey is paused or ended</li>
+      </ul>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="drawer-section">
+      <div class="drawer-section-header">
+        <span class="drawer-section-icon" style="color:#0369a1; background:#e0f2fe;">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.3" width="18" height="18">
+            <circle cx="9" cy="9" r="7"/>
+            <path d="M7 7a2 2 0 113 1.73c-.5.3-1 .77-1 1.27v.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9" cy="13" r="0.7" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <h3 class="drawer-section-title">Question Distribution</h3>
+      </div>
+      <ul class="drawer-list">
+        <li>Questions are randomly sampled to prevent survey fatigue</li>
+        <li>Each employee receives a different set of questions per pulse</li>
+        <li>All questions will be distributed by the final pulse</li>
+      </ul>
+    </div>
+  </div>
+</div>

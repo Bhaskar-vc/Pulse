@@ -1,0 +1,119 @@
+/* Progress — Pulse Design System */
+
+:host { display: block; }
+
+/* ═══ Progress Bar ═══ */
+.progress-wrap { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.progress-label-row { display: flex; align-items: center; justify-content: space-between; }
+.progress-label { font-size: 13px; font-weight: 500; color: var(--ds-text-body); font-family: 'Inter', sans-serif; }
+.progress-value { font-size: 12px; font-weight: 600; color: var(--ds-brand-dark); font-family: 'Inter', sans-serif; }
+
+.progress-track {
+  width: 100%;
+  border-radius: 99px;
+  background: var(--ds-border);
+  overflow: hidden;
+  position: relative;
+}
+.progress-track--sm { height: 4px; }
+.progress-track--md { height: 8px; }
+.progress-track--lg { height: 12px; }
+.progress-track--xl { height: 16px; }
+
+.progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--ds-brand);
+  transition: width 0.4s ease;
+  position: relative;
+}
+.progress-fill--primary { background: var(--ds-brand); }
+.progress-fill--success { background: var(--ds-success-dark); }
+.progress-fill--warning { background: var(--ds-warning); }
+.progress-fill--error   { background: var(--ds-danger); }
+.progress-fill--info    { background: var(--ds-info); }
+
+/* Striped */
+.progress-fill--striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255,255,255,.12) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255,255,255,.12) 50%,
+    rgba(255,255,255,.12) 75%,
+    transparent 75%
+  );
+  background-size: 16px 16px;
+}
+
+/* Indeterminate */
+@keyframes progress-indeterminate {
+  0%   { transform: translateX(-100%) scaleX(0.5); }
+  50%  { transform: translateX(25%) scaleX(0.6); }
+  100% { transform: translateX(100%) scaleX(0.5); }
+}
+.progress-fill--indeterminate {
+  width: 60% !important;
+  animation: progress-indeterminate 1.6s ease infinite;
+  transform-origin: left;
+}
+
+/* Animated stripes */
+@keyframes stripe-move {
+  from { background-position: 0 0; }
+  to   { background-position: 32px 0; }
+}
+.progress-fill--striped.progress-fill--animated {
+  animation: stripe-move 0.6s linear infinite;
+}
+
+/* Step progress */
+.progress-steps { display: flex; gap: 4px; width: 100%; }
+.progress-step {
+  flex: 1; height: 8px; border-radius: 99px;
+  background: var(--ds-border); transition: background 0.3s;
+}
+.progress-step.is-done   { background: var(--ds-brand); }
+.progress-step.is-active { background: var(--ds-brand-hover); }
+
+/* ═══ Progress Circle ═══ */
+:host-context(v-progress-circle) { display: inline-flex; }
+
+.progress-circle-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.progress-circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.progress-circle svg { transform: rotate(-90deg); display: block; }
+.progress-circle-track { fill: none; stroke: var(--ds-border); }
+.progress-circle-fill {
+  fill: none;
+  stroke: var(--ds-brand);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+.progress-circle-fill--primary { stroke: var(--ds-brand); }
+.progress-circle-fill--success { stroke: var(--ds-success-dark); }
+.progress-circle-fill--warning { stroke: var(--ds-warning); }
+.progress-circle-fill--error   { stroke: var(--ds-danger); }
+.progress-circle-fill--info    { stroke: var(--ds-info); }
+
+.progress-circle-label {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+.progress-circle-pct { font-size: 20px; font-weight: 700; color: var(--ds-text); line-height: 1; font-family: 'Inter', sans-serif; }
+.progress-circle-sub { font-size: 11px; color: var(--ds-text-placeholder); font-family: 'Inter', sans-serif; }

@@ -12,31 +12,7 @@
       Back
     </button>
 
-    <div class="steps-check">
-      <div class="steps-check-item is-done">
-        <div class="steps-check-pill">
-          <svg class="check-svg" viewBox="0 0 24 24" fill="none">
-            <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <span class="steps-check-label">Get Started</span>
-      </div>
-      <div class="steps-check-line"></div>
-      <div class="steps-check-item is-active">
-        <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
-        <span class="steps-check-label">Select Questions</span>
-      </div>
-      <div class="steps-check-line"></div>
-      <div class="steps-check-item">
-        <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
-        <span class="steps-check-label">Configure</span>
-      </div>
-      <div class="steps-check-line"></div>
-      <div class="steps-check-item">
-        <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
-        <span class="steps-check-label">Preview &amp; Launch</span>
-      </div>
-    </div>
+    <v-steps variant="pill" [steps]="wizardSteps" [activeStep]="1"></v-steps>
   </div>
 
   <!-- THREE PANELS -->

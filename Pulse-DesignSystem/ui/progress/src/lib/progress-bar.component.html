@@ -1,0 +1,11 @@
+<div class="progress-wrap">
+  @if (label || (showValue && !indeterminate)) {
+    <div class="progress-label-row">
+      @if (label) { <span class="progress-label">{{ label }}</span> }
+      @if (showValue && !indeterminate) { <span class="progress-value">{{ displayValue }}%</span> }
+    </div>
+  }
+  <div class="progress-track" [class]="trackClass" [attr.role]="'progressbar'" [attr.aria-valuenow]="indeterminate ? null : displayValue" [attr.aria-valuemin]="0" [attr.aria-valuemax]="100" [attr.aria-label]="label || 'Progress'">
+    <div class="progress-fill" [class]="fillClass" [style.width.%]="indeterminate ? 100 : displayValue"></div>
+  </div>
+</div>

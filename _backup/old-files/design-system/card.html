@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Card – Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1d2939;
+  background: #f8f9fb;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── Sidebar ── */
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #eaeaed; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #eaeaed; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #29294c; }
+.sidebar-logo sub { font-size: 10px; color: #9d9dad; font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main { margin-left: 240px; flex: 1; min-width: 0; overflow-x: hidden; }
+.content { max-width: 1100px; padding: 48px 56px; }
+
+/* ── Page Header ── */
+.page-header { margin-bottom: 44px; }
+.breadcrumb { font-size: 12px; color: #98a2b3; margin-bottom: 10px; }
+.breadcrumb span { color: #6941c6; }
+.page-title { font-size: 30px; font-weight: 700; color: #101828; letter-spacing: -.4px; line-height: 1.2; }
+.page-desc { margin-top: 8px; font-size: 15px; color: #475467; line-height: 1.6; max-width: 600px; }
+.tag-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.page-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.tag-a11y   { color: #026aa2; background: #e0f2fe; border-color: #b9e6fe; }
+.tag-figma  { color: #6941c6; background: #f4f0fd; border-color: #d6bbfb; }
+
+/* ── Section ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 700; color: #101828; padding-bottom: 12px; border-bottom: 1px solid #e4e7ec; margin-bottom: 20px; }
+.section-desc { font-size: 14px; color: #475467; line-height: 1.7; margin-bottom: 20px; }
+.divider { border: none; border-top: 1px solid #e4e7ec; margin: 0 0 56px; }
+
+/* ── Demo Box ── */
+.demo-box { background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 32px; margin-bottom: 12px; }
+.demo-box-grey { background: #f4f4f6; border: 1px solid #e4e7ec; border-radius: 12px; padding: 32px; margin-bottom: 12px; }
+.variant-label { font-size: 12px; font-weight: 600; color: #98a2b3; text-transform: uppercase; letter-spacing: .06em; margin: 20px 0 8px; }
+
+/* ── Props Table ── */
+.ds-table-wrap { border: 1px solid #e4e7ec; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-table thead { background: #f9fafb; }
+.ds-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .05em; }
+.ds-table td { padding: 11px 16px; border-top: 1px solid #f2f4f7; color: #344054; }
+.ds-table tr:hover td { background: #fafbff; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: #f2f4f7; color: #29294c; padding: 2px 6px; border-radius: 4px; }
+
+/* ── Code Block ── */
+.code-block { background: #0f172a; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.code-block-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155; }
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.copy-btn { font-size: 11px; font-weight: 600; color: #94a3b8; background: none; border: 1px solid #334155; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s, color .15s; }
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; }
+.c-tag     { color: #7dd3fc; }
+.c-attr    { color: #a5b4fc; }
+.c-val     { color: #86efac; }
+
+/* ── A11y ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid #e4e7ec; border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: #101828; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: #475467; line-height: 1.7; }
+
+/* ── Do / Don't ── */
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.do-card, .dont-card { border-radius: 12px; padding: 20px; border: 1.5px solid; }
+.do-card { border-color: #a6f4c5; background: #f6fef9; }
+.dont-card { border-color: #fecdca; background: #fffbfa; }
+.do-header, .dont-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.do-header { color: #027a48; }
+.dont-header { color: #b42318; }
+.do-icon, .dont-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.do-icon { background: #027a48; color: #fff; }
+.dont-icon { background: #b42318; color: #fff; }
+.do-card ul, .dont-card ul { padding-left: 18px; }
+.do-card li, .dont-card li { font-size: 13px; color: #344054; line-height: 1.7; }
+
+/* ════════════════════════════════
+   CARD COMPONENT STYLES
+   ════════════════════════════════ */
+
+.card {
+  background: #fff;
+  border: 1px solid #eaeaed;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card:hover { box-shadow: 0 4px 16px rgba(16,24,40,.08); border-color: #d0d5dd; }
+
+/* Card Image */
+.card-img { width: 100%; display: block; object-fit: cover; }
+.card-img-placeholder {
+  width: 100%; height: 180px;
+  background: linear-gradient(135deg, #eaeaed 0%, #d0d3dc 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.card-img-placeholder svg { opacity: 0.35; }
+
+/* Card Body */
+.card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.card-body-lg { padding: 28px; }
+
+/* Card Header (inside card-body or standalone) */
+.card-eyebrow { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #6941c6; }
+.card-title { font-size: 16px; font-weight: 600; color: #101828; line-height: 1.4; }
+.card-title-sm { font-size: 14px; font-weight: 600; color: #101828; line-height: 1.4; }
+.card-title-lg { font-size: 20px; font-weight: 700; color: #101828; line-height: 1.3; }
+.card-desc { font-size: 14px; color: #475467; line-height: 1.65; }
+.card-meta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #98a2b3; }
+.card-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: #d0d5dd; }
+
+/* Card Badge */
+.card-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600; padding: 2px 8px;
+  border-radius: 99px; border: 1px solid;
+}
+.card-badge-success { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.card-badge-warning { color: #b54708; background: #fffaeb; border-color: #fec84b; }
+.card-badge-error   { color: #b42318; background: #fef3f2; border-color: #fecdca; }
+.card-badge-info    { color: #026aa2; background: #e0f2fe; border-color: #b9e6fe; }
+.card-badge-neutral { color: #344054; background: #f2f4f7; border-color: #d0d5dd; }
+
+/* Card Divider */
+.card-divider { height: 1px; background: #eaeaed; margin: 0; }
+
+/* Card Footer */
+.card-footer { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #f9fafb; border-top: 1px solid #eaeaed; }
+.card-footer-flush { padding: 0 20px 20px; display: flex; align-items: center; gap: 12px; }
+
+/* Card Actions */
+.card-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 0 20px 20px; }
+
+/* Avatar */
+.card-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #eef2ff; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: #6941c6; flex-shrink: 0;
+}
+.card-avatar-lg { width: 48px; height: 48px; font-size: 16px; }
+.card-author { display: flex; align-items: center; gap: 10px; }
+.card-author-name { font-size: 13px; font-weight: 600; color: #344054; }
+.card-author-role { font-size: 12px; color: #98a2b3; margin-top: 1px; }
+
+/* Card Icon (icon card) */
+.card-icon-wrap {
+  width: 44px; height: 44px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.card-icon-wrap-purple { background: #f4ebff; color: #6941c6; }
+.card-icon-wrap-green  { background: #ecfdf3; color: #039855; }
+.card-icon-wrap-blue   { background: #e0f2fe; color: #0ba5ec; }
+.card-icon-wrap-orange { background: #fff6ed; color: #f79009; }
+
+/* Stat Card */
+.stat-card { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.stat-value { font-size: 28px; font-weight: 700; color: #101828; line-height: 1; }
+.stat-label { font-size: 13px; color: #475467; }
+.stat-change { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; }
+.stat-change-up   { color: #027a48; }
+.stat-change-down { color: #b42318; }
+
+/* Card states */
+.card.is-selected { border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12); }
+.card.is-disabled { opacity: 0.5; pointer-events: none; }
+.card.is-clickable { cursor: pointer; }
+.card.is-flat { box-shadow: none !important; }
+.card.is-flat:hover { border-color: #d0d5dd; }
+
+/* Card grid helpers */
+.card-grid { display: grid; gap: 16px; }
+.card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Card sizes */
+.card-sm .card-body { padding: 14px; }
+.card-sm .card-title { font-size: 13px; }
+.card-sm .card-desc  { font-size: 13px; }
+.card-lg .card-body { padding: 28px; }
+.card-lg .card-title { font-size: 20px; }
+
+/* Horizontal card */
+.card-horizontal { flex-direction: row; }
+.card-horizontal .card-img-col { width: 160px; min-width: 160px; flex-shrink: 0; }
+.card-horizontal .card-img-col .card-img-placeholder { height: 100%; border-radius: 0; }
+
+/* Reusable btn inside cards */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 4px 16px; min-width: 64px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; border: 1.5px solid transparent; cursor: pointer; -webkit-appearance: none; appearance: none; text-decoration: none; }
+.btn-sm { height: 30px; font-size: 13px; padding: 4px 12px; }
+.btn-solid-primary { background: #29294c; color: #fff; border-color: #29294c; }
+.btn-solid-primary:hover { background: #1e1e38; border-color: #1e1e38; }
+.btn-outlined-primary { background: transparent; color: #29294c; border-color: #d0d5dd; }
+.btn-outlined-primary:hover { background: #f4f4f6; }
+.btn:not(:disabled):active { transition: none; }
+.btn:focus:not(:focus-visible) { box-shadow: none; outline: none; }
+.btn-ghost { background: transparent; color: #6941c6; border-color: transparent; }
+.btn-ghost:hover { background: #f4ebff; }
+.btn-solid-error { background: #f04438; color: #fff; border-color: #f04438; }
+.btn-solid-error:hover { background: #d92d20; border-color: #d92d20; }
+
+/* Icon link */
+.icon-btn { width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid #eaeaed; cursor: pointer; color: #667085; transition: background .15s, color .15s; }
+.icon-btn:hover { background: #f4f4f6; color: #344054; }
+
+/* Tag/chip */
+.chip { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 99px; font-size: 11px; font-weight: 500; background: #f2f4f7; color: #344054; border: 1px solid #e4e7ec; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle" style="display:block"/></a>
+    <span>Pulse DS</span>
+    <sub>v1.0.0 · Design System</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link active">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+<div class="content">
+
+  <!-- Page Header -->
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">CARD</span>
+    </div>
+  </div>
+    
+    <h1 class="page-title">Card</h1>
+    <p class="page-desc">Cards are flexible containers that group related content and actions. Use them to surface information in a scannable, structured layout.</p>
+    <div class="tag-row">
+      <span class="page-tag tag-stable">Stable</span>
+      <span class="page-tag tag-a11y">Accessible</span>
+      <span class="page-tag tag-figma">Figma Ready</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 1. Overview -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">The default card has a white background, subtle border, and 12px border-radius. It lifts on hover via a soft shadow. Cards adapt to any content — text, images, stats, avatars — and can be interactive (clickable) or static.</p>
+
+    <div class="demo-box">
+      <div class="card-grid card-grid-3">
+
+        <!-- Basic card -->
+        <div class="card">
+          <div class="card-body">
+            <span class="card-eyebrow">Design System</span>
+            <div class="card-title">Getting Started</div>
+            <div class="card-desc">Learn how to install and configure Pulse DS in your project in minutes.</div>
+          </div>
+          <div class="card-footer">
+            <span class="card-meta">5 min read</span>
+            <button class="btn btn-sm btn-outlined-primary">Read more</button>
+          </div>
+        </div>
+
+        <!-- Card with badge -->
+        <div class="card">
+          <div class="card-body">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <span class="card-eyebrow">Release</span>
+              <span class="card-badge card-badge-success">v1.0.0</span>
+            </div>
+            <div class="card-title">Component Library</div>
+            <div class="card-desc">Over 20 production-ready components with full accessibility support built in.</div>
+          </div>
+          <div class="card-footer">
+            <span class="card-meta">Updated today</span>
+            <button class="btn btn-sm btn-solid-primary">View</button>
+          </div>
+        </div>
+
+        <!-- Card with author -->
+        <div class="card">
+          <div class="card-body">
+            <span class="card-eyebrow">Tutorial</span>
+            <div class="card-title">Design Tokens in Practice</div>
+            <div class="card-desc">A deep dive into how Pulse DS uses CSS custom properties for consistent theming.</div>
+          </div>
+          <div class="card-footer">
+            <div class="card-author">
+              <div class="card-avatar">JL</div>
+              <div>
+                <div class="card-author-name">Jordan Lee</div>
+                <div class="card-meta">Mar 19, 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 2. Variants -->
+  <div class="section">
+    <h2 class="section-title">Variants</h2>
+    <p class="section-desc">Cards come in several structural variants to match different content types and layout needs.</p>
+
+    <!-- Image card -->
+    <div class="variant-label">With Image</div>
+    <div class="demo-box">
+      <div class="card-grid card-grid-3">
+        <div class="card">
+          <div class="card-img-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#667085" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke="#667085" stroke-width="1.5"/><path d="M21 15l-5-5L5 21" stroke="#667085" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-info" style="width:fit-content">Design</span>
+            <div class="card-title">Visual Systems</div>
+            <div class="card-desc">A guide to building cohesive visual systems that scale across products.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#667085" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke="#667085" stroke-width="1.5"/><path d="M21 15l-5-5L5 21" stroke="#667085" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-warning" style="width:fit-content">Workshop</span>
+            <div class="card-title">Accessibility First</div>
+            <div class="card-desc">Building inclusive interfaces from the ground up, not as an afterthought.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#667085" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke="#667085" stroke-width="1.5"/><path d="M21 15l-5-5L5 21" stroke="#667085" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="card-body">
+            <span class="card-badge card-badge-success" style="width:fit-content">Tutorial</span>
+            <div class="card-title">Token Architecture</div>
+            <div class="card-desc">How to structure design tokens for maintainability across multiple themes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="variant-label">Stat / Metric</div>
+    <div class="demo-box">
+      <div class="card-grid card-grid-4">
+        <div class="card">
+          <div class="stat-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="stat-label">Total Revenue</div>
+              <div class="card-icon-wrap card-icon-wrap-purple">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <div class="stat-value">$48,295</div>
+            <div class="stat-change stat-change-up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+              12.5% from last month
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="stat-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="stat-label">Active Users</div>
+              <div class="card-icon-wrap card-icon-wrap-green">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <div class="stat-value">3,842</div>
+            <div class="stat-change stat-change-up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+              8.2% from last week
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="stat-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="stat-label">Conversion Rate</div>
+              <div class="card-icon-wrap card-icon-wrap-blue">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div class="stat-value">5.27%</div>
+            <div class="stat-change stat-change-down">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+              1.1% from last week
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="stat-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="stat-label">Avg. Session</div>
+              <div class="card-icon-wrap card-icon-wrap-orange">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <div class="stat-value">4m 32s</div>
+            <div class="stat-change stat-change-up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+              3.7% from last month
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Icon cards -->
+    <div class="variant-label">Icon / Feature</div>
+    <div class="demo-box">
+      <div class="card-grid card-grid-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-icon-wrap card-icon-wrap-purple" style="margin-bottom:8px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="card-title">Component Library</div>
+            <div class="card-desc">20+ production-ready components with built-in accessibility and keyboard navigation.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="card-icon-wrap card-icon-wrap-green" style="margin-bottom:8px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="card-title">WCAG Compliant</div>
+            <div class="card-desc">All components meet WCAG 2.1 AA standards. Focus rings, ARIA, and keyboard support out of the box.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="card-icon-wrap card-icon-wrap-blue" style="margin-bottom:8px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div class="card-title">Design Tokens</div>
+            <div class="card-desc">A robust token system using CSS custom properties for colors, spacing, typography, and more.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Horizontal card -->
+    <div class="variant-label">Horizontal</div>
+    <div class="demo-box">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card card-horizontal">
+          <div class="card-img-col">
+            <div class="card-img-placeholder" style="height:100%;min-height:100px;">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#667085" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke="#667085" stroke-width="1.5"/><path d="M21 15l-5-5L5 21" stroke="#667085" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+              <span class="card-eyebrow">Tutorial</span>
+              <span class="card-badge card-badge-success">New</span>
+            </div>
+            <div class="card-title">Composing Layouts with Grid</div>
+            <div class="card-desc">Learn how to create responsive, flexible layouts using CSS Grid and Pulse DS layout utilities.</div>
+          </div>
+          <div style="padding:20px;display:flex;flex-direction:column;justify-content:center;gap:8px;min-width:140px;">
+            <button class="btn btn-sm btn-solid-primary">Read</button>
+            <button class="btn btn-sm btn-outlined-primary">Save</button>
+          </div>
+        </div>
+        <div class="card card-horizontal">
+          <div class="card-img-col">
+            <div class="card-img-placeholder" style="height:100%;min-height:100px;">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#667085" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke="#667085" stroke-width="1.5"/><path d="M21 15l-5-5L5 21" stroke="#667085" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+              <span class="card-eyebrow">Deep Dive</span>
+              <span class="card-badge card-badge-neutral">Intermediate</span>
+            </div>
+            <div class="card-title">Advanced Typography Scale</div>
+            <div class="card-desc">A step-by-step guide to defining a robust type scale using modular ratios and design tokens.</div>
+          </div>
+          <div style="padding:20px;display:flex;flex-direction:column;justify-content:center;gap:8px;min-width:140px;">
+            <button class="btn btn-sm btn-solid-primary">Read</button>
+            <button class="btn btn-sm btn-outlined-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile card -->
+    <div class="variant-label">Profile / Team Member</div>
+    <div class="demo-box">
+      <div class="card-grid card-grid-3">
+        <div class="card" style="text-align:center;">
+          <div class="card-body" style="align-items:center;padding-top:28px;">
+            <div class="card-avatar card-avatar-lg" style="margin:0 auto 12px;">JL</div>
+            <div class="card-title">Jordan Lee</div>
+            <div class="card-desc" style="font-size:13px;color:#667085;">Senior Product Designer</div>
+            <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+              <span class="chip">UI Systems</span>
+              <span class="chip">Figma</span>
+              <span class="chip">A11y</span>
+            </div>
+          </div>
+          <div class="card-footer" style="justify-content:center;">
+            <button class="btn btn-sm btn-outlined-primary">Message</button>
+            <button class="btn btn-sm btn-solid-primary">View Profile</button>
+          </div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-body" style="align-items:center;padding-top:28px;">
+            <div class="card-avatar card-avatar-lg" style="margin:0 auto 12px;background:#fdf2fa;color:#c11574;">AM</div>
+            <div class="card-title">Alex Morgan</div>
+            <div class="card-desc" style="font-size:13px;color:#667085;">Frontend Engineer</div>
+            <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+              <span class="chip">React</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">CSS</span>
+            </div>
+          </div>
+          <div class="card-footer" style="justify-content:center;">
+            <button class="btn btn-sm btn-outlined-primary">Message</button>
+            <button class="btn btn-sm btn-solid-primary">View Profile</button>
+          </div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-body" style="align-items:center;padding-top:28px;">
+            <div class="card-avatar card-avatar-lg" style="margin:0 auto 12px;background:#ecfdf3;color:#039855;">RK</div>
+            <div class="card-title">Riley Kim</div>
+            <div class="card-desc" style="font-size:13px;color:#667085;">Design Systems Lead</div>
+            <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+              <span class="chip">Tokens</span>
+              <span class="chip">Storybook</span>
+              <span class="chip">QA</span>
+            </div>
+          </div>
+          <div class="card-footer" style="justify-content:center;">
+            <button class="btn btn-sm btn-outlined-primary">Message</button>
+            <button class="btn btn-sm btn-solid-primary">View Profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 3. States -->
+  <div class="section">
+    <h2 class="section-title">States</h2>
+    <p class="section-desc">Cards can be interactive. Use <code>is-clickable</code> for pointer cursor, <code>is-selected</code> for active selection, and <code>is-disabled</code> to prevent interaction.</p>
+
+    <div class="demo-box">
+      <div class="card-grid card-grid-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="stat-label" style="margin-bottom:4px;">Default</div>
+            <div class="card-title-sm">Standard card</div>
+            <div class="card-desc" style="font-size:13px;margin-top:4px;">Hover to see shadow lift.</div>
+          </div>
+        </div>
+        <div class="card is-clickable" onclick="">
+          <div class="card-body">
+            <div class="stat-label" style="margin-bottom:4px;">Clickable</div>
+            <div class="card-title-sm">Interactive card</div>
+            <div class="card-desc" style="font-size:13px;margin-top:4px;">Pointer cursor on hover.</div>
+          </div>
+        </div>
+        <div class="card is-selected">
+          <div class="card-body">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <div class="stat-label">Selected</div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#7f56d9" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="card-title-sm">Active card</div>
+            <div class="card-desc" style="font-size:13px;margin-top:4px;">Purple border + ring.</div>
+          </div>
+        </div>
+        <div class="card is-disabled">
+          <div class="card-body">
+            <div class="stat-label" style="margin-bottom:4px;">Disabled</div>
+            <div class="card-title-sm">Inactive card</div>
+            <div class="card-desc" style="font-size:13px;margin-top:4px;">50% opacity, no events.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 4. Sizes -->
+  <div class="section">
+    <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">Use <code>card-sm</code> for compact layouts and <code>card-lg</code> for hero or featured content.</p>
+
+    <div class="demo-box">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
+        <div class="card card-sm">
+          <div class="card-body">
+            <div class="card-eyebrow">Small</div>
+            <div class="card-title-sm">Compact Card</div>
+            <div class="card-desc" style="font-size:13px;">Reduced padding for dense UIs.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="card-eyebrow">Medium (default)</div>
+            <div class="card-title">Standard Card</div>
+            <div class="card-desc">Default size suitable for most use cases.</div>
+          </div>
+        </div>
+        <div class="card card-lg">
+          <div class="card-body card-body-lg">
+            <div class="card-eyebrow">Large</div>
+            <div class="card-title-lg">Featured Card</div>
+            <div class="card-desc">More breathing room for highlighted or hero content.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 5. Props / API -->
+  <div class="section">
+    <h2 class="section-title">CSS Classes</h2>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead>
+          <tr><th>Class</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>.card</code></td><td>Base card — white background, border, 12px radius, hover shadow</td></tr>
+          <tr><td><code>.card-sm</code></td><td>Smaller padding variant</td></tr>
+          <tr><td><code>.card-lg</code></td><td>Larger padding and title variant</td></tr>
+          <tr><td><code>.card-horizontal</code></td><td>Row layout — image column on the left</td></tr>
+          <tr><td><code>.is-clickable</code></td><td>Adds pointer cursor for interactive cards</td></tr>
+          <tr><td><code>.is-selected</code></td><td>Purple border + focus ring — active selection state</td></tr>
+          <tr><td><code>.is-disabled</code></td><td>50% opacity + no pointer events</td></tr>
+          <tr><td><code>.is-flat</code></td><td>Disables hover shadow lift</td></tr>
+          <tr><td><code>.card-body</code></td><td>Padded content area (20px)</td></tr>
+          <tr><td><code>.card-footer</code></td><td>Grey footer strip with top border — flex row, space-between</td></tr>
+          <tr><td><code>.card-footer-flush</code></td><td>Footer inside the card-body, no background or border</td></tr>
+          <tr><td><code>.card-actions</code></td><td>Action row at the bottom with horizontal gap</td></tr>
+          <tr><td><code>.card-grid-2/3/4</code></td><td>Responsive grid presets for 2, 3, or 4 columns</td></tr>
+          <tr><td><code>.card-title</code></td><td>Card heading — 16px / semibold</td></tr>
+          <tr><td><code>.card-eyebrow</code></td><td>Small uppercase label above title</td></tr>
+          <tr><td><code>.card-desc</code></td><td>Body text — 14px / #475467</td></tr>
+          <tr><td><code>.card-badge-*</code></td><td>Inline badge pill — success / warning / error / info / neutral</td></tr>
+          <tr><td><code>.stat-value</code></td><td>Large metric number — 28px / bold</td></tr>
+          <tr><td><code>.card-icon-wrap-*</code></td><td>44px icon container — purple / green / blue / orange</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 6. Code -->
+  <div class="section">
+    <h2 class="section-title">Code</h2>
+
+    <div class="variant-label">Basic Card</div>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">card-basic.html</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"card"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"card-body"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"card-eyebrow"</span><span class="c-tag">&gt;</span>Category<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"card-title"</span><span class="c-tag">&gt;</span>Card Title<span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"card-desc"</span><span class="c-tag">&gt;</span>Supporting description text.<span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"card-footer"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"card-meta"</span><span class="c-tag">&gt;</span>5 min read<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">class=</span><span class="c-val">"btn btn-sm btn-solid-primary"</span><span class="c-tag">&gt;</span>Read<span class="c-tag">&lt;/button&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+    </div>
+
+    <div class="variant-label">Stat Card</div>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">card-stat.html</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"card"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"stat-card"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"stat-label"</span><span class="c-tag">&gt;</span>Total Revenue<span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"stat-value"</span><span class="c-tag">&gt;</span>$48,295<span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"stat-change stat-change-up"</span><span class="c-tag">&gt;</span>↑ 12.5%<span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 7. Accessibility -->
+  <div class="section">
+    <h2 class="section-title">Accessibility</h2>
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>Interactive cards</h4>
+        <ul>
+          <li>Use a <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code> as the root element when the entire card is clickable</li>
+          <li>Provide a descriptive <code>aria-label</code> if the visible label is ambiguous</li>
+          <li>Ensure focus ring is visible — do not suppress outline</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>Static cards</h4>
+        <ul>
+          <li>Use semantic HTML inside: headings, lists, paragraphs</li>
+          <li>Card images should have descriptive <code>alt</code> text</li>
+          <li>Decorative images should use <code>alt=""</code></li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>Selection cards</h4>
+        <ul>
+          <li>Use <code>role="radio"</code> or <code>role="checkbox"</code> with <code>aria-checked</code> for selectable cards</li>
+          <li>Group them with <code>role="radiogroup"</code> or <code>role="group"</code></li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>Card grids</h4>
+        <ul>
+          <li>Use a meaningful <code>&lt;ul&gt;</code>/<code>&lt;li&gt;</code> structure for card lists</li>
+          <li>Provide a region label via <code>aria-label</code> on the grid container</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+<script>
+document.addEventListener('mousedown', e => {
+  const btn = e.target.closest('.btn');
+  if (!btn || btn.disabled) return;
+  btn.style.transition = 'none';
+  const restore = () => {
+    requestAnimationFrame(() => requestAnimationFrame(() => { btn.style.transition = ''; }));
+    document.removeEventListener('mouseup', restore);
+  };
+  document.addEventListener('mouseup', restore);
+});
+</script>
+</body>
+</html>

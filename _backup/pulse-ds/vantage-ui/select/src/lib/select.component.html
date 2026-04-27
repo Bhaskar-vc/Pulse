@@ -1,0 +1,90 @@
+@if (label) {
+  <vc-label type="dark" [text]="label" [required]="required"></vc-label>
+}
+<button
+  #vcSelectBtn
+  [class]="'select-btn ' + theme"
+  [ngStyle]="{
+    width: width,
+    'min-width': minWidth,
+    'max-width': maxWidth
+  }"
+  [ngClass]="getSelectBtnClass()"
+  [attr.data-collapsed]="!menuOpen"
+  [disabled]="disabled"
+  (click)="toggleMenu(!menuOpen)"
+  (keydown)="handleKeyDown($event)"
+  (focus)="handleFocus($event)"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+>
+  <div class="left-content">
+    @if (this.lastSelectedIndex > -1) {
+      @if (getVisibleImageUrl()) {
+        <img class="selected-option-img" [src]="getVisibleImageUrl()" />
+      } @else if (getVisibleIconClass()) {
+        <i class="text-primary-500" [class]="getVisibleIconClass()"></i>
+      }
+    }
+    <div class="select-placeholder-container">
+      <span
+        class="select-placeholder"
+        [ngClass]="{'text-[13px]': size === 'sm'}"
+        [id]="elementId"
+        [innerHTML]="selectedPlaceholder || placeholder"
+        [ngClass]="{ 'selected-option-text': !isSelectionEmpty() }"
+      ></span>
+      @if (multiple && remainingSelectedPlaceholder) {
+        <span class="ml-[0.4rem]" [ngClass]="{'text-[13px]': size === 'sm'}">({{ remainingSelectedPlaceholder }})</span>
+      }
+    </div>
+  </div>
+  <!-- <i class="select-btn-icon vc-arrow-down"></i> -->
+  <span class="select-btn-icon">
+    <ng-container *ngTemplateOutlet="chevronIcon"></ng-container>
+  </span>
+</button>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayMinWidth]="menuWidth!"
+  [cdkConnectedOverlayOpen]="menuOpen"
+  [cdkConnectedOverlayOffsetY]="getOverlayYOffset()"
+  [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+  (overlayOutsideClick)="handleOutsideClick($event)"
+  (detach)="close()"
+>
+  <div #vcSelectMenu 
+    [class]="'select-menu ' + theme"
+    @panelAnimation
+  >
+    <vc-listbox
+      [width]="menuWidth?.toString() + 'px'"
+      [size]="size"
+      [theme]="theme"
+      [optionStyle]="optionStyle"
+      [loading]="loading"
+      [multiple]="multiple"
+      [selected]="model"
+      [options]="listboxOptions"
+      (onActiveIndexChange)="handleActiveIndexChange($event)"
+      (onSelectAction)="handleActionSelect($event)"
+      (onSelectionChange)="handleSelectionChange($event)"
+      (onSelectAllCheckboxChange)="handleSelectAllChange($event)"
+    >
+    </vc-listbox>
+  </div>
+</ng-template>
+
+<ng-template #chevronIcon>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16">
+    <path
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="40"
+      d="M112 184l144 144 144-144"
+    />
+  </svg>
+</ng-template>

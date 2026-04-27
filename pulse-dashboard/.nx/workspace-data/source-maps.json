@@ -1,0 +1,264 @@
+{
+  "apps/ng-dashboard": {
+    "root": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "name": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "$schema": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "projectType": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "prefix": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "sourceRoot": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "tags": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.executor": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.outputPath": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.defaultConfiguration": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.outputPath": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.index": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.browser": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.polyfills": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.tsConfig": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.inlineStyleLanguage": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.assets": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.styles": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.scripts": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.production": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.production.budgets": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.production.outputHashing": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.production.fileReplacements": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.uat": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.uat.fileReplacements": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.test": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.test.fileReplacements": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.development": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.development.optimization": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.development.extractLicenses": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.development.sourceMap": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.executor": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.configurations": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.defaultConfiguration": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.options": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.options.port": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.options.proxyConfig": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.configurations.production": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.configurations.production.buildTarget": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.configurations.development": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.configurations.development.buildTarget": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.executor": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.outputs": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options.jestConfig": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options.passWithNoTests": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.lint": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.lint.executor": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.lint.outputs": [
+      "apps/ng-dashboard/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.dependsOn": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.inputs": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.cache": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.parallelism": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.test.inputs": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.test.cache": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.test.parallelism": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.lint.inputs": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.lint.cache": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.lint.parallelism": [
+      "nx.json",
+      "nx/target-defaults"
+    ]
+  }
+}

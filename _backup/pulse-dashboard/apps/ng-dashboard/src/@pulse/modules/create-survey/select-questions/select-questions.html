@@ -1,0 +1,332 @@
+<div class="shadow-rect shadow-rect-1"></div>
+<div class="shadow-rect shadow-rect-2"></div>
+<div class="main-card">
+
+  <!-- Top bar: Back + Stepper -->
+  <div class="top-bar">
+    <button class="back-btn" [routerLink]="['/create-survey/get-started']">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/>
+        <polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Back
+    </button>
+
+    <div class="steps-check">
+      <div class="steps-check-item is-done">
+        <div class="steps-check-pill">
+          <svg class="check-svg" viewBox="0 0 24 24" fill="none">
+            <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="steps-check-label">Get Started</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item is-active">
+        <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+        <span class="steps-check-label">Select Questions</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item">
+        <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+        <span class="steps-check-label">Configure</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item">
+        <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+        <span class="steps-check-label">Preview &amp; Launch</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THREE PANELS -->
+  <div class="panels">
+
+    <!-- LEFT: QUESTION BANK -->
+    <div class="panel-bank">
+      <div class="panel-bank-inner">
+
+        <!-- Bank header -->
+        <div class="pb-header-section">
+          <div class="pb-title-row">
+            <div class="pb-title">
+              Question Bank <span class="pb-count">({{ visibleQuestionCount }})</span>
+            </div>
+            <div class="pb-actions">
+              <!-- Add all checkbox -->
+              <div class="add-all-wrap" (click)="addAllQuestions()">
+                <div class="add-all-cb" [class.checked]="allAdded">
+                  <svg *ngIf="allAdded" width="10" height="10" viewBox="0 0 12 12" fill="none">
+                    <path d="M1.5 6L4.5 9L10.5 3" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span class="add-all-label">Add all</span>
+              </div>
+              <div class="pb-divider-v" *ngIf="hasSelectedQuestions"></div>
+              <button class="clear-btn" *ngIf="hasSelectedQuestions" (click)="clearAllQuestions()">
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                  <path d="M9 3L3 9M3 3l6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+                Clear All
+              </button>
+            </div>
+          </div>
+          <!-- Search -->
+          <div class="pb-search">
+            <svg class="pb-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" placeholder="Search questions" (input)="onSearchInput($event)" [value]="searchQuery"/>
+          </div>
+        </div>
+
+        <!-- Accordion list -->
+        <div class="pb-body">
+          <ng-container *ngFor="let cat of categories">
+            <ng-container *ngIf="getFilteredQuestions(cat).length > 0">
+              <div class="accord-section">
+                <div class="accord-header" (click)="toggleCategory(cat.name)">
+                  <span class="accord-chevron" [class.closed]="isCategoryCollapsed(cat.name)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#545470" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </span>
+                  <span class="accord-title">{{ cat.name }}</span>
+                  <span class="accord-count">({{ getFilteredQuestions(cat).length }})</span>
+                </div>
+                <div class="accord-body" [class.closed]="isCategoryCollapsed(cat.name)">
+                  <div class="qcard" *ngFor="let q of getFilteredQuestions(cat)" [class.selected]="isSelected(q.id)">
+                    <div class="qcard-content">
+                      <p class="qcard-text">{{ q.text }}</p>
+                      <span class="qcard-tag" [ngClass]="badgeClass(q.type)">{{ q.type }}</span>
+                    </div>
+                    <button class="add-q-btn" [class.added]="isSelected(q.id)" (click)="toggleQuestion(q.id)" [title]="isSelected(q.id) ? 'Remove' : 'Add question'">
+                      <!-- Plus icon -->
+                      <svg *ngIf="!isSelected(q.id)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"/>
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                      </svg>
+                      <!-- Trash icon -->
+                      <svg *ngIf="isSelected(q.id)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f04438" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        <path d="M10 11v6M14 11v6"/>
+                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <div class="no-results" *ngIf="visibleQuestionCount === 0">
+            No questions match your search.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: SELECTED QUESTIONS -->
+    <div class="panel-sel">
+      <div class="ps-header">
+        <div class="ps-title-wrap">
+          <div class="ps-title">Selected Questions</div>
+          <div class="ps-stats">
+            {{ selectedIds.size }} questions selected &nbsp;from {{ selectedCategoryCount }} categories
+            &bull; ~{{ estimatedTime }}s to complete
+          </div>
+        </div>
+        <button class="add-custom-btn" [routerLink]="['/create-survey/add-custom-question']">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Custom Question
+        </button>
+      </div>
+      <div class="ps-divider"></div>
+
+      <div class="ps-body">
+        <!-- Empty state -->
+        <div class="sel-empty" *ngIf="!hasSelectedQuestions">
+          <svg width="88" height="88" viewBox="0 0 88 88" fill="none" opacity=".5">
+            <rect x="10" y="14" width="68" height="60" rx="6" fill="#f2f4f7" stroke="#e4e7ec" stroke-width="1.3"/>
+            <rect x="20" y="26" width="30" height="5" rx="2.5" fill="#d0d5dd"/>
+            <rect x="20" y="36" width="48" height="3.5" rx="1.75" fill="#e4e7ec"/>
+            <rect x="20" y="44" width="40" height="3.5" rx="1.75" fill="#e4e7ec"/>
+            <rect x="20" y="52" width="28" height="3.5" rx="1.75" fill="#e4e7ec"/>
+            <circle cx="69" cy="64" r="13" fill="#f9fafb" stroke="#e4e7ec" stroke-width="1.3"/>
+            <path d="M65 64 Q69 58 73 64" stroke="#d0d5dd" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+            <circle cx="67" cy="62.5" r="1.2" fill="#d0d5dd"/>
+            <circle cx="71" cy="62.5" r="1.2" fill="#d0d5dd"/>
+          </svg>
+          <div class="sel-empty-title">No questions selected</div>
+          <div class="sel-empty-sub">Add questions from the library to build your survey</div>
+        </div>
+
+        <!-- Selected question cards -->
+        <ng-container *ngIf="hasSelectedQuestions">
+          <div class="selq-card" *ngFor="let q of selectedQuestions; let i = index">
+            <div class="selq-inner">
+              <div class="selq-content">
+                <p class="selq-text">
+                  <span class="qnum">Q{{ i + 1 }}.</span> {{ q.text }}
+                </p>
+                <div class="selq-tags">
+                  <span class="qcard-tag tag-category">{{ q.category }}</span>
+                  <span class="qcard-tag" [ngClass]="badgeClass(q.type)">{{ q.type }}</span>
+                </div>
+              </div>
+              <button class="selq-chevron" (click)="toggleSelCard(q.id)">
+                <svg *ngIf="!isSelCardExpanded(q.id)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+                <svg *ngIf="isSelCardExpanded(q.id)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="18 15 12 9 6 15"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Expanded section -->
+            <div class="selq-expanded" *ngIf="isSelCardExpanded(q.id)">
+              <div class="selq-divider"></div>
+              <div class="selq-toggles">
+                <div class="selq-toggle-item">
+                  <span class="selq-toggle-label">Mandatory Question</span>
+                </div>
+                <div class="selq-toggle-item">
+                  <span class="selq-toggle-label">Mandatory Comment</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- RIGHT: LIVE PREVIEW -->
+    <div class="panel-prev" [class.collapsed]="previewCollapsed">
+      <!-- Header -->
+      <div class="pp-header">
+        <div class="pp-title">
+          <span class="live-dot"><span class="live-dot-ring"></span></span>
+          Live Preview
+        </div>
+        <button class="pp-collapse" title="Toggle preview" (click)="togglePreview()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#98a2b3" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h6v6"/>
+            <path d="M21 3l-7 7"/>
+            <path d="M9 21H3v-6"/>
+            <path d="M3 21l7-7"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="pp-body" *ngIf="!previewCollapsed">
+        <!-- Empty state -->
+        <div class="pp-empty" *ngIf="!hasSelectedQuestions">
+          Add questions to see the preview
+        </div>
+
+        <!-- Preview content -->
+        <ng-container *ngIf="hasSelectedQuestions && currentPreviewQuestion">
+          <!-- Progress -->
+          <div class="pp-progress-row">
+            <span class="pp-prog-label">{{ previewIndex + 1 }} of {{ previewTotal }}</span>
+            <div class="pp-prog-track">
+              <div class="pp-prog-fill" [style.width.%]="previewProgress"></div>
+            </div>
+          </div>
+
+          <!-- Question card -->
+          <div class="pp-card">
+            <div class="pp-card-content">
+              <!-- Question text -->
+              <p class="pp-question-text">{{ currentPreviewQuestion.text }}</p>
+
+              <!-- Rating Scale -->
+              <div class="pp-rating-wrap" *ngIf="isPreviewRatingType">
+                <div class="pp-rating-btns">
+                  <button class="rating-btn"
+                          *ngFor="let n of getRatingArray()"
+                          [class.selected-r]="previewSelectedRating === n"
+                          (click)="selectRating(n)">
+                    {{ n }}
+                  </button>
+                </div>
+                <div class="pp-rating-labels">
+                  <span>Strongly disagree</span>
+                  <span>Strongly agree</span>
+                </div>
+              </div>
+
+              <!-- MCQ -->
+              <div *ngIf="isPreviewMCQ" class="pp-mcq-wrap">
+                <label class="pp-mcq-option" *ngFor="let opt of ['Always','Often','Sometimes','Rarely','Never']">
+                  <span class="pp-radio"></span>
+                  {{ opt }}
+                </label>
+              </div>
+
+              <!-- Yes/No -->
+              <div *ngIf="isPreviewYesNo" class="pp-mcq-wrap">
+                <label class="pp-mcq-option" *ngFor="let opt of ['Yes','No']">
+                  <span class="pp-radio"></span>
+                  {{ opt }}
+                </label>
+              </div>
+
+              <!-- Text -->
+              <div *ngIf="isPreviewText">
+                <textarea class="pp-comment-input" placeholder="Your answer..."></textarea>
+              </div>
+
+              <!-- Comment box (for rating types) -->
+              <div class="pp-comment-wrap" *ngIf="isPreviewRatingType">
+                <span class="pp-comment-label">Add your comment</span>
+                <textarea class="pp-comment-input" placeholder=""></textarea>
+                <button class="pp-skip-btn">
+                  Skip Question
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#6941c6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="8" x2="13" y2="8"/>
+                    <polyline points="9 4 13 8 9 12"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Back / Next -->
+            <div class="pp-nav">
+              <button class="pp-nav-btn" [disabled]="previewIndex === 0" (click)="previewNav(-1)">
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="7 2 3 5.5 7 9"/>
+                </svg>
+                Back
+              </button>
+              <button class="pp-nav-btn" [disabled]="previewIndex === previewTotal - 1" (click)="previewNav(1)">
+                Next
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="4 2 8 5.5 4 9"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <button class="btn-cancel" [routerLink]="['/create-survey']">Cancel</button>
+    <button class="btn-proceed" [disabled]="!hasSelectedQuestions" (click)="proceed()">
+      Save &amp; Proceed
+      <svg viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+</div>

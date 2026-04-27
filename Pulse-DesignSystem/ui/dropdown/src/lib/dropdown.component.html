@@ -1,0 +1,107 @@
+<div class="dd-wrap">
+  @if (label) { <div class="dd-field-label">{{ label }}</div> }
+
+  <button type="button" class="dd-trigger"
+    [class.dd-trigger--multi]="multi"
+    [class.is-open]="isOpen"
+    [class.is-disabled]="disabled"
+    [class.is-error]="hasError"
+    [disabled]="disabled || null"
+    [attr.aria-expanded]="isOpen"
+    aria-haspopup="listbox"
+    (click)="toggle()">
+    @if (multi) {
+      @if (selectedValues.length > 0) {
+        <div class="dd-tags">
+          @for (val of visibleTags; track val) {
+            <span class="dd-tag">{{ getLabelForValue(val) }}
+              <button type="button" class="dd-tag-x" (click)="$event.stopPropagation(); removeTag(val)">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+            </span>
+          }
+          @if (extraTagCount > 0) { <span class="dd-tag-more">+{{ extraTagCount }} more</span> }
+        </div>
+      } @else {
+        <span class="dd-placeholder">{{ placeholder }}</span>
+      }
+    } @else {
+      <span [class]="selectedLabel ? 'dd-selected' : 'dd-placeholder'">{{ selectedLabel || placeholder }}</span>
+    }
+    <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <div class="dd-menu" [class.is-open]="isOpen" [class.dd-menu--multi]="multi" role="listbox">
+    @if (multi) {
+      <div class="dd-ms-header">
+        <div class="dd-ms-left">
+          <span class="dd-ms-count">{{ selectedValues.length }} Selected</span>
+          @if (multiHint) { <span class="dd-ms-hint">{{ multiHint }}</span> }
+        </div>
+        <div class="dd-ms-right" (click)="$event.stopPropagation(); toggleAll()">
+          <span class="dd-cb-ctrl" [class.is-checked]="allSelected">
+            <svg class="dd-cb-check" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="dd-ms-select-all-label">Select All</span>
+        </div>
+      </div>
+      <div class="dd-divider"></div>
+    }
+    @if (searchable) {
+      <div class="dd-search-wrap">
+        <input class="dd-search" type="text" placeholder="Search…"
+          [(ngModel)]="searchQuery" (input)="filterItems()" aria-label="Search options"/>
+      </div>
+    }
+    <div [class.dd-menu-scroll]="multi">
+      @for (item of filteredItems; track item.value) {
+        @if (item.dividerBefore) { <div class="dd-divider"></div> }
+        @if (item.group && isFirstInGroup(item)) { <div class="dd-group-label">{{ item.group }}</div> }
+        @if (multi) {
+          <div class="dd-cb-item" [class.is-checked]="isMultiSelected(item)" [class.is-disabled]="item.disabled" (click)="!item.disabled && select(item)">
+            <span class="dd-cb-ctrl" [class.is-checked]="isMultiSelected(item)">
+              <svg class="dd-cb-check" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="dd-cb-label">{{ item.label }}</span>
+          </div>
+        } @else {
+          <div class="dd-item" role="option"
+            [class.is-selected]="item.value === value"
+            [class.is-disabled]="item.disabled"
+            [class.is-danger]="item.danger"
+            [attr.aria-selected]="item.value === value"
+            (click)="!item.disabled && select(item)">
+            @if (item.icon) { <span class="dd-item-icon" [innerHTML]="safeHtml(item.icon)"></span> }
+            @if (item.avatar) {
+              <span class="dd-item-avatar" [style.background]="item.avatarBg || null" [style.color]="item.avatarColor || null">{{ item.avatar }}</span>
+            }
+            @if (item.description) {
+              <div class="dd-item-meta">
+                <span class="dd-item-label">{{ item.label }}</span>
+                <span class="dd-item-desc">{{ item.description }}</span>
+              </div>
+            } @else {
+              <span class="dd-item-label">{{ item.label }}</span>
+            }
+            @if (item.badge) { <span class="dd-item-badge">{{ item.badge }}</span> }
+            @if (item.value === value && !item.badge) {
+              <svg class="dd-check" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M13 4L6 11 3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            }
+          </div>
+        }
+      }
+    </div>
+  </div>
+
+  @if (hint && !hasError) { <div class="dd-field-hint">{{ hint }}</div> }
+  @if (errorMessage && hasError) {
+    <div class="dd-field-error">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="vertical-align:-1px;margin-right:3px;"><circle cx="6" cy="6" r="5.25" stroke="currentColor" stroke-width="1.5"/><line x1="6" y1="3.5" x2="6" y2="6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="8.5" r="0.75" fill="currentColor"/></svg>
+      {{ errorMessage }}
+    </div>
+  }
+</div>

@@ -1,0 +1,377 @@
+<div class="shadow-rect shadow-rect-1"></div>
+<div class="shadow-rect shadow-rect-2"></div>
+<div class="main-card">
+
+  <!-- Top bar: Back + Stepper -->
+  <div class="top-bar">
+    <button class="back-btn" [routerLink]="['/create-survey/select-questions']">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Back
+    </button>
+
+    <div class="steps-check">
+      <!-- Step 1: Done -->
+      <div class="steps-check-item is-done">
+        <div class="steps-check-pill">
+          <svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="steps-check-label">Get Started</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <!-- Step 2: Done -->
+      <div class="steps-check-item is-done">
+        <div class="steps-check-pill">
+          <svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="steps-check-label">Select Questions</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <!-- Step 3: Active -->
+      <div class="steps-check-item is-active">
+        <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+        <span class="steps-check-label">Configure</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <!-- Step 4: Upcoming -->
+      <div class="steps-check-item">
+        <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+        <span class="steps-check-label">Preview &amp; Launch</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-area">
+
+    <!-- ── SKELETON LOADER ──────────────────────────────── -->
+    <div class="cfg-skeleton" *ngIf="skeletonVisible">
+      <div style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:28px">
+
+        <!-- card 1 skeleton -->
+        <div class="sk-card">
+          <div class="sk-left">
+            <div class="sk sk-icon"></div>
+            <div class="sk sk-title"></div>
+            <div class="sk sk-desc"></div>
+            <div class="sk sk-desc2"></div>
+          </div>
+          <div class="sk-right">
+            <div class="sk sk-label"></div>
+            <div style="display:flex;gap:16px">
+              <div class="sk sk-input" style="flex:1"></div>
+              <div class="sk sk-input" style="flex:1"></div>
+              <div class="sk sk-input" style="width:160px"></div>
+            </div>
+            <div class="sk sk-input" style="height:34px"></div>
+          </div>
+        </div>
+
+        <!-- card 2 skeleton -->
+        <div class="sk-card">
+          <div class="sk-left">
+            <div class="sk sk-icon"></div>
+            <div class="sk sk-title"></div>
+            <div class="sk sk-desc"></div>
+            <div class="sk sk-desc2"></div>
+          </div>
+          <div class="sk-right">
+            <div class="sk sk-label"></div>
+            <div style="display:flex;gap:8px">
+              <div class="sk sk-pill"></div>
+              <div class="sk sk-pill"></div>
+              <div class="sk sk-pill" style="width:100px"></div>
+              <div class="sk sk-pill" style="width:110px"></div>
+              <div class="sk sk-pill" style="width:100px"></div>
+            </div>
+            <div class="sk" style="height:1px"></div>
+            <div class="sk sk-wide"></div>
+          </div>
+        </div>
+
+        <!-- card 3 skeleton -->
+        <div class="sk-card">
+          <div class="sk-left">
+            <div class="sk sk-icon"></div>
+            <div class="sk sk-title"></div>
+            <div class="sk sk-desc"></div>
+            <div class="sk sk-desc2"></div>
+          </div>
+          <div class="sk-right">
+            <div class="sk sk-label"></div>
+            <div style="display:flex;gap:8px">
+              <div class="sk sk-pill" style="width:180px"></div>
+              <div class="sk sk-pill" style="width:155px"></div>
+              <div class="sk sk-pill" style="width:125px"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div class="sk sk-input"></div>
+              <div class="sk sk-input"></div>
+            </div>
+            <div class="sk sk-wide"></div>
+          </div>
+        </div>
+
+        <!-- card 4 skeleton -->
+        <div class="sk-card">
+          <div class="sk-left">
+            <div class="sk sk-icon"></div>
+            <div class="sk sk-title"></div>
+            <div class="sk sk-desc"></div>
+            <div class="sk sk-desc2"></div>
+          </div>
+          <div class="sk-right">
+            <div class="sk sk-label"></div>
+            <div class="sk sk-input"></div>
+            <div class="sk sk-label"></div>
+            <div class="sk sk-block"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="content-inner" [class.visible]="contentVisible">
+
+      <!-- ── 1. SCHEDULING ─────────────────────────────────── -->
+      <div class="config-card">
+        <div class="card-head">
+          <div class="card-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="8" cy="15" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="15" r="1" fill="currentColor" stroke="none"/><circle cx="16" cy="15" r="1" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div class="card-head-text">
+            <div class="card-title">Scheduling</div>
+            <div class="card-desc">Set when the survey goes live and when it closes for responses</div>
+          </div>
+        </div>
+        <div class="card-body-inner">
+          <!-- Duration presets -->
+          <div style="margin-bottom:16px">
+            <div class="field-label" style="margin-bottom:10px">Duration</div>
+            <div class="freq-tabs">
+              <button class="freq-tab" [class.active]="activeDuration === '1m'" (click)="setDuration('1m')">1 Month</button>
+              <button class="freq-tab" [class.active]="activeDuration === '3m'" (click)="setDuration('3m')">3 Months</button>
+              <button class="freq-tab" [class.active]="activeDuration === '1y'" (click)="setDuration('1y')">1 Year</button>
+              <button class="freq-tab" [class.active]="activeDuration === 'all'" (click)="setDuration('all')">All at once</button>
+            </div>
+          </div>
+          <div class="field-row" style="margin-bottom:16px">
+            <div class="field">
+              <div class="field-label">Start date</div>
+              <input type="date" [(ngModel)]="startDate" (change)="onStartChange()"/>
+            </div>
+            <div class="field">
+              <div class="field-label">End date</div>
+              <input type="date" [(ngModel)]="endDate" [disabled]="endDateDisabled" [class.disabled-input]="endDateDisabled" (change)="onEndChange()"/>
+            </div>
+            <div class="field" style="max-width:160px">
+              <div class="field-label">Time</div>
+              <input type="time" [(ngModel)]="surveyTime"/>
+            </div>
+          </div>
+
+          <!-- Duration pill -->
+          <div class="duration-info">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#98a2b3" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><polyline points="8 4.5 8 8 10.5 9.5"/></svg>
+            <span class="duration-text">Survey duration: <b>{{ durationDays }}</b></span>
+            <span class="duration-range">{{ durationRange }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 2. FREQUENCY ──────────────────────────────────── -->
+      <div class="config-card">
+        <div class="card-head">
+          <div class="card-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+          </div>
+          <div class="card-head-text">
+            <div class="card-title">Frequency</div>
+            <div class="card-desc">Control how often questions are sent to participants during the survey period</div>
+          </div>
+        </div>
+        <div class="card-body-inner" style="display:flex;flex-direction:column;gap:16px">
+          <div>
+            <div class="field-label" style="margin-bottom:10px">Send questions</div>
+            <div class="freq-tabs">
+              <button
+                *ngFor="let opt of frequencyOptions"
+                class="freq-tab"
+                [class.active]="activeFrequency === opt.key"
+                [class.disabled-tab]="isFrequencyDisabled(opt.key)"
+                [disabled]="isFrequencyDisabled(opt.key)"
+                (click)="setFrequency(opt.key)"
+              >{{ opt.label }}</button>
+            </div>
+          </div>
+          <div class="field-divider"></div>
+          <label class="toggle-row" (click)="toggleRecurring()">
+            <div class="toggle-row-info">
+              <div class="toggle-row-title">Recurring Survey</div>
+              <div class="toggle-row-sub">Automatically re-send the survey at the selected frequency after it ends</div>
+            </div>
+            <label class="toggle-switch" (click)="$event.stopPropagation()">
+              <input type="checkbox" [checked]="recurringEnabled" (change)="toggleRecurring()"/>
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </label>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── 3. AUDIENCE ───────────────────────────────────── -->
+      <div class="config-card">
+        <div class="card-head">
+          <div class="card-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="card-head-text">
+            <div class="card-title">Audience</div>
+            <div class="card-desc">Define who receives this survey — include or exclude specific groups</div>
+          </div>
+        </div>
+        <div class="card-body-inner" style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <div class="field-label" style="margin-bottom:10px">Target method</div>
+            <div class="audience-pills">
+              <div class="audience-pill" [class.active]="activeAudience === 'segments'" (click)="setAudience('segments')">Target by Segments</div>
+              <div class="audience-pill" [class.active]="activeAudience === 'email'" (click)="setAudience('email')">Target by Email</div>
+              <div class="audience-pill" [class.active]="activeAudience === 'csv'" (click)="setAudience('csv')">Upload CSV</div>
+            </div>
+          </div>
+
+          <!-- segments / email view -->
+          <div *ngIf="activeAudience !== 'csv'">
+            <div class="audience-grid">
+              <div class="field">
+                <div class="field-label">Including</div>
+                <div class="select-wrap">
+                  <select>
+                    <option>All employees</option>
+                    <option>Department: Engineering</option>
+                    <option>Department: Marketing</option>
+                    <option>Department: Sales</option>
+                    <option>Location: HQ</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field-label">Excluding</div>
+                <div class="select-wrap">
+                  <select>
+                    <option>None</option>
+                    <option>Finland</option>
+                    <option>Germany</option>
+                    <option>France</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- csv upload view -->
+          <div *ngIf="activeAudience === 'csv'">
+            <div
+              class="csv-dropzone"
+              [class.drag-over]="csvDragOver"
+              (click)="csvFileInput.click()"
+              (dragover)="onCsvDragOver($event)"
+              (dragleave)="onCsvDragLeave()"
+              (drop)="onCsvDrop($event)"
+            >
+              <input #csvFileInput type="file" accept=".csv" style="display:none" (change)="onCsvFileChange($event)"/>
+              <div class="csv-dz-content" *ngIf="!csvFileUploaded">
+                <svg class="csv-upload-icon" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+                <div class="csv-dz-title">Upload employee list (CSV)</div>
+                <div class="csv-dz-desc">
+                  <p>Upload a CSV file containing employee email IDs to invite them to this survey.</p>
+                  <p>Download the sample CSV, add the email IDs, and upload the file.</p>
+                </div>
+                <a class="csv-dz-link" href="#" (click)="$event.stopPropagation()">Download Sample CSV</a>
+              </div>
+              <div class="csv-file-info" *ngIf="csvFileUploaded">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#039855" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+                <span class="csv-filename">{{ csvFileName }}</span>
+                <button (click)="$event.stopPropagation(); clearCsv()" class="csv-clear-btn">&times;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 4. EMAIL INVITATION ───────────────────────────── -->
+      <div class="config-card">
+        <div class="card-head">
+          <div class="card-icon orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="card-head-text">
+            <div class="card-title">Email Invitation</div>
+            <div class="card-desc">Customize the email that will be sent to survey participants</div>
+          </div>
+        </div>
+        <div class="card-body-inner" style="display:flex;flex-direction:column;gap:14px">
+          <div class="field">
+            <div class="field-label">Subject line</div>
+            <div class="subject-wrap">
+              <input type="text" [(ngModel)]="emailSubject" (input)="onSubjectInput()"/>
+              <span class="subj-count" [class.over]="subjectCountOver">{{ subjectCount }}</span>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label" style="justify-content:space-between">
+              <span>Message</span>
+              <div class="email-vars">
+                <span class="email-var" (click)="insertVar('[Employee Name]')">[Employee Name]</span>
+                <span class="email-var" (click)="insertVar('[Manager Name]')">[Manager Name]</span>
+                <span class="email-var" (click)="insertVar('[Survey Link]')">[Survey Link]</span>
+              </div>
+            </div>
+            <div class="email-editor">
+              <div class="email-toolbar">
+                <button class="toolbar-btn" title="Bold" (click)="execCommand('bold')"><b>B</b></button>
+                <button class="toolbar-btn" title="Italic" (click)="execCommand('italic')"><i>I</i></button>
+                <button class="toolbar-btn" title="Underline" (click)="execCommand('underline')"><u>U</u></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn" title="Bullet list" (click)="execCommand('insertUnorderedList')">
+                  <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="5" y1="4" x2="13" y2="4"/><line x1="5" y1="8" x2="13" y2="8"/><line x1="5" y1="12" x2="13" y2="12"/><circle cx="2.5" cy="4" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="8" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
+                </button>
+                <button class="toolbar-btn" title="Link">
+                  <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6.5 9.5a3.5 3.5 0 005 0l2-2a3.5 3.5 0 00-5-5l-1 1"/><path d="M9.5 6.5a3.5 3.5 0 00-5 0l-2 2a3.5 3.5 0 005 5l1-1"/></svg>
+                </button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn" title="Undo" (click)="execCommand('undo')">
+                  <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8a4 4 0 010 8H6"/><polyline points="5 3 2 6 5 9"/></svg>
+                </button>
+              </div>
+              <div
+                #emailBody
+                class="email-body"
+                contenteditable="true"
+              >Dear [Employee Name],<br><br>We would like to invite you to participate in our <b>Employee Pulse Survey</b>. Your feedback is valuable and will help us improve our workplace culture.<br><br>The survey takes approximately <b>5 minutes</b> to complete and your responses are completely anonymous.<br><br>Thank you for your time and contribution.<br><br>Best regards,<br>[Manager Name]</div>
+              <div class="email-footer">
+                <div class="email-hint">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><line x1="6" y1="5" x2="6" y2="8"/><circle cx="6" cy="3.5" r=".5" fill="currentColor" stroke="none"/></svg>
+                  Click variable tags above to insert them into the message
+                </div>
+                <div style="font-size:11px;color:#98a2b3">Preview will be shown before sending</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <button class="btn-cancel" [routerLink]="['/create-survey']">Cancel</button>
+    <button class="btn-continue" (click)="proceed()">
+      Save &amp; Proceed
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg>
+    </button>
+  </div>
+
+</div>

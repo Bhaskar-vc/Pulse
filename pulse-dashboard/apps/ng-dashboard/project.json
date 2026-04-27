@@ -66,7 +66,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular/build:dev-server",
+      "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": { "buildTarget": "ng-dashboard:build:production" },
         "development": { "buildTarget": "ng-dashboard:build:development" }

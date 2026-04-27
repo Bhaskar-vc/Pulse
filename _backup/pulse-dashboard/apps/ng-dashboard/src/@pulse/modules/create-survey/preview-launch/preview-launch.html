@@ -1,0 +1,266 @@
+<div class="shadow-rect shadow-rect-1"></div>
+<div class="shadow-rect shadow-rect-2"></div>
+<div class="main-card">
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <button class="back-btn" [routerLink]="['/create-survey/configure']">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back
+    </button>
+    <div class="steps-check">
+      <div class="steps-check-item is-done">
+        <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="steps-check-label">Get Started</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item is-done">
+        <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="steps-check-label">Select Questions</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item is-done">
+        <div class="steps-check-pill"><svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="steps-check-label">Configure</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item is-active">
+        <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+        <span class="steps-check-label">Preview &amp; Launch</span>
+      </div>
+    </div>
+    <div class="top-bar-right"></div>
+  </div>
+
+  <!-- Scrollable content -->
+  <div class="content-area">
+  <div class="page-body">
+
+    <!-- LEFT COL -->
+    <div class="left-col">
+
+      <!-- Status banner -->
+      <div class="status-banner">
+        <div class="status-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-8"/></svg>
+        </div>
+        <div>
+          <div class="status-banner-title">Your survey is ready to launch</div>
+          <div class="status-banner-sub">Review the details below and click Launch Survey when you're ready. Your survey will be sent to all employees on the scheduled date.</div>
+        </div>
+      </div>
+
+      <!-- Survey details -->
+      <div class="wcard">
+        <div class="details-card-title">Survey details</div>
+        <div class="details-grid">
+
+          <div class="detail-cell">
+            <div class="detail-label">Survey name</div>
+            <div class="detail-value">Employee Pulse Survey</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">Total questions</div>
+            <div class="detail-value">8</div>
+            <div class="detail-sub">~4 min to complete</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">Audience</div>
+            <div class="detail-value">All employees</div>
+            <div class="detail-sub">Anonymous responses</div>
+          </div>
+
+          <div class="detail-divider"></div>
+
+          <div class="detail-cell">
+            <div class="detail-label">Start date</div>
+            <div class="detail-value">01 Dec 2025</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">End date</div>
+            <div class="detail-value">31 Dec 2025</div>
+            <div class="detail-sub">30 days active</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">Send time</div>
+            <div class="detail-value">12:00 PM</div>
+          </div>
+
+          <div class="detail-divider"></div>
+
+          <div class="detail-cell">
+            <div class="detail-label">Frequency</div>
+            <div class="detail-value">Weekly</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">Recurring</div>
+            <div class="detail-value" style="color:#039855">Enabled</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-label">Audience</div>
+            <div class="detail-value">All Employees</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Questions -->
+      <div class="wcard">
+        <div class="q-list-title">Questions <span style="font-size:12px;font-weight:400;color:#98a2b3;margin-left:4px">8 total</span></div>
+
+        <div class="q-row">
+          <div class="q-num">1</div>
+          <div><div class="q-text">My organization encourages employees to give recognition to one another</div><span class="q-badge badge-rating">Rating Scale (1–5)</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">2</div>
+          <div><div class="q-text">Overall, how satisfied are you with working at this organization?</div><span class="q-badge badge-rating">Rating Scale (1–5)</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">3</div>
+          <div><div class="q-text">How well does your organization support your overall wellbeing and mental health?</div><span class="q-badge badge-rating">Rating Scale (1–5)</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">4</div>
+          <div><div class="q-text">My manager provides me with regular, useful feedback.</div><span class="q-badge badge-rating">Rating Scale (1–5)</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">5</div>
+          <div><div class="q-text">Which benefit matters most to you?</div><span class="q-badge badge-mcq">Multiple Choice</span></div>
+        </div>
+
+        <!-- Hidden questions -->
+        <div *ngIf="showExtraQuestions">
+          <div class="q-row">
+            <div class="q-num">6</div>
+            <div><div class="q-text">I am able to disconnect from work outside of working hours.</div><span class="q-badge badge-yesno">Yes / No</span></div>
+          </div>
+          <div class="q-row">
+            <div class="q-num">7</div>
+            <div><div class="q-text">I would recommend this organization as a great place to work.</div><span class="q-badge badge-scale">Scale (1–10)</span></div>
+          </div>
+          <div class="q-row">
+            <div class="q-num">8</div>
+            <div><div class="q-text">What is one thing that would improve your work experience?</div><span class="q-badge badge-text">Open Text</span></div>
+          </div>
+        </div>
+
+        <!-- View more toggle -->
+        <button class="q-toggle-btn" (click)="toggleQuestions()">
+          <svg *ngIf="!showExtraQuestions" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          <svg *ngIf="showExtraQuestions" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4-4 4 4"/></svg>
+          {{ showExtraQuestions ? 'Show less' : 'View 3 more questions' }}
+        </button>
+
+      </div>
+
+      <!-- Email Preview -->
+      <div class="wcard email-preview-card">
+        <!-- Card header -->
+        <div class="email-header">
+          <div class="email-header-title">Email Preview</div>
+          <span class="email-readonly-badge">
+            <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M7 1a6 6 0 100 12A6 6 0 007 1zm0 9V7m0-3v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Read-only preview
+          </span>
+        </div>
+
+        <!-- Email chrome -->
+        <div class="email-chrome">
+          <div class="email-chrome-row">
+            <span class="email-chrome-label">From</span>
+            <span class="email-chrome-value email-chrome-value--bold">Vantage Pulse &lt;noreply&#64;vantagecircle.com&gt;</span>
+          </div>
+          <div class="email-chrome-row">
+            <span class="email-chrome-label">To</span>
+            <span class="email-chrome-value">All Employees &lt;employees&#64;yourcompany.com&gt;</span>
+          </div>
+          <div class="email-chrome-row">
+            <span class="email-chrome-label">Subject</span>
+            <span class="email-chrome-value email-chrome-value--subject">We'd love your feedback — Employee Pulse Survey</span>
+          </div>
+        </div>
+
+        <!-- Email body -->
+        <div class="email-body-wrap">
+          <div class="email-body-inner">
+
+            <!-- Email header band -->
+            <div class="email-brand-bar">
+              <div class="email-brand-icon">
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="#fff" opacity=".5"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="#fff" opacity=".8"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="#fff" opacity=".8"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="#fff"/></svg>
+              </div>
+              <span class="email-brand-name">Vantage Pulse</span>
+            </div>
+
+            <!-- Email content -->
+            <div class="email-content">
+              <p class="email-greeting">Dear <strong>[Employee Name]</strong>,</p>
+              <p class="email-paragraph">We would like to invite you to participate in our <strong class="email-strong">Employee Pulse Survey</strong>. Your feedback is valuable and will help us improve our workplace culture.</p>
+              <p class="email-paragraph">The survey takes approximately <strong class="email-strong">5 minutes</strong> to complete and your responses are completely anonymous.</p>
+
+              <!-- CTA button -->
+              <div class="email-cta-wrap">
+                <div class="email-cta-btn">Take the Survey &rarr;</div>
+              </div>
+
+              <p class="email-paragraph">Thank you for your time and contribution.</p>
+              <p class="email-paragraph email-signoff">Best regards,<br/><strong class="email-strong">[Programme Name]</strong></p>
+            </div>
+
+            <!-- Email footer -->
+            <div class="email-footer">
+              <p>You're receiving this because you're part of the survey audience.<br/>
+              <span class="email-footer-link">Unsubscribe</span> · <span class="email-footer-link">View in browser</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /left-col -->
+
+    <!-- RIGHT COL -->
+    <div class="right-col">
+
+      <!-- Summary card -->
+      <div class="wcard sum-card">
+        <div class="sum-title">Survey summary</div>
+        <div class="sum-inner">
+          <div class="sum-row"><span class="sum-key">Survey</span><span class="sum-val">Employee Pulse</span></div>
+          <div class="sum-row"><span class="sum-key">Start</span><span class="sum-val">01 Dec 2025</span></div>
+          <div class="sum-row"><span class="sum-key">End</span><span class="sum-val">31 Dec 2025</span></div>
+          <div class="sum-row"><span class="sum-key">Frequency</span><span class="sum-val">Weekly</span></div>
+          <div class="sum-row"><span class="sum-key">Audience</span><span class="sum-val">All employees</span></div>
+          <div class="sum-row"><span class="sum-key">Anonymous</span><span class="sum-val green">Yes</span></div>
+          <div class="sum-row"><span class="sum-key">Questions</span><span class="sum-val">8</span></div>
+        </div>
+      </div>
+
+    </div><!-- /right-col -->
+
+  </div><!-- /page-body -->
+  </div><!-- /content-area -->
+
+  <!-- Bottom action bar -->
+  <div class="bottom-bar">
+    <button class="btn-text-cancel" [routerLink]="['/create-survey']">Cancel</button>
+    <button class="btn-launch" (click)="launchSurvey()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.5-1.5 4.5 0 4.5s3-1.5 4.5-3L12 15l-3-3-4.5 4.5z"/><path d="M12 15l3.5-3.5c2-2 3-5 2.5-8.5-3.5-.5-6.5.5-8.5 2.5L6 9l6 6z"/><circle cx="16" cy="8" r="1.5" fill="currentColor" stroke="none"/></svg>
+      Launch Survey
+    </button>
+  </div>
+
+</div><!-- /main-card -->
+
+<!-- Launch Overlay -->
+<div class="launch-overlay" [class.open]="showLaunchOverlay" (click)="onOverlayClick($event)">
+  <div class="launch-modal">
+    <div class="launch-icon">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16l7 7L26 9"/></svg>
+    </div>
+    <div class="launch-title">Survey Launched!</div>
+    <div class="launch-sub">Your <strong>Employee Pulse Survey</strong> is now live and will be sent to all employees starting <strong>01 Dec 2025</strong> at 12:00 PM.</div>
+    <button class="launch-modal-btn" (click)="confirmLaunch()">Go to Dashboard</button>
+    <button class="launch-modal-secondary" (click)="closeLaunch()">View Survey Details</button>
+  </div>
+</div>

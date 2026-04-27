@@ -1,0 +1,16 @@
+<div [class]="emptyClass">
+  @if (hasIllustration) {
+    <div class="empty-img">
+      <ng-content select="[illustration]"></ng-content>
+    </div>
+  }
+  <div class="empty-body">
+    @if (title) { <div class="empty-title">{{ title }}</div> }
+    @if (description) { <div class="empty-desc">{{ description }}</div> }
+    <ng-content select="[emptyBody]"></ng-content>
+  </div>
+  <div class="empty-actions">
+    <ng-content select="[emptyActions]"></ng-content>
+    <ng-content></ng-content>
+  </div>
+</div>

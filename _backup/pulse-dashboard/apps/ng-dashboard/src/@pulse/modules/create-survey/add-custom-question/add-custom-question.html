@@ -1,0 +1,204 @@
+<div class="shadow-rect shadow-rect-1"></div>
+<div class="shadow-rect shadow-rect-2"></div>
+<div class="main-card">
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <button class="back-arrow" [routerLink]="['/create-survey/select-questions']" title="Go back">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><line x1="13" y1="8" x2="3" y2="8"/><polyline points="7 12 3 8 7 4"/></svg>
+    </button>
+    <span class="top-bar-title">Add Custom Questions</span>
+
+    <div class="steps-check">
+      <div class="steps-check-item is-done">
+        <div class="steps-check-pill">
+          <svg class="check-svg" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.2 7.5 8 3"/></svg>
+        </div>
+        <span class="steps-check-label">Get Started</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item is-active">
+        <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
+        <span class="steps-check-label">Select Questions</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item">
+        <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
+        <span class="steps-check-label">Configure</span>
+      </div>
+      <div class="steps-check-line"></div>
+      <div class="steps-check-item">
+        <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
+        <span class="steps-check-label">Preview &amp; Launch</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-area">
+    <div class="content-inner">
+
+      <!-- FORM PANEL -->
+      <div class="form-panel">
+        <div class="form-panel-title">Add Custom Question</div>
+
+        <!-- Question Type -->
+        <div class="field">
+          <div class="field-label">Question type <span class="req">*</span></div>
+          <div class="select-wrap">
+            <select (change)="onTypeChange($event)">
+              <option *ngFor="let type of questionTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="field">
+          <div class="field-label">Category <span class="req">*</span></div>
+          <div class="select-wrap">
+            <select (change)="onCategoryChange($event)">
+              <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Question Text -->
+        <div class="field">
+          <div class="field-label">Question <span class="req">*</span></div>
+          <input
+            #questionText
+            type="text"
+            class="text-input"
+            placeholder="Type your question here..."
+            (input)="onQuestionInput($event)"
+          />
+        </div>
+
+        <!-- Answer Options -->
+        <div *ngIf="hasOptionsPreview">
+          <div class="options-label">Answer options</div>
+          <div>
+            <div class="option-row" *ngFor="let opt of options; let i = index">
+              <div class="option-drag" title="Drag to reorder">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><line x1="2" y1="4" x2="12" y2="4"/><line x1="2" y1="7" x2="12" y2="7"/><line x1="2" y1="10" x2="12" y2="10"/></svg>
+              </div>
+              <input
+                type="text"
+                class="option-input"
+                [placeholder]="opt.placeholder"
+                [value]="opt.value"
+                (input)="onOptionInput(i, $event)"
+              />
+              <button class="option-remove" (click)="removeOption(i)" title="Remove">
+                <svg viewBox="0 0 14 14" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+          <button class="btn-add-option" (click)="addOption()">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="7" y1="2" x2="7" y2="12"/><line x1="2" y1="7" x2="12" y2="7"/></svg>
+            Add Option
+          </button>
+        </div>
+
+        <!-- Languages -->
+        <div class="lang-section">
+          <div class="lang-field-label">Select additional languages to this question</div>
+          <button class="lang-dropdown-btn" (click)="toggleLangDropdown($event)">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="10" cy="10" r="8.5"/><path d="M10 1.5c-2.5 2.5-3.75 5-3.75 8.5s1.25 6 3.75 8.5M10 1.5c2.5 2.5 3.75 5 3.75 8.5s-1.25 6-3.75 8.5M1.5 10h17"/>
+            </svg>
+            <span class="lang-label">Add Languages</span>
+            <svg class="lang-chevron" [class.open]="langDropOpen" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"/></svg>
+          </button>
+          <div class="lang-dropdown-list" [class.open]="langDropOpen">
+            <div
+              *ngFor="let language of availableLanguages"
+              class="lang-option"
+              [class.selected]="isLangSelected(language.lang)"
+              (click)="toggleLang(language)"
+            >
+              <div class="lang-option-check"></div>
+              <span class="lang-option-text">{{ language.lang }} ({{ language.native }})</span>
+            </div>
+          </div>
+          <div class="lang-tags">
+            <span class="lang-tag fixed">English</span>
+            <span class="lang-tag" *ngFor="let sl of selectedLanguages">
+              {{ sl.lang }} ({{ sl.native }})
+              <button class="lang-tag-remove" (click)="removeLangTag(sl.lang)" title="Remove">
+                <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/></svg>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREVIEW PANEL -->
+      <div class="preview-panel">
+        <div class="preview-title">Language Preview</div>
+
+        <!-- Segmented lang tabs -->
+        <div class="lang-tabs-wrap">
+          <button
+            *ngFor="let tab of visibleTabs"
+            class="lang-tab"
+            [class.active]="tab === activeLang"
+            (click)="setActiveLang(tab)"
+          >{{ tab }}</button>
+          <button
+            *ngIf="overflowCount > 0"
+            class="lang-tab overflow-tab"
+          >+{{ overflowCount }}</button>
+        </div>
+
+        <!-- Question preview -->
+        <div class="preview-section-label">Question</div>
+        <div class="preview-q-card">
+          <div class="preview-q-text" [class.empty]="previewQuestionEmpty">{{ previewQuestionText }}</div>
+        </div>
+
+        <!-- Options preview -->
+        <div class="preview-section-label">Options</div>
+        <div class="preview-opts-list">
+          <!-- Multiple choice options -->
+          <ng-container *ngIf="hasOptionsPreview">
+            <div class="preview-opt-row" *ngFor="let opt of options; let i = index">
+              <div class="preview-opt-num">{{ i + 1 }}.</div>
+              <div class="preview-opt-card">
+                <div class="preview-opt-text">{{ getOptionDisplay(i) }}</div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Rating scale -->
+          <ng-container *ngIf="isRatingScale">
+            <div class="rating-scale-preview">
+              <div class="rating-pill" *ngFor="let r of [1,2,3,4,5]"></div>
+            </div>
+          </ng-container>
+
+          <!-- Open ended -->
+          <ng-container *ngIf="isOpenEnded">
+            <div class="open-ended-preview"></div>
+          </ng-container>
+
+          <!-- Fallback -->
+          <div class="preview-empty-hint" *ngIf="!hasOptionsPreview && !isRatingScale && !isOpenEnded">
+            Add answer options above
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <button class="btn-cancel" (click)="cancel()">Cancel</button>
+    <button class="btn-save" [disabled]="isSaveDisabled" (click)="save()">
+      Save &amp; Proceed
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9 4 13 8 9 12"/></svg>
+    </button>
+  </div>
+
+</div>

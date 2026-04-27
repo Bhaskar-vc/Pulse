@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Table – Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1d2939;
+  background: #f8f9fb;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── Sidebar ── */
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #eaeaed; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #eaeaed; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #29294c; }
+.sidebar-logo sub { font-size: 10px; color: #9d9dad; font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; border-radius: 0;
+  text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+/* ── Main ── */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+}
+.content {
+  max-width: 1100px;
+  margin: 0;
+  padding: 48px 56px;
+}
+
+/* ── Page Header ── */
+.page-header { margin-bottom: 44px; }
+.breadcrumb { font-size: 12px; color: #98a2b3; margin-bottom: 10px; }
+.breadcrumb span { color: #6941c6; }
+.page-title { font-size: 30px; font-weight: 700; color: #101828; letter-spacing: -.4px; line-height: 1.2; }
+.page-desc { margin-top: 8px; font-size: 15px; color: #475467; line-height: 1.6; max-width: 600px; }
+.tag-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.page-tag {
+  font-size: 11px; font-weight: 600; padding: 3px 10px;
+  border-radius: 99px; border: 1px solid;
+}
+.tag-stable { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.tag-figma  { color: #6941c6; background: #f4f0fd; border-color: #d6bbfb; }
+
+/* ── Section ── */
+.section { margin-bottom: 56px; }
+.section-title {
+  font-size: 18px; font-weight: 700; color: #101828;
+  padding-bottom: 12px; border-bottom: 1px solid #e4e7ec;
+  margin-bottom: 20px;
+}
+.section-desc { font-size: 14px; color: #475467; line-height: 1.7; margin-bottom: 20px; }
+
+/* ── Demo Box ── */
+.demo-box {
+  background: #fff;
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+}
+.demo-box-label { font-size: 12px; font-weight: 600; color: #98a2b3; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px; }
+
+/* ── Variant heading ── */
+.variant-heading { font-size: 13px; font-weight: 600; color: #344054; margin: 24px 0 10px; }
+
+/* ── Props / DS Table ── */
+.ds-table-wrap { border: 1px solid #e4e7ec; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-table thead { background: #f9fafb; }
+.ds-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .05em; }
+.ds-table td { padding: 11px 16px; border-top: 1px solid #f2f4f7; color: #344054; }
+.ds-table tr:hover td { background: #fafbff; }
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  background: #f2f4f7;
+  color: #29294c;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ── Code Block ── */
+.code-block { background: #0f172a; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.code-block-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155;
+}
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.copy-btn {
+  font-size: 11px; font-weight: 600; color: #94a3b8;
+  background: none; border: 1px solid #334155; border-radius: 6px;
+  padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif;
+  transition: background .15s, color .15s;
+}
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; }
+.c-tag     { color: #7dd3fc; }
+.c-attr    { color: #a5b4fc; }
+.c-val     { color: #86efac; }
+.c-text    { color: #fde68a; }
+
+/* ── Do / Don't ── */
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.do-card, .dont-card { border-radius: 12px; padding: 20px; border: 1.5px solid; }
+.do-card { border-color: #a6f4c5; background: #f6fef9; }
+.dont-card { border-color: #fecdca; background: #fffbfa; }
+.do-header, .dont-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.do-header { color: #027a48; }
+.dont-header { color: #b42318; }
+.do-icon, .dont-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.do-icon { background: #027a48; color: #fff; }
+.dont-icon { background: #b42318; color: #fff; }
+.do-card ul, .dont-card ul { padding-left: 18px; }
+.do-card li, .dont-card li { font-size: 13px; color: #344054; line-height: 1.7; }
+
+/* ── A11y Grid ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid #e4e7ec; border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: #101828; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: #475467; line-height: 1.7; }
+
+/* ── Anatomy ── */
+.anatomy-wrap { position: relative; }
+.anatomy-img { width: 100%; border-radius: 8px; border: 1px solid #e4e7ec; }
+.anatomy-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+.anatomy-item { display: flex; align-items: flex-start; gap: 10px; background: #f9fafb; border-radius: 8px; padding: 10px 14px; border: 1px solid #f2f4f7; }
+.anatomy-num { width: 22px; height: 22px; border-radius: 50%; background: #6941c6; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.anatomy-text { font-size: 13px; color: #344054; }
+.anatomy-text strong { color: #101828; font-weight: 600; }
+
+/* ════════════════════════════════
+   DATA TABLE COMPONENT STYLES
+   ════════════════════════════════ */
+
+/* Live Demo Table Container */
+.table-container {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid #eaeaed;
+}
+
+/* Base table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: #29294c;
+  background: #fff;
+}
+
+/* Header */
+.data-table thead {
+  background: #f9fafb;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.data-table thead th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #707087;
+  border-bottom: 1px solid #eaeaed;
+  white-space: nowrap;
+  user-select: none;
+}
+.data-table thead th.sortable { cursor: pointer; }
+.data-table thead th.sortable:hover { background: #f4f4f6; color: #29294c; }
+.data-table thead th .th-inner { display: flex; align-items: center; gap: 6px; }
+.data-table thead th .sort-icon { display: flex; flex-direction: column; gap: 1px; opacity: .35; }
+.data-table thead th.sort-asc .sort-icon,
+.data-table thead th.sort-desc .sort-icon { opacity: 1; color: #6941c6; }
+.data-table thead th .sort-icon svg { width: 10px; height: 10px; }
+.data-table thead th.sort-asc .chevron-down,
+.data-table thead th.sort-desc .chevron-up { display: none; }
+
+/* Rows */
+.data-table tbody tr { transition: background .1s; }
+.data-table tbody tr:hover { background: #f4f4f6; }
+.data-table tbody tr.selected { background: #f9f5ff; }
+.data-table tbody tr.selected:hover { background: #f4ebff; }
+
+/* Striped (default variant) */
+.data-table.striped tbody tr:nth-child(even) { background: #f9fafb; }
+.data-table.striped tbody tr:nth-child(even):hover { background: #f4f4f6; }
+.data-table.striped tbody tr:nth-child(even).selected { background: #f9f5ff; }
+
+/* Bordered variant */
+.data-table.bordered td,
+.data-table.bordered th { border: 1px solid #eaeaed; }
+
+/* Minimal variant */
+.data-table.minimal thead th { border-bottom: 2px solid #eaeaed; }
+.data-table.minimal td { border: none; }
+
+/* Cells */
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eaeaed;
+  font-size: 13px;
+  color: #29294c;
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+
+/* Number column */
+.data-table td.num, .data-table th.num { text-align: right; }
+
+/* Checkbox column */
+.data-table th.col-check, .data-table td.col-check { width: 44px; padding: 12px 8px 12px 16px; }
+.cb { width: 16px; height: 16px; accent-color: #6941c6; cursor: pointer; }
+
+/* Avatar + name */
+.cell-avatar { display: flex; align-items: center; gap: 10px; }
+.avatar-circle {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+  color: #fff;
+}
+.cell-name { font-weight: 500; color: #29294c; font-size: 13px; }
+.cell-email { font-size: 11px; color: #707087; margin-top: 1px; }
+
+/* Status badge */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 99px;
+}
+.badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.badge-success { color: #027a48; background: #ecfdf3; }
+.badge-warning { color: #b54708; background: #fffaeb; }
+.badge-error   { color: #b42318; background: #fef3f2; }
+.badge-info    { color: #026aa2; background: #f0f9ff; }
+.badge-neutral { color: #545470; background: #f4f4f6; }
+
+/* Action buttons in table */
+.action-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; font-weight: 500; padding: 5px 10px; border-radius: 6px;
+  border: 1px solid #eaeaed; background: #fff; color: #29294c; cursor: pointer;
+  transition: background .12s, border-color .12s;
+  text-decoration: none;
+}
+.action-btn:hover { background: #f9fafb; border-color: #d6bbfb; color: #6941c6; }
+.action-btn svg { width: 12px; height: 12px; }
+.action-btn-danger { color: #b42318; }
+.action-btn-danger:hover { background: #fef3f2; border-color: #fecdca; color: #b42318; }
+
+/* Pagination */
+.table-pagination {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; border-top: 1px solid #eaeaed;
+  background: #fff; border-radius: 0 0 10px 10px; flex-wrap: wrap; gap: 10px;
+}
+.pagination-info { font-size: 13px; color: #707087; }
+.pagination-info strong { color: #29294c; }
+.pagination-buttons { display: flex; gap: 6px; }
+.page-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 7px;
+  border: 1px solid #eaeaed; background: #fff; color: #29294c; cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+.page-btn:hover:not(:disabled) { background: #f9fafb; border-color: #d6bbfb; }
+.page-btn:disabled { opacity: .4; cursor: not-allowed; }
+.page-btn.active { background: #f4f0fd; border-color: #d6bbfb; color: #6941c6; font-weight: 600; }
+
+/* Empty state */
+.empty-state {
+  text-align: center; padding: 56px 24px;
+}
+.empty-state-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  background: #f4f4f6; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px;
+}
+.empty-state-title { font-size: 14px; font-weight: 600; color: #344054; margin-bottom: 6px; }
+.empty-state-desc { font-size: 13px; color: #707087; }
+
+/* Skeleton loading */
+.skeleton-row td { padding: 14px 16px; }
+.skeleton-line {
+  height: 12px; border-radius: 6px; background: #eaeaed;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+
+/* Anatomy diagram */
+.anatomy-demo-table { width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; border: 1px solid #eaeaed; font-size: 13px; }
+.anatomy-demo-table thead th { background: #f9fafb; padding: 12px 16px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #707087; border-bottom: 1px solid #eaeaed; }
+.anatomy-demo-table td { padding: 12px 16px; border-bottom: 1px solid #eaeaed; color: #29294c; }
+.anatomy-demo-table tfoot td { background: #f9fafb; padding: 10px 16px; font-size: 12px; color: #707087; border-top: 1px solid #eaeaed; }
+
+.anatomy-label {
+  position: relative; display: inline-block;
+  background: #f4f0fd; color: #6941c6; font-size: 10px; font-weight: 700;
+  padding: 2px 6px; border-radius: 4px; letter-spacing: .04em; margin-left: 6px;
+  vertical-align: middle;
+}
+
+@media (max-width: 640px) {
+  .do-dont { grid-template-columns: 1fr; }
+  .a11y-grid { grid-template-columns: 1fr; }
+  .content {
+  max-width: 1100px;
+  margin: 0;
+  padding: 48px 56px;
+}
+  .anatomy-list { grid-template-columns: 1fr; }
+}
+#search-input:hover { border-color: #9e77ed !important; }
+#search-input:focus { border-color: #7f56d9 !important; box-shadow: 0 0 0 3px rgba(127,86,217,.12) !important; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle" style="display:block"/></a>
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link active">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<main class="main">
+<div class="content">
+
+  <!-- Page Header -->
+  <header class="page-header">
+  <div class="ph-folder-icon">
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">TABLE</span>
+    </div>
+  </div>
+    
+    <h1 class="page-title">Data Table</h1>
+    <p class="page-desc">A flexible table component for displaying structured data with support for sorting, row selection, pagination, and multiple visual variants.</p>
+    <div class="tag-row">
+      <span class="page-tag tag-stable">Stable</span>
+      <span class="page-tag tag-figma">Figma 230-4906</span>
+    </div>
+  </header>
+
+  <!-- ── Overview / Live Demo ── -->
+  <section class="section" id="overview">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">The interactive demo below supports sortable column headers, row selection via checkboxes, and a functional pagination footer.</p>
+
+    <div style="border:1px solid #e4e7ec; border-radius:12px; overflow:hidden; background:#fff;">
+      <!-- Toolbar -->
+      <div style="padding:14px 16px; border-bottom:1px solid #eaeaed; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div style="position:relative;">
+            <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#9d9dad;pointer-events:none;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input id="search-input" type="text" placeholder="Search users…" style="padding:7px 12px 7px 32px;font-size:13px;font-family:Inter,sans-serif;border:1px solid #e1e5ea;border-radius:6px;outline:none;-webkit-appearance:none;appearance:none;width:220px;color:#29294c;height:36px;transition:border-color .15s,box-shadow .15s;" oninput="filterTable()"/>
+          </div>
+        </div>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <span id="selected-count" style="font-size:12px;color:#707087;display:none;"></span>
+          <select id="variant-select" onchange="applyVariant()" style="font-size:12px;font-family:Inter,sans-serif;padding:6px 10px;border:1px solid #e1e5ea;border-radius:6px;color:#29294c;background:#fff;cursor:pointer;outline:none;height:36px;">
+            <option value="striped">Striped</option>
+            <option value="bordered">Bordered</option>
+            <option value="minimal">Minimal</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table wrapper -->
+      <div class="table-container" style="border-radius:0;border:none;" id="table-wrapper">
+        <table class="data-table striped" id="demo-table" role="table" aria-label="Users data table">
+          <thead>
+            <tr>
+              <th class="col-check" scope="col">
+                <input type="checkbox" class="cb" id="select-all" aria-label="Select all rows" onchange="toggleAll(this)"/>
+              </th>
+              <th class="sortable" scope="col" data-col="name" onclick="sortTable('name', this)">
+                <div class="th-inner">
+                  Name
+                  <span class="sort-icon" aria-hidden="true">
+                    <svg class="chevron-up" viewBox="0 0 10 10" fill="currentColor"><path d="M5 3L9 7H1L5 3z"/></svg>
+                    <svg class="chevron-down" viewBox="0 0 10 10" fill="currentColor"><path d="M5 7L1 3H9L5 7z"/></svg>
+                  </span>
+                </div>
+              </th>
+              <th class="sortable" scope="col" data-col="role" onclick="sortTable('role', this)">
+                <div class="th-inner">
+                  Role
+                  <span class="sort-icon" aria-hidden="true">
+                    <svg class="chevron-up" viewBox="0 0 10 10" fill="currentColor"><path d="M5 3L9 7H1L5 3z"/></svg>
+                    <svg class="chevron-down" viewBox="0 0 10 10" fill="currentColor"><path d="M5 7L1 3H9L5 7z"/></svg>
+                  </span>
+                </div>
+              </th>
+              <th scope="col">Status</th>
+              <th class="sortable num" scope="col" data-col="revenue" onclick="sortTable('revenue', this)">
+                <div class="th-inner" style="justify-content:flex-end;">
+                  Revenue
+                  <span class="sort-icon" aria-hidden="true">
+                    <svg class="chevron-up" viewBox="0 0 10 10" fill="currentColor"><path d="M5 3L9 7H1L5 3z"/></svg>
+                    <svg class="chevron-down" viewBox="0 0 10 10" fill="currentColor"><path d="M5 7L1 3H9L5 7z"/></svg>
+                  </span>
+                </div>
+              </th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty state (hidden by default) -->
+      <div id="empty-state" class="empty-state" style="display:none;" role="status">
+        <div class="empty-state-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#9d9dad"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="empty-state-title">No results found</div>
+        <div class="empty-state-desc">Try adjusting your search or filter to find what you're looking for.</div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="table-pagination" id="pagination-bar">
+        <div class="pagination-info">
+          Showing <strong id="range-text">1–5</strong> of <strong id="total-text">48</strong> results
+        </div>
+        <div class="pagination-buttons">
+          <button class="page-btn" id="prev-btn" onclick="prevPage()" disabled aria-label="Previous page">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Previous
+          </button>
+          <button class="page-btn active" id="page1-btn" onclick="goToPage(1)" aria-label="Page 1" aria-current="page">1</button>
+          <button class="page-btn" id="page2-btn" onclick="goToPage(2)" aria-label="Page 2">2</button>
+          <button class="page-btn" id="page3-btn" onclick="goToPage(3)" aria-label="Page 3">3</button>
+          <button class="page-btn" id="next-btn" onclick="nextPage()" aria-label="Next page">
+            Next
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Anatomy ── -->
+  <section class="section" id="anatomy">
+    <h2 class="section-title">Anatomy</h2>
+    <div class="demo-box">
+      <table class="anatomy-demo-table" role="table">
+        <thead>
+          <tr>
+            <th scope="col">Column Header <span class="anatomy-label">1</span></th>
+            <th scope="col">Column Header</th>
+            <th scope="col">Column Header</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Row <span class="anatomy-label">2</span> / Cell <span class="anatomy-label">3</span></td>
+            <td>Cell value</td>
+            <td>Cell value</td>
+          </tr>
+          <tr style="background:#f9fafb;">
+            <td>Row (striped)</td>
+            <td>Cell value</td>
+            <td>Cell value</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3">Footer / Pagination <span class="anatomy-label">4</span></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="anatomy-list">
+      <div class="anatomy-item"><div class="anatomy-num">1</div><div class="anatomy-text"><strong>Column Header</strong> — Label with optional sort control. bg #f9fafb, uppercase, 11px/600.</div></div>
+      <div class="anatomy-item"><div class="anatomy-num">2</div><div class="anatomy-text"><strong>Row</strong> — Data row with hover state. Even rows striped #f9fafb in default variant.</div></div>
+      <div class="anatomy-item"><div class="anatomy-num">3</div><div class="anatomy-text"><strong>Cell</strong> — 12px 16px padding, 13px font-size, color #29294c.</div></div>
+      <div class="anatomy-item"><div class="anatomy-num">4</div><div class="anatomy-text"><strong>Footer / Pagination</strong> — Shows count and prev/next page controls.</div></div>
+    </div>
+  </section>
+
+  <!-- ── Variants ── -->
+  <section class="section" id="variants">
+    <h2 class="section-title">Variants</h2>
+    <p class="section-desc">Three visual variants for different contexts and information density needs.</p>
+
+    <!-- Default / Striped -->
+    <div class="variant-heading">Default (Striped)</div>
+    <div class="demo-box">
+      <table class="data-table striped" role="table" aria-label="Striped table example">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Status</th>
+            <th class="num" scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Alice Chen</td><td>Designer</td><td><span class="badge badge-success">Active</span></td><td class="num">$4,200</td></tr>
+          <tr><td>Bob Martinez</td><td>Engineer</td><td><span class="badge badge-warning">Pending</span></td><td class="num">$3,800</td></tr>
+          <tr><td>Carol Wu</td><td>PM</td><td><span class="badge badge-success">Active</span></td><td class="num">$5,100</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bordered -->
+    <div class="variant-heading">Bordered</div>
+    <div class="demo-box">
+      <table class="data-table bordered" role="table" aria-label="Bordered table example">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Status</th>
+            <th class="num" scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Alice Chen</td><td>Designer</td><td><span class="badge badge-success">Active</span></td><td class="num">$4,200</td></tr>
+          <tr><td>Bob Martinez</td><td>Engineer</td><td><span class="badge badge-warning">Pending</span></td><td class="num">$3,800</td></tr>
+          <tr><td>Carol Wu</td><td>PM</td><td><span class="badge badge-success">Active</span></td><td class="num">$5,100</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Minimal -->
+    <div class="variant-heading">Minimal</div>
+    <div class="demo-box">
+      <table class="data-table minimal" role="table" aria-label="Minimal table example">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Status</th>
+            <th class="num" scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Alice Chen</td><td>Designer</td><td><span class="badge badge-success">Active</span></td><td class="num">$4,200</td></tr>
+          <tr><td>Bob Martinez</td><td>Engineer</td><td><span class="badge badge-warning">Pending</span></td><td class="num">$3,800</td></tr>
+          <tr><td>Carol Wu</td><td>PM</td><td><span class="badge badge-success">Active</span></td><td class="num">$5,100</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── Column Types ── -->
+  <section class="section" id="column-types">
+    <h2 class="section-title">Column Types</h2>
+    <p class="section-desc">Standard column type patterns to use consistently across tables.</p>
+    <div class="demo-box">
+      <table class="data-table striped" role="table" aria-label="Column types example">
+        <thead>
+          <tr>
+            <th scope="col">Text</th>
+            <th class="num" scope="col">Number</th>
+            <th scope="col">Status Badge</th>
+            <th scope="col">Avatar + Name</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Product Analytics</td>
+            <td class="num">14,820</td>
+            <td><span class="badge badge-success">Active</span></td>
+            <td>
+              <div class="cell-avatar">
+                <div class="avatar-circle" style="background:#6941c6;">AC</div>
+                <div>
+                  <div class="cell-name">Alice Chen</div>
+                  <div class="cell-email">alice@pulse.io</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div style="display:flex;gap:6px;">
+                <button class="action-btn">
+                  <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                  Edit
+                </button>
+                <button class="action-btn action-btn-danger">
+                  <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── States ── -->
+  <section class="section" id="states">
+    <h2 class="section-title">States</h2>
+
+    <!-- Empty State -->
+    <div class="variant-heading">Empty State</div>
+    <div class="demo-box" style="padding:0; overflow:hidden;">
+      <table class="data-table" role="table" aria-label="Empty table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="3">
+              <div class="empty-state" role="status">
+                <div class="empty-state-icon">
+                  <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#9d9dad"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0H4"/></svg>
+                </div>
+                <div class="empty-state-title">No data available</div>
+                <div class="empty-state-desc">There are no records to display at this time.</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Loading Skeleton -->
+    <div class="variant-heading">Loading Skeleton</div>
+    <div class="demo-box" style="padding:0; overflow:hidden;">
+      <table class="data-table" role="table" aria-label="Loading table" aria-busy="true">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Status</th>
+            <th class="num" scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="skeleton-row"><td><div class="skeleton-line" style="width:60%;"></div></td><td><div class="skeleton-line" style="width:40%;"></div></td><td><div class="skeleton-line" style="width:50%;border-radius:99px;"></div></td><td><div class="skeleton-line" style="width:30%;margin-left:auto;"></div></td></tr>
+          <tr class="skeleton-row"><td><div class="skeleton-line" style="width:45%;"></div></td><td><div class="skeleton-line" style="width:55%;"></div></td><td><div class="skeleton-line" style="width:50%;border-radius:99px;"></div></td><td><div class="skeleton-line" style="width:35%;margin-left:auto;"></div></td></tr>
+          <tr class="skeleton-row"><td><div class="skeleton-line" style="width:70%;"></div></td><td><div class="skeleton-line" style="width:35%;"></div></td><td><div class="skeleton-line" style="width:50%;border-radius:99px;"></div></td><td><div class="skeleton-line" style="width:28%;margin-left:auto;"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── Props Table ── -->
+  <section class="section" id="props">
+    <h2 class="section-title">Column Configuration Props</h2>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead>
+          <tr>
+            <th>Prop</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>key</code></td><td><code>string</code></td><td>—</td><td>Unique key matching data field</td></tr>
+          <tr><td><code>label</code></td><td><code>string</code></td><td>—</td><td>Column header display text</td></tr>
+          <tr><td><code>sortable</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable click-to-sort on this column</td></tr>
+          <tr><td><code>align</code></td><td><code>'left' | 'center' | 'right'</code></td><td><code>'left'</code></td><td>Cell content alignment</td></tr>
+          <tr><td><code>width</code></td><td><code>string</code></td><td>—</td><td>Column width (e.g. <code>'120px'</code>)</td></tr>
+          <tr><td><code>render</code></td><td><code>function</code></td><td>—</td><td>Custom cell render function</td></tr>
+          <tr><td><code>type</code></td><td><code>'text' | 'number' | 'badge' | 'action' | 'avatar'</code></td><td><code>'text'</code></td><td>Preset column type for styling</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:700;color:#101828;margin:24px 0 12px;">Table Props</h3>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead>
+          <tr>
+            <th>Prop</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>variant</code></td><td><code>'striped' | 'bordered' | 'minimal'</code></td><td><code>'striped'</code></td><td>Visual table style</td></tr>
+          <tr><td><code>selectable</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show checkbox column for row selection</td></tr>
+          <tr><td><code>stickyHeader</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Keep header visible while scrolling</td></tr>
+          <tr><td><code>loading</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show skeleton loading state</td></tr>
+          <tr><td><code>emptyMessage</code></td><td><code>string</code></td><td><code>'No data available'</code></td><td>Text shown when data array is empty</td></tr>
+          <tr><td><code>pageSize</code></td><td><code>number</code></td><td><code>10</code></td><td>Rows per page for pagination</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── Do's & Don'ts ── -->
+  <section class="section" id="do-dont">
+    <h2 class="section-title">Do's &amp; Don'ts</h2>
+    <div class="do-dont">
+      <div class="do-card">
+        <div class="do-header"><div class="do-icon">✓</div> Do</div>
+        <ul>
+          <li>Use clear, concise column headers</li>
+          <li>Right-align numeric data for easy scanning</li>
+          <li>Use status badges consistently with the semantic color system</li>
+          <li>Provide an empty state with a helpful message</li>
+          <li>Show pagination for more than 10 rows</li>
+          <li>Keep actions minimal — 1–2 per row maximum</li>
+        </ul>
+      </div>
+      <div class="dont-card">
+        <div class="dont-header"><div class="dont-icon">✕</div> Don't</div>
+        <ul>
+          <li>Don't truncate critical data without a tooltip</li>
+          <li>Don't use more than 7–8 columns without horizontal scroll</li>
+          <li>Don't mix text and number alignment in the same column</li>
+          <li>Don't use decorative row colors that conflict with status badges</li>
+          <li>Don't make non-interactive rows look clickable</li>
+          <li>Don't nest tables inside table cells</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Accessibility ── -->
+  <section class="section" id="accessibility">
+    <h2 class="section-title">Accessibility</h2>
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Semantic HTML
+        </h4>
+        <ul>
+          <li>Use <code>role="table"</code> on <code>&lt;table&gt;</code></li>
+          <li>Use <code>scope="col"</code> on all <code>&lt;th&gt;</code> headers</li>
+          <li>Use <code>scope="row"</code> on row headers if applicable</li>
+          <li>Wrap in <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tfoot&gt;</code></li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+          Sorting
+        </h4>
+        <ul>
+          <li>Add <code>aria-sort="ascending"</code> or <code>"descending"</code> to active sort header</li>
+          <li>Non-sorted columns use <code>aria-sort="none"</code></li>
+          <li>Sortable headers must be keyboard-focusable and activatable with Enter/Space</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Selection
+        </h4>
+        <ul>
+          <li>Checkbox inputs must have <code>aria-label</code></li>
+          <li>Selected rows should announce state to screen readers</li>
+          <li>Select-all checkbox communicates indeterminate state with <code>aria-checked="mixed"</code></li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#6941c6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          Loading & Status
+        </h4>
+        <ul>
+          <li>Add <code>aria-busy="true"</code> on table when loading</li>
+          <li>Empty state container should use <code>role="status"</code></li>
+          <li>Pagination should use <code>aria-label</code> for prev/next buttons</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Code Snippets ── -->
+  <section class="section" id="code">
+    <h2 class="section-title">Code</h2>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">table.html — Basic striped table</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">&lt;!-- Striped Data Table --&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"table-container"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;table</span> <span class="c-attr">class</span>=<span class="c-val">"data-table striped"</span>
+         <span class="c-attr">role</span>=<span class="c-val">"table"</span>
+         <span class="c-attr">aria-label</span>=<span class="c-val">"Users"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;thead&gt;</span>
+      <span class="c-tag">&lt;tr&gt;</span>
+        <span class="c-tag">&lt;th</span> <span class="c-attr">scope</span>=<span class="c-val">"col"</span>
+            <span class="c-attr">class</span>=<span class="c-val">"sortable"</span>
+            <span class="c-attr">aria-sort</span>=<span class="c-val">"ascending"</span><span class="c-tag">&gt;</span>
+          Name
+        <span class="c-tag">&lt;/th&gt;</span>
+        <span class="c-tag">&lt;th</span> <span class="c-attr">scope</span>=<span class="c-val">"col"</span><span class="c-tag">&gt;</span>Status<span class="c-tag">&lt;/th&gt;</span>
+        <span class="c-tag">&lt;th</span> <span class="c-attr">scope</span>=<span class="c-val">"col"</span> <span class="c-attr">class</span>=<span class="c-val">"num"</span><span class="c-tag">&gt;</span>Revenue<span class="c-tag">&lt;/th&gt;</span>
+      <span class="c-tag">&lt;/tr&gt;</span>
+    <span class="c-tag">&lt;/thead&gt;</span>
+    <span class="c-tag">&lt;tbody&gt;</span>
+      <span class="c-tag">&lt;tr&gt;</span>
+        <span class="c-tag">&lt;td&gt;</span>Alice Chen<span class="c-tag">&lt;/td&gt;</span>
+        <span class="c-tag">&lt;td&gt;</span>
+          <span class="c-tag">&lt;span</span> <span class="c-attr">class</span>=<span class="c-val">"badge badge-success"</span><span class="c-tag">&gt;</span>
+            Active
+          <span class="c-tag">&lt;/span&gt;</span>
+        <span class="c-tag">&lt;/td&gt;</span>
+        <span class="c-tag">&lt;td</span> <span class="c-attr">class</span>=<span class="c-val">"num"</span><span class="c-tag">&gt;</span>$4,200<span class="c-tag">&lt;/td&gt;</span>
+      <span class="c-tag">&lt;/tr&gt;</span>
+    <span class="c-tag">&lt;/tbody&gt;</span>
+  <span class="c-tag">&lt;/table&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-title">CSS — Core token values</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">/* Table header */</span>
+<span class="c-tag">.data-table thead th</span> {
+  <span class="c-attr">background</span>: <span class="c-val">#f9fafb</span>;
+  <span class="c-attr">font-size</span>: <span class="c-val">11px</span>;
+  <span class="c-attr">font-weight</span>: <span class="c-val">600</span>;
+  <span class="c-attr">text-transform</span>: <span class="c-val">uppercase</span>;
+  <span class="c-attr">letter-spacing</span>: <span class="c-val">0.06em</span>;
+  <span class="c-attr">color</span>: <span class="c-val">#707087</span>;
+  <span class="c-attr">border-bottom</span>: <span class="c-val">1px solid #eaeaed</span>;
+}
+
+<span class="c-comment">/* Row hover */</span>
+<span class="c-tag">.data-table tbody tr:hover</span> {
+  <span class="c-attr">background</span>: <span class="c-val">#f4f4f6</span>;
+}
+
+<span class="c-comment">/* Selected row */</span>
+<span class="c-tag">.data-table tbody tr.selected</span> {
+  <span class="c-attr">background</span>: <span class="c-val">#f9f5ff</span>;
+}
+
+<span class="c-comment">/* Cell */</span>
+<span class="c-tag">.data-table td</span> {
+  <span class="c-attr">padding</span>: <span class="c-val">12px 16px</span>;
+  <span class="c-attr">font-size</span>: <span class="c-val">13px</span>;
+  <span class="c-attr">color</span>: <span class="c-val">#29294c</span>;
+  <span class="c-attr">border-bottom</span>: <span class="c-val">1px solid #eaeaed</span>;
+}</pre></div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<script>
+// ── Table Data ──
+const ALL_DATA = [
+  { id:1, name:'Alice Chen',    email:'alice@pulse.io',   role:'Designer',   status:'active',   statusLabel:'Active',   revenue:4200,  avatarColor:'#6941c6', initials:'AC' },
+  { id:2, name:'Bob Martinez',  email:'bob@pulse.io',     role:'Engineer',   status:'pending',  statusLabel:'Pending',  revenue:3800,  avatarColor:'#0ba5ec', initials:'BM' },
+  { id:3, name:'Carol Wu',      email:'carol@pulse.io',   role:'PM',         status:'active',   statusLabel:'Active',   revenue:5100,  avatarColor:'#12b76a', initials:'CW' },
+  { id:4, name:'David Kim',     email:'david@pulse.io',   role:'Engineer',   status:'inactive', statusLabel:'Inactive', revenue:2900,  avatarColor:'#f79009', initials:'DK' },
+  { id:5, name:'Elena Rossi',   email:'elena@pulse.io',   role:'Designer',   status:'active',   statusLabel:'Active',   revenue:6300,  avatarColor:'#f04438', initials:'ER' },
+  { id:6, name:'Faris Hassan',  email:'faris@pulse.io',   role:'QA',         status:'active',   statusLabel:'Active',   revenue:3200,  avatarColor:'#545470', initials:'FH' },
+  { id:7, name:'Grace Liu',     email:'grace@pulse.io',   role:'Engineer',   status:'pending',  statusLabel:'Pending',  revenue:4800,  avatarColor:'#026aa2', initials:'GL' },
+  { id:8, name:'Hugo Perez',    email:'hugo@pulse.io',    role:'Designer',   status:'active',   statusLabel:'Active',   revenue:5500,  avatarColor:'#6941c6', initials:'HP' },
+  { id:9, name:'Irene Yao',     email:'irene@pulse.io',   role:'PM',         status:'active',   statusLabel:'Active',   revenue:7100,  avatarColor:'#12b76a', initials:'IY' },
+  { id:10, name:'James Park',   email:'james@pulse.io',   role:'Engineer',   status:'inactive', statusLabel:'Inactive', revenue:2200,  avatarColor:'#f79009', initials:'JP' },
+  { id:11, name:'Keiko Tanaka', email:'keiko@pulse.io',   role:'Designer',   status:'active',   statusLabel:'Active',   revenue:4400,  avatarColor:'#0ba5ec', initials:'KT' },
+  { id:12, name:'Liam Okonkwo', email:'liam@pulse.io',    role:'QA',         status:'pending',  statusLabel:'Pending',  revenue:3600,  avatarColor:'#f04438', initials:'LO' },
+];
+
+const PAGE_SIZE = 5;
+let currentPage = 1;
+let sortCol = null;
+let sortDir = 'asc';
+let searchQuery = '';
+let selectedIds = new Set();
+
+const statusBadgeClass = { active:'badge-success', pending:'badge-warning', inactive:'badge-neutral' };
+
+function getFiltered() {
+  let data = [...ALL_DATA];
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    data = data.filter(r => r.name.toLowerCase().includes(q) || r.role.toLowerCase().includes(q) || r.email.toLowerCase().includes(q));
+  }
+  if (sortCol) {
+    data.sort((a, b) => {
+      let va = a[sortCol], vb = b[sortCol];
+      if (typeof va === 'string') va = va.toLowerCase();
+      if (typeof vb === 'string') vb = vb.toLowerCase();
+      if (va < vb) return sortDir === 'asc' ? -1 : 1;
+      if (va > vb) return sortDir === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }
+  return data;
+}
+
+function renderTable() {
+  const filtered = getFiltered();
+  const total = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageData = filtered.slice(start, start + PAGE_SIZE);
+
+  const tbody = document.getElementById('table-body');
+  const emptyState = document.getElementById('empty-state');
+  const tableWrapper = document.getElementById('table-wrapper');
+  const paginationBar = document.getElementById('pagination-bar');
+
+  if (total === 0) {
+    tableWrapper.style.display = 'none';
+    emptyState.style.display = 'block';
+    paginationBar.style.display = 'none';
+    return;
+  }
+
+  tableWrapper.style.display = 'block';
+  emptyState.style.display = 'none';
+  paginationBar.style.display = 'flex';
+
+  tbody.innerHTML = pageData.map(row => `
+    <tr class="${selectedIds.has(row.id) ? 'selected' : ''}" onclick="toggleRow(${row.id}, event)" style="cursor:pointer;">
+      <td class="col-check"><input type="checkbox" class="cb" ${selectedIds.has(row.id) ? 'checked' : ''} aria-label="Select ${row.name}" onchange="toggleRow(${row.id}, event)" onclick="event.stopPropagation()"/></td>
+      <td>
+        <div class="cell-avatar">
+          <div class="avatar-circle" style="background:${row.avatarColor};">${row.initials}</div>
+          <div>
+            <div class="cell-name">${row.name}</div>
+            <div class="cell-email">${row.email}</div>
+          </div>
+        </div>
+      </td>
+      <td>${row.role}</td>
+      <td><span class="badge ${statusBadgeClass[row.status]}">${row.statusLabel}</span></td>
+      <td class="num">$${row.revenue.toLocaleString()}</td>
+      <td>
+        <div style="display:flex;gap:6px;">
+          <button class="action-btn" onclick="event.stopPropagation(); alert('Edit ${row.name}')">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+            Edit
+          </button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+
+  // Update pagination
+  const rangeEnd = Math.min(start + PAGE_SIZE, total);
+  document.getElementById('range-text').textContent = `${start + 1}–${rangeEnd}`;
+  document.getElementById('total-text').textContent = total;
+  document.getElementById('prev-btn').disabled = currentPage === 1;
+  document.getElementById('next-btn').disabled = currentPage === totalPages;
+  [1,2,3].forEach(p => {
+    const btn = document.getElementById(`page${p}-btn`);
+    if (btn) {
+      btn.style.display = p <= totalPages ? '' : 'none';
+      btn.classList.toggle('active', p === currentPage);
+      btn.setAttribute('aria-current', p === currentPage ? 'page' : 'false');
+    }
+  });
+
+  // Update selected count
+  const sc = document.getElementById('selected-count');
+  if (selectedIds.size > 0) {
+    sc.textContent = `${selectedIds.size} selected`;
+    sc.style.display = '';
+  } else {
+    sc.style.display = 'none';
+  }
+
+  // Update select-all
+  const allPageIds = pageData.map(r => r.id);
+  const allSelected = allPageIds.every(id => selectedIds.has(id));
+  const someSelected = allPageIds.some(id => selectedIds.has(id));
+  const selectAll = document.getElementById('select-all');
+  selectAll.checked = allSelected;
+  selectAll.indeterminate = !allSelected && someSelected;
+}
+
+function toggleRow(id, event) {
+  if (event.target.tagName === 'BUTTON' || event.target.tagName === 'INPUT') return;
+  if (selectedIds.has(id)) selectedIds.delete(id);
+  else selectedIds.add(id);
+  renderTable();
+}
+
+function toggleAll(cb) {
+  const filtered = getFiltered();
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageData = filtered.slice(start, start + PAGE_SIZE);
+  if (cb.checked) pageData.forEach(r => selectedIds.add(r.id));
+  else pageData.forEach(r => selectedIds.delete(r.id));
+  renderTable();
+}
+
+function sortTable(col, th) {
+  if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  else { sortCol = col; sortDir = 'asc'; }
+  document.querySelectorAll('#demo-table thead th').forEach(t => {
+    t.classList.remove('sort-asc','sort-desc');
+    t.removeAttribute('aria-sort');
+  });
+  th.classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+  th.setAttribute('aria-sort', sortDir === 'asc' ? 'ascending' : 'descending');
+  currentPage = 1;
+  renderTable();
+}
+
+function filterTable() {
+  searchQuery = document.getElementById('search-input').value;
+  currentPage = 1;
+  renderTable();
+}
+
+function applyVariant() {
+  const t = document.getElementById('demo-table');
+  t.className = 'data-table ' + document.getElementById('variant-select').value;
+}
+
+function prevPage() { if (currentPage > 1) { currentPage--; renderTable(); } }
+function nextPage() {
+  const total = Math.ceil(getFiltered().length / PAGE_SIZE);
+  if (currentPage < total) { currentPage++; renderTable(); }
+}
+function goToPage(p) { currentPage = p; renderTable(); }
+
+function copyCode(btn) {
+  const code = btn.closest('.code-block').querySelector('pre').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// Init
+renderTable();
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

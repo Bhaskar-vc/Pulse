@@ -1,0 +1,140 @@
+<div
+  class="modal-overlay"
+  [class.is-open]="isOpen"
+  [class.modal-overlay--contained]="contained"
+  [class.modal-overlay--drawer]="variant === 'drawer'"
+  (click)="onOverlayClick($event)"
+  role="dialog"
+  [attr.aria-modal]="isOpen ? 'true' : null"
+  [attr.aria-label]="title || 'Dialog'"
+>
+  <div
+    class="modal"
+    [class.modal--wide]="size === 'wide'"
+    [class.modal--centered]="centered && layout === 'stacked'"
+    [class.modal--horizontal]="layout === 'horizontal'"
+    [class.modal--drawer]="variant === 'drawer'"
+    (click)="$event.stopPropagation()"
+  >
+
+    @if (layout === 'horizontal') {
+      <!-- ── HORIZONTAL: featured icon left, content column right ── -->
+      @if (intent !== 'none') {
+        <div class="modal-feat-icon" [ngClass]="'modal-feat-icon--' + intent">
+          <ng-container [ngTemplateOutlet]="iconTpl"></ng-container>
+        </div>
+      }
+      <ng-content select="[modalIcon]"></ng-content>
+      <div class="modal-col">
+        <div class="modal-content">
+          <div class="modal-text-row">
+            <div class="modal-text">
+              @if (title) { <div class="modal-title">{{ title }}</div> }
+              @if (body)  { <div class="modal-body">{{ body }}</div> }
+              <ng-content select="[modalBody]"></ng-content>
+            </div>
+            @if (showClose) {
+              <button type="button" class="modal-close" (click)="close()" aria-label="Close dialog">
+                <ng-container [ngTemplateOutlet]="closeSvg"></ng-container>
+              </button>
+            }
+          </div>
+        </div>
+        <div [class]="actionsClass">
+          <ng-content select="[modalActions]"></ng-content>
+        </div>
+      </div>
+
+    } @else if (centered) {
+      <!-- ── STACKED CENTERED: close top-right, icon centered below ── -->
+      <div class="modal-content">
+        <div class="modal-close-row">
+          @if (showClose) {
+            <button type="button" class="modal-close" (click)="close()" aria-label="Close dialog">
+              <ng-container [ngTemplateOutlet]="closeSvg"></ng-container>
+            </button>
+          }
+        </div>
+        @if (intent !== 'none') {
+          <div class="modal-feat-icon modal-feat-icon--lg" [ngClass]="'modal-feat-icon--' + intent">
+            <ng-container [ngTemplateOutlet]="iconTpl"></ng-container>
+          </div>
+        }
+        <ng-content select="[modalIcon]"></ng-content>
+        <div class="modal-text">
+          @if (title) { <div class="modal-title">{{ title }}</div> }
+          @if (body)  { <div class="modal-body">{{ body }}</div> }
+          <ng-content select="[modalBody]"></ng-content>
+        </div>
+      </div>
+      <div [class]="actionsClass">
+        <ng-content select="[modalActions]"></ng-content>
+      </div>
+
+    } @else {
+      <!-- ── STACKED LEFT-ALIGNED (default + drawer) ── -->
+      <div class="modal-content">
+        <div class="modal-icon-row">
+          @if (intent !== 'none') {
+            <div class="modal-feat-icon" [ngClass]="'modal-feat-icon--' + intent">
+              <ng-container [ngTemplateOutlet]="iconTpl"></ng-container>
+            </div>
+          }
+          <ng-content select="[modalIcon]"></ng-content>
+          <div class="modal-icon-row__spacer"></div>
+          @if (showClose) {
+            <button type="button" class="modal-close" (click)="close()" aria-label="Close dialog">
+              <ng-container [ngTemplateOutlet]="closeSvg"></ng-container>
+            </button>
+          }
+        </div>
+        <div class="modal-text">
+          @if (title) { <div class="modal-title">{{ title }}</div> }
+          @if (body)  { <div class="modal-body">{{ body }}</div> }
+          <ng-content select="[modalBody]"></ng-content>
+        </div>
+      </div>
+      <div [class]="actionsClass">
+        <ng-content select="[modalActions]"></ng-content>
+      </div>
+    }
+
+  </div>
+</div>
+
+<!-- ── Close button SVG ───────────────────────────── -->
+<ng-template #closeSvg>
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M4 4l8 8M12 4L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+</ng-template>
+
+<!-- ── Intent icon switch ─────────────────────────── -->
+<ng-template #iconTpl>
+  @switch (intent) {
+    @case ('success') {
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9 11l3 3 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    }
+    @case ('warning') {
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    }
+    @case ('error') {
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    }
+    @case ('info') {
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    }
+  }
+</ng-template>

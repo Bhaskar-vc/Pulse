@@ -1,0 +1,39 @@
+<div class="progress-circle-wrap">
+  <div class="progress-circle" [style.width.px]="diameter" [style.height.px]="diameter">
+    <svg
+      [attr.width]="diameter"
+      [attr.height]="diameter"
+      [attr.viewBox]="'0 0 ' + diameter + ' ' + diameter"
+      [attr.aria-label]="label || 'Progress'"
+      role="img"
+    >
+      <circle
+        class="progress-circle-track"
+        [attr.cx]="cx"
+        [attr.cy]="cx"
+        [attr.r]="r"
+        [attr.stroke-width]="strokeWidth"
+      />
+      <circle
+        [class]="fillClass"
+        [attr.cx]="cx"
+        [attr.cy]="cx"
+        [attr.r]="r"
+        [attr.stroke-width]="strokeWidth"
+        [attr.stroke-dasharray]="circumference"
+        [attr.stroke-dashoffset]="offset"
+      />
+    </svg>
+    @if (showValue) {
+      <div class="progress-circle-label" aria-hidden="true">
+        <span class="progress-circle-pct">{{ displayValue }}%</span>
+        @if (sublabel) {
+          <span class="progress-circle-sub">{{ sublabel }}</span>
+        }
+      </div>
+    }
+  </div>
+  @if (label) {
+    <span class="progress-label">{{ label }}</span>
+  }
+</div>

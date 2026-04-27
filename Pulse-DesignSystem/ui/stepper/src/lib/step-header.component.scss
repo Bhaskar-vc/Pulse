@@ -1,0 +1,74 @@
+/* Step Header — Pulse Design System */
+
+:host {
+  display: block;
+  font-family: 'Inter', sans-serif;
+}
+
+.vc-step-header-horizontal {
+  display: flex;
+  flex-direction: column;
+}
+
+.vc-step-header-vertical {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.vc-step-header-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.vc-step-spacer {
+  width: 100%;
+}
+
+.vc-step-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.vc-step-icon-circle {
+  border-radius: 9999px;
+  width: 32px;
+  height: 31px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.vc-step-icon-inactive {
+  background: var(--ds-bg-hover);
+}
+
+.vc-step-icon-active {
+  background: #88dbb4;
+}
+
+.vc-step-label {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.vc-step-label-active {
+    color: var(--ds-text);
+    font-weight: 400;
+  }
+
+  &.vc-step-label-selected {
+    color: var(--ds-text);
+    font-weight: 500;
+  }
+}
+
+.vc-horizontal-line {
+  width: 100%;
+  border: 2px var(--ds-border-strong) solid;
+}

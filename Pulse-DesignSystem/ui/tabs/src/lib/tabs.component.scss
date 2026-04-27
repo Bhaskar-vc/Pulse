@@ -1,0 +1,80 @@
+/* Tabs — Pulse Design System */
+
+:host { display: block; }
+
+.tabs { width: 100%; font-family: 'Inter', sans-serif; }
+
+/* Tablist */
+.tabs-list { display: flex; position: relative; }
+
+/* ── Line variant (default) ── */
+.tabs--line .tabs-list {
+  border-bottom: 1px solid var(--ds-border);
+  gap: 0;
+}
+.tabs--line .tab-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 4px; height: 40px;
+  font-size: 14px; font-weight: 500;
+  color: var(--ds-text-faint);
+  background: transparent; border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap; text-decoration: none;
+  margin-right: 24px;
+}
+.tabs--line .tab-item:last-child { margin-right: 0; }
+.tabs--line .tab-item:hover { color: var(--ds-text); }
+.tabs--line .tab-item.is-active { color: var(--ds-brand); border-bottom: 2px solid var(--ds-brand); }
+.tabs--line .tab-item[disabled] { color: var(--ds-text-disabled); cursor: not-allowed; pointer-events: none; }
+
+/* Sizes */
+.tabs--line.tabs--sm .tab-item { height: 32px; font-size: 13px; }
+.tabs--line.tabs--lg .tab-item { height: 48px; font-size: 15px; }
+
+/* Tab count badge */
+.tab-count {
+  font-size: 11px; font-weight: 600;
+  background: var(--ds-bg-muted); color: var(--ds-text-faint);
+  border-radius: 99px; padding: 1px 7px;
+  border: 1px solid var(--ds-border);
+}
+.tab-item.is-active .tab-count {
+  background: var(--ds-brand-light); color: var(--ds-brand);
+  border-color: var(--ds-brand-border);
+}
+
+/* Close button */
+.tab-close {
+  width: 18px; height: 18px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: none; cursor: pointer;
+  color: var(--ds-text-disabled); transition: background 0.12s, color 0.12s;
+  flex-shrink: 0; padding: 0;
+}
+.tab-close:hover { background: var(--ds-border); color: var(--ds-text); }
+
+/* Panel content */
+.tab-panels { margin-top: 0; }
+
+/* ── Vertical tabs ── */
+.tabs--vertical { display: flex; gap: 0; }
+.tabs--vertical .tabs-list {
+  flex-direction: column; border-bottom: none;
+  border-right: 1px solid var(--ds-border);
+  width: 180px; flex-shrink: 0;
+  gap: 2px; padding: 4px 0;
+}
+.tabs--vertical .tab-item {
+  border-bottom: none; border-right: 2px solid transparent;
+  border-radius: 0; margin-right: 0; margin-bottom: 0;
+  height: 40px; padding: 0 16px; justify-content: flex-start;
+}
+.tabs--vertical .tab-item.is-active {
+  border-bottom: none; border-right: 2px solid var(--ds-brand);
+  background: var(--ds-brand-subtle); color: var(--ds-brand);
+}
+.tabs--vertical .tab-panels { flex: 1; padding-left: 24px; }

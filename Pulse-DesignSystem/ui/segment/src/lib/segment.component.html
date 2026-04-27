@@ -1,0 +1,15 @@
+<div class="segment" [class]="segmentClass" role="group" [attr.aria-label]="ariaLabel || 'Options'">
+  @for (item of items; track item.value) {
+    <button
+      type="button"
+      class="segment-item"
+      [class.is-active]="item.value === value"
+      [class.is-disabled]="item.disabled"
+      [disabled]="item.disabled || null"
+      [attr.aria-pressed]="item.value === value"
+      (click)="select(item)"
+    >
+      {{ item.label }}
+    </button>
+  }
+</div>

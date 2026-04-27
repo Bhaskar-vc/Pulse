@@ -1,0 +1,38 @@
+<span class="toggle-wrap"
+  [class.is-disabled]="disabled"
+  [class.has-supporting]="supporting">
+
+  <!-- Interactive toggle — button avoids the double-trigger that label+checkbox causes -->
+  <button
+    class="toggle"
+    [class.size-sm]="size === 'sm'"
+    [class.size-md]="size === 'md'"
+    [class.size-lg]="size === 'lg'"
+    [class.is-on]="checked"
+    [class.color-primary]="color === 'primary'"
+    [class.color-secondary]="color === 'secondary'"
+    [class.color-success]="color === 'success'"
+    type="button"
+    role="switch"
+    [attr.aria-checked]="checked"
+    [attr.aria-label]="(!label && !supporting) ? 'Toggle' : null"
+    [disabled]="disabled || null"
+    (click)="toggle()"
+  >
+    <span class="toggle-track">
+      <span class="toggle-thumb"></span>
+    </span>
+  </button>
+
+  @if (label) {
+    <span class="cb-label-wrap" (click)="toggle()">
+      <span class="toggle-label">{{ label }}</span>
+      @if (supporting) {
+        <span class="toggle-supporting">{{ supporting }}</span>
+      }
+    </span>
+  } @else {
+    <ng-content></ng-content>
+  }
+
+</span>

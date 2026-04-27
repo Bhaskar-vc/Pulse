@@ -1,0 +1,140 @@
+<div class="field">
+  @if (label) {
+    <label class="field-label" [attr.for]="inputId">
+      {{ label }}
+      @if (required) {
+        <span class="field-required" aria-hidden="true">*</span>
+      }
+      @if (helpIcon) {
+        <span class="help-icon" title="More information">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M8 7.5v3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="8" cy="5.5" r=".75" fill="currentColor"/>
+          </svg>
+        </span>
+      }
+    </label>
+  }
+
+  <div
+    class="input-wrap"
+    [class.is-error]="!!error"
+    [class.is-disabled]="disabled"
+  >
+    @if (prefixText || prefixIcon) {
+      <span class="input-prefix">
+        @if (prefixIcon) {
+          <span [innerHTML]="safeHtml(prefixIcon)"></span>
+        }
+        @if (prefixText) {
+          {{ prefixText }}
+        }
+      </span>
+    } @else if (leadingIcon) {
+      <span class="input-icon">
+        <span [innerHTML]="safeHtml(leadingIcon)"></span>
+      </span>
+    } @else if (type === 'search') {
+      <span class="input-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M13.5 13.5l3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </span>
+    } @else if (type === 'password') {
+      <span class="input-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="4" y="9" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M7 9V7a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </span>
+    }
+
+    <input
+      [id]="inputId"
+      [type]="effectiveType"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [value]="value"
+      [attr.maxlength]="maxLength || null"
+      [attr.aria-invalid]="error ? 'true' : null"
+      [attr.aria-describedby]="error ? inputId + '-hint' : (hint ? inputId + '-hint' : null)"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+    />
+
+    @if (type === 'password') {
+      <span class="input-trailing">
+        @if (error) {
+          <span class="input-alert">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M8 5v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <circle cx="8" cy="11" r=".7" fill="currentColor"/>
+            </svg>
+          </span>
+        }
+        <button
+          type="button"
+          class="pw-toggle"
+          (click)="togglePasswordVisibility()"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+        >
+          @if (showPassword) {
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 8s2.5-4.5 6-4.5S14 8 14 8s-2.5 4.5-6 4.5S2 8 2 8z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+              <circle cx="8" cy="8" r="1.8" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M2 2l12 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          } @else {
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <ellipse cx="8" cy="8" rx="6" ry="4" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="8" cy="8" r="1.8" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+          }
+        </button>
+      </span>
+    } @else if (trailingIcon || error) {
+      <span class="input-trailing">
+        @if (error) {
+          <span class="input-alert">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M8 5v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <circle cx="8" cy="11" r=".7" fill="currentColor"/>
+            </svg>
+          </span>
+        }
+        @if (trailingIcon && !error) {
+          <span class="input-icon" [innerHTML]="safeHtml(trailingIcon)"></span>
+        }
+      </span>
+    }
+
+    @if (suffixText) {
+      <span class="input-suffix">{{ suffixText }}</span>
+    }
+  </div>
+
+  @if (error) {
+    <span class="field-hint is-error" [id]="inputId + '-hint'" role="alert">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px">
+        <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/>
+        <path d="M7 4.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <circle cx="7" cy="9.5" r=".65" fill="currentColor"/>
+      </svg>
+      {{ error }}
+    </span>
+  } @else if (hint) {
+    <span class="field-hint" [id]="inputId + '-hint'">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px">
+        <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/>
+        <path d="M7 6.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <circle cx="7" cy="4.5" r=".65" fill="currentColor"/>
+      </svg>
+      {{ hint }}
+    </span>
+  }
+</div>

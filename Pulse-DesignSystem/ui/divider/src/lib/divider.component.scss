@@ -1,0 +1,48 @@
+/* Divider — Pulse Design System */
+
+:host {
+  display: block;
+}
+
+.divider {
+  display: flex;
+  align-self: center;
+  width: 100%;
+}
+
+.divider.solid {
+  border-top: 1px solid var(--ds-border);
+}
+
+.divider.dashed {
+  border-top: 1px dashed var(--ds-border);
+}
+
+.small-divider {
+  display: flex;
+  align-self: center;
+  width: 21px;
+}
+
+.small-divider.solid {
+  border-top: 1px solid var(--ds-border);
+}
+
+.small-divider.dashed {
+  border-top: 1px dashed var(--ds-border);
+}
+
+.divider-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.divider-title {
+  margin: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ds-text);
+  white-space: nowrap;
+}

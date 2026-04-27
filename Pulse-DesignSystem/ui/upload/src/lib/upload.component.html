@@ -1,0 +1,67 @@
+<div>
+  <div
+    class="upload-zone"
+    [class.dragover]="isDragging"
+    [class.has-error]="hasError"
+    tabindex="0"
+    role="button"
+    [attr.aria-label]="'Upload files'"
+    (click)="fileInput.click()"
+    (keydown.enter)="fileInput.click()"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave()"
+    (drop)="onDrop($event)"
+  >
+    <input
+      #fileInput
+      class="upload-input"
+      type="file"
+      [attr.accept]="accept || null"
+      [attr.multiple]="multiple || null"
+      (change)="onFileChange($event)"
+    />
+    <div class="upload-icon">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M13.33 26.67c-3.68 0-6.66-3-6.66-6.67 0-3.4 2.56-6.21 5.87-6.6.69-3.76 4-6.4 7.8-6.4 3.8 0 7.11 2.64 7.8 6.4 3.31.39 5.87 3.2 5.87 6.6 0 3.67-2.98 6.67-6.67 6.67H13.33z" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M20 26.67V20m0 0l-3.33 3.33M20 20l3.33 3.33" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="upload-text">
+      <strong>Click to upload</strong>
+      <span> or drag and drop</span>
+    </div>
+    <div class="upload-subtext">{{ subtext }}</div>
+    @if (hasError && errorMessage) {
+      <div class="upload-error-text">{{ errorMessage }}</div>
+    }
+  </div>
+
+  @if (uploadedFiles.length > 0) {
+    <div class="file-list">
+      @for (f of uploadedFiles; track f.name) {
+        <div class="file-item">
+          <div class="file-icon-wrap">
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M11.67 2.5H5.83C5.37 2.5 5 2.87 5 3.33v13.34c0 .46.37.83.83.83h8.34c.46 0 .83-.37.83-.83V7.5l-3.33-5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M11.67 2.5V7.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="file-info">
+            <div class="file-name">{{ f.name }}</div>
+            <div class="file-size">{{ f.sizeLabel }}</div>
+          </div>
+          @if (f.status === 'done') {
+            <svg class="file-status-done" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-label="Upload complete">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" fill="currentColor"/>
+            </svg>
+          }
+          <button type="button" class="file-remove" (click)="removeFile(f)" aria-label="Remove file">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 4l8 8M12 4L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

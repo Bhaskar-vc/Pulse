@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "bundler",
@@ -19,7 +18,9 @@
       "@core/*": ["apps/ng-dashboard/src/@core/*"],
       "@pulse/*": ["apps/ng-dashboard/src/@pulse/*"],
       "@utils/*": ["apps/ng-dashboard/src/@utils/*"],
-      "@environments/*": ["apps/ng-dashboard/src/environments/*"]
+      "@environments/*": ["apps/ng-dashboard/src/environments/*"],
+      "@pulse-ds/ui": ["../Pulse-DesignSystem/ui/src/index.ts"],
+      "@pulse-ds/ui/*": ["../Pulse-DesignSystem/ui/*/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "target": "ES2022",
+    "module": "ES2022",
+    "strict": true,
+    "useDefineForClassFields": false,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "./*.ts",
+    "./*.tsx",
+    "../ui/**/src/**/*.ts",
+    "../ui/**/src/**/*.stories.ts",
+    "../docs/**/*.ts"
+  ],
+  "exclude": [
+    "../ui/**/src/**/*.spec.ts"
+  ]
+}

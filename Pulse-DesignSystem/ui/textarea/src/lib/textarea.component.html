@@ -1,0 +1,86 @@
+<div class="field">
+  @if (label) {
+    <label class="field-label" [attr.for]="fieldId">
+      {{ label }}
+      @if (required) {
+        <span class="field-required" aria-hidden="true">*</span>
+      }
+      @if (helpIcon) {
+        <span class="help-icon" title="More information">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M8 7.5v3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="8" cy="5.5" r=".75" fill="currentColor"/>
+          </svg>
+        </span>
+      }
+    </label>
+  }
+
+  <div
+    class="textarea-wrap"
+    [class.is-error]="!!error"
+    [class.is-disabled]="disabled"
+  >
+    <textarea
+      [id]="fieldId"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [rows]="rows"
+      [value]="value"
+      [class.no-resize]="!resize"
+      [attr.maxlength]="maxLength || null"
+      [attr.minlength]="minLength || null"
+      [attr.aria-invalid]="error ? 'true' : null"
+      [attr.aria-describedby]="error ? fieldId + '-hint' : (hint ? fieldId + '-hint' : null)"
+      [attr.aria-required]="required || null"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+    ></textarea>
+  </div>
+
+  @if (maxLength) {
+    <div class="field-footer">
+      @if (error) {
+        <span class="field-hint is-error" [id]="fieldId + '-hint'" role="alert">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px">
+            <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/>
+            <path d="M7 4.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <circle cx="7" cy="9.5" r=".65" fill="currentColor"/>
+          </svg>
+          {{ error }}
+        </span>
+      } @else if (hint) {
+        <span class="field-hint" [id]="fieldId + '-hint'">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px">
+            <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/>
+            <path d="M7 6.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <circle cx="7" cy="4.5" r=".65" fill="currentColor"/>
+          </svg>
+          {{ hint }}
+        </span>
+      } @else {
+        <span></span>
+      }
+      <span class="char-count">{{ charCount }} / {{ maxLength }}</span>
+    </div>
+  } @else if (error) {
+    <span class="field-hint is-error" [id]="fieldId + '-hint'" role="alert">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px">
+        <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/>
+        <path d="M7 4.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <circle cx="7" cy="9.5" r=".65" fill="currentColor"/>
+      </svg>
+      {{ error }}
+    </span>
+  } @else if (hint) {
+    <span class="field-hint" [id]="fieldId + '-hint'">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px">
+        <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.1"/>
+        <path d="M7 6.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <circle cx="7" cy="4.5" r=".65" fill="currentColor"/>
+      </svg>
+      {{ hint }}
+    </span>
+  }
+</div>

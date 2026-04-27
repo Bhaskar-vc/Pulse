@@ -11,35 +11,7 @@
       Back
     </button>
 
-    <div class="steps-check">
-      <!-- Step 1: Done -->
-      <div class="steps-check-item is-done">
-        <div class="steps-check-pill">
-          <svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <span class="steps-check-label">Get Started</span>
-      </div>
-      <div class="steps-check-line"></div>
-      <!-- Step 2: Done -->
-      <div class="steps-check-item is-done">
-        <div class="steps-check-pill">
-          <svg class="check-svg" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <span class="steps-check-label">Select Questions</span>
-      </div>
-      <div class="steps-check-line"></div>
-      <!-- Step 3: Active -->
-      <div class="steps-check-item is-active">
-        <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
-        <span class="steps-check-label">Configure</span>
-      </div>
-      <div class="steps-check-line"></div>
-      <!-- Step 4: Upcoming -->
-      <div class="steps-check-item">
-        <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
-        <span class="steps-check-label">Preview &amp; Launch</span>
-      </div>
-    </div>
+    <v-steps variant="pill" [steps]="wizardSteps" [activeStep]="2"></v-steps>
   </div>
 
   <!-- Content -->
@@ -206,17 +178,11 @@
             </div>
           </div>
           <div class="field-divider"></div>
-          <label class="toggle-row" (click)="toggleRecurring()">
-            <div class="toggle-row-info">
-              <div class="toggle-row-title">Recurring Survey</div>
-              <div class="toggle-row-sub">Automatically re-send the survey at the selected frequency after it ends</div>
-            </div>
-            <label class="toggle-switch" (click)="$event.stopPropagation()">
-              <input type="checkbox" [checked]="recurringEnabled" (change)="toggleRecurring()"/>
-              <span class="toggle-track"></span>
-              <span class="toggle-thumb"></span>
-            </label>
-          </label>
+          <v-toggle
+            [(ngModel)]="recurringEnabled"
+            label="Recurring Survey"
+            supporting="Automatically re-send the survey at the selected frequency after it ends"
+          ></v-toggle>
         </div>
       </div>
 

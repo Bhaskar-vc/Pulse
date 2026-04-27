@@ -1,0 +1,179 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design Tokens/Shadow & Border" tags={['hidden']} parameters={{ docs: { toc: { disable: true } } }} />
+
+<style>{`
+  .shadow-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; margin-bottom: 40px; }
+  .shadow-card { display: flex; flex-direction: column; gap: 12px; }
+  .shadow-swatch { width: 100%; height: 80px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .shadow-name { font-size: 13px; font-weight: 600; color: #344054; }
+  .shadow-css { font-size: 10px; color: #9d9dad; font-family: monospace; line-height: 1.6; }
+  .radius-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 40px; }
+  .radius-card { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .radius-label { font-size: 12px; font-weight: 600; color: #344054; }
+  .radius-value { font-size: 10px; color: #9d9dad; font-family: monospace; }
+  .border-grid { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
+  .border-card { display: flex; flex-direction: column; gap: 8px; }
+  .border-swatch { width: 160px; height: 56px; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #707087; }
+  .border-name { font-size: 12px; font-weight: 600; color: #344054; font-family: monospace; }
+  .border-value { font-size: 10px; color: #9d9dad; font-family: monospace; }
+  .focus-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; margin-bottom: 40px; }
+  .focus-demo { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .focus-el { width: 120px; height: 40px; border-radius: 8px; background: #fff; border: 1.5px solid; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; }
+
+  /* ── Dark mode ── */
+  [data-theme="dark"] .shadow-swatch { background: #2a2f40 !important; border-color: #353858 !important; }
+  [data-theme="dark"] .shadow-name   { color: #e9ecf5 !important; }
+  [data-theme="dark"] .shadow-css    { color: #9aa3be !important; }
+  [data-theme="dark"] .radius-label  { color: #e9ecf5 !important; }
+  [data-theme="dark"] .radius-value  { color: #9aa3be !important; }
+  [data-theme="dark"] .border-swatch { background: #2a2f40 !important; color: #9aa3be !important; }
+  [data-theme="dark"] .border-name   { color: #e9ecf5 !important; }
+  [data-theme="dark"] .border-value  { color: #9aa3be !important; }
+  [data-theme="dark"] .focus-el      { background: #2a2f40 !important; }
+`}</style>
+
+## Shadows
+
+<div className="shadow-grid">
+  <div className="shadow-card">
+    <div className="shadow-swatch" style={{boxShadow:'none', border:'1px solid #eaeaed'}}><span style={{fontSize:'12px', color:'#9d9dad'}}>No shadow</span></div>
+    <div><div className="shadow-name">shadow-none</div><div className="shadow-css">none</div></div>
+  </div>
+  <div className="shadow-card">
+    <div className="shadow-swatch" style={{boxShadow:'0 1px 2px rgba(16,24,40,0.05)'}}></div>
+    <div><div className="shadow-name">shadow-xs</div><div className="shadow-css">0 1px 2px rgba(16,24,40,0.05)</div></div>
+  </div>
+  <div className="shadow-card">
+    <div className="shadow-swatch" style={{boxShadow:'0 1px 3px rgba(16,24,40,0.10), 0 1px 2px rgba(16,24,40,0.06)'}}></div>
+    <div><div className="shadow-name">shadow-sm</div><div className="shadow-css">0 1px 3px …<br/>0 1px 2px …</div></div>
+  </div>
+  <div className="shadow-card">
+    <div className="shadow-swatch" style={{boxShadow:'0 4px 8px -2px rgba(16,24,40,0.10), 0 2px 4px -2px rgba(16,24,40,0.06)'}}></div>
+    <div><div className="shadow-name">shadow-md</div><div className="shadow-css">0 4px 8px -2px …<br/>0 2px 4px -2px …</div></div>
+  </div>
+  <div className="shadow-card">
+    <div className="shadow-swatch" style={{boxShadow:'0 12px 16px -4px rgba(16,24,40,0.08), 0 4px 6px -2px rgba(16,24,40,0.03)'}}></div>
+    <div><div className="shadow-name">shadow-lg</div><div className="shadow-css">0 12px 16px -4px …<br/>0 4px 6px -2px …</div></div>
+  </div>
+  <div className="shadow-card">
+    <div className="shadow-swatch" style={{boxShadow:'0 20px 24px -4px rgba(16,24,40,0.08), 0 8px 8px -4px rgba(16,24,40,0.03)'}}></div>
+    <div><div className="shadow-name">shadow-xl</div><div className="shadow-css">0 20px 24px -4px …<br/>0 8px 8px -4px …</div></div>
+  </div>
+  <div className="shadow-card">
+    <div className="shadow-swatch" style={{boxShadow:'0 24px 48px -12px rgba(16,24,40,0.18)'}}></div>
+    <div><div className="shadow-name">shadow-2xl</div><div className="shadow-css">0 24px 48px -12px …</div></div>
+  </div>
+</div>
+
+---
+
+## Border Radius
+
+<div className="radius-row">
+  <div className="radius-card">
+    <div style={{width:48,height:48,background:'#eeedf6',border:'2px solid #9e77ed',borderRadius:0}}></div>
+    <div className="radius-label">none</div><div className="radius-value">0</div>
+  </div>
+  <div className="radius-card">
+    <div style={{width:52,height:52,background:'#eeedf6',border:'2px solid #9e77ed',borderRadius:2}}></div>
+    <div className="radius-label">xs</div><div className="radius-value">2px</div>
+  </div>
+  <div className="radius-card">
+    <div style={{width:56,height:56,background:'#eeedf6',border:'2px solid #9e77ed',borderRadius:4}}></div>
+    <div className="radius-label">sm</div><div className="radius-value">4px</div>
+  </div>
+  <div className="radius-card">
+    <div style={{width:60,height:60,background:'#eeedf6',border:'2px solid #9e77ed',borderRadius:6}}></div>
+    <div className="radius-label">md</div><div className="radius-value">6px</div>
+  </div>
+  <div className="radius-card">
+    <div style={{width:64,height:64,background:'#eeedf6',border:'2px solid #9e77ed',borderRadius:8}}></div>
+    <div className="radius-label">lg</div><div className="radius-value">8px</div>
+  </div>
+  <div className="radius-card">
+    <div style={{width:68,height:68,background:'#eeedf6',border:'2px solid #9e77ed',borderRadius:10}}></div>
+    <div className="radius-label">xl</div><div className="radius-value">10px</div>
+  </div>
+  <div className="radius-card">
+    <div style={{width:72,height:72,background:'#eeedf6',border:'2px solid #9e77ed',borderRadius:12}}></div>
+    <div className="radius-label">2xl</div><div className="radius-value">12px</div>
+  </div>
+  <div className="radius-card">
+    <div style={{width:76,height:76,background:'#eeedf6',border:'2px solid #9e77ed',borderRadius:16}}></div>
+    <div className="radius-label">3xl</div><div className="radius-value">16px</div>
+  </div>
+  <div className="radius-card">
+    <div style={{width:80,height:80,background:'#eeedf6',border:'2px solid #9e77ed',borderRadius:9999}}></div>
+    <div className="radius-label">full</div><div className="radius-value">9999px</div>
+  </div>
+</div>
+
+---
+
+## Border Colors
+
+<div className="border-grid">
+  <div className="border-card">
+    <div className="border-swatch" style={{border:'1px solid #eaeaed'}}>border-default</div>
+    <div className="border-name">--color-border-default</div>
+    <div className="border-value">#eaeaed · primary-200</div>
+  </div>
+  <div className="border-card">
+    <div className="border-swatch" style={{border:'1.5px solid #bdbdc8'}}>border-strong</div>
+    <div className="border-name">--color-border-strong</div>
+    <div className="border-value">#bdbdc8 · primary-300</div>
+  </div>
+  <div className="border-card">
+    <div className="border-swatch" style={{border:'2px solid #7f56d9'}}>border-focus</div>
+    <div className="border-name">--input-border-focus</div>
+    <div className="border-value">#7f56d9 · secondary-600</div>
+  </div>
+  <div className="border-card">
+    <div className="border-swatch" style={{border:'2px solid #f04438'}}>border-error</div>
+    <div className="border-name">--input-border-error</div>
+    <div className="border-value">#f04438 · error-600</div>
+  </div>
+</div>
+
+---
+
+## Focus Rings
+
+<div className="focus-row">
+  <div className="focus-demo">
+    <div className="focus-el" style={{borderColor:'#29294c', boxShadow:'0 0 0 4px rgba(41,41,76,0.14)'}}>Primary</div>
+    <div className="shadow-css" style={{textAlign:'center'}}>shadow-focus-primary<br/>rgba(41,41,76,0.14)</div>
+  </div>
+  <div className="focus-demo">
+    <div className="focus-el" style={{borderColor:'#f04438', boxShadow:'0 0 0 4px rgba(240,68,56,0.14)'}}>Error</div>
+    <div className="shadow-css" style={{textAlign:'center'}}>shadow-focus-error<br/>rgba(240,68,56,0.14)</div>
+  </div>
+  <div className="focus-demo">
+    <div className="focus-el" style={{borderColor:'#12b76a', boxShadow:'0 0 0 4px rgba(18,183,106,0.14)'}}>Success</div>
+    <div className="shadow-css" style={{textAlign:'center'}}>shadow-focus-success<br/>rgba(18,183,106,0.14)</div>
+  </div>
+  <div className="focus-demo">
+    <div className="focus-el" style={{borderColor:'#98a2b3', boxShadow:'0 0 0 4px rgba(152,162,179,0.18)'}}>Gray</div>
+    <div className="shadow-css" style={{textAlign:'center'}}>shadow-focus-gray<br/>rgba(152,162,179,0.18)</div>
+  </div>
+</div>
+
+---
+
+## CSS Custom Properties
+
+| Token | Value |
+|-------|-------|
+| `--shadow-xs` | `0 1px 2px rgba(16,24,40,0.05)` |
+| `--shadow-sm` | `0 1px 3px rgba(16,24,40,0.10), 0 1px 2px rgba(16,24,40,0.06)` |
+| `--shadow-md` | `0 4px 8px -2px rgba(16,24,40,0.10), 0 2px 4px -2px rgba(16,24,40,0.06)` |
+| `--shadow-lg` | `0 12px 16px -4px rgba(16,24,40,0.08), 0 4px 6px -2px rgba(16,24,40,0.03)` |
+| `--shadow-xl` | `0 20px 24px -4px rgba(16,24,40,0.08), 0 8px 8px -4px rgba(16,24,40,0.03)` |
+| `--shadow-2xl` | `0 24px 48px -12px rgba(16,24,40,0.18)` |
+| `--radius-sm` | `4px` |
+| `--radius-md` | `6px` |
+| `--radius-lg` | `8px` |
+| `--radius-xl` | `10px` |
+| `--radius-2xl` | `12px` |
+| `--radius-full` | `9999px` |

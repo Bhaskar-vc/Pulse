@@ -1,0 +1,40 @@
+<li
+  role="option"
+  class="select-option"
+  [title]="value && value.text"
+  [attr.aria-selected]="selected"
+  [ngClass]="{
+    'select-hovered-option': hovered
+  }"
+  [attr.data-selected]="selected"
+  [attr.data-hovered]="hovered"
+  [attr.aria-selected]="selected"
+  (click)="handleSelect($event, value)"
+>
+  <div class="flex w-full justify-between items-center">
+    <div class="left-content">
+      @if (value && value.imageURL) {
+        <img class="left-content-img" [src]="value.imageURL" />
+      }
+      <div class="child-content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+    @if (selected) {
+      <svg
+        class="check-icon"
+        viewBox="0 0 20 21"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16.6668 5.5L7.50016 14.6667L3.3335 10.5"
+          stroke="currentColor"
+          stroke-width="1.66667"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    }
+  </div>
+</li>

@@ -1,0 +1,347 @@
+/* Date Range Picker — Pulse Design System
+   Figma: node 715-36095 — dual calendar + preset sidebar */
+
+:host { display: inline-flex; }
+
+/* ── Outer shell ──────────────────────────────────────────────── */
+.drp-wrap {
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border-medium);
+  border-radius: 8px;
+  box-shadow: var(--ds-shadow-lg);
+  display: inline-flex;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* ── Dividers ─────────────────────────────────────────────────── */
+.drp-vdivider { width: 1px;  background: var(--ds-border-medium); flex-shrink: 0; align-self: stretch; }
+.drp-hdivider { height: 1px; background: var(--ds-border-medium); }
+
+/* ── Sidebar ──────────────────────────────────────────────────── */
+.drp-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  width: 192px;
+  flex-shrink: 0;
+}
+
+.drp-preset {
+  display: flex;
+  align-items: center;
+  width: 160px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ds-text-body);
+  text-align: left;
+  white-space: nowrap;
+  transition: background .12s, color .12s, font-weight .12s;
+
+  &:hover:not(.is-active) { background: var(--ds-bg-subtle); }
+}
+
+.drp-preset.is-active {
+  background: #fcfaff;
+  color: var(--ds-brand-dark);
+  font-weight: 500;
+}
+
+/* ── Right area ───────────────────────────────────────────────── */
+.drp-right {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Dual calendars row ───────────────────────────────────────── */
+.drp-calendars {
+  display: flex;
+  align-items: stretch;
+}
+
+/* ── Single calendar pane ─────────────────────────────────────── */
+.drp-cal {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+  gap: 12px;
+  width: 328px;
+  flex-shrink: 0;
+}
+
+.drp-cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 280px;
+}
+
+.drp-month-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ds-text);
+  text-align: center;
+}
+
+.drp-nav {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ds-text-muted);
+  transition: background .1s;
+  flex-shrink: 0;
+
+  &:hover { background: var(--ds-bg-muted); }
+}
+
+.drp-nav--ghost {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ── Calendar grid ────────────────────────────────────────────── */
+.drp-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 40px);
+  gap: 0;
+}
+
+/* Day-of-week headers */
+.drp-day-hd {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ds-text);
+  user-select: none;
+}
+
+/* ── Date cells ───────────────────────────────────────────────── */
+.drp-cell {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 0;
+}
+
+/* The day number — sits on top of strip / circle layers */
+.drp-num {
+  position: relative;
+  z-index: 2;
+  width: 24px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ds-text);
+  line-height: 1.4;
+}
+
+/* Default hover */
+.drp-cell:hover:not(.is-out):not(.is-range-start):not(.is-range-end) .drp-num {
+  background: var(--ds-bg-muted);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Out-of-month */
+.drp-cell.is-out {
+  cursor: default;
+  .drp-num { color: var(--ds-text-faint); }
+  &:hover .drp-num { background: none; }
+}
+
+/* Today dot */
+.drp-cell.is-today::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ds-brand);
+  z-index: 3;
+}
+
+/* ── Range strip helpers ───────────────────────────────────────── */
+
+/* In-range: full strip */
+.drp-cell.is-in-range {
+  background: var(--ds-brand-subtle);
+  .drp-num { color: var(--ds-brand-dark); font-weight: 500; }
+}
+
+/* Range start: circle + right-half strip */
+.drp-cell.is-range-start {
+  background: linear-gradient(90deg, transparent 50%, var(--ds-brand-subtle) 50%);
+  .drp-num { color: #fff; font-weight: 500; }
+
+  /* Purple circle */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--ds-brand);
+    z-index: 1;
+  }
+}
+
+/* Range end: circle + left-half strip */
+.drp-cell.is-range-end {
+  background: linear-gradient(90deg, var(--ds-brand-subtle) 50%, transparent 50%);
+  .drp-num { color: #fff; font-weight: 500; }
+
+  /* Purple circle */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--ds-brand);
+    z-index: 1;
+  }
+}
+
+/* When start === end: no strip needed */
+.drp-cell.is-range-start.is-range-end {
+  background: transparent;
+}
+
+/* ── Hover preview states (same visual but lighter) ─────────────── */
+.drp-cell.is-preview-range {
+  background: var(--ds-brand-subtle);
+  .drp-num { color: var(--ds-brand-dark); }
+}
+
+.drp-cell.is-preview-start,
+.drp-cell.is-preview-end {
+  .drp-num { color: #fff; }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--ds-brand-hover);
+    z-index: 1;
+  }
+}
+
+.drp-cell.is-preview-start {
+  background: linear-gradient(90deg, transparent 50%, var(--ds-brand-subtle) 50%);
+}
+
+.drp-cell.is-preview-end {
+  background: linear-gradient(90deg, var(--ds-brand-subtle) 50%, transparent 50%);
+}
+
+.drp-cell.is-preview-start.is-preview-end {
+  background: transparent;
+}
+
+/* ── Bottom panel ─────────────────────────────────────────────── */
+.drp-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  gap: 12px;
+}
+
+/* Date inputs group */
+.drp-inputs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.drp-input-box {
+  width: 128px;
+  height: 40px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--ds-border-strong);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(16,24,40,.05);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ds-text-heading);
+  background: var(--ds-bg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.is-placeholder { color: var(--ds-text-placeholder); }
+}
+
+.drp-input-sep {
+  font-size: 16px;
+  color: var(--ds-text-muted);
+  flex-shrink: 0;
+}
+
+/* Action buttons */
+.drp-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.drp-btn {
+  height: 36px;
+  padding: 0 20px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s, color .15s;
+}
+
+.drp-btn-cancel {
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border-strong);
+  color: var(--ds-text);
+  min-width: 134px;
+
+  &:hover { background: var(--ds-bg-subtle); }
+}
+
+.drp-btn-apply {
+  background: var(--ds-text);
+  border: 1px solid var(--ds-text);
+  color: #fff;
+  font-weight: 600;
+  min-width: 100px;
+
+  &:hover { background: #1e1e38; }
+}

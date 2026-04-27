@@ -1,0 +1,49 @@
+.option {
+  .left-content {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+
+    & .left-content-img {
+      width: 20px;
+      height: 16px;
+      margin-top: 3px;
+      object-fit: cover;
+    }
+
+    & .left-content-icon {
+      margin-top: 3px;
+    }
+
+    & .child-content {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .supporting-text {
+    color: var(--ds-text-faint);
+  }
+
+  .right-content {
+    color: var(--ds-text-faint);
+  }
+
+  .check-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--ds-brand);
+  }
+
+  .active, .selected {
+    &.light {
+      background: var(--ds-bg-hover);
+    }
+
+    &.dark {
+      background: var(--ds-bg-hover);
+    }
+  }
+}

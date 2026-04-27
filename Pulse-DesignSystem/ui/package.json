@@ -1,0 +1,28 @@
+{
+  "name": "@pulse-ds/ui",
+  "version": "0.1.0",
+  "description": "Pulse Design System — Angular 21+ component library",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bhaskar-vc/Pulse-designsystem.git",
+    "directory": "pulse-ds/ui"
+  },
+  "peerDependencies": {
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@angular/animations": "^21.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@angular/cdk": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

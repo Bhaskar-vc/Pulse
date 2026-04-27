@@ -1,0 +1,135 @@
+@if (customIconSingle) {
+  <div class="flex rounded-full w-fit h-fit" [ngClass]="getTagClass()">
+    <div
+      [ngClass]="{
+        'icon-wrapper-sm': size === undefined || size === 'sm',
+        'icon-wrapper-md': size === 'md',
+        'icon-wrapper-lg': size === 'lg'
+      }"
+    >
+      <ng-content select="[iconSingle]"></ng-content>
+    </div>
+  </div>
+} @else if (iconOnly) {
+  <div class="flex rounded-full w-fit h-fit" [ngClass]="getTagClass()">
+    <div
+      [ngClass]="{
+        'icon-wrapper-sm': size === undefined || size === 'sm',
+        'icon-wrapper-md': size === 'md',
+        'icon-wrapper-lg': size === 'lg'
+      }"
+    >
+      <i class="{{ iconOnly }}"></i>
+    </div>
+  </div>
+} @else {
+  <div
+    #tag
+    class="tag"
+    [ngClass]="getTagClass()"
+    [style]="'width: ' + width + 'px;' + componentStyle"
+    (keyup)="handleKeyUp($event)"
+    (keydown)="handleKeyDown($event)"
+    [attr.tabindex]="focusable ? 0 : -1"
+  >
+    @if (dot) {
+      <div
+        [ngClass]="{
+          'dot-wrapper-sm': size === undefined || size === 'sm',
+          'dot-wrapper-md': size === 'md',
+          'dot-wrapper-lg': size === 'lg'
+        }"
+      >
+        <div class="dot" [ngClass]="getDotColor()"></div>
+      </div>
+    } @else if (image) {
+      <div
+        [ngClass]="{
+          'image-wrapper-sm': size === undefined || size === 'sm',
+          'image-wrapper-md': size === 'md',
+          'image-wrapper-lg': size === 'lg'
+        }"
+      >
+        <img src="{{ image }}" style="width: 16px; height: 16px" alt="icon" />
+      </div>
+    } @else if (iconLeft) {
+      <div
+        [ngClass]="{
+          'left-icon-wrapper-sm': size === undefined || size === 'sm',
+          'left-icon-wrapper-md': size === 'md',
+          'left-icon-wrapper-lg': size === 'lg'
+        }"
+      >
+        <i class="{{ iconLeft }}"></i>
+      </div>
+    } @else if (customIconLeft) {
+      <div
+        [ngClass]="{
+          'left-icon-wrapper-sm': size === undefined || size === 'sm',
+          'left-icon-wrapper-md': size === 'md',
+          'left-icon-wrapper-lg': size === 'lg'
+        }"
+      >
+        <ng-content select="[iconLeft]"></ng-content>
+      </div>
+    } @else {
+      <div
+        class="flex"
+        [ngClass]="{
+          'first-grid-sm': size === undefined || size === 'sm',
+          'first-grid-md': size === 'md',
+          'first-grid-lg': size === 'lg'
+        }"
+      ></div>
+    }
+
+    <div class="text-center text-ellipsis" [class.overflow-hidden]="flexy" [ngClass]="getSize()">
+      <ng-content></ng-content>
+    </div>
+
+    @if (showX) {
+      <div
+        [ngClass]="{
+          'cross-wrapper-sm': size === undefined || size === 'sm',
+          'cross-wrapper-md': size === 'md',
+          'cross-wrapper-lg': size === 'lg'
+        }"
+        (click)="onRemove.emit()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+          <path
+            d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z"
+          />
+        </svg>
+      </div>
+    } @else if (iconRight) {
+      <div
+        [ngClass]="{
+          'right-icon-wrapper-sm': size === undefined || size === 'sm',
+          'right-icon-wrapper-md': size === 'md',
+          'right-icon-wrapper-lg': size === 'lg'
+        }"
+      >
+        <i class="{{ iconRight }}"></i>
+      </div>
+    } @else if (customIconRight) {
+      <div
+        [ngClass]="{
+          'right-icon-wrapper-sm': size === undefined || size === 'sm',
+          'right-icon-wrapper-md': size === 'md',
+          'right-icon-wrapper-lg': size === 'lg'
+        }"
+      >
+        <ng-content select="[iconRight]"></ng-content>
+      </div>
+    } @else {
+      <div
+        [ngClass]="{
+          'third-grid-sm': size === undefined || size === 'sm',
+          'third-grid-md': size === 'md',
+          'third-grid-lg': size === 'lg'
+        }"
+      ></div>
+    }
+  </div>
+}

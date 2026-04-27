@@ -1,0 +1,38 @@
+/* Pagination — Pulse Design System */
+
+:host { display: inline-flex; }
+
+.pgn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--ds-text);
+  font-family: 'Inter', sans-serif;
+}
+
+.pgn-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 8px; border: 1px solid var(--ds-border-strong);
+  background: var(--ds-bg); color: var(--ds-text-body);
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+  flex-shrink: 0; font-size: 13px; font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+.pgn-btn:hover:not(:disabled) {
+  background: var(--ds-brand-subtle); border-color: var(--ds-brand); color: var(--ds-brand-dark);
+}
+.pgn-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pgn-btn.is-active {
+  background: var(--ds-brand); border-color: var(--ds-brand); color: #fff; font-weight: 700;
+}
+
+.pgn-pages { display: flex; align-items: center; gap: 2px; }
+
+.pgn-ellipsis {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  color: var(--ds-text-placeholder); font-size: 13px; user-select: none; letter-spacing: 1px;
+}

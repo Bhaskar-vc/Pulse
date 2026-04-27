@@ -1,0 +1,10 @@
+export * from './lib/dropdown-menu.module';
+export * from './lib/dropdown-menu.component';
+// export * from './lib/dropdown-menu-trigger.directive';
+export * from './lib/dropdown-menu-trigger.component';
+export * from './lib/dropdown-menu-content.component';
+export * from './lib/dropdown-menu-item.component';
+export * from './lib/dropdown-menu-group.component';
+export * from './lib/dropdown-menu-divider.component';
+export * from './lib/dropdown-menu-label.component';
+export * from './lib/dropdown-menu-shortcut.component';

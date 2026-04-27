@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dropdown – Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; font-size: 14px; color: #1d2939; background: #f8f9fb; min-height: 100vh; display: flex; }
+
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #eaeaed; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #eaeaed; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #29294c; }
+.sidebar-logo sub { font-size: 10px; color: #9d9dad; font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+
+.main { margin-left: 240px; flex: 1; }
+.content { max-width: 1100px; padding: 48px 56px; }
+
+.page-header { margin-bottom: 44px; }
+.breadcrumb { font-size: 12px; color: #98a2b3; margin-bottom: 10px; }
+.breadcrumb span { color: #6941c6; }
+.page-title { font-size: 30px; font-weight: 700; color: #101828; letter-spacing: -.4px; line-height: 1.2; }
+.page-desc { margin-top: 8px; font-size: 15px; color: #475467; line-height: 1.6; max-width: 640px; }
+.tag-row { display: flex; gap: 8px; margin-top: 14px; }
+.page-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { color: #027a48; background: #ecfdf5; border-color: #a6f4c5; }
+.tag-a11y { color: #026aa2; background: #e0f2fe; border-color: #b9e6fe; }
+.tag-figma { color: #6941c6; background: #f4f0fd; border-color: #d6bbfb; }
+
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 700; color: #101828; padding-bottom: 12px; border-bottom: 1px solid #e4e7ec; margin-bottom: 20px; }
+.section-desc { font-size: 14px; color: #475467; line-height: 1.7; margin-bottom: 20px; }
+.divider { border: none; border-top: 1px solid #e4e7ec; margin: 0 0 56px; }
+.variant-label { font-size: 12px; font-weight: 600; color: #98a2b3; text-transform: uppercase; letter-spacing: .06em; margin: 20px 0 8px; }
+
+.demo-box { background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 40px 32px; margin-bottom: 12px; }
+.demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.demo-grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+.ds-table-wrap { border: 1px solid #e4e7ec; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-table thead { background: #f9fafb; }
+.ds-table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .05em; }
+.ds-table td { padding: 11px 16px; border-top: 1px solid #f2f4f7; color: #344054; }
+.ds-table tr:hover td { background: #fafbff; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: #f2f4f7; color: #29294c; padding: 2px 6px; border-radius: 4px; }
+
+.code-block { background: #0f172a; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.code-block-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1e293b; border-bottom: 1px solid #334155; }
+.code-block-title { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.copy-btn { font-size: 11px; font-weight: 600; color: #94a3b8; background: none; border: 1px solid #334155; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s, color .15s; }
+.copy-btn:hover { background: #334155; color: #f1f5f9; }
+.copy-btn.copied { color: #34d399; border-color: #34d399; }
+.code-body { padding: 20px; overflow-x: auto; }
+.code-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #e2e8f0; line-height: 1.8; white-space: pre; }
+.c-comment { color: #64748b; } .c-tag { color: #7dd3fc; } .c-attr { color: #a5b4fc; } .c-val { color: #86efac; }
+
+/* ═══════════════════════════════
+   DROPDOWN COMPONENT
+   ═══════════════════════════════ */
+
+/* Trigger button */
+.dd-wrap { position: relative; display: inline-block; }
+
+.dd-trigger {
+  display: inline-flex; align-items: center; justify-content: space-between;
+  gap: 8px; height: 40px; padding: 0 12px;
+  background: #fff; border: 1px solid #d0d5dd; border-radius: 8px;
+  font-family: 'Inter', sans-serif; font-size: 14px; color: #344054; font-weight: 400;
+  cursor: pointer; min-width: 180px; width: 100%;
+  transition: border-color .15s, box-shadow .15s;
+  user-select: none;
+}
+.dd-trigger:hover { border-color: #9e77ed; }
+.dd-trigger:focus-visible { outline: none; border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12); }
+.dd-trigger.is-open { border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12); }
+.dd-trigger.is-disabled { background: #f9fafb; color: #98a2b3; border-color: #e4e7ec; cursor: not-allowed; box-shadow: none; }
+.dd-trigger.is-error { border-color: #f04438; }
+.dd-trigger.is-error:focus-visible, .dd-trigger.is-error.is-open { box-shadow: 0 0 0 3px rgba(240,68,56,.12); }
+
+.dd-placeholder { color: #98a2b3; }
+.dd-selected { color: #344054; }
+.dd-chevron { flex-shrink: 0; transition: transform 0.2s ease; color: #667085; }
+.dd-trigger.is-open .dd-chevron { transform: rotate(180deg); }
+
+/* Menu */
+.dd-menu {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  min-width: 100%; background: #fff;
+  border: 1px solid #e4e7ec; border-radius: 8px;
+  box-shadow: 0 12px 16px -4px rgba(16,24,40,.08), 0 4px 6px -2px rgba(16,24,40,.03);
+  z-index: 1000; padding: 4px 0;
+  opacity: 0; pointer-events: none; transform: translateY(-6px);
+  transition: opacity 0.15s, transform 0.15s;
+}
+.dd-menu.is-open { opacity: 1; pointer-events: all; transform: translateY(0); }
+
+/* Search inside menu */
+.dd-search-wrap { padding: 8px 8px 4px; }
+.dd-search {
+  width: 100%; height: 34px; border: 1px solid #d0d5dd;
+  border-radius: 6px; padding: 0 10px; font-size: 13px;
+  font-family: 'Inter', sans-serif; color: #344054; outline: none;
+  background: #f9fafb;
+}
+.dd-search:focus { border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12); background: #fff; }
+
+/* Group label */
+.dd-group-label {
+  padding: 8px 14px 4px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: #98a2b3;
+}
+
+/* Divider */
+.dd-divider { height: 1px; background: #f2f4f7; margin: 4px 0; }
+
+/* Items */
+.dd-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px; font-size: 14px; color: #344054;
+  cursor: pointer; transition: background .1s;
+  position: relative;
+}
+.dd-item:hover { background: #f9fafb; }
+.dd-item.is-selected { color: #6941c6; font-weight: 500; background: #f9f5ff; }
+.dd-item.is-selected::after {
+  content: '';
+  display: block;
+  width: 16px; height: 16px;
+  margin-left: auto;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none'%3E%3Cpath d='M13 4L6 11 3 8' stroke='%236941c6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.dd-item.is-disabled { color: #d0d5dd; cursor: not-allowed; }
+.dd-item.is-disabled:hover { background: transparent; }
+.dd-item.is-danger { color: #f04438; }
+.dd-item.is-danger:hover { background: #fff1f0; }
+
+/* Item icon */
+.dd-item-icon { width: 18px; height: 18px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.dd-item-avatar { width: 24px; height: 24px; border-radius: 50%; background: #eef2ff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #6941c6; }
+.dd-item-badge { margin-left: auto; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 99px; background: #f4ebff; color: #6941c6; }
+.dd-item-meta { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+.dd-item-label { font-size: 14px; color: #344054; line-height: 1.3; }
+.dd-item-desc { font-size: 12px; color: #98a2b3; line-height: 1.3; }
+
+/* Field wrapper */
+.dd-field { display: flex; flex-direction: column; gap: 6px; }
+.dd-field-label { font-size: 14px; font-weight: 500; color: #344054; }
+.dd-field-hint { font-size: 12px; color: #98a2b3; }
+.dd-field-error { font-size: 12px; color: #f04438; }
+
+/* ══════════════════════════════════
+   ADVANCED VARIANT STYLES
+   ══════════════════════════════════ */
+
+/* ── Icon / Navigation Menu ── */
+.dd-nav-menu {
+  min-width: 210px; background: #fff;
+  border: 1px solid #e4e7ec; border-radius: 12px;
+  box-shadow: 0 12px 16px -4px rgba(16,24,40,.08), 0 4px 6px -2px rgba(16,24,40,.03);
+  overflow: hidden; display: inline-flex; flex-direction: column;
+}
+.dd-nav-header { padding: 14px 16px 12px; border-bottom: 1px solid #f2f4f7; }
+.dd-nav-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #f4ebff; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #6941c6; margin-bottom: 6px; flex-shrink: 0;
+}
+.dd-nav-name { font-size: 13px; font-weight: 600; color: #101828; }
+.dd-nav-email { font-size: 12px; color: #667085; }
+.dd-nav-body { padding: 6px 0; }
+.dd-nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 16px; font-size: 14px; color: #344054;
+  cursor: pointer; transition: background .1s;
+}
+.dd-nav-item:hover { background: #f9fafb; }
+.dd-nav-icon { width: 18px; height: 18px; flex-shrink: 0; color: #667085; display: flex; align-items: center; justify-content: center; }
+.dd-nav-footer { padding: 8px 16px 12px; border-top: 1px solid #f2f4f7; }
+
+/* ── Multi-select tags in trigger ── */
+.dd-tags { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; flex: 1; min-width: 0; }
+.dd-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 99px;
+  background: #f4ebff; color: #6941c6; font-size: 12px; font-weight: 500; white-space: nowrap;
+}
+.dd-tag-x { cursor: pointer; display: flex; align-items: center; color: #9e77ed; background: none; border: none; padding: 0; line-height: 1; }
+.dd-tag-x:hover { color: #6941c6; }
+
+/* ── Checkbox items ── */
+.dd-cb-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px; cursor: pointer; transition: background .1s;
+}
+.dd-cb-item:hover { background: #f9fafb; }
+.dd-cb-label { font-size: 14px; color: #344054; }
+.dd-cb-item.is-checked .dd-cb-label { color: #29294c; }
+
+/* ── Library checkbox control (from checkbox.html) ── */
+.cb-control {
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  background: #fff; border: 1px solid #d0d5dd;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+  position: relative;
+}
+.cb-control.is-checkbox.size-sm { border-radius: 4px; width: 16px; height: 16px; }
+.dd-cb-item:hover .cb-control:not(.is-checked) { border-color: #9e77ed; background: #fcfaff; }
+.cb-control.is-checked { background: #7f56d9; border-color: #7f56d9; }
+.dd-cb-item:hover .cb-control.is-checked { background: #6941c6; border-color: #6941c6; }
+.cb-check-svg { display: none; }
+.cb-control.is-checked .cb-check-svg { display: block; }
+/* Cascade: item-level is-checked drives the control */
+.dd-cb-item.is-checked .cb-control { background: #7f56d9; border-color: #7f56d9; }
+.dd-cb-item.is-checked .cb-check-svg { display: block; }
+.dd-cb-item:hover.is-checked .cb-control { background: #6941c6; border-color: #6941c6; }
+
+/* Select all / selected header row */
+.dd-action-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px 4px;
+}
+.dd-action-btn {
+  font-size: 13px; color: #6941c6; font-weight: 500;
+  background: none; border: none; cursor: pointer; padding: 0; font-family: 'Inter', sans-serif;
+}
+.dd-action-btn:hover { text-decoration: underline; }
+.dd-selected-header {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: #6941c6; padding: 6px 14px 4px;
+  background: #f9f5ff;
+}
+.dd-count-badge {
+  font-size: 11px; background: #f4ebff; color: #6941c6;
+  padding: 1px 7px; border-radius: 99px; font-weight: 600;
+}
+
+/* ── Autocomplete input (multi-autocomplete trigger) ── */
+.dd-ac-wrap { position: relative; display: inline-block; }
+.dd-ac-input {
+  display: flex; align-items: center; gap: 6px;
+  min-height: 40px; padding: 4px 10px 4px 12px;
+  background: #fff; border: 1px solid #d0d5dd; border-radius: 8px;
+  font-family: 'Inter', sans-serif; font-size: 14px; color: #344054;
+  transition: border-color .15s;
+  cursor: text; flex-wrap: wrap; gap: 4px;
+}
+.dd-ac-input.is-focused { border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12); }
+.dd-ac-field {
+  flex: 1; min-width: 80px; border: none; outline: none;
+  font-family: 'Inter', sans-serif; font-size: 14px; color: #344054; background: transparent;
+}
+.dd-ac-clear { cursor: pointer; color: #98a2b3; display: none; align-items: center; background: none; border: none; padding: 0; margin-left: auto; }
+.dd-ac-clear:hover { color: #344054; }
+.dd-ac-input.has-value .dd-ac-clear { display: flex; }
+
+/* ── Single-select Autocomplete: internal search + member items ── */
+.dd-ac-search-wrap { padding: 8px 10px 6px; }
+.dd-ac-search-box {
+  display: flex; align-items: center; gap: 8px;
+  background: #f2f4f7; border-radius: 6px; padding: 7px 10px;
+}
+.dd-ac-search-icon { color: #98a2b3; flex-shrink: 0; display: flex; align-items: center; }
+.dd-ac-search-field {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-size: 14px; font-family: 'Inter', sans-serif; color: #344054;
+}
+.dd-ac-search-field::placeholder { color: #98a2b3; }
+.dd-ac-info { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; }
+.dd-ac-name { font-size: 14px; font-weight: 500; color: #29294c; white-space: nowrap; }
+.dd-ac-handle { font-size: 14px; color: #707087; white-space: nowrap; }
+.dd-ac-check { display: none; flex-shrink: 0; }
+.dd-item.dd-ac-item.is-selected { background: #f2f4f7; color: inherit; font-weight: inherit; }
+.dd-item.dd-ac-item.is-selected::after { display: none; }
+.dd-item.dd-ac-item.is-selected .dd-ac-check { display: block; }
+.dd-item.dd-ac-item.is-selected .dd-ac-name { font-weight: 600; }
+
+/* ── Filter tabs (multi-select autocomplete) ── */
+.dd-filter-tabs {
+  display: flex; border-bottom: 1px solid #f2f4f7; padding: 0 6px; overflow-x: auto;
+  scrollbar-width: none;
+}
+.dd-filter-tab {
+  padding: 8px 10px; font-size: 12px; font-weight: 500; color: #667085;
+  cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap;
+  transition: color .15s, border-color .15s; background: none; border-left: none; border-right: none; border-top: none; font-family: 'Inter', sans-serif;
+}
+.dd-filter-tab.is-active { color: #6941c6; border-bottom-color: #7f56d9; }
+.dd-filter-tab:hover:not(.is-active) { color: #344054; }
+
+/* ── Multi-level drill-down ── */
+.dd-ml-wrap { overflow: hidden; width: 100%; }
+.dd-ml-panels { display: flex; transition: transform 0.22s cubic-bezier(.4,0,.2,1); }
+.dd-ml-panel { flex: 0 0 100%; min-width: 0; padding: 4px 0; }
+.dd-ml-wrap.show-child .dd-ml-panels { transform: translateX(-100%); }
+.dd-ml-back {
+  display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+  font-size: 13px; font-weight: 600; color: #344054; cursor: pointer;
+  border-bottom: 1px solid #f2f4f7; transition: background .1s;
+}
+.dd-ml-back:hover { background: #f9fafb; }
+.dd-ml-back svg { color: #667085; flex-shrink: 0; }
+.dd-ml-parent {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 14px; font-size: 14px; color: #344054;
+  cursor: pointer; transition: background .1s; gap: 8px;
+}
+.dd-ml-parent:hover { background: #f9fafb; }
+.dd-ml-parent.is-active { color: #6941c6; font-weight: 500; }
+
+/* ── Multi Select v2 ── */
+.dd-ms2-trigger {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 4px; min-height: 40px; padding: 6px 12px;
+  background: #fff; border: 1px solid #d0d5dd; border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(16,24,40,.05), 0 0 0 4px #f2f4f7;
+  cursor: pointer; width: 100%; user-select: none;
+  transition: border-color .15s;
+}
+.dd-ms2-trigger:hover { border-color: #9e77ed; }
+.dd-ms2-trigger.is-open { border-color: #7f56d9; box-shadow: 0 1px 2px rgba(16,24,40,.05), 0 0 0 4px #f4ebff; }
+.dd-ms2-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 6px 2px 8px; border-radius: 16px;
+  background: #fcfaff; color: #6941c6;
+  font-size: 12px; font-weight: 500; white-space: nowrap;
+}
+.dd-ms2-tag-x {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px; border-radius: 50%;
+  cursor: pointer; background: none; border: none; padding: 0;
+  color: #9e77ed; font-size: 13px; line-height: 1; font-family: inherit;
+}
+.dd-ms2-tag-x:hover { color: #6941c6; background: #ede9fe; }
+.dd-ms2-more { font-size: 12px; font-weight: 500; color: #6941c6; white-space: nowrap; padding: 2px 4px; }
+.dd-ms2-placeholder { font-size: 14px; color: #98a2b3; }
+.dd-ms2-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 16px; min-height: 36px;
+}
+.dd-ms2-left { display: flex; flex-direction: column; gap: 1px; }
+.dd-ms2-count { font-size: 12px; font-weight: 500; color: #039855; line-height: 1.4; }
+.dd-ms2-hint { font-size: 10px; color: #707087; line-height: 1.4; }
+.dd-ms2-right { display: flex; align-items: center; gap: 8px; cursor: pointer; flex-shrink: 0; }
+
+/* ── Demo layout helpers ── */
+.variants-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: start; }
+.variants-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.variant-col { display: flex; flex-direction: column; gap: 12px; }
+.variant-col-title { font-size: 12px; font-weight: 700; color: #667085; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle"/></a><div><span>Pulse DS</span><sub>v1.0.0 · Design System</sub></div></div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link active">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</aside>
+
+<main class="main">
+<div class="content">
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">DROPDOWN</span>
+    </div>
+  </div>
+    
+    <h1 class="page-title">Dropdown</h1>
+    <p class="page-desc">Dropdowns present a list of options the user can select from. Use them for single selection, grouped items, searchable lists, and action menus.</p>
+    <div class="tag-row">
+      <span class="page-tag tag-stable">Stable</span>
+      <span class="page-tag tag-a11y">Accessible</span>
+      <span class="page-tag tag-figma">Figma Ready</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Overview -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">Click the trigger to open the menu. Arrow keys navigate items, Enter/Space selects, Escape closes. Click outside also closes.</p>
+
+    <div class="demo-box" style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start; min-height:220px;">
+
+      <!-- Basic dropdown -->
+      <div class="dd-wrap" id="dd1-wrap">
+        <button class="dd-trigger" id="dd1" aria-haspopup="listbox" aria-expanded="false" onclick="toggleDd('dd1')">
+          <span class="dd-placeholder" id="dd1-label">Select option</span>
+          <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd1-menu" role="listbox">
+          <div class="dd-item" role="option" onclick="selectDd('dd1','Analytics')">Analytics</div>
+          <div class="dd-item" role="option" onclick="selectDd('dd1','Dashboard')">Dashboard</div>
+          <div class="dd-item" role="option" onclick="selectDd('dd1','Reports')">Reports</div>
+          <div class="dd-item" role="option" onclick="selectDd('dd1','Settings')">Settings</div>
+          <div class="dd-item is-disabled" role="option" aria-disabled="true">Billing (locked)</div>
+        </div>
+      </div>
+
+      <!-- With selected value -->
+      <div class="dd-wrap" id="dd2-wrap">
+        <button class="dd-trigger" id="dd2" aria-haspopup="listbox" aria-expanded="false" onclick="toggleDd('dd2')">
+          <span class="dd-selected" id="dd2-label">Dashboard</span>
+          <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd2-menu" role="listbox">
+          <div class="dd-item" role="option" onclick="selectDd('dd2','Analytics')">Analytics</div>
+          <div class="dd-item is-selected" role="option" aria-selected="true" onclick="selectDd('dd2','Dashboard')">Dashboard</div>
+          <div class="dd-item" role="option" onclick="selectDd('dd2','Reports')">Reports</div>
+          <div class="dd-item" role="option" onclick="selectDd('dd2','Settings')">Settings</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Variants -->
+  <div class="section">
+    <h2 class="section-title">Variants</h2>
+
+    <!-- With icons -->
+    <div class="variant-label">With icons</div>
+    <div class="demo-box" style="min-height:260px;">
+      <div class="dd-wrap" id="dd-icon-wrap" style="min-width:220px;">
+        <button class="dd-trigger" id="dd-icon" aria-haspopup="listbox" aria-expanded="false" onclick="toggleDd('dd-icon')" style="min-width:220px;">
+          <span class="dd-placeholder" id="dd-icon-label">Select action</span>
+          <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd-icon-menu" role="listbox" style="min-width:220px;">
+          <div class="dd-item" role="option" onclick="selectDd('dd-icon','Edit')">
+            <span class="dd-item-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#667085" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            Edit
+          </div>
+          <div class="dd-item" role="option" onclick="selectDd('dd-icon','Duplicate')">
+            <span class="dd-item-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="#667085" stroke-width="1.8"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="#667085" stroke-width="1.8"/></svg></span>
+            Duplicate
+          </div>
+          <div class="dd-item" role="option" onclick="selectDd('dd-icon','Archive')">
+            <span class="dd-item-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><polyline points="21 8 21 21 3 21 3 8" stroke="#667085" stroke-width="1.8" stroke-linecap="round"/><rect x="1" y="3" width="22" height="5" rx="1" stroke="#667085" stroke-width="1.8"/><line x1="10" y1="12" x2="14" y2="12" stroke="#667085" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            Archive
+          </div>
+          <div class="dd-divider"></div>
+          <div class="dd-item is-danger" role="option" onclick="selectDd('dd-icon','Delete')">
+            <span class="dd-item-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#f04438" stroke-width="1.8" stroke-linecap="round"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6M10 11v6M14 11v6" stroke="#f04438" stroke-width="1.8" stroke-linecap="round"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" stroke="#f04438" stroke-width="1.8"/></svg></span>
+            Delete
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grouped with labels -->
+    <div class="variant-label">Grouped with section labels</div>
+    <div class="demo-box" style="min-height:320px;">
+      <div class="dd-wrap" id="dd-group-wrap" style="min-width:220px;">
+        <button class="dd-trigger" id="dd-group" aria-haspopup="listbox" aria-expanded="false" onclick="toggleDd('dd-group')" style="min-width:220px;">
+          <span class="dd-placeholder" id="dd-group-label">Assign to team</span>
+          <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd-group-menu" role="listbox" style="min-width:220px;">
+          <div class="dd-group-label">Design</div>
+          <div class="dd-item" onclick="selectDd('dd-group','Jordan Lee')">
+            <span class="dd-item-avatar">JL</span>
+            <div class="dd-item-meta"><span class="dd-item-label">Jordan Lee</span><span class="dd-item-desc">Senior Designer</span></div>
+          </div>
+          <div class="dd-item" onclick="selectDd('dd-group','Riley Kim')">
+            <span class="dd-item-avatar" style="background:#ecfdf3;color:#039855;">RK</span>
+            <div class="dd-item-meta"><span class="dd-item-label">Riley Kim</span><span class="dd-item-desc">Design Systems</span></div>
+          </div>
+          <div class="dd-divider"></div>
+          <div class="dd-group-label">Engineering</div>
+          <div class="dd-item" onclick="selectDd('dd-group','Alex Morgan')">
+            <span class="dd-item-avatar" style="background:#fdf2fa;color:#c11574;">AM</span>
+            <div class="dd-item-meta"><span class="dd-item-label">Alex Morgan</span><span class="dd-item-desc">Frontend Engineer</span></div>
+          </div>
+          <div class="dd-item" onclick="selectDd('dd-group','Sam Chen')">
+            <span class="dd-item-avatar" style="background:#eff8ff;color:#026aa2;">SC</span>
+            <div class="dd-item-meta"><span class="dd-item-label">Sam Chen</span><span class="dd-item-desc">Full Stack</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- With search -->
+    <div class="variant-label">With search</div>
+    <div class="demo-box" style="min-height:280px;">
+      <div class="dd-wrap" id="dd-search-wrap" style="min-width:240px;">
+        <button class="dd-trigger" id="dd-search" aria-haspopup="listbox" aria-expanded="false" onclick="toggleDd('dd-search')" style="min-width:240px;">
+          <span class="dd-placeholder" id="dd-search-label">Search country…</span>
+          <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd-search-menu" role="listbox" style="min-width:240px;">
+          <div class="dd-search-wrap">
+            <input class="dd-search" type="text" placeholder="Search…" id="dd-search-input" oninput="filterDd(this)">
+          </div>
+          <div id="dd-search-items">
+            <div class="dd-item" data-label="United States" onclick="selectDd('dd-search','United States')">🇺🇸 United States</div>
+            <div class="dd-item" data-label="United Kingdom" onclick="selectDd('dd-search','United Kingdom')">🇬🇧 United Kingdom</div>
+            <div class="dd-item" data-label="Germany" onclick="selectDd('dd-search','Germany')">🇩🇪 Germany</div>
+            <div class="dd-item" data-label="France" onclick="selectDd('dd-search','France')">🇫🇷 France</div>
+            <div class="dd-item" data-label="Japan" onclick="selectDd('dd-search','Japan')">🇯🇵 Japan</div>
+            <div class="dd-item" data-label="India" onclick="selectDd('dd-search','India')">🇮🇳 India</div>
+            <div class="dd-item" data-label="Canada" onclick="selectDd('dd-search','Canada')">🇨🇦 Canada</div>
+            <div class="dd-item" data-label="Australia" onclick="selectDd('dd-search','Australia')">🇦🇺 Australia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- With label + required error -->
+    <div class="variant-label">With label &amp; required error</div>
+    <div class="demo-box" style="display:flex; gap:32px; flex-wrap:wrap; align-items:flex-start; min-height:120px;">
+
+      <!-- Normal labeled dropdown -->
+      <div class="dd-field" style="min-width:220px;">
+        <label class="dd-field-label" for="dd-lbl1">Country <span style="color:#d92d20;">*</span></label>
+        <div class="dd-wrap" id="dd-lbl1-wrap" style="width:100%;">
+          <button class="dd-trigger" id="dd-lbl1" aria-haspopup="listbox" aria-expanded="false" onclick="toggleDd('dd-lbl1')" style="width:100%;">
+            <span class="dd-placeholder" id="dd-lbl1-label">Select country</span>
+            <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dd-menu" id="dd-lbl1-menu" role="listbox" style="min-width:220px;">
+            <div class="dd-item" onclick="selectDd('dd-lbl1','United States')">🇺🇸 United States</div>
+            <div class="dd-item" onclick="selectDd('dd-lbl1','United Kingdom')">🇬🇧 United Kingdom</div>
+            <div class="dd-item" onclick="selectDd('dd-lbl1','Germany')">🇩🇪 Germany</div>
+            <div class="dd-item" onclick="selectDd('dd-lbl1','France')">🇫🇷 France</div>
+            <div class="dd-item" onclick="selectDd('dd-lbl1','Japan')">🇯🇵 Japan</div>
+          </div>
+        </div>
+        <span class="dd-field-hint">Choose your billing country.</span>
+      </div>
+
+      <!-- Error state labeled dropdown -->
+      <div class="dd-field" style="min-width:220px;" id="dd-err1-field">
+        <label class="dd-field-label" for="dd-err1">Department <span style="color:#d92d20;">*</span></label>
+        <div class="dd-wrap" id="dd-err1-wrap" style="width:100%;">
+          <button class="dd-trigger is-error" id="dd-err1" aria-haspopup="listbox" aria-expanded="false" aria-describedby="dd-err1-msg" onclick="toggleDd('dd-err1')" style="width:100%;">
+            <span class="dd-placeholder" id="dd-err1-label">Select department</span>
+            <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dd-menu" id="dd-err1-menu" role="listbox" style="min-width:220px;">
+            <div class="dd-item" onclick="selectDd('dd-err1','Engineering'); clearDdError('dd-err1')">Engineering</div>
+            <div class="dd-item" onclick="selectDd('dd-err1','Design'); clearDdError('dd-err1')">Design</div>
+            <div class="dd-item" onclick="selectDd('dd-err1','Marketing'); clearDdError('dd-err1')">Marketing</div>
+            <div class="dd-item" onclick="selectDd('dd-err1','Product'); clearDdError('dd-err1')">Product</div>
+            <div class="dd-item" onclick="selectDd('dd-err1','Operations'); clearDdError('dd-err1')">Operations</div>
+          </div>
+        </div>
+        <span class="dd-field-error" id="dd-err1-msg">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="vertical-align:-1px; margin-right:3px;"><circle cx="6" cy="6" r="5.25" stroke="#f04438" stroke-width="1.5"/><line x1="6" y1="3.5" x2="6" y2="6.5" stroke="#f04438" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="8.5" r="0.75" fill="#f04438"/></svg>
+          This field is required.
+        </span>
+      </div>
+
+      <!-- With hint -->
+      <div class="dd-field" style="min-width:220px;">
+        <label class="dd-field-label" for="dd-lbl2">Role</label>
+        <div class="dd-wrap" id="dd-lbl2-wrap" style="width:100%;">
+          <button class="dd-trigger" id="dd-lbl2" aria-haspopup="listbox" aria-expanded="false" onclick="toggleDd('dd-lbl2')" style="width:100%;">
+            <span class="dd-placeholder" id="dd-lbl2-label">Select role</span>
+            <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dd-menu" id="dd-lbl2-menu" role="listbox" style="min-width:220px;">
+            <div class="dd-item" onclick="selectDd('dd-lbl2','Admin')">Admin</div>
+            <div class="dd-item" onclick="selectDd('dd-lbl2','Editor')">Editor</div>
+            <div class="dd-item" onclick="selectDd('dd-lbl2','Viewer')">Viewer</div>
+            <div class="dd-item" onclick="selectDd('dd-lbl2','Guest')">Guest</div>
+          </div>
+        </div>
+        <span class="dd-field-hint">Controls what this user can access.</span>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Advanced Variants -->
+  <div class="section">
+    <h2 class="section-title">Advanced Variants</h2>
+    <p class="section-desc">Specialized dropdown patterns for navigation menus, single/multi selection with search, autocomplete, and hierarchical data.</p>
+
+    <!-- ── Icon Menu ── -->
+    <div class="variant-label">Icon Menu</div>
+    <div class="demo-box" style="display:flex; gap:40px; align-items:flex-start; flex-wrap:wrap;">
+      <!-- Trigger + static open menu -->
+      <div>
+        <div class="dd-wrap" id="nav-dd-wrap">
+          <button class="dd-trigger is-open" id="nav-dd" style="min-width:160px;" onclick="toggleDd('nav-dd')">
+            <span style="display:flex;align-items:center;gap:8px;">
+              <span style="width:24px;height:24px;border-radius:50%;background:#f4ebff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6941c6;flex-shrink:0;">OR</span>
+              <span class="dd-selected">Olivia Rhye</span>
+            </span>
+            <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" style="transform:rotate(180deg)"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dd-menu is-open" id="nav-dd-menu" style="min-width:220px;">
+            <div class="dd-nav-header" style="display:flex;align-items:center;gap:10px;">
+              <div class="dd-nav-avatar">OR</div>
+              <div><div class="dd-nav-name">Olivia Rhye</div><div class="dd-nav-email">olivia@pulse.io</div></div>
+            </div>
+            <div class="dd-nav-body">
+              <div class="dd-nav-item">
+                <span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                View profile
+              </div>
+              <div class="dd-nav-item">
+                <span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18" stroke="currentColor" stroke-width="1.5"/></svg></span>
+                Workspace shortcuts
+              </div>
+              <div class="dd-nav-item">
+                <span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                Company crafter
+              </div>
+              <div class="dd-nav-item">
+                <span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                Team
+              </div>
+              <div class="dd-divider"></div>
+              <div class="dd-nav-item">
+                <span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.5"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                Emergency
+              </div>
+              <div class="dd-nav-item">
+                <span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/></svg></span>
+                Slack Community
+              </div>
+              <div class="dd-nav-item">
+                <span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                Support
+              </div>
+              <div class="dd-nav-item">
+                <span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                API
+              </div>
+              <div class="dd-divider"></div>
+              <div class="dd-nav-item" style="color:#f04438;">
+                <span class="dd-nav-icon" style="color:#f04438;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                Log out
+              </div>
+            </div>
+            <div class="dd-nav-footer">
+              <button style="width:100%; height:36px; background:#29294c; color:#fff; border:none; border-radius:8px; font-family:'Inter',sans-serif; font-size:14px; font-weight:500; cursor:pointer;">Button Label</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Static card view -->
+      <div class="dd-nav-menu" style="position:relative; flex-shrink:0;">
+        <div class="dd-nav-header" style="display:flex;align-items:center;gap:10px;">
+          <div class="dd-nav-avatar">OR</div>
+          <div><div class="dd-nav-name">Olivia Rhye</div><div class="dd-nav-email">olivia@pulse.io</div></div>
+        </div>
+        <div class="dd-nav-body">
+          <div class="dd-nav-item"><span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>View profile</div>
+          <div class="dd-nav-item"><span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18" stroke="currentColor" stroke-width="1.5"/></svg></span>Workspace shortcuts</div>
+          <div class="dd-nav-item"><span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/></svg></span>Team</div>
+          <div class="dd-divider"></div>
+          <div class="dd-nav-item"><span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.5"/></svg></span>Emergency</div>
+          <div class="dd-nav-item"><span class="dd-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Support</div>
+          <div class="dd-divider"></div>
+          <div class="dd-nav-item" style="color:#f04438;"><span class="dd-nav-icon" style="color:#f04438;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Log out</div>
+        </div>
+        <div class="dd-nav-footer">
+          <button style="width:100%; height:36px; background:#29294c; color:#fff; border:none; border-radius:8px; font-family:'Inter',sans-serif; font-size:14px; font-weight:500; cursor:pointer;">Button Label</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Single Select ── -->
+    <div class="variant-label">Single Select</div>
+    <div class="demo-box" style="display:flex; gap:40px; flex-wrap:wrap; align-items:flex-start;">
+      <!-- Trigger -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:12px;font-weight:600;color:#667085;">Closed</div>
+        <div class="dd-wrap">
+          <button class="dd-trigger" id="ss1" style="min-width:200px;" onclick="toggleDd('ss1')">
+            <span class="dd-selected" id="ss1-label">Olivia Rhye</span>
+            <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dd-menu" id="ss1-menu" style="min-width:220px;">
+            <div class="dd-search-wrap"><input class="dd-search" placeholder="Search items" oninput="filterSingle(this, 'ss1-list')"/></div>
+            <div id="ss1-list">
+              <div class="dd-item is-selected" data-val="Olivia Rhye" onclick="selectSingle('ss1','Olivia Rhye')">Olivia Rhye</div>
+              <div class="dd-item" data-val="Phoenix Baker" onclick="selectSingle('ss1','Phoenix Baker')">Phoenix Baker</div>
+              <div class="dd-item" data-val="Lana Steiner" onclick="selectSingle('ss1','Lana Steiner')">Lana Steiner</div>
+              <div class="dd-item" data-val="Candice Wu" onclick="selectSingle('ss1','Candice Wu')">Candice Wu</div>
+              <div class="dd-item" data-val="Demi Wilkinson" onclick="selectSingle('ss1','Demi Wilkinson')">Demi Wilkinson</div>
+              <div class="dd-item" data-val="Natali Craig" onclick="selectSingle('ss1','Natali Craig')">Natali Craig</div>
+              <div class="dd-item" data-val="Andi Lane" onclick="selectSingle('ss1','Andi Lane')">Andi Lane</div>
+              <div class="dd-item" data-val="Kate Morrison" onclick="selectSingle('ss1','Kate Morrison')">Kate Morrison</div>
+              <div class="dd-item" data-val="Ana Wright" onclick="selectSingle('ss1','Ana Wright')">Ana Wright</div>
+              <div class="dd-item" data-val="Eve Leary" onclick="selectSingle('ss1','Eve Leary')">Eve Leary</div>
+              <div class="dd-item" data-val="Zara Vayo" onclick="selectSingle('ss1','Zara Vayo')">Zara Vayo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Static open preview -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:12px;font-weight:600;color:#667085;">Open (static preview)</div>
+        <div style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;box-shadow:0 12px 16px -4px rgba(16,24,40,.08);min-width:220px;padding:4px 0;">
+          <div class="dd-search-wrap"><input class="dd-search" placeholder="Search items"/></div>
+          <div class="dd-item" style="display:flex;align-items:center;justify-content:space-between;">
+            <span>Olivia Rhye</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="dd-item">Phoenix Baker</div>
+          <div class="dd-item">Lana Steiner</div>
+          <div class="dd-item">Candice Wu</div>
+          <div class="dd-item">Demi Wilkinson</div>
+          <div class="dd-item">Natali Craig</div>
+          <div class="dd-item">Andi Lane</div>
+          <div class="dd-item">Kate Morrison</div>
+          <div class="dd-item">Ana Wright</div>
+          <div class="dd-item">Eve Leary</div>
+          <div class="dd-item">Zara Vayo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Multi Select ── -->
+    <div class="variant-label">Multi Select</div>
+    <div class="demo-box" style="display:flex; gap:48px; flex-wrap:wrap; align-items:flex-start;">
+
+      <!-- Interactive -->
+      <div style="display:flex; flex-direction:column; gap:8px; width:280px;">
+        <div class="variant-col-title">Interactive</div>
+        <div class="dd-wrap" id="ms2-wrap" style="width:100%;">
+          <button class="dd-trigger" id="ms2-dd" style="width:100%;" onclick="toggleDd('ms2-dd')" aria-haspopup="listbox" aria-expanded="false">
+            <span id="ms2-trigger-label" class="dd-placeholder">Select items</span>
+            <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dd-menu" id="ms2-dd-menu" style="width:280px; padding:0; overflow:hidden;">
+            <div class="dd-ms2-header">
+              <div class="dd-ms2-left">
+                <span class="dd-ms2-count" id="ms2-sel-count">0 Selected</span>
+                <span class="dd-ms2-hint">Select minimum of 2</span>
+              </div>
+              <div class="dd-ms2-right" onclick="event.stopPropagation(); ms2ToggleAll()">
+                <div class="dd-cb" id="ms2-all-cb"></div>
+                <span style="font-size:12px; font-weight:500; color:#29294c;">Select All</span>
+              </div>
+            </div>
+            <div class="dd-divider"></div>
+            <div style="max-height:320px; overflow-y:auto;">
+              <div class="dd-cb-item" data-val="List item 1" onclick="ms2Toggle(this)" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+              <div class="dd-cb-item" data-val="List item 2" onclick="ms2Toggle(this)" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+              <div class="dd-cb-item is-checked" data-val="List item first" onclick="ms2Toggle(this)" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item first</span></div>
+              <div class="dd-divider"></div>
+              <div class="dd-cb-item is-checked" data-val="Second item" onclick="ms2Toggle(this)" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+              <div class="dd-cb-item is-checked" data-val="Third item" onclick="ms2Toggle(this)" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+              <div class="dd-divider"></div>
+              <div class="dd-cb-item" data-val="Item 6" onclick="ms2Toggle(this)" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+              <div class="dd-cb-item" data-val="Item 7" onclick="ms2Toggle(this)" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+              <div class="dd-cb-item" data-val="Item 8" onclick="ms2Toggle(this)" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+              <div class="dd-cb-item" data-val="Item 9" onclick="ms2Toggle(this)" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+              <div class="dd-divider"></div>
+              <div class="dd-cb-item" data-val="Item 10" onclick="ms2Toggle(this)" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Static open preview -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div class="variant-col-title">Open (static preview)</div>
+        <div class="dd-ms2-trigger" style="width:280px; margin-bottom:6px; pointer-events:none;">
+          <span class="dd-ms2-tag">List item first <button class="dd-ms2-tag-x">×</button></span>
+          <span class="dd-ms2-tag">List item first <button class="dd-ms2-tag-x">×</button></span>
+          <span class="dd-ms2-tag">List item first <button class="dd-ms2-tag-x">×</button></span>
+          <span class="dd-ms2-more">+ 2 more</span>
+        </div>
+        <div style="background:#fff; border:1px solid #f2f4f7; border-radius:8px; box-shadow:0 20px 24px -4px rgba(16,24,40,.08),0 8px 8px -4px rgba(16,24,40,.03); overflow:hidden; width:280px;">
+          <div class="dd-ms2-header">
+            <div class="dd-ms2-left">
+              <span class="dd-ms2-count">5 Selected</span>
+              <span class="dd-ms2-hint">Select minimum of 2</span>
+            </div>
+            <div class="dd-ms2-right">
+              <span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span style="font-size:12px;font-weight:500;color:#29294c;">Select All</span>
+            </div>
+          </div>
+          <div class="dd-divider"></div>
+          <div class="dd-cb-item" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+          <div class="dd-cb-item" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+          <div class="dd-cb-item is-checked" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item first</span></div>
+          <div class="dd-divider"></div>
+          <div class="dd-cb-item is-checked" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+          <div class="dd-cb-item is-checked" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+          <div class="dd-divider"></div>
+          <div class="dd-cb-item" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+          <div class="dd-cb-item" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+          <div class="dd-cb-item" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+          <div class="dd-cb-item" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+          <div class="dd-divider"></div>
+          <div class="dd-cb-item" style="padding:10px 16px;gap:12px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List item</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Single-select Autocomplete ── -->
+    <div class="variant-label">Single-select Autocomplete</div>
+    <div class="demo-box" style="display:flex; gap:40px; flex-wrap:wrap; align-items:flex-start;">
+      <!-- Interactive -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:12px;font-weight:600;color:#667085;">Interactive</div>
+        <div class="dd-wrap" id="ac1-wrap">
+          <button class="dd-trigger" id="ac1" onclick="toggleAcDd('ac1')" aria-expanded="false" style="min-width:240px;">
+            <span id="ac1-label" class="dd-placeholder">Select team member</span>
+            <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dd-menu" id="ac1-dd-menu" style="min-width:240px; max-height:320px; overflow-y:auto;">
+            <div class="dd-ac-search-wrap">
+              <div class="dd-ac-search-box">
+                <span class="dd-ac-search-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="#98a2b3" stroke-width="1.5"/><path d="M10.5 10.5L13.5 13.5" stroke="#98a2b3" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <input id="ac1-field" class="dd-ac-search-field" placeholder="Search" oninput="filterAc('ac1')" autocomplete="off"/>
+              </div>
+            </div>
+            <div id="ac1-list">
+              <div class="dd-item dd-ac-item" data-val="Olivia Rhye" data-handle="olivia" onclick="selectAc('ac1','Olivia Rhye')"><div class="dd-ac-info"><span class="dd-ac-name">Olivia Rhye</span><span class="dd-ac-handle">@olivia</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="dd-item dd-ac-item" data-val="Phoenix Baker" data-handle="phoenix" onclick="selectAc('ac1','Phoenix Baker')"><div class="dd-ac-info"><span class="dd-ac-name">Phoenix Baker</span><span class="dd-ac-handle">@phoenix</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="dd-item dd-ac-item" data-val="Lana Steiner" data-handle="lana" onclick="selectAc('ac1','Lana Steiner')"><div class="dd-ac-info"><span class="dd-ac-name">Lana Steiner</span><span class="dd-ac-handle">@lana</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="dd-item dd-ac-item" data-val="Candice Wu" data-handle="candice" onclick="selectAc('ac1','Candice Wu')"><div class="dd-ac-info"><span class="dd-ac-name">Candice Wu</span><span class="dd-ac-handle">@candice</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="dd-item dd-ac-item" data-val="Demi Wilkinson" data-handle="demi" onclick="selectAc('ac1','Demi Wilkinson')"><div class="dd-ac-info"><span class="dd-ac-name">Demi Wilkinson</span><span class="dd-ac-handle">@demi</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="dd-item dd-ac-item" data-val="Natali Craig" data-handle="natali" onclick="selectAc('ac1','Natali Craig')"><div class="dd-ac-info"><span class="dd-ac-name">Natali Craig</span><span class="dd-ac-handle">@natali</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="dd-item dd-ac-item" data-val="Andi Lane" data-handle="andi" onclick="selectAc('ac1','Andi Lane')"><div class="dd-ac-info"><span class="dd-ac-name">Andi Lane</span><span class="dd-ac-handle">@andi</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="dd-item dd-ac-item" data-val="Kate Morrison" data-handle="kate" onclick="selectAc('ac1','Kate Morrison')"><div class="dd-ac-info"><span class="dd-ac-name">Kate Morrison</span><span class="dd-ac-handle">@kate</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="dd-item dd-ac-item" data-val="Ana Wright" data-handle="ana" onclick="selectAc('ac1','Ana Wright')"><div class="dd-ac-info"><span class="dd-ac-name">Ana Wright</span><span class="dd-ac-handle">@ana</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="dd-item dd-ac-item" data-val="Eve Leary" data-handle="eve" onclick="selectAc('ac1','Eve Leary')"><div class="dd-ac-info"><span class="dd-ac-name">Eve Leary</span><span class="dd-ac-handle">@eve</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="dd-item dd-ac-item" data-val="Zara Vayo" data-handle="zara" onclick="selectAc('ac1','Zara Vayo')"><div class="dd-ac-info"><span class="dd-ac-name">Zara Vayo</span><span class="dd-ac-handle">@zara</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Static previews -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:12px;font-weight:600;color:#667085;">Closed (static)</div>
+        <button class="dd-trigger" style="min-width:240px; pointer-events:none;">
+          <span class="dd-placeholder">Select team member</span>
+          <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:12px;font-weight:600;color:#667085;">Open (static)</div>
+        <div style="position:relative; min-width:240px;">
+          <button class="dd-trigger is-open" style="min-width:240px; pointer-events:none;">
+            <span class="dd-selected">Olivia Rhye</span>
+            <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" style="transform:rotate(180deg);" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dd-menu is-open" style="min-width:240px; max-height:280px; overflow-y:auto; position:static; margin-top:4px;">
+            <div class="dd-ac-search-wrap">
+              <div class="dd-ac-search-box">
+                <span class="dd-ac-search-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="#98a2b3" stroke-width="1.5"/><path d="M10.5 10.5L13.5 13.5" stroke="#98a2b3" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <input class="dd-ac-search-field" placeholder="Search" style="pointer-events:none;" readonly/>
+              </div>
+            </div>
+            <div class="dd-item dd-ac-item is-selected"><div class="dd-ac-info"><span class="dd-ac-name">Olivia Rhye</span><span class="dd-ac-handle">@olivia</span></div><svg class="dd-ac-check" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11 3 8" stroke="#6941c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="dd-item dd-ac-item"><div class="dd-ac-info"><span class="dd-ac-name">Phoenix Baker</span><span class="dd-ac-handle">@phoenix</span></div></div>
+            <div class="dd-item dd-ac-item"><div class="dd-ac-info"><span class="dd-ac-name">Lana Steiner</span><span class="dd-ac-handle">@lana</span></div></div>
+            <div class="dd-item dd-ac-item"><div class="dd-ac-info"><span class="dd-ac-name">Candice Wu</span><span class="dd-ac-handle">@candice</span></div></div>
+            <div class="dd-item dd-ac-item"><div class="dd-ac-info"><span class="dd-ac-name">Demi Wilkinson</span><span class="dd-ac-handle">@demi</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Multi-select Autocomplete ── -->
+    <div class="variant-label">Multi-select Autocomplete</div>
+    <div class="demo-box" style="display:flex; gap:40px; flex-wrap:wrap; align-items:flex-start;">
+      <!-- Interactive -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:12px;font-weight:600;color:#667085;">Interactive</div>
+        <div class="dd-ac-wrap" id="acm1-wrap" style="width:260px;">
+          <div class="dd-ac-input is-focused" style="width:100%; min-height:42px; box-sizing:border-box;" onclick="document.getElementById('acm1-field').focus()">
+            <div id="acm1-tags" style="display:flex;flex-wrap:wrap;gap:4px;align-items:center;flex:1;min-width:0;">
+              <span class="dd-tag">List Item 1 <button class="dd-tag-x" onclick="event.stopPropagation();removeAcTag('acm1','List Item 1')">×</button></span>
+              <span class="dd-tag">List Item 2 <button class="dd-tag-x" onclick="event.stopPropagation();removeAcTag('acm1','List Item 2')">×</button></span>
+            </div>
+            <input class="dd-ac-field" id="acm1-field" placeholder="" oninput="filterAcMulti('acm1')" onfocus="openAcMenu('acm1')" autocomplete="off" style="min-width:60px;"/>
+          </div>
+          <div class="dd-menu is-open" id="acm1-menu" style="width:100%; max-height:280px; overflow-y:auto;" onmousedown="event.preventDefault()">
+            <div class="dd-filter-tabs" id="acm1-tabs">
+              <button class="dd-filter-tab is-active" onclick="switchAcTab('acm1','all',this)">All</button>
+              <button class="dd-filter-tab" onclick="switchAcTab('acm1','selected',this)">Selected <span class="dd-count-badge" id="acm1-sel-count">2</span></button>
+              <button class="dd-filter-tab" onclick="switchAcTab('acm1','unselected',this)">Not Selected</button>
+            </div>
+            <div class="dd-action-row">
+              <span style="font-size:13px;color:#667085;" id="acm1-count">6 items</span>
+              <button class="dd-action-btn" onclick="selectAllAcMulti('acm1')">Select All</button>
+            </div>
+            <div id="acm1-list">
+              <div class="dd-cb-item is-checked" data-val="List Item 1" onclick="toggleAcCb(this,'acm1')"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 1</span></div>
+              <div class="dd-cb-item is-checked" data-val="List Item 2" onclick="toggleAcCb(this,'acm1')"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 2</span></div>
+              <div class="dd-cb-item" data-val="List Item 3" onclick="toggleAcCb(this,'acm1')"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 3</span></div>
+              <div class="dd-cb-item" data-val="List Item 4" onclick="toggleAcCb(this,'acm1')"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 4</span></div>
+              <div class="dd-cb-item" data-val="List Item 5" onclick="toggleAcCb(this,'acm1')"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 5</span></div>
+              <div class="dd-cb-item" data-val="List Item 6" onclick="toggleAcCb(this,'acm1')"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 6</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Static preview -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:12px;font-weight:600;color:#667085;">Open (static preview)</div>
+        <div style="min-width:260px;">
+          <div class="dd-ac-input is-focused" style="min-height:42px;margin-bottom:6px;">
+            <div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center;flex:1;">
+              <span class="dd-tag">List Item 1 <span class="dd-tag-x">×</span></span>
+              <span class="dd-tag">List Item 2 <span class="dd-tag-x">×</span></span>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;box-shadow:0 12px 16px -4px rgba(16,24,40,.08);padding:0;overflow:hidden;">
+            <div class="dd-filter-tabs">
+              <button class="dd-filter-tab is-active">All</button>
+              <button class="dd-filter-tab">Selected <span class="dd-count-badge">2</span></button>
+              <button class="dd-filter-tab">Not Selected <span class="dd-count-badge">4</span></button>
+            </div>
+            <div class="dd-action-row"><span style="font-size:13px;color:#667085;">6 items</span><button class="dd-action-btn">Select All</button></div>
+            <div class="dd-cb-item is-checked"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 1</span></div>
+            <div class="dd-cb-item is-checked"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 2</span></div>
+            <div class="dd-cb-item"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 3</span></div>
+            <div class="dd-cb-item"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 4</span></div>
+            <div class="dd-cb-item"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 5</span></div>
+            <div class="dd-cb-item"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 6</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Multi-level Select ── -->
+    <div class="variant-label">Multi Level Select</div>
+    <div class="demo-box" style="display:flex; gap:40px; flex-wrap:wrap; align-items:flex-start;">
+
+      <!-- Interactive drill-down -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div class="variant-col-title">Interactive</div>
+        <div class="dd-wrap" id="ml1-wrap">
+          <button class="dd-trigger" id="ml1-dd" style="min-width:220px;" onclick="toggleDd('ml1-dd')">
+            <span class="dd-placeholder" id="ml1-label">Select items</span>
+            <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dd-menu" id="ml1-dd-menu" style="min-width:220px; padding:0; overflow:hidden;">
+            <div class="dd-ml-wrap" id="ml1-ml">
+              <div class="dd-ml-panels">
+                <!-- Level 1 -->
+                <div class="dd-ml-panel">
+                  <div class="dd-cb-item" data-val="List Item 1" onclick="toggleCbItem(this,'ml1')" style="padding:9px 14px;gap:10px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 1</span></div>
+                  <div class="dd-cb-item" data-val="List Item 2" onclick="toggleCbItem(this,'ml1')" style="padding:9px 14px;gap:10px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 2</span></div>
+                  <div class="dd-cb-item" data-val="List Item 3" onclick="toggleCbItem(this,'ml1')" style="padding:9px 14px;gap:10px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 3</span></div>
+                  <div class="dd-divider"></div>
+                  <div class="dd-ml-parent" id="ml1-parent-design" onclick="mlDrillIn('ml1-ml','Design',['UI Design','UX Research','Motion','Brand'])">
+                    <span>Design</span>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="dd-ml-parent" id="ml1-parent-eng" onclick="mlDrillIn('ml1-ml','Engineering',['Frontend','Backend','DevOps','QA'])">
+                    <span>Engineering</span>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="dd-ml-parent" id="ml1-parent-mkt" onclick="mlDrillIn('ml1-ml','Marketing',['Content','SEO','Paid Media','Brand Strategy'])">
+                    <span>Marketing</span>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+                <!-- Level 2 (populated by JS) -->
+                <div class="dd-ml-panel">
+                  <div class="dd-ml-back" onclick="mlGoBack('ml1-ml')">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span id="ml1-ml-back-label">Design</span>
+                  </div>
+                  <div id="ml1-ml-child-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Static: Level 1 open -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div class="variant-col-title">Level 1 (static)</div>
+        <div style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;box-shadow:0 12px 16px -4px rgba(16,24,40,.08);min-width:220px;padding:4px 0;">
+          <div class="dd-cb-item" style="padding:9px 14px;gap:10px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 1</span></div>
+          <div class="dd-cb-item is-checked" style="padding:9px 14px;gap:10px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 2</span></div>
+          <div class="dd-cb-item" style="padding:9px 14px;gap:10px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">List Item 3</span></div>
+          <div class="dd-divider"></div>
+          <div class="dd-ml-parent">Design <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-left:auto;"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="dd-ml-parent">Engineering <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-left:auto;"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="dd-ml-parent">Marketing <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-left:auto;"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+      </div>
+
+      <!-- Static: Level 2 open (drilled into Design) -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div class="variant-col-title">Level 2 — Design (static)</div>
+        <div style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;box-shadow:0 12px 16px -4px rgba(16,24,40,.08);min-width:220px;padding:0;overflow:hidden;">
+          <div class="dd-ml-back" style="cursor:default;">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Design</span>
+          </div>
+          <div style="padding:4px 0;">
+            <div class="dd-cb-item is-checked" style="padding:9px 14px;gap:10px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">UI Design</span></div>
+            <div class="dd-cb-item" style="padding:9px 14px;gap:10px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">UX Research</span></div>
+            <div class="dd-cb-item" style="padding:9px 14px;gap:10px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">Motion</span></div>
+            <div class="dd-cb-item" style="padding:9px 14px;gap:10px;"><span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dd-cb-label">Brand</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- States -->
+  <div class="section">
+    <h2 class="section-title">States</h2>
+
+    <div class="demo-box">
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:24px;">
+
+        <div class="dd-field">
+          <span class="dd-field-label">Default</span>
+          <div class="dd-wrap" style="width:100%;">
+            <button class="dd-trigger" style="width:100%;" onclick="toggleDd('dd-s1')">
+              <span class="dd-placeholder">Select option</span>
+              <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="dd-menu" id="dd-s1-menu">
+              <div class="dd-item" onclick="selectDdField(this, 'dd-s1-menu')">Option A</div>
+              <div class="dd-item" onclick="selectDdField(this, 'dd-s1-menu')">Option B</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dd-field">
+          <span class="dd-field-label">With value</span>
+          <div class="dd-wrap" style="width:100%;">
+            <button class="dd-trigger" style="width:100%;">
+              <span class="dd-selected">Analytics</span>
+              <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="dd-field">
+          <span class="dd-field-label">Open / Focused</span>
+          <div class="dd-wrap" style="width:100%;">
+            <button class="dd-trigger is-open" style="width:100%;">
+              <span class="dd-placeholder">Select option</span>
+              <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" style="transform:rotate(180deg);"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="dd-field">
+          <span class="dd-field-label">Disabled</span>
+          <div class="dd-wrap" style="width:100%;">
+            <button class="dd-trigger is-disabled" style="width:100%;" disabled>
+              <span class="dd-placeholder">Select option</span>
+              <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="dd-field">
+          <span class="dd-field-label">Error</span>
+          <div class="dd-wrap" style="width:100%;">
+            <button class="dd-trigger is-error" style="width:100%;">
+              <span class="dd-placeholder">Select option</span>
+              <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <span class="dd-field-error">This field is required.</span>
+        </div>
+
+        <div class="dd-field">
+          <span class="dd-field-label">With hint</span>
+          <div class="dd-wrap" style="width:100%;">
+            <button class="dd-trigger" style="width:100%;">
+              <span class="dd-selected">USD — Dollar</span>
+              <svg class="dd-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <span class="dd-field-hint">Used for invoicing and billing.</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CSS Classes -->
+  <div class="section">
+    <h2 class="section-title">CSS Classes</h2>
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <thead><tr><th>Class</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>.dd-wrap</code></td><td>Position: relative container — scopes the floating menu</td></tr>
+          <tr><td><code>.dd-trigger</code></td><td>Button-style trigger — full width, 40px height</td></tr>
+          <tr><td><code>.dd-trigger.is-open</code></td><td>Active / focused state — purple border + ring</td></tr>
+          <tr><td><code>.dd-trigger.is-disabled</code></td><td>Disabled state — grey background, no events</td></tr>
+          <tr><td><code>.dd-trigger.is-error</code></td><td>Error state — red border</td></tr>
+          <tr><td><code>.dd-menu</code></td><td>Floating options list — absolutely positioned below trigger</td></tr>
+          <tr><td><code>.dd-menu.is-open</code></td><td>Visible state — opacity 1, pointer events enabled</td></tr>
+          <tr><td><code>.dd-item</code></td><td>Single option row — 9px 14px padding, hover grey</td></tr>
+          <tr><td><code>.dd-item.is-selected</code></td><td>Active selection — purple text + checkmark</td></tr>
+          <tr><td><code>.dd-item.is-disabled</code></td><td>Non-interactive option — grey text</td></tr>
+          <tr><td><code>.dd-item.is-danger</code></td><td>Destructive action — red text, red hover background</td></tr>
+          <tr><td><code>.dd-group-label</code></td><td>Section heading inside the menu</td></tr>
+          <tr><td><code>.dd-divider</code></td><td>1px horizontal separator between groups</td></tr>
+          <tr><td><code>.dd-search</code></td><td>Text input for filtering options inline</td></tr>
+          <tr><td><code>.dd-item-icon</code></td><td>18px icon container before item label</td></tr>
+          <tr><td><code>.dd-item-avatar</code></td><td>24px circular initials avatar</td></tr>
+          <tr><td><code>.dd-item-badge</code></td><td>Pill badge pushed to the right inside an item</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Code -->
+  <div class="section">
+    <h2 class="section-title">Code</h2>
+    <div class="code-block">
+      <div class="code-block-header"><span class="code-block-title">dropdown.html</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <div class="code-body"><pre><span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"dd-wrap"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;button</span> <span class="c-attr">class=</span><span class="c-val">"dd-trigger"</span>
+          <span class="c-attr">aria-haspopup=</span><span class="c-val">"listbox"</span>
+          <span class="c-attr">aria-expanded=</span><span class="c-val">"false"</span>
+          <span class="c-attr">onclick=</span><span class="c-val">"toggleDd('my-dd')"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"dd-placeholder"</span><span class="c-tag">&gt;</span>Select option<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-comment">&lt;!-- chevron SVG --&gt;</span>
+  <span class="c-tag">&lt;/button&gt;</span>
+
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"dd-menu"</span> <span class="c-attr">id=</span><span class="c-val">"my-dd-menu"</span> <span class="c-attr">role=</span><span class="c-val">"listbox"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"dd-item"</span> <span class="c-attr">role=</span><span class="c-val">"option"</span><span class="c-tag">&gt;</span>Option A<span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"dd-item is-selected"</span> <span class="c-attr">role=</span><span class="c-val">"option"</span> <span class="c-attr">aria-selected=</span><span class="c-val">"true"</span><span class="c-tag">&gt;</span>Option B<span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"dd-item is-disabled"</span> <span class="c-attr">role=</span><span class="c-val">"option"</span> <span class="c-attr">aria-disabled=</span><span class="c-val">"true"</span><span class="c-tag">&gt;</span>Option C<span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+// Generic toggle
+function toggleDd(id) {
+  const trigger = document.getElementById(id);
+  const menu = document.getElementById(id + '-menu');
+  if (!trigger || !menu) return;
+  const isOpen = menu.classList.contains('is-open');
+  closeAllDd();
+  if (!isOpen) {
+    menu.classList.add('is-open');
+    trigger.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+  }
+}
+
+function closeAllDd() {
+  document.querySelectorAll('.dd-menu.is-open').forEach(m => m.classList.remove('is-open'));
+  document.querySelectorAll('.dd-trigger.is-open').forEach(t => {
+    t.classList.remove('is-open');
+    t.setAttribute('aria-expanded', 'false');
+  });
+
+  document.querySelectorAll('.dd-ac-input.is-focused').forEach(el => el.classList.remove('is-focused'));
+}
+
+function selectDd(id, value) {
+  const label = document.getElementById(id + '-label');
+  if (label) {
+    label.textContent = value;
+    label.className = 'dd-selected';
+  }
+  // Update selected state
+  const menu = document.getElementById(id + '-menu');
+  if (menu) {
+    menu.querySelectorAll('.dd-item').forEach(i => {
+      i.classList.toggle('is-selected', i.textContent.trim() === value || i.dataset.label === value);
+      if (i.classList.contains('is-selected')) i.setAttribute('aria-selected', 'true');
+      else i.removeAttribute('aria-selected');
+    });
+  }
+  closeAllDd();
+}
+
+function clearDdError(id) {
+  const trigger = document.getElementById(id);
+  if (trigger) trigger.classList.remove('is-error');
+  const msg = document.getElementById(id + '-msg');
+  if (msg) msg.style.display = 'none';
+}
+
+function selectDdField(item, menuId) {
+  const menu = document.getElementById(menuId);
+  if (menu) menu.querySelectorAll('.dd-item').forEach(i => i.classList.remove('is-selected'));
+  item.classList.add('is-selected');
+  closeAllDd();
+}
+
+function filterDd(input) {
+  const q = input.value.toLowerCase();
+  document.querySelectorAll('#dd-search-items .dd-item').forEach(item => {
+    const label = (item.dataset.label || item.textContent).toLowerCase();
+    item.style.display = label.includes(q) ? '' : 'none';
+  });
+}
+
+// Close on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.dd-wrap') && !e.target.closest('.dd-ac-wrap')) closeAllDd();
+});
+
+// Keyboard: Escape closes
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAllDd();
+});
+
+/* ── Single Select ── */
+function selectSingle(id, val) {
+  const label = document.getElementById(id + '-label');
+  if (label) { label.textContent = val; label.className = 'dd-selected'; }
+  document.querySelectorAll('#' + id + '-list .dd-item').forEach(i => {
+    i.classList.toggle('is-selected', i.dataset.val === val);
+  });
+  closeAllDd();
+}
+function filterSingle(input, listId) {
+  const q = input.value.toLowerCase();
+  document.querySelectorAll('#' + listId + ' .dd-item').forEach(i => {
+    i.style.display = i.dataset.val.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+/* ── Multi Select ── */
+function toggleCbItem(el, wrapId) {
+  el.classList.toggle('is-checked');
+  if (wrapId === 'ml1') ml1UpdateTrigger();
+  else if (wrapId) updateMsTags(wrapId);
+}
+function updateMsTags(id) {
+  const tags = document.getElementById(id + '-tags');
+  if (!tags) return;
+  const checked = [...document.querySelectorAll('#' + id + '-dd-menu .dd-cb-item.is-checked')];
+  tags.innerHTML = checked.map(c =>
+    `<span class="dd-tag">${c.querySelector('.dd-cb-label').textContent} <button class="dd-tag-x" onclick="event.stopPropagation();removeTag('${id}','${c.querySelector('.dd-cb-label').textContent}')">×</button></span>`
+  ).join('') || '<span class="dd-placeholder">Select items</span>';
+}
+function removeTag(id, val) {
+  document.querySelectorAll('#' + id + '-dd-menu .dd-cb-item').forEach(i => {
+    if (i.querySelector('.dd-cb-label').textContent.trim() === val) i.classList.remove('is-checked');
+  });
+  updateMsTags(id);
+}
+function selectAllMs(id) {
+  document.querySelectorAll('#' + id + '-dd-menu .dd-cb-item').forEach(i => i.classList.add('is-checked'));
+  updateMsTags(id);
+}
+
+/* ── Autocomplete single (trigger button + search inside menu) ── */
+function toggleAcDd(id) {
+  const trigger = document.getElementById(id);
+  const menu = document.getElementById(id + '-dd-menu');
+  if (!trigger || !menu) return;
+  const isOpen = menu.classList.contains('is-open');
+  closeAllDd();
+  if (!isOpen) {
+    menu.classList.add('is-open');
+    trigger.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    setTimeout(() => document.getElementById(id + '-field')?.focus(), 40);
+  }
+}
+function filterAc(id) {
+  const field = document.getElementById(id + '-field');
+  if (!field) return;
+  const q = field.value.toLowerCase();
+  document.querySelectorAll('#' + id + '-list .dd-ac-item').forEach(i => {
+    const name = (i.dataset.val || '').toLowerCase();
+    const handle = (i.dataset.handle || '').toLowerCase();
+    i.style.display = (name.includes(q) || handle.includes(q)) ? '' : 'none';
+  });
+}
+function selectAc(id, val) {
+  const labelEl = document.getElementById(id + '-label');
+  if (labelEl) { labelEl.textContent = val; labelEl.className = 'dd-selected'; }
+  document.querySelectorAll('#' + id + '-list .dd-ac-item').forEach(i => {
+    i.classList.toggle('is-selected', i.dataset.val === val);
+    i.style.display = '';
+  });
+  const field = document.getElementById(id + '-field');
+  if (field) field.value = '';
+  const menu = document.getElementById(id + '-dd-menu');
+  if (menu) menu.classList.remove('is-open');
+  const trigger = document.getElementById(id);
+  if (trigger) { trigger.classList.remove('is-open'); trigger.setAttribute('aria-expanded', 'false'); }
+}
+
+/* ── Autocomplete multi ── */
+function toggleAcCb(el, id) {
+  el.classList.toggle('is-checked');
+  updateAcMultiTags(id);
+  updateAcMultiCount(id);
+}
+function updateAcMultiTags(id) {
+  const tagsEl = document.getElementById(id + '-tags');
+  if (!tagsEl) return;
+  const checked = [...document.querySelectorAll('#' + id + '-list .dd-cb-item.is-checked')];
+  tagsEl.innerHTML = checked.map(c =>
+    `<span class="dd-tag">${c.dataset.val} <button class="dd-tag-x" onclick="event.stopPropagation();removeAcTag('${id}','${c.dataset.val}')">×</button></span>`
+  ).join('');
+}
+function removeAcTag(id, val) {
+  document.querySelectorAll('#' + id + '-list .dd-cb-item').forEach(i => {
+    if (i.dataset.val === val) i.classList.remove('is-checked');
+  });
+  updateAcMultiTags(id);
+  updateAcMultiCount(id);
+  // Re-open menu and refocus input after tag removal
+  const menu = document.getElementById(id + '-menu');
+  if (menu) menu.classList.add('is-open');
+  const wrap = document.getElementById(id + '-wrap');
+  if (wrap) wrap.querySelector('.dd-ac-input')?.classList.add('is-focused');
+  const field = document.getElementById(id + '-field');
+  if (field) field.focus();
+}
+function updateAcMultiCount(id) {
+  const all = document.querySelectorAll('#' + id + '-list .dd-cb-item').length;
+  const sel = document.querySelectorAll('#' + id + '-list .dd-cb-item.is-checked').length;
+  const badge = document.getElementById(id + '-sel-count');
+  if (badge) badge.textContent = sel;
+  const countEl = document.getElementById(id + '-count');
+  if (countEl) countEl.textContent = all + ' items';
+}
+function selectAllAcMulti(id) {
+  document.querySelectorAll('#' + id + '-list .dd-cb-item').forEach(i => i.classList.add('is-checked'));
+  updateAcMultiTags(id);
+  updateAcMultiCount(id);
+}
+function filterAcMulti(id) {
+  const q = document.getElementById(id + '-field').value.toLowerCase();
+  document.querySelectorAll('#' + id + '-list .dd-cb-item').forEach(i => {
+    i.style.display = i.dataset.val.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+function switchAcTab(id, tab, btn) {
+  document.querySelectorAll('#' + id + '-tabs .dd-filter-tab').forEach(t => t.classList.remove('is-active'));
+  btn.classList.add('is-active');
+  document.querySelectorAll('#' + id + '-list .dd-cb-item').forEach(i => {
+    if (tab === 'all') i.style.display = '';
+    else if (tab === 'selected') i.style.display = i.classList.contains('is-checked') ? '' : 'none';
+    else i.style.display = !i.classList.contains('is-checked') ? '' : 'none';
+  });
+}
+
+/* ── Multi-level drill-down ── */
+function mlDrillIn(wrapId, category, children) {
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  // Highlight active parent
+  wrap.querySelectorAll('.dd-ml-parent').forEach(p => p.classList.remove('is-active'));
+  const activeParent = wrap.querySelector(`[onclick*="'${category}'"]`);
+  if (activeParent) activeParent.classList.add('is-active');
+  // Set back label
+  const backLabel = document.getElementById(wrapId + '-back-label');
+  if (backLabel) backLabel.textContent = category;
+  // Render children
+  const list = document.getElementById(wrapId + '-child-list');
+  if (list) {
+    list.innerHTML = children.map(c =>
+      `<div class="dd-cb-item" data-val="${category}:${c}" onclick="toggleCbItem(this,'ml1')" style="padding:9px 14px;gap:10px;">` +
+      `<span class="cb-control is-checkbox size-sm"><svg class="cb-check-svg" width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>` +
+      `<span class="dd-cb-label">${c}</span></div>`
+    ).join('');
+  }
+  // Slide in
+  wrap.classList.add('show-child');
+}
+function mlGoBack(wrapId) {
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  wrap.classList.remove('show-child');
+  wrap.querySelectorAll('.dd-ml-parent').forEach(p => p.classList.remove('is-active'));
+}
+
+/* ── Multi Level trigger label ── */
+function ml1UpdateTrigger() {
+  const checked = [...document.querySelectorAll('#ml1-dd-menu .dd-cb-item.is-checked')];
+  const labelEl = document.getElementById('ml1-label');
+  if (!labelEl) return;
+  if (checked.length === 0) {
+    labelEl.textContent = 'Select items';
+    labelEl.className = 'dd-placeholder';
+  } else {
+    const first = checked[0].querySelector('.dd-cb-label').textContent;
+    const overflow = checked.length - 1;
+    labelEl.className = 'dd-selected';
+    labelEl.innerHTML = overflow > 0
+      ? `${first} <span style="font-size:12px;font-weight:500;color:#707087;">(+${overflow} others)</span>`
+      : first;
+  }
+}
+
+/* ── Multi Select v2 (ms2) ── */
+function ms2GetItems() {
+  return [...document.querySelectorAll('#ms2-dd-menu .dd-cb-item')];
+}
+function ms2GetChecked() {
+  return ms2GetItems().filter(i => i.classList.contains('is-checked'));
+}
+function ms2UpdateUI() {
+  const checked = ms2GetChecked();
+  const all = ms2GetItems();
+
+  // Trigger label
+  const labelEl = document.getElementById('ms2-trigger-label');
+  if (labelEl) {
+    if (checked.length === 0) {
+      labelEl.textContent = 'Select items';
+      labelEl.className = 'dd-placeholder';
+    } else {
+      const first = checked[0].querySelector('.dd-cb-label').textContent;
+      const overflow = checked.length - 1;
+      labelEl.className = 'dd-selected';
+      labelEl.innerHTML = overflow > 0
+        ? `${first} <span style="font-size:12px;font-weight:500;color:#707087;">(+${overflow} others)</span>`
+        : first;
+    }
+  }
+
+  // Header count
+  const countEl = document.getElementById('ms2-sel-count');
+  if (countEl) countEl.textContent = checked.length + ' Selected';
+
+  // Select All checkbox state
+  const allCb = document.getElementById('ms2-all-cb');
+  if (allCb) {
+    const isAll = checked.length === all.length && all.length > 0;
+    allCb.style.background = isAll ? '#7f56d9' : '';
+    allCb.style.borderColor = isAll ? '#7f56d9' : '';
+    allCb.innerHTML = isAll
+      ? '<div style="width:9px;height:7px;margin:auto;background:url(\'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'9\' height=\'7\' fill=\'none\'%3E%3Cpath d=\'M1 3.5l2.5 2.5 5-5\' stroke=\'%23fff\' stroke-width=\'1.5\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E\') center/contain no-repeat;"></div>'
+      : '';
+  }
+}
+function ms2Toggle(el) {
+  el.classList.toggle('is-checked');
+  ms2UpdateUI();
+}
+function ms2ToggleAll() {
+  const items = ms2GetItems();
+  const allChecked = items.every(i => i.classList.contains('is-checked'));
+  items.forEach(i => allChecked ? i.classList.remove('is-checked') : i.classList.add('is-checked'));
+  ms2UpdateUI();
+}
+
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'Copied!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// Init
+ms2UpdateUI();
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

@@ -1,13 +1,8 @@
-/* ── Pulse DS Spacing Tokens (4px grid) ── */
+/* ── Pulse Design System Tokens ── */
+@import '../../../../Pulse-DesignSystem/tokens.css';
+
+/* ── Dashboard-specific composition tokens ── */
 :root {
-  --space-3:  12px;
-  --space-4:  16px;
-  --space-5:  20px;
-  --space-6:  24px;
-  --space-7:  28px;
-  --space-8:  32px;
-  --space-9:  36px;
-  --space-10: 40px;
   --card-padding:  var(--space-7);
   --card-gap:      var(--space-6);
   --section-gap:   var(--space-7);
@@ -385,88 +380,35 @@ pulse-root > router-outlet + * { display: flex; flex-direction: column; flex: 1;
 .welcome-text h1 { font-size: 16px; font-weight: 600; color: #29294c; letter-spacing: 0.024px; line-height: 1.5; margin-bottom: 2px; }
 .welcome-text p { font-size: 12px; font-weight: 400; color: #707087; letter-spacing: 0.03px; line-height: 1.4; }
 .survey-controls { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-/* ── Survey Dropdown — DS style ── */
-.survey-dd-wrap { position: relative; }
-.survey-dropdown {
-  display: inline-flex; align-items: center; gap: 10px;
-  height: 36px; padding: 0 12px;
-  background: #fff; border: 1px solid #d0d5dd; border-radius: 8px;
-  cursor: pointer; white-space: nowrap; user-select: none;
-  box-shadow: 0 1px 2px rgba(16,24,40,0.05);
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-.survey-dropdown:hover { border-color: #9e77ed; }
-.survey-dropdown.is-open {
-  border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12);
-}
-.survey-name { font-size: 14px; font-weight: 500; color: #344054; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.live-badge { display: inline-flex; align-items: center; gap: 5px; background: #f6fef9; border: 1px solid #d1fadf; border-radius: 16px; padding: 2px 8px; flex-shrink: 0; }
-.live-badge.small { padding: 1px 7px; }
-.live-dot { width: 6px; height: 6px; border-radius: 50%; background: #039855; flex-shrink: 0; }
-.live-text { font-size: 12px; font-weight: 500; color: #039855; line-height: 1; }
-.survey-date { font-size: 13px; font-weight: 400; color: #667085; }
-.survey-chevron { color: #667085; transition: transform 0.2s ease; flex-shrink: 0; }
-.survey-dropdown.is-open .survey-chevron { transform: rotate(180deg); }
-.survey-chevron svg { width: 16px; height: 16px; display: block; }
 
-/* Survey dropdown menu */
-.survey-dd-menu {
-  position: absolute; top: calc(100% + 6px); right: 0;
-  min-width: 100%; width: max-content; background: #fff;
-  border: 1px solid #e4e7ec; border-radius: 8px;
-  box-shadow: 0 12px 16px -4px rgba(16,24,40,.08), 0 4px 6px -2px rgba(16,24,40,.03);
-  z-index: 600; padding: 4px;
-  opacity: 0; pointer-events: none; transform: translateY(-6px);
-  transition: opacity 0.15s, transform 0.15s;
+/* DS dropdown overrides inside the header bar */
+.survey-controls v-dropdown {
+  display: block;
 }
-.survey-dd-menu.is-open { opacity: 1; pointer-events: all; transform: translateY(0); }
-.survey-dd-item {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 9px 12px; cursor: pointer; transition: background 0.1s; border-radius: 6px;
+.survey-controls v-dropdown .dd-wrap { width: auto; }
+.survey-controls v-dropdown .dd-trigger {
+  height: 36px; min-width: 0; width: auto; padding: 0 10px;
+  font-size: 13px; font-weight: 500;
+  background: #fff; border-color: #d0d5dd; border-radius: 8px;
+  --ds-bg: #fff; --ds-border-strong: #d0d5dd; --ds-text-body: #344054;
+  --ds-text-placeholder: #98a2b3; --ds-text-muted: #667085;
+  --ds-brand: #7f56d9; --ds-brand-hover: #9e77ed;
+  --ds-brand-focus-shadow: rgba(127,86,217,0.15);
 }
-.survey-dd-item:hover { background: #f9fafb; }
-.survey-dd-item.is-selected { background: #f9f5ff; }
-.survey-dd-item.is-selected .survey-dd-item-name { color: #6941c6; font-weight: 500; }
-.survey-dd-item-info { display: flex; flex-direction: column; gap: 2px; }
-.survey-dd-item-name { font-size: 14px; font-weight: 400; color: #344054; white-space: nowrap; }
-.survey-dd-item-date { font-size: 12px; color: #98a2b3; white-space: nowrap; }
-
-/* ── Country Dropdown — DS style ── */
-.country-dd-wrap { position: relative; }
-.country-dropdown {
-  display: inline-flex; align-items: center; gap: 8px;
-  height: 36px; padding: 0 12px;
-  background: #fff; border: 1px solid #d0d5dd; border-radius: 8px;
-  cursor: pointer; white-space: nowrap; user-select: none;
-  box-shadow: 0 1px 2px rgba(16,24,40,0.05);
-  transition: border-color 0.15s, box-shadow 0.15s;
+.survey-controls v-dropdown .dd-trigger:hover { border-color: #9e77ed; }
+.survey-controls v-dropdown .dd-menu {
+  z-index: 1050; min-width: 320px; width: max-content;
+  --ds-bg: #fff; --ds-bg-subtle: #f9fafb; --ds-border-medium: #e4e7ec;
+  --ds-shadow-lg: 0 4px 12px rgba(0,0,0,.08), 0 0 0 1px rgba(0,0,0,.04);
+  --ds-text-body: #344054; --ds-text-placeholder: #98a2b3;
+  --ds-brand-dark: #6941c6; --ds-brand-subtle: #f9f5ff;
 }
-.country-dropdown:hover { border-color: #9e77ed; }
-.country-dropdown.is-open {
-  border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,.12);
+.survey-controls v-dropdown:last-of-type .dd-menu { right: 0; left: auto; }
+.survey-controls v-dropdown .dd-item-icon img { width: 20px; height: 20px; border-radius: 50%; }
+.survey-controls v-dropdown .dd-item-badge {
+  background: #ecfdf3; color: #039855; font-size: 11px; font-weight: 600;
 }
-.country-dropdown.is-open .survey-chevron { transform: rotate(180deg); }
-.country-flag-img { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
-.country-globe-icon { width: 15px; height: 15px; flex-shrink: 0; display: block; }
-.country-name { font-size: 14px; font-weight: 500; color: #344054; }
-.country-dd-menu {
-  position: absolute; top: calc(100% + 6px); left: 0;
-  min-width: 160px; background: #fff;
-  border: 1px solid #e4e7ec; border-radius: 8px;
-  box-shadow: 0 12px 16px -4px rgba(16,24,40,.08), 0 4px 6px -2px rgba(16,24,40,.03);
-  z-index: 600; padding: 4px;
-  opacity: 0; pointer-events: none; transform: translateY(-6px);
-  transition: opacity 0.15s, transform 0.15s;
-}
-.country-dd-menu.is-open { opacity: 1; pointer-events: all; transform: translateY(0); }
-.country-dd-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 12px; cursor: pointer; transition: background 0.1s; border-radius: 6px;
-}
-.country-dd-item:hover { background: #f9fafb; }
-.country-dd-item.is-selected { background: #f9f5ff; }
-.country-dd-item.is-selected .country-dd-item-name { color: #6941c6; font-weight: 500; }
-.country-dd-item-name { font-size: 14px; color: #344054; white-space: nowrap; }
+/* (Old custom dropdowns removed — now using DS v-dropdown) */
 
 .more-btn {
   width: 32px; height: 32px; border-radius: 8px; background: transparent; border: none;
@@ -486,6 +428,9 @@ pulse-root > router-outlet + * { display: flex; flex-direction: column; flex: 1;
   box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
 }
 .date-range-btn:hover { border-color: #9e77ed; }
+.ds-dp-wrap:has(.is-open) .date-range-btn {
+  border-color: #7f56d9; box-shadow: 0 0 0 3px rgba(127,86,217,0.15);
+}
 
 /* DS Date picker dropdown — positioned wrapper */
 .cal-wrap--picker {
@@ -2386,7 +2331,7 @@ app-ai-hub .main-card.scrolled-bottom::after { opacity: 0; }
 @keyframes shimmer { 0% { background-position: -600px 0; } 100% { background-position: 600px 0; } }
 .skel { background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%); background-size: 1200px 100%; animation: shimmer 1.4s ease-in-out infinite; border-radius: 8px; }
 #skeleton-overlay { position: fixed; inset: 0; z-index: 9999; background: #f0f2f5; display: flex; flex-direction: column; opacity: 1; transition: opacity 0.45s ease; pointer-events: all; }
-#skeleton-overlay.hidden { opacity: 0; pointer-events: none; }
+body.page-loaded #skeleton-overlay { opacity: 0; pointer-events: none; }
 .sk-topnav { height: 56px; background: white; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; padding: 0 20px; gap: 14px; flex-shrink: 0; }
 .sk-body { display: flex; flex: 1; overflow: hidden; }
 .sk-sidebar { width: 70px; background: white; border-right: 1px solid #f0f0f0; display: flex; flex-direction: column; align-items: center; padding: 16px 0; gap: 14px; flex-shrink: 0; }

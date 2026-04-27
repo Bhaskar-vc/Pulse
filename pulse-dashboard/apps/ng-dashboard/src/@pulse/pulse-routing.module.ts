@@ -32,6 +32,16 @@ const routes: Routes = [
         loadChildren: () =>
           import('./modules/create-survey/create-survey.module').then(m => m.CreateSurveyModule),
       },
+      {
+        path: 'manage-surveys',
+        loadComponent: () =>
+          import('./modules/manage-surveys/manage-surveys').then(m => m.ManageSurveysComponent),
+      },
+      {
+        path: 'coming-soon',
+        loadComponent: () =>
+          import('./modules/coming-soon/coming-soon').then(m => m.ComingSoonComponent),
+      },
     ],
   },
 ];

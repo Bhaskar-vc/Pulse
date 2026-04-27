@@ -49,7 +49,9 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
   @ViewChild('chatPlaceholder') chatPlaceholderRef!: ElementRef<HTMLDivElement>;
   @ViewChild('messagesEl') messagesElRef!: ElementRef<HTMLDivElement>;
 
-  constructor(private cdr: ChangeDetectorRef, private router: Router) {}
+  constructor(private cdr: ChangeDetectorRef, private router: Router) {
+    this.renderPlaceholder(this.PLACEHOLDERS[0], false);
+  }
 
   scrolledToBottom = false;
   private scrollHandler = () => this.checkScroll();
@@ -218,7 +220,6 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
   private readonly DEFAULT_CHIPS = ['Show eNPS score','Department breakdown','Recommend actions'];
 
   ngAfterViewInit() {
-    this.renderPlaceholder(this.PLACEHOLDERS[0], false);
     this.startCycle();
     this.startStatCounter();
     this.startHeadlineCycle();
@@ -229,7 +230,6 @@ export class AiHubComponent implements AfterViewInit, OnDestroy {
     const mainCard = document.querySelector('app-ai-hub .main-card');
     if (mainCard) {
       mainCard.addEventListener('scroll', this.scrollHandler);
-      this.checkScroll();
     }
   }
 

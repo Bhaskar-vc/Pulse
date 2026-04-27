@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tooltip — Pulse Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary-700: #29294c;
+  --primary-600: #545470;
+  --primary-500: #707087;
+  --primary-400: #9d9dad;
+  --primary-300: #bdbdc8;
+  --primary-200: #eaeaed;
+  --primary-100: #f4f4f6;
+  --primary-50:  #f9fafb;
+  --secondary-700: #6941c6;
+  --secondary-600: #7f56d9;
+  --secondary-500: #9e77ed;
+  --secondary-400: #b692f6;
+  --secondary-300: #d6bbfb;
+  --secondary-200: #e9d7fe;
+  --secondary-100: #f4ebff;
+  --secondary-50:  #f9f5ff;
+  --error-700: #d92d20;
+  --error-600: #f04438;
+  --error-100: #fef3f2;
+  --success-700: #039855;
+  --success-600: #12b76a;
+  --success-100: #ecfdf3;
+  --text-primary: #29294c;
+  --text-secondary: #707087;
+  --text-tertiary: #9d9dad;
+  --text-placeholder: #bdbdc8;
+  --text-link: #6941c6;
+  --border-default: #eaeaed;
+  --border-focus: #7f56d9;
+  --bg-page: #f9fafb;
+  --sidebar-w: 240px;
+  --font: 'Inter', sans-serif;
+}
+
+body { font-family: var(--font); color: var(--text-primary); background: var(--bg-page); display: flex; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #eaeaed; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.sidebar-logo { padding: 0 20px 24px; border-bottom: 1px solid #eaeaed; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+.sidebar-logo span { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #29294c; }
+.sidebar-logo sub { font-size: 10px; color: #9d9dad; font-weight: 400; display: block; margin-top: 2px; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title { padding: 6px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #9d9dad; }
+.sidebar-link { display: block; padding: 7px 20px; font-size: 13px; color: #4a4a68; border-radius: 0;
+  text-decoration: none; transition: background .15s, color .15s; }
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active { background: #f0f0ff; color: #5c5ce0; font-weight: 500; border-right: 2px solid #5c5ce0; }
+.main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 48px 56px;
+  max-width: 1100px;
+}
+
+/* ── Page header ── */
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-tertiary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text-primary); }
+.breadcrumb-sep { opacity: .4; }
+.page-header { margin-bottom: 40px; }
+.page-title { font-size: 28px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; }
+.page-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 640px; }
+.page-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.tag-stable { background: #ecfdf3; color: #039855; border-color: #a6f4c5; }
+.tag-figma  { background: #f9f5ff; color: #6941c6; border-color: #d6bbfb; }
+.tag-wcag   { background: #eff8ff; color: #026aa2; border-color: #b9e6fe; }
+
+/* ── Sections ── */
+.section { margin-bottom: 56px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--primary-700); margin-bottom: 6px; }
+.section-desc  { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+.divider { border: none; border-top: 1px solid var(--border-default); margin: 48px 0; }
+
+/* ── Demo canvas ── */
+.demo-canvas {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 32px;
+}
+.demo-canvas + .demo-canvas { margin-top: 16px; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+.demo-row + .demo-row { margin-top: 24px; }
+.demo-col { display: flex; flex-direction: column; gap: 16px; min-width: 200px; flex: 1; }
+.demo-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text-tertiary); margin-bottom: 8px; }
+
+/* ── Code block ── */
+.code-block { position: relative; background: #1e1e2e; border-radius: 10px; padding: 20px; overflow-x: auto; margin-top: 16px; }
+.code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; color: #cdd6f4; }
+.code-block .token-tag    { color: #89dceb; }
+.code-block .token-attr   { color: #89b4fa; }
+.code-block .token-str    { color: #a6e3a1; }
+.code-block .token-comment { color: #6c7086; font-style: italic; }
+.copy-btn {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  color: #cdd6f4; font-size: 11px; font-family: var(--font); font-weight: 500;
+  padding: 5px 12px; border-radius: 6px; cursor: pointer;
+  transition: background .15s;
+}
+.copy-btn:hover { background: rgba(255,255,255,.15); }
+.copy-btn.copied { color: #a6e3a1; border-color: #a6e3a1; }
+
+/* ── Props table ── */
+.props-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid var(--border-default); border-radius: 10px; overflow: hidden; }
+.props-table th { text-align: left; padding: 10px 14px; background: var(--primary-50); color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border-default); }
+.props-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; line-height: 1.5; }
+.props-table tr:last-child td { border-bottom: none; }
+.props-table code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--primary-100); color: var(--secondary-700); padding: 2px 6px; border-radius: 4px; }
+
+/* ── Accessibility cards ── */
+.a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.a11y-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 16px; }
+.a11y-card h4 { font-size: 13px; font-weight: 700; color: var(--primary-700); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.a11y-card ul { padding-left: 16px; }
+.a11y-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ══════════════════════════════════════
+   TOOLTIP COMPONENT STYLES
+   Source: Figma node 230-4910
+══════════════════════════════════════ */
+
+/* Tooltip anchor — the wrapper that triggers show/hide */
+.tt-anchor {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tooltip bubble — hidden by default */
+.tt-bubble {
+  position: absolute;
+  z-index: 200;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 6px 10px;
+  border-radius: 8px;
+  max-width: 240px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+/* Dark variant (default): #1d2939 bg, white text */
+.tt-bubble.tt-dark {
+  background: #1d2939;
+  color: #fff;
+}
+
+/* Light variant: white bg, #29294c text, subtle border + shadow */
+.tt-bubble.tt-light {
+  background: #fff;
+  color: #29294c;
+  border: 1px solid #eaeaed;
+  box-shadow: 0 4px 8px rgba(0,0,0,.08);
+}
+
+/* ── Arrow carets via clip-path on ::after ── */
+.tt-bubble::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+}
+.tt-bubble.tt-dark::after  { background: #1d2939; }
+.tt-bubble.tt-light::after { background: #fff; border: 1px solid #eaeaed; }
+
+/* Position — Top (caret points down) */
+.tt-bubble.tt-top {
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+}
+.tt-bubble.tt-top::after {
+  top: 100%; left: 50%;
+  margin-left: -4px;
+  margin-top: -5px;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+}
+
+/* Position — Bottom (caret points up) */
+.tt-bubble.tt-bottom {
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+}
+.tt-bubble.tt-bottom::after {
+  bottom: 100%; left: 50%;
+  margin-left: -4px;
+  margin-bottom: -5px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Position — Right (caret points left) */
+.tt-bubble.tt-right {
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+}
+.tt-bubble.tt-right::after {
+  right: 100%; top: 50%;
+  margin-top: -4px;
+  margin-right: -5px;
+  clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+}
+
+/* Position — Left (caret points right) */
+.tt-bubble.tt-left {
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%) translateX(4px);
+}
+.tt-bubble.tt-left::after {
+  left: 100%; top: 50%;
+  margin-top: -4px;
+  margin-left: -5px;
+  clip-path: polygon(100% 50%, 0% 0%, 0% 100%);
+}
+
+/* Show on hover / focus */
+.tt-anchor:hover .tt-bubble,
+.tt-anchor:focus-within .tt-bubble {
+  opacity: 1;
+}
+.tt-anchor:hover .tt-bubble.tt-top,
+.tt-anchor:focus-within .tt-bubble.tt-top   { transform: translateX(-50%) translateY(0); }
+.tt-anchor:hover .tt-bubble.tt-bottom,
+.tt-anchor:focus-within .tt-bubble.tt-bottom { transform: translateX(-50%) translateY(0); }
+.tt-anchor:hover .tt-bubble.tt-right,
+.tt-anchor:focus-within .tt-bubble.tt-right  { transform: translateY(-50%) translateX(0); }
+.tt-anchor:hover .tt-bubble.tt-left,
+.tt-anchor:focus-within .tt-bubble.tt-left   { transform: translateY(-50%) translateX(0); }
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .tt-bubble { transition: opacity .15s ease; }
+}
+
+/* ── Icon button ── */
+.icon-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border-default);
+  background: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.icon-btn:hover {
+  border-color: var(--secondary-300);
+  background: var(--secondary-50);
+  box-shadow: 0 0 0 3px var(--secondary-100);
+}
+.icon-btn:focus-visible {
+  outline: none;
+  border-color: var(--secondary-600);
+  box-shadow: 0 0 0 3px var(--secondary-100);
+}
+
+/* ── Trigger box for position demos ── */
+.trigger-box {
+  width: 88px; height: 36px;
+  background: var(--secondary-100);
+  border: 1px solid var(--secondary-300);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--secondary-700);
+  cursor: default;
+}
+
+/* ── Static tooltip (non-interactive, for type showcase) ── */
+.tt-static {
+  display: inline-block;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  max-width: 240px;
+  white-space: nowrap;
+}
+.tt-static.tt-dark  { background: #1d2939; color: #fff; }
+.tt-static.tt-light { background: #fff; color: #29294c; border: 1px solid #eaeaed; box-shadow: 0 4px 8px rgba(0,0,0,.08); }
+
+/* ── Usage cards ── */
+.usage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.usage-card { background: #fff; border: 1px solid var(--border-default); border-radius: 10px; padding: 20px; }
+.usage-card h4 { font-size: 13px; font-weight: 700; color: var(--primary-700); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.usage-card ul { padding-left: 16px; }
+.usage-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ── Inline code ── */
+.ic { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--primary-100); color: var(--secondary-700); padding: 2px 6px; border-radius: 4px; }
+kbd { font-size: 11px; padding: 1px 5px; border: 1px solid #eaeaed; border-radius: 4px; background: #f9fafb; font-family: var(--font); }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle" style="display:block"/></a>
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link active">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <div class="breadcrumb">
+    <a href="#">Design System</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Components</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>Tooltip</span>
+  </div>
+
+  <div class="page-header">
+  <div class="ph-folder-icon">
+    <div class="ph-folder-wrap">
+      <div class="ph-paper ph-paper-1"></div>
+      <div class="ph-paper ph-paper-2"></div>
+      <div class="ph-paper ph-paper-3"></div>
+      <img src="assets/folder-front.png" class="ph-folder-img" alt="">
+      <span class="ph-folder-label">TOOLTIP</span>
+    </div>
+  </div>
+    
+    <h1 class="page-title">Tooltip</h1>
+    <p class="page-subtitle">A small informational popup that appears on hover or keyboard focus. Use tooltips to label icon-only buttons, clarify form field hints, and expose truncated text — never to deliver critical information or interactive content.</p>
+    <div class="page-tags">
+      <span class="tag tag-stable">Stable</span>
+      <span class="tag tag-figma">Figma · 230-4910</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── OVERVIEW ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-desc">Tooltips surface brief, supplementary information on demand. They appear after a short hover delay (300 ms by default) and disappear when the pointer leaves or focus moves away. Two visual variants — dark and light — adapt to different surface contexts. The component is built entirely with CSS hover and focus-within, with no JavaScript required for basic usage.</p>
+
+    <div class="demo-canvas" style="background:#f9fafb; display:flex; gap:48px; align-items:flex-end; flex-wrap:wrap; justify-content:center; padding:56px 32px;">
+      <span class="tt-anchor">
+        <button class="icon-btn" tabindex="0" aria-describedby="tt-ov-1">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#7f56d9" stroke-width="1.5"/><path d="M9 8v5M9 6h.01" stroke="#7f56d9" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <span id="tt-ov-1" role="tooltip" class="tt-bubble tt-dark tt-top">More information</span>
+      </span>
+
+      <span class="tt-anchor">
+        <button style="background:#29294c; color:#fff; border:none; padding:9px 18px; border-radius:8px; font-size:13px; font-weight:500; font-family:var(--font); cursor:pointer;" tabindex="0" aria-describedby="tt-ov-2">
+          Delete account
+        </button>
+        <span id="tt-ov-2" role="tooltip" class="tt-bubble tt-light tt-top" style="white-space:normal; width:200px; text-align:center;">This action is permanent and cannot be undone.</span>
+      </span>
+
+      <span class="tt-anchor">
+        <button style="border:1px solid #eaeaed; background:#fff; color:#29294c; padding:9px 18px; border-radius:8px; font-size:13px; font-weight:500; font-family:var(--font); cursor:pointer; white-space:nowrap; overflow:hidden; max-width:160px; text-overflow:ellipsis;" tabindex="0" aria-describedby="tt-ov-3">
+          Very long file name…
+        </button>
+        <span id="tt-ov-3" role="tooltip" class="tt-bubble tt-dark tt-top">quarterly-financial-report-2025-final-v3.pdf</span>
+      </span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── TYPES ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Types</h2>
+    <p class="section-desc">Two variants serve different surface contexts. Use <strong>dark</strong> on white or light-gray backgrounds (the default). Use <strong>light</strong> on dark surfaces, photos, or any context where a dark bubble would visually compete.</p>
+
+    <div class="demo-canvas">
+      <div style="display:flex; gap:48px; flex-wrap:wrap; align-items:flex-start; margin-bottom:32px;">
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="demo-label">Dark (default)</div>
+          <span class="tt-static tt-dark">This is the default tooltip</span>
+          <p style="font-size:12px; color:var(--text-tertiary);">bg: #1d2939 &nbsp;·&nbsp; text: #fff &nbsp;·&nbsp; radius: 8px &nbsp;·&nbsp; padding: 6px 10px</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="demo-label">Light</div>
+          <span class="tt-static tt-light">This is the light tooltip</span>
+          <p style="font-size:12px; color:var(--text-tertiary);">bg: #fff &nbsp;·&nbsp; border: #eaeaed &nbsp;·&nbsp; shadow: 0 4px 8px rgba(0,0,0,.08)</p>
+        </div>
+      </div>
+
+      <div class="demo-label" style="margin-bottom:16px;">Live hover demos — hover each button</div>
+      <div style="display:flex; gap:40px; flex-wrap:wrap; padding:24px 0 8px;">
+        <span class="tt-anchor">
+          <button class="icon-btn" tabindex="0" aria-describedby="tt-type-dark">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#707087" stroke-width="1.5"/><path d="M9 8v5M9 6h.01" stroke="#707087" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <span id="tt-type-dark" role="tooltip" class="tt-bubble tt-dark tt-top">Dark variant</span>
+        </span>
+        <span class="tt-anchor">
+          <button class="icon-btn" tabindex="0" aria-describedby="tt-type-light">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#707087" stroke-width="1.5"/><path d="M9 8v5M9 6h.01" stroke="#707087" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <span id="tt-type-light" role="tooltip" class="tt-bubble tt-light tt-top">Light variant</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre><span class="token-comment">&lt;!-- Dark tooltip (default) --&gt;</span>
+<span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"tt-anchor"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;button</span> <span class="token-attr">aria-describedby</span>=<span class="token-str">"my-tip"</span><span class="token-tag">&gt;</span>Hover me<span class="token-tag">&lt;/button&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">id</span>=<span class="token-str">"my-tip"</span> <span class="token-attr">role</span>=<span class="token-str">"tooltip"</span> <span class="token-attr">class</span>=<span class="token-str">"tt-bubble tt-dark tt-top"</span><span class="token-tag">&gt;</span>
+    Tooltip text
+  <span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/span&gt;</span>
+
+<span class="token-comment">&lt;!-- Light tooltip --&gt;</span>
+<span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-str">"tt-anchor"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;button</span> <span class="token-attr">aria-describedby</span>=<span class="token-str">"my-tip-2"</span><span class="token-tag">&gt;</span>Hover me<span class="token-tag">&lt;/button&gt;</span>
+  <span class="token-tag">&lt;span</span> <span class="token-attr">id</span>=<span class="token-str">"my-tip-2"</span> <span class="token-attr">role</span>=<span class="token-str">"tooltip"</span> <span class="token-attr">class</span>=<span class="token-str">"tt-bubble tt-light tt-top"</span><span class="token-tag">&gt;</span>
+    Tooltip text
+  <span class="token-tag">&lt;/span&gt;</span>
+<span class="token-tag">&lt;/span&gt;</span></pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── POSITIONS ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Positions</h2>
+    <p class="section-desc">Tooltips support four placements. Each uses a CSS-only 8×8 px caret built from a clipped pseudo-element — no additional markup required. Choose based on available screen real-estate; prefer <strong>top</strong> when uncertain.</p>
+
+    <div class="demo-canvas" style="background:#f9fafb;">
+      <div style="display:flex; flex-wrap:wrap; gap:64px; align-items:center; justify-content:center; padding:48px 24px;">
+
+        <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+          <div class="demo-label">Top</div>
+          <span class="tt-anchor">
+            <div class="trigger-box" tabindex="0">Hover me</div>
+            <span role="tooltip" class="tt-bubble tt-dark tt-top">Appears on top</span>
+          </span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+          <div class="demo-label">Bottom</div>
+          <span class="tt-anchor">
+            <div class="trigger-box" tabindex="0">Hover me</div>
+            <span role="tooltip" class="tt-bubble tt-dark tt-bottom">Appears below</span>
+          </span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+          <div class="demo-label">Right</div>
+          <span class="tt-anchor">
+            <div class="trigger-box" tabindex="0">Hover me</div>
+            <span role="tooltip" class="tt-bubble tt-dark tt-right">Appears right</span>
+          </span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+          <div class="demo-label">Left</div>
+          <span class="tt-anchor">
+            <div class="trigger-box" tabindex="0">Hover me</div>
+            <span role="tooltip" class="tt-bubble tt-dark tt-left">Appears left</span>
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── INTERACTIVE DEMO ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Interactive Demo</h2>
+    <p class="section-desc">Hover or <kbd>Tab</kbd> to each icon button below. Each tooltip appears above with a downward-pointing caret. Pure CSS — no JavaScript involved.</p>
+
+    <div class="demo-canvas" style="background:#f9fafb;">
+      <div style="display:flex; gap:20px; align-items:center; flex-wrap:wrap; padding:40px 24px; justify-content:center;">
+
+        <span class="tt-anchor">
+          <button class="icon-btn" tabindex="0" aria-describedby="tt-i-info">ℹ️</button>
+          <span id="tt-i-info" role="tooltip" class="tt-bubble tt-dark tt-top">Info</span>
+        </span>
+
+        <span class="tt-anchor">
+          <button class="icon-btn" tabindex="0" aria-describedby="tt-i-settings">⚙️</button>
+          <span id="tt-i-settings" role="tooltip" class="tt-bubble tt-dark tt-top">Settings</span>
+        </span>
+
+        <span class="tt-anchor">
+          <button class="icon-btn" tabindex="0" aria-describedby="tt-i-delete">🗑️</button>
+          <span id="tt-i-delete" role="tooltip" class="tt-bubble tt-dark tt-top">Delete</span>
+        </span>
+
+        <span class="tt-anchor">
+          <button class="icon-btn" tabindex="0" aria-describedby="tt-i-edit">✏️</button>
+          <span id="tt-i-edit" role="tooltip" class="tt-bubble tt-dark tt-top">Edit</span>
+        </span>
+
+        <span class="tt-anchor">
+          <button class="icon-btn" tabindex="0" aria-describedby="tt-i-copy">📋</button>
+          <span id="tt-i-copy" role="tooltip" class="tt-bubble tt-dark tt-top">Copy to clipboard</span>
+        </span>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── USAGE ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Usage</h2>
+    <p class="section-desc">Tooltips are supplementary — the UI must be fully operable without them. They are not a substitute for proper labels.</p>
+
+    <div class="usage-grid">
+      <div class="usage-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#ecfdf3" stroke="#a6f4c5" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="#039855" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          When to use
+        </h4>
+        <ul>
+          <li>Icon-only buttons that lack a visible text label</li>
+          <li>Form field hints that would clutter the layout if always visible</li>
+          <li>Truncated text — expose the full string on hover</li>
+          <li>Keyboard shortcut reminders (e.g. "Save — ⌘S")</li>
+          <li>Abbreviations or technical terms needing plain-language glosses</li>
+        </ul>
+      </div>
+      <div class="usage-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#fef3f2" stroke="#fecdca" stroke-width="1.2"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#d92d20" stroke-width="1.5" stroke-linecap="round"/></svg>
+          When NOT to use
+        </h4>
+        <ul>
+          <li>Long or structured content — use a popover instead</li>
+          <li>Critical actions or error messages — must always be visible</li>
+          <li>Mobile-only experiences — tooltips are unreachable on touch</li>
+          <li>Information already visible nearby</li>
+          <li>Interactive elements (links, buttons) inside the tooltip</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── ACCESSIBILITY ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Accessibility</h2>
+    <p class="section-desc">Tooltips must be reachable by keyboard and announced correctly to screen readers — not only available to mouse users.</p>
+
+    <div class="a11y-grid">
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#b9e6fe" fill="#eff8ff" stroke-width="1.2"/><path d="M8 5v4M8 11h.01" stroke="#026aa2" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ARIA pattern
+        </h4>
+        <ul>
+          <li>Add <span class="ic">role="tooltip"</span> to the bubble element</li>
+          <li>Link trigger to bubble via <span class="ic">aria-describedby</span></li>
+          <li>Tooltip text should not duplicate the trigger's accessible name</li>
+          <li>Never place focusable elements inside the tooltip</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#b9e6fe" fill="#eff8ff" stroke-width="1.2"/><path d="M8 5v4M8 11h.01" stroke="#026aa2" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Keyboard &amp; focus
+        </h4>
+        <ul>
+          <li>Tooltip shows on <kbd>Tab</kbd> focus (CSS <span class="ic">:focus-within</span>)</li>
+          <li>Dismiss on <kbd>Escape</kbd> when JS-enhanced</li>
+          <li>The trigger element itself must be keyboard-focusable</li>
+          <li>Recommended hover delay: 300 ms to avoid accidental triggers</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#b9e6fe" fill="#eff8ff" stroke-width="1.2"/><path d="M8 5v4M8 11h.01" stroke="#026aa2" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Motion
+        </h4>
+        <ul>
+          <li>Use <span class="ic">prefers-reduced-motion</span> to disable translate animation</li>
+          <li>Keep animation subtle — opacity fade + 4 px translate only</li>
+          <li>Never use bouncy or large-scale animations for tooltips</li>
+        </ul>
+      </div>
+      <div class="a11y-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#b9e6fe" fill="#eff8ff" stroke-width="1.2"/><path d="M8 5v4M8 11h.01" stroke="#026aa2" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Color contrast
+        </h4>
+        <ul>
+          <li>Dark variant: white on #1d2939 — passes WCAG AA at all sizes</li>
+          <li>Light variant: #29294c on #fff — passes WCAG AA at all sizes</li>
+          <li>Never convey meaning through color alone inside a tooltip</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── PROPS TABLE ─────────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Props</h2>
+    <p class="section-desc">All configurable properties for the Tooltip component.</p>
+
+    <table class="props-table">
+      <thead>
+        <tr>
+          <th>Prop</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>content</code></td>
+          <td><code>string</code></td>
+          <td>—</td>
+          <td>The text displayed inside the tooltip. Required.</td>
+        </tr>
+        <tr>
+          <td><code>position</code></td>
+          <td><code>"top" | "right" | "bottom" | "left"</code></td>
+          <td><code>"top"</code></td>
+          <td>Which side of the trigger element the tooltip appears on.</td>
+        </tr>
+        <tr>
+          <td><code>variant</code></td>
+          <td><code>"dark" | "light"</code></td>
+          <td><code>"dark"</code></td>
+          <td>Visual style. Use <code>dark</code> on light surfaces, <code>light</code> on dark backgrounds.</td>
+        </tr>
+        <tr>
+          <td><code>delay</code></td>
+          <td><code>number</code></td>
+          <td><code>300</code></td>
+          <td>Milliseconds before the tooltip appears after hover begins. Requires JS implementation.</td>
+        </tr>
+        <tr>
+          <td><code>maxWidth</code></td>
+          <td><code>string</code></td>
+          <td><code>"240px"</code></td>
+          <td>Maximum width of the tooltip bubble. Increase for multi-line content.</td>
+        </tr>
+        <tr>
+          <td><code>disabled</code></td>
+          <td><code>boolean</code></td>
+          <td><code>false</code></td>
+          <td>When true, the tooltip will not be shown regardless of hover or focus.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// Escape key dismissal for keyboard users
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.activeElement.blur();
+  }
+});
+</script>
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

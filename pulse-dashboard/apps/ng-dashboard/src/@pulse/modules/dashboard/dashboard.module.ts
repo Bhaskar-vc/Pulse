@@ -5,6 +5,7 @@ import { OverviewComponent } from './overview';
 import { ExpandableCardComponent } from '../../shared/components/expandable-card/expandable-card';
 import { SurveyCarouselComponent } from '../../shared/components/survey-carousel/survey-carousel';
 import { DatePickerComponent } from '../../shared/components/date-picker/date-picker';
+import { VDropdown } from '@pulse-ds/ui/dropdown';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,7 @@ import { DatePickerComponent } from '../../shared/components/date-picker/date-pi
     SurveyCarouselComponent,
     DatePickerComponent,
   ],
-  imports: [CommonModule, DashboardRoutingModule],
+  imports: [CommonModule, DashboardRoutingModule, VDropdown],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DashboardModule {}

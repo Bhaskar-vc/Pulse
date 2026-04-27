@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pulse Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1d2939;
+  background: #f8f9fb;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: #fff;
+  border-right: 1px solid #eaeaed;
+  padding: 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  padding: 20px 20px 24px;
+  border-bottom: 1px solid #eaeaed;
+  margin-bottom: 16px;
+}
+.sidebar-logo a img {
+  margin-bottom: 8px;
+}
+.sidebar-logo span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #29294c;
+}
+.sidebar-logo sub {
+  font-size: 10px;
+  color: #9d9dad;
+  font-weight: 400;
+  display: block;
+  margin-top: 2px;
+}
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-title {
+  padding: 6px 20px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9d9dad;
+}
+.sidebar-link {
+  display: block;
+  padding: 7px 20px;
+  font-size: 13px;
+  color: #4a4a68;
+  text-decoration: none;
+  border-radius: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.sidebar-link:hover { background: #f4f4f8; color: #29294c; }
+.sidebar-link.active {
+  background: #f0f0ff;
+  color: #5c5ce0;
+  font-weight: 500;
+  border-right: 2px solid #5c5ce0;
+}
+
+/* ── Main ── */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 48px 56px;
+  max-width: 1100px;
+}
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(135deg, #29294c 0%, #5c5ce0 100%);
+  border-radius: 16px;
+  padding: 56px 56px 48px;
+  color: #fff;
+  margin-bottom: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; right: 80px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.hero p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.hero-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.hero-badge {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ── Stats ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.stat-card {
+  background: #fff;
+  border: 1px solid #eaeaed;
+  border-radius: 12px;
+  padding: 24px;
+}
+.stat-value {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #29294c;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 13px;
+  color: #9d9dad;
+}
+
+/* ── Section header ── */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.section-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #29294c;
+}
+.section-count {
+  font-size: 12px;
+  color: #9d9dad;
+}
+
+/* ── Component grid ── */
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 48px;
+}
+/* ── Glassmorphism component card ── */
+.component-card {
+  background: rgba(255,255,255,0.62);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.78);
+  border-radius: 22px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: 0 8px 32px rgba(109,40,217,.07),
+              0 2px 8px rgba(109,40,217,.04),
+              inset 0 1px 0 rgba(255,255,255,.9);
+  transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s ease;
+  position: relative;
+  overflow: hidden;
+}
+.component-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.25) 0%, transparent 55%);
+  border-radius: 22px;
+  pointer-events: none;
+}
+.component-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 20px 48px rgba(109,40,217,.13),
+              0 6px 16px rgba(109,40,217,.07),
+              inset 0 1px 0 rgba(255,255,255,.95);
+}
+/* top row: icon + share btn */
+.cc-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.component-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: rgba(124,58,237,.09);
+  border: 1px solid rgba(124,58,237,.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .2s, background .2s;
+}
+.component-card:hover .component-icon {
+  background: rgba(124,58,237,.14);
+  transform: scale(1.08) rotate(-3deg);
+}
+.cc-share {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.75);
+  border: 1px solid rgba(109,40,217,.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #98a2b3;
+  flex-shrink: 0;
+  transition: background .15s, color .15s;
+  text-decoration: none;
+}
+.cc-share:hover { background: rgba(255,255,255,1); color: #7c3aed; }
+/* name + desc */
+.component-name {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #16162a;
+  margin-bottom: 5px;
+  letter-spacing: -.2px;
+}
+.component-desc {
+  font-size: 12px;
+  color: #667085;
+  line-height: 1.55;
+  margin-bottom: 12px;
+  min-height: 36px;
+}
+/* tags row */
+.cc-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.cc-tag {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 10.5px;
+  font-weight: 600;
+  background: rgba(255,255,255,.8);
+  border: 1px solid rgba(109,40,217,.14);
+  color: #6941c6;
+  letter-spacing: .01em;
+}
+.cc-tag--a11y {
+  border-color: rgba(5,150,105,.22);
+  color: #027a48;
+  background: rgba(236,253,245,.82);
+}
+/* stats row */
+.cc-stats {
+  display: flex;
+  align-items: stretch;
+  border-top: 1px solid rgba(255,255,255,.65);
+  border-bottom: 1px solid rgba(255,255,255,.65);
+  padding: 12px 0;
+  margin-bottom: 14px;
+  gap: 0;
+}
+.cc-stat {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+}
+.cc-stat-val {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #16162a;
+}
+.cc-stat-lbl {
+  font-size: 10.5px;
+  color: #98a2b3;
+  font-weight: 400;
+}
+.cc-sep {
+  width: 1px;
+  background: rgba(109,40,217,.1);
+  margin: 0 4px;
+  align-self: stretch;
+}
+/* footer: CTA + bookmark */
+.cc-footer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.cc-cta {
+  flex: 1;
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(109,40,217,.12);
+  border-radius: 12px;
+  padding: 10px 14px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #16162a;
+  transition: background .15s, color .15s, border-color .15s;
+  display: block;
+}
+.component-card:hover .cc-cta {
+  background: rgba(124,58,237,.08);
+  border-color: rgba(124,58,237,.3);
+  color: #7c3aed;
+}
+.cc-bookmark {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.85);
+  border: 1px solid rgba(109,40,217,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #98a2b3;
+  flex-shrink: 0;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.component-card:hover .cc-bookmark {
+  background: #7c3aed;
+  color: #fff;
+  border-color: #7c3aed;
+}
+/* dark mode */
+html[data-theme="dark"] .component-card {
+  background: rgba(20,20,38,.68) !important;
+  border-color: rgba(167,139,250,.15) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,.28),
+              inset 0 1px 0 rgba(167,139,250,.08) !important;
+}
+html[data-theme="dark"] .component-name { color: #eeeef8 !important; }
+html[data-theme="dark"] .component-desc { color: #6e6e90 !important; }
+html[data-theme="dark"] .cc-tag { background: rgba(30,30,52,.8) !important; border-color: rgba(167,139,250,.2) !important; color: #a78bfa !important; }
+html[data-theme="dark"] .cc-tag--a11y { background: rgba(6,78,59,.35) !important; border-color: rgba(52,211,153,.2) !important; color: #6ee7b7 !important; }
+html[data-theme="dark"] .cc-stat-val { color: #c8c8e8 !important; }
+html[data-theme="dark"] .cc-stat-lbl { color: #5c5c80 !important; }
+html[data-theme="dark"] .cc-stats { border-top-color: rgba(167,139,250,.1) !important; border-bottom-color: rgba(167,139,250,.1) !important; }
+html[data-theme="dark"] .cc-sep { background: rgba(167,139,250,.12) !important; }
+html[data-theme="dark"] .cc-cta { background: rgba(30,30,52,.8) !important; border-color: rgba(167,139,250,.2) !important; color: #b0b0d8 !important; }
+html[data-theme="dark"] .component-card:hover .cc-cta { background: rgba(124,58,237,.2) !important; color: #c4b5fd !important; border-color: rgba(167,139,250,.4) !important; }
+html[data-theme="dark"] .cc-share,
+html[data-theme="dark"] .cc-bookmark { background: rgba(30,30,52,.8) !important; border-color: rgba(167,139,250,.15) !important; color: #6060a0 !important; }
+html[data-theme="dark"] .component-card:hover .cc-bookmark { background: #7c3aed !important; color: #fff !important; border-color: #7c3aed !important; }
+html[data-theme="dark"] .component-icon { background: rgba(124,58,237,.15) !important; border-color: rgba(124,58,237,.25) !important; }
+
+/* ── Foundations grid ── */
+.foundations-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.foundation-card {
+  background: #fff;
+  border: 1px solid #eaeaed;
+  border-radius: 12px;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.foundation-card:hover {
+  border-color: #5c5ce0;
+  box-shadow: 0 4px 16px rgba(92,92,224,0.08);
+}
+.foundation-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.foundation-icon { background: #f0f0ff; }
+.foundation-info {}
+.foundation-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #29294c;
+  margin-bottom: 3px;
+}
+.foundation-desc {
+  font-size: 12px;
+  color: #9d9dad;
+}
+</style>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="dark.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="glass.css">
+<script src="responsive.js"></script>
+<script src="loader.js"></script>
+</head>
+<body>
+<button class="sidebar-ham" aria-label="Toggle navigation" aria-expanded="false">
+  <span class="sidebar-ham-icon">
+    <span></span><span></span><span></span>
+  </span>
+</button>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <a href="../index.html"><img src="../assets/vc-logo.svg" height="20" alt="VantageCircle" style="display:block"/></a>
+    <span>Pulse DS</span>
+    <sub>Design System v1.0</sub>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">General</div>
+    <a href="index.html" class="sidebar-link active">Home</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tokens</div>
+    <a href="colors.html" class="sidebar-link">Colors</a>
+    <a href="typography.html" class="sidebar-link">Typography</a>
+    <a href="shadow-border.html" class="sidebar-link">Shadow &amp; Border</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="accordion.html" class="sidebar-link">Accordion</a>
+    <a href="alert.html" class="sidebar-link">Alert</a>
+    <a href="avatar.html" class="sidebar-link">Avatar</a>
+    <a href="button.html" class="sidebar-link">Button</a>
+            <a href="calendar.html" class="sidebar-link">Calendar</a>
+    <a href="card.html" class="sidebar-link">Card</a>
+    <a href="checkbox.html" class="sidebar-link">Checkbox</a>
+    <a href="dropdown.html" class="sidebar-link">Dropdown</a>
+    <a href="empty-state.html" class="sidebar-link">Empty State</a>
+    <a href="input.html" class="sidebar-link">Input</a>
+    <a href="modal.html" class="sidebar-link">Modal</a>
+    <a href="pagination.html" class="sidebar-link">Pagination</a>
+    <a href="progress.html" class="sidebar-link">Progress</a>
+    <a href="rating.html" class="sidebar-link">Rating</a>
+    <a href="segment.html" class="sidebar-link">Segment</a>
+    <a href="slider.html" class="sidebar-link">Slider</a>
+    <a href="steps.html" class="sidebar-link">Steps</a>
+    <a href="table.html" class="sidebar-link">Table</a>
+    <a href="tabs.html" class="sidebar-link">Tabs</a>
+    <a href="tag.html" class="sidebar-link">Tag</a>
+    <a href="toggle.html" class="sidebar-link">Toggle</a>
+    <a href="tooltip.html" class="sidebar-link">Tooltip</a>
+    <a href="upload.html" class="sidebar-link">Upload</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-eyebrow">Pulse Design System</div>
+    <h1>Build consistent,<br>beautiful interfaces.</h1>
+    <p>A unified component library and design language for the Pulse product suite — from tokens to components, everything in one place.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">24 Components</span>
+      <span class="hero-badge">3 Foundations</span>
+      <span class="hero-badge">v1.0</span>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-value">24</div>
+      <div class="stat-label">UI Components</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Foundation Docs</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">1</div>
+      <div class="stat-label">Design Language</div>
+    </div>
+  </div>
+
+  <!-- Foundations -->
+  <div class="section-header">
+    <div class="section-title">Foundations</div>
+    <div class="section-count">3 docs</div>
+  </div>
+  <div class="foundations-grid">
+    <a class="foundation-card" href="colors.html">
+      <div class="foundation-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="9" stroke="#29294c" stroke-width="1.6"/>
+          <circle cx="8.5" cy="10" r="2" fill="#29294c"/>
+          <circle cx="15.5" cy="10" r="2" fill="#29294c" opacity=".5"/>
+          <circle cx="12" cy="15" r="2" fill="#29294c" opacity=".25"/>
+        </svg>
+      </div>
+      <div class="foundation-info">
+        <div class="foundation-name">Colors</div>
+        <div class="foundation-desc">Primary palette, semantic tokens, and usage guidance</div>
+      </div>
+    </a>
+    <a class="foundation-card" href="typography.html">
+      <div class="foundation-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 6h16M4 10h10M4 14h12M4 18h8" stroke="#29294c" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="foundation-info">
+        <div class="foundation-name">Typography</div>
+        <div class="foundation-desc">Type scale, weights, line heights, and text styles</div>
+      </div>
+    </a>
+    <a class="foundation-card" href="shadow-border.html">
+      <div class="foundation-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="14" height="14" rx="3" stroke="#29294c" stroke-width="1.6"/>
+          <rect x="7" y="7" width="14" height="14" rx="3" fill="#29294c" opacity=".1" stroke="#29294c" stroke-width="1.2" opacity=".3"/>
+        </svg>
+      </div>
+      <div class="foundation-info">
+        <div class="foundation-name">Shadow &amp; Border</div>
+        <div class="foundation-desc">Elevation levels, border radius tokens, and depth</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Components -->
+  <div class="section-header">
+    <div class="section-title">Components</div>
+    <div class="section-count">24 components</div>
+  </div>
+      <div class="component-grid">
+    <a class="component-card" href="accordion.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="3.5" rx="1" fill="#29294c"/><rect x="2" y="8.25" width="16" height="3.5" rx="1" fill="#29294c" opacity=".35"/><rect x="2" y="13.5" width="16" height="3.5" rx="1" fill="#29294c" opacity=".35"/><path d="M13.5 5.5L15 4l1.5 1.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="component-name">Accordion</div>
+      <div class="component-desc">Collapsible content panels for progressive disclosure</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="alert.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#29294c" stroke-width="1.6"/><rect x="9.2" y="8.5" width="1.6" height="5" rx=".8" fill="#29294c"/><circle cx="10" cy="6.5" r=".9" fill="#29294c"/></svg>
+      </div>
+      <div class="component-name">Alert</div>
+      <div class="component-desc">Status messages for info, success, warning, and errors</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="avatar.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3.5" stroke="#29294c" stroke-width="1.5"/><path d="M3 17c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="#29294c" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="component-name">Avatar</div>
+      <div class="component-desc">User photos, initials, groups &amp; labels</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="button.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="6" width="16" height="8" rx="3" fill="#29294c"/><rect x="5" y="9" width="10" height="2" rx="1" fill="#fff"/></svg>
+      </div>
+      <div class="component-name">Button</div>
+      <div class="component-desc">Primary, secondary, ghost, and destructive actions</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="calendar.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="14" rx="2" stroke="#29294c" stroke-width="1.5"/><path d="M2 8h16" stroke="#29294c" stroke-width="1.5"/><path d="M6 2v4M14 2v4" stroke="#29294c" stroke-width="1.5" stroke-linecap="round"/><circle cx="7" cy="12" r="1" fill="#29294c"/><circle cx="10" cy="12" r="1" fill="#29294c"/><circle cx="13" cy="12" r="1" fill="#29294c" opacity=".4"/></svg>
+      </div>
+      <div class="component-name">Calendar</div>
+      <div class="component-desc">Date picker and calendar view with range selection</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="card.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2.5" stroke="#29294c" stroke-width="1.5"/><rect x="5" y="7.5" width="10" height="1.5" rx=".75" fill="#29294c"/><rect x="5" y="10.5" width="7" height="1.5" rx=".75" fill="#29294c" opacity=".4"/></svg>
+      </div>
+      <div class="component-name">Card</div>
+      <div class="component-desc">Content containers with media, body, and action areas</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="checkbox.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" fill="#29294c"/><path d="M6.5 10l2.5 2.5 4.5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="component-name">Checkbox</div>
+      <div class="component-desc">Single and grouped selection controls with states</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="dropdown.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="8" rx="2" stroke="#29294c" stroke-width="1.5"/><path d="M7 9l3 3 3-3" stroke="#29294c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="15" width="12" height="1.5" rx=".75" fill="#29294c" opacity=".25"/></svg>
+      </div>
+      <div class="component-name">Dropdown</div>
+      <div class="component-desc">Select menus with search, multi-select, and autocomplete</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="empty-state.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2.5" stroke="#29294c" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M10 7v3M10 13h.01" stroke="#29294c" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <div class="component-name">Empty State</div>
+      <div class="component-desc">Placeholder views for no-data and error scenarios</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="input.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="6" width="16" height="8" rx="2.5" stroke="#29294c" stroke-width="1.6"/><rect x="5" y="9.2" width="1.4" height="1.6" rx=".7" fill="#29294c"/></svg>
+      </div>
+      <div class="component-name">Input</div>
+      <div class="component-desc">Text fields, search, password, and textarea variants</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="label.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="8.5" width="10" height="3" rx="1" fill="#29294c"/><circle cx="15" cy="10" r="2" stroke="#29294c" stroke-width="1.4"/><rect x="2" y="13" width="7" height="1.5" rx=".75" fill="#29294c" opacity=".3"/></svg>
+      </div>
+      <div class="component-name">Label</div>
+      <div class="component-desc">Form labels with required, optional, and tooltip variants</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="modal.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="1" width="18" height="18" rx="1" fill="#29294c" opacity=".12"/><rect x="3" y="4" width="14" height="12" rx="2" fill="#fff" stroke="#29294c" stroke-width="1.5"/><rect x="5" y="7" width="10" height="1.5" rx=".75" fill="#29294c"/><rect x="5" y="10" width="7" height="1.5" rx=".75" fill="#29294c" opacity=".4"/></svg>
+      </div>
+      <div class="component-name">Modal</div>
+      <div class="component-desc">Dialog overlays for confirmations and focused tasks</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="pagination.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10H2M18 10h-3" stroke="#29294c" stroke-width="1.5" stroke-linecap="round"/><rect x="5" y="7" width="10" height="6" rx="1.5" stroke="#29294c" stroke-width="1.5"/><rect x="7.5" y="9" width="2" height="2" rx=".5" fill="#29294c"/><rect x="10.5" y="9" width="2" height="2" rx=".5" fill="#29294c" opacity=".35"/></svg>
+      </div>
+      <div class="component-name">Pagination</div>
+      <div class="component-desc">Page navigation controls for lists and data tables</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="progress.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="8.5" width="16" height="3" rx="1.5" fill="#29294c" opacity=".15"/><rect x="2" y="8.5" width="10" height="3" rx="1.5" fill="#29294c"/></svg>
+      </div>
+      <div class="component-name">Progress</div>
+      <div class="component-desc">Linear and circular progress indicators and loaders</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="rating.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3l1.8 3.6 4 .58-2.9 2.82.68 3.98L10 12.1l-3.58 1.88.68-3.98L4.2 7.18l4-.58L10 3z" fill="#29294c"/></svg>
+      </div>
+      <div class="component-name">Rating</div>
+      <div class="component-desc">Star ratings with interactive and display modes</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="segment.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="6" width="16" height="8" rx="2" stroke="#29294c" stroke-width="1.5"/><rect x="2" y="6" width="6" height="8" rx="2" fill="#29294c"/><line x1="8" y1="6" x2="8" y2="14" stroke="#29294c" stroke-width="1"/><line x1="13" y1="6" x2="13" y2="14" stroke="#29294c" stroke-width="1" opacity=".35"/></svg>
+      </div>
+      <div class="component-name">Segment</div>
+      <div class="component-desc">Segmented controls for mutually exclusive options</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="slider.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="9.25" width="16" height="1.5" rx=".75" fill="#29294c" opacity=".2"/><rect x="2" y="9.25" width="9" height="1.5" rx=".75" fill="#29294c"/><circle cx="11" cy="10" r="3" fill="#fff" stroke="#29294c" stroke-width="1.5"/></svg>
+      </div>
+      <div class="component-name">Slider</div>
+      <div class="component-desc">Range inputs for numeric values and dual-handle ranges</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="steps.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="4" cy="10" r="2.5" fill="#29294c"/><circle cx="10" cy="10" r="2.5" fill="#29294c" opacity=".5"/><circle cx="16" cy="10" r="2.5" stroke="#29294c" stroke-width="1.4" opacity=".35"/><line x1="6.5" y1="10" x2="7.5" y2="10" stroke="#29294c" stroke-width="1.5"/><line x1="12.5" y1="10" x2="13.5" y2="10" stroke="#29294c" stroke-width="1.5" opacity=".4"/></svg>
+      </div>
+      <div class="component-name">Steps</div>
+      <div class="component-desc">Multi-step progress indicators for wizards and flows</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="table.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="14" rx="2" stroke="#29294c" stroke-width="1.5"/><line x1="2" y1="7.5" x2="18" y2="7.5" stroke="#29294c" stroke-width="1.5"/><line x1="8" y1="7.5" x2="8" y2="17" stroke="#29294c" stroke-width="1.2" opacity=".5"/><line x1="13" y1="7.5" x2="13" y2="17" stroke="#29294c" stroke-width="1.2" opacity=".5"/></svg>
+      </div>
+      <div class="component-name">Table</div>
+      <div class="component-desc">Data tables with sorting, selection, and pagination</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="tabs.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="8" width="16" height="9" rx="2" stroke="#29294c" stroke-width="1.5"/><rect x="2" y="3" width="6" height="5" rx="2" fill="#29294c"/><rect x="9.5" y="3" width="5" height="5" rx="2" stroke="#29294c" stroke-width="1.3" opacity=".4"/></svg>
+      </div>
+      <div class="component-name">Tabs</div>
+      <div class="component-desc">Horizontal and vertical tab navigation patterns</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="tag.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="6.5" width="10" height="7" rx="3.5" fill="#29294c"/><rect x="13" y="6.5" width="5" height="7" rx="3.5" fill="#29294c" opacity=".35"/><circle cx="5.5" cy="10" r="1.2" fill="#fff"/></svg>
+      </div>
+      <div class="component-name">Tag</div>
+      <div class="component-desc">Labels, badges, and status chips with variants</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="toggle.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="6.5" width="16" height="7" rx="3.5" fill="#29294c"/><circle cx="14.5" cy="10" r="2.5" fill="#fff"/></svg>
+      </div>
+      <div class="component-name">Toggle</div>
+      <div class="component-desc">On/off switches for boolean settings and preferences</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="tooltip.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="10" rx="3" fill="#29294c"/><path d="M7 15l3 2.5L13 15H7z" fill="#29294c"/><rect x="5" y="6.5" width="10" height="1.4" rx=".7" fill="#fff"/><rect x="5" y="9.1" width="7" height="1.4" rx=".7" fill="#fff" opacity=".6"/></svg>
+      </div>
+      <div class="component-name">Tooltip</div>
+      <div class="component-desc">Contextual hints and helper text on hover</div>
+      <div class="component-arrow">→</div>
+    </a>
+    <a class="component-card" href="upload.html">
+      <div class="component-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="13" width="14" height="4" rx="1.5" stroke="#29294c" stroke-width="1.5"/><path d="M10 11V4M7 7l3-3 3 3" stroke="#29294c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="component-name">Upload</div>
+      <div class="component-desc">File upload with drag-and-drop and progress states</div>
+      <div class="component-arrow">→</div>
+    </a>
+  </div>
+
+</main>
+
+<button class="theme-btn" onclick="window.__pulseToggleTheme && window.__pulseToggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="theme-toggle-label">Dark mode</span>
+</button>
+<div class="sidebar-overlay"></div>
+</body>
+</html>

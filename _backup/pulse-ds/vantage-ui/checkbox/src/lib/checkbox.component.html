@@ -1,0 +1,98 @@
+<div class="checkbox-container">
+  <div
+    class="checkbox"
+    [ngClass]="getCheckboxClass()"
+    [attr.data-hovered]="hovered"
+    [attr.data-focused]="focused"
+    [attr.data-checked]="indeterminate ? 'mixed' : checked"
+    [attr.data-disabled]="disabled"
+    (click)="handleClick($event, inputId)"
+    (mouseenter)="handleMouseEnter()"
+    (mouseleave)="handleMouseLeave()"
+  >
+    <input
+      #checkbox
+      role="checkbox"
+      type="checkbox"
+      class="checkbox-hidden"
+      [id]="elementId"
+      [attr.name]="name"
+      [value]="value"
+      [attr.aria-label]="ariaLabel"
+      [attr.aria-labelledby]="ariaLabelledBy"
+      [attr.aria-checked]="indeterminate ? 'mixed' : checked"
+      [attr.aria-disabled]="disabled"
+      [disabled]="disabled"
+      (focus)="handleFocus($event)"
+      (blur)="handleBlur($event)"
+    />
+    <div class="checkbox-visible">
+      @if (checked) {
+        @if (!indeterminate) {
+          <svg
+            class="check-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+          >
+            <path
+              d="M10 3L4.5 8.5L2 6"
+              stroke="currentColor"
+              stroke-width="1.6666"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        } @else {
+          <svg
+            class="check-icon"
+            width="10"
+            height="2"
+            viewBox="0 0 10 2"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.5 1H8.5"
+              stroke="currentColor"
+              stroke-width="1.66666"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        }
+      } @else if (indeterminate) {
+        <svg
+          class="check-icon"
+          width="10"
+          height="2"
+          viewBox="0 0 10 2"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1.5 1H8.5"
+            stroke="currentColor"
+            stroke-width="1.66666"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      }
+    </div>
+  </div>
+  @if (label) {
+    <label
+      class="input-label"
+      [ngClass]="getLabelClass()"
+      [attr.for]="elementId"
+      (mouseenter)="handleMouseEnter()"
+      (mouseleave)="handleMouseLeave()"
+    >
+      <span class="input-label-main" [innerHTML]="label"></span>
+      <span class="input-label-subtext" [innerHTML]="subtext"></span>
+    </label>
+  }
+</div>

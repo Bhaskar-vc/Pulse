@@ -1,0 +1,378 @@
+/* ══════════════════════════════════════════════════════════
+   PULSE DS — Glassmorphism Layer  v1.0
+   Adds frosted-glass surfaces, layered depth, and blur
+   on top of the base design. Loads last.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Glassmorphism token overrides ── */
+:root {
+  --glass-bg-light:    rgba(255, 255, 255, 0.72);
+  --glass-bg-medium:   rgba(255, 255, 255, 0.55);
+  --glass-bg-heavy:    rgba(255, 255, 255, 0.85);
+  --glass-border:      rgba(255, 255, 255, 0.55);
+  --glass-border-soft: rgba(255, 255, 255, 0.30);
+  --glass-shadow:      0 8px 32px rgba(109, 40, 217, 0.08),
+                       0 2px 8px  rgba(109, 40, 217, 0.04),
+                       inset 0 1px 0 rgba(255,255,255,0.9);
+  --glass-blur:        saturate(180%) blur(16px);
+  --glass-blur-heavy:  saturate(200%) blur(24px);
+}
+
+html[data-theme="dark"] {
+  --glass-bg-light:    rgba(22, 22, 42, 0.72);
+  --glass-bg-medium:   rgba(22, 22, 42, 0.55);
+  --glass-bg-heavy:    rgba(22, 22, 42, 0.88);
+  --glass-border:      rgba(167, 139, 250, 0.14);
+  --glass-border-soft: rgba(167, 139, 250, 0.08);
+  --glass-shadow:      0 8px 32px rgba(0, 0, 0, 0.3),
+                       0 2px 8px  rgba(0, 0, 0, 0.2),
+                       inset 0 1px 0 rgba(167,139,250,0.08);
+}
+
+
+/* ════════════════════════════════════════════
+   SIDEBAR — glass panel
+   ════════════════════════════════════════════ */
+.sidebar {
+  background: var(--glass-bg-heavy) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border-right: 1px solid var(--glass-border) !important;
+  box-shadow: 4px 0 24px rgba(109,40,217,.06),
+              inset -1px 0 0 rgba(255,255,255,.5) !important;
+}
+html[data-theme="dark"] .sidebar {
+  background: var(--glass-bg-heavy) !important;
+  border-right: 1px solid var(--glass-border) !important;
+  box-shadow: 4px 0 24px rgba(0,0,0,.25) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   THEME BUTTON — glass pill
+   ════════════════════════════════════════════ */
+.theme-btn {
+  background: var(--glass-bg-light) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+.theme-btn:hover {
+  background: rgba(255,255,255,0.88) !important;
+}
+html[data-theme="dark"] .theme-btn {
+  background: rgba(30,30,48,.75) !important;
+}
+html[data-theme="dark"] .theme-btn:hover {
+  background: rgba(40,40,64,.88) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   HAMBURGER — glass pill
+   ════════════════════════════════════════════ */
+.sidebar-ham {
+  background: var(--glass-bg-light) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   DEMO BOXES — glass card
+   ════════════════════════════════════════════ */
+.demo-box,
+.demo-canvas {
+  background: var(--glass-bg-heavy) !important;
+  backdrop-filter: saturate(160%) blur(8px) !important;
+  -webkit-backdrop-filter: saturate(160%) blur(8px) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 4px 24px rgba(109,40,217,.05),
+              0 1px 4px rgba(109,40,217,.04),
+              inset 0 1px 0 rgba(255,255,255,.8) !important;
+}
+html[data-theme="dark"] .demo-box,
+html[data-theme="dark"] .demo-canvas {
+  background: rgba(22,22,42,.65) !important;
+  border: 1px solid rgba(167,139,250,.1) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,.2),
+              inset 0 1px 0 rgba(167,139,250,.06) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   DROPDOWN MENU — glass float
+   ════════════════════════════════════════════ */
+.dd-menu {
+  background: var(--glass-bg-heavy) !important;
+  backdrop-filter: var(--glass-blur-heavy) !important;
+  -webkit-backdrop-filter: var(--glass-blur-heavy) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 20px 48px rgba(109,40,217,.12),
+              0 4px 12px rgba(109,40,217,.06),
+              inset 0 1px 0 rgba(255,255,255,.8) !important;
+}
+html[data-theme="dark"] .dd-menu {
+  background: rgba(22,22,42,.9) !important;
+  border: 1px solid rgba(167,139,250,.15) !important;
+  box-shadow: 0 20px 48px rgba(0,0,0,.4),
+              0 4px 12px rgba(0,0,0,.2),
+              inset 0 1px 0 rgba(167,139,250,.08) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   MODAL — glass overlay panel
+   ════════════════════════════════════════════ */
+.modal {
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid #e4e7ec !important;
+  box-shadow: 0 24px 64px rgba(22,22,42,.12),
+              0 8px 24px rgba(22,22,42,.06) !important;
+}
+.modal-overlay {
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+html[data-theme="dark"] .modal {
+  background: rgba(18,18,32,.92) !important;
+  border: 1px solid rgba(167,139,250,.18) !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,.5),
+              inset 0 1px 0 rgba(167,139,250,.1) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   HOMEPAGE — stat cards + component cards
+   ════════════════════════════════════════════ */
+.stat-card {
+  background: var(--glass-bg-heavy) !important;
+  backdrop-filter: saturate(160%) blur(12px) !important;
+  -webkit-backdrop-filter: saturate(160%) blur(12px) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 4px 16px rgba(109,40,217,.06),
+              inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+html[data-theme="dark"] .stat-card {
+  background: rgba(22,22,42,.72) !important;
+  border: 1px solid rgba(167,139,250,.12) !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2) !important;
+}
+
+.component-card {
+  background: var(--glass-bg-heavy) !important;
+  backdrop-filter: saturate(150%) blur(8px) !important;
+  -webkit-backdrop-filter: saturate(150%) blur(8px) !important;
+  border: 1px solid rgba(255,255,255,.6) !important;
+  box-shadow: 0 2px 8px rgba(109,40,217,.04),
+              inset 0 1px 0 rgba(255,255,255,.9) !important;
+  transition: border-color .15s, box-shadow .2s, transform .2s !important;
+}
+.component-card:hover {
+  border-color: rgba(124,58,237,.4) !important;
+  box-shadow: 0 8px 28px rgba(109,40,217,.14),
+              0 2px 8px rgba(109,40,217,.06),
+              inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+html[data-theme="dark"] .component-card {
+  background: rgba(22,22,42,.6) !important;
+  border: 1px solid rgba(167,139,250,.1) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2) !important;
+}
+html[data-theme="dark"] .component-card:hover {
+  border-color: rgba(167,139,250,.3) !important;
+  box-shadow: 0 8px 28px rgba(127,86,217,.2) !important;
+}
+
+.foundation-card {
+  background: var(--glass-bg-heavy) !important;
+  backdrop-filter: saturate(150%) blur(8px) !important;
+  -webkit-backdrop-filter: saturate(150%) blur(8px) !important;
+  border: 1px solid rgba(255,255,255,.6) !important;
+  box-shadow: 0 2px 8px rgba(109,40,217,.04),
+              inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+.foundation-card:hover {
+  border-color: rgba(124,58,237,.4) !important;
+  box-shadow: 0 8px 28px rgba(109,40,217,.12) !important;
+}
+html[data-theme="dark"] .foundation-card {
+  background: rgba(22,22,42,.6) !important;
+  border-color: rgba(167,139,250,.1) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   PROPS TABLE
+   ════════════════════════════════════════════ */
+.props-table {
+  background: var(--glass-bg-heavy) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 2px 12px rgba(109,40,217,.04) !important;
+}
+html[data-theme="dark"] .props-table {
+  background: rgba(22,22,42,.7) !important;
+  border-color: rgba(167,139,250,.12) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   FOR / A11Y / CARDS
+   ════════════════════════════════════════════ */
+.for-card,
+.a11y-card,
+.group-panel {
+  background: rgba(255,255,255,.75) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255,255,255,.6) !important;
+  box-shadow: 0 2px 8px rgba(109,40,217,.04),
+              inset 0 1px 0 rgba(255,255,255,.8) !important;
+}
+html[data-theme="dark"] .for-card,
+html[data-theme="dark"] .a11y-card,
+html[data-theme="dark"] .group-panel {
+  background: rgba(22,22,42,.65) !important;
+  border-color: rgba(167,139,250,.1) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   TOOLTIP — glass bubble
+   ════════════════════════════════════════════ */
+.tooltip-content {
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   HERO — glass dot grid + frosted badge
+   ════════════════════════════════════════════ */
+.hero {
+  backdrop-filter: saturate(180%) !important;
+  -webkit-backdrop-filter: saturate(180%) !important;
+}
+.hero-badge {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: inset 0 1px 0 rgba(109,40,217,.15) !important;
+}
+html[data-theme="dark"] .hero-badge {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: inset 0 1px 0 rgba(167,139,250,.15) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   PAGE BODY — subtle gradient backdrop
+   ════════════════════════════════════════════ */
+body {
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(167,139,250,.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(99,102,241,.05) 0%, transparent 60%),
+    #f6f6fc !important;
+}
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 10%, rgba(127,86,217,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 10% 80%, rgba(99,102,241,.08) 0%, transparent 50%),
+    #0c0c1a !important;
+}
+
+
+/* ════════════════════════════════════════════
+   SPEC CHIP — glass pill
+   ════════════════════════════════════════════ */
+.spec-chip {
+  background: rgba(255,255,255,.75) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  border: 1px solid rgba(255,255,255,.7) !important;
+  box-shadow: 0 1px 4px rgba(109,40,217,.06) !important;
+}
+html[data-theme="dark"] .spec-chip {
+  background: rgba(30,30,48,.75) !important;
+  border-color: rgba(167,139,250,.12) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   CALENDAR WRAP — glass
+   ════════════════════════════════════════════ */
+.cal-wrap {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: 0 8px 32px rgba(109,40,217,.08),
+              inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+html[data-theme="dark"] .cal-wrap {
+  background: rgba(22,22,42,.85) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,.3) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   SCROLLBAR — refined
+   ════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(109,40,217,.2);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(109,40,217,.4);
+}
+html[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(167,139,250,.2);
+}
+html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(167,139,250,.4);
+}
+
+
+/* ════════════════════════════════════════════
+   FOLDER ICON — glass & animation overrides
+   ════════════════════════════════════════════ */
+/* Stronger drop shadow in light mode */
+.ph-folder-img {
+  filter: drop-shadow(0 8px 20px rgba(20,10,120,.32)) !important;
+}
+/* Dark mode: purple-tinted glow */
+html[data-theme="dark"] .ph-folder-img {
+  filter: drop-shadow(0 8px 20px rgba(100,60,220,.45)) !important;
+}
+html[data-theme="dark"] .ph-folder-icon:hover .ph-folder-wrap {
+  filter: drop-shadow(0 16px 32px rgba(140,100,255,.5)) !important;
+}
+/* Glass label — slightly more opaque in dark mode */
+html[data-theme="dark"] .ph-folder-label {
+  background: rgba(10,5,40,0.38) !important;
+  border-color: rgba(167,139,250,0.22) !important;
+}
+/* Paper docs — slight transparency in dark mode */
+html[data-theme="dark"] .ph-paper {
+  background: rgba(230,230,255,0.88) !important;
+}
+
+
+/* ════════════════════════════════════════════
+   SELECTION color
+   ════════════════════════════════════════════ */
+::selection {
+  background: rgba(124,58,237,.18);
+  color: #4c1d95;
+}
+html[data-theme="dark"] ::selection {
+  background: rgba(167,139,250,.25);
+  color: #e4e4f0;
+}

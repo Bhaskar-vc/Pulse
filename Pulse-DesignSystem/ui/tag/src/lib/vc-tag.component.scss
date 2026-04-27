@@ -1,0 +1,65 @@
+/* VcTag (legacy) — Pulse Design System */
+
+.tag {
+  border-radius: 9999px; width: fit-content; height: fit-content; outline: none;
+  display: grid; grid-template-columns: auto auto auto; white-space: nowrap;
+}
+
+.first-grid-sm  { width: 8px; }
+.first-grid-md  { width: 10px; }
+.first-grid-lg  { width: 12px; }
+.third-grid-sm  { width: 8px; }
+.third-grid-md  { width: 10px; }
+.third-grid-lg  { width: 12px; }
+
+/* Type colors */
+.type-primary    { color: var(--ds-brand-dark); background: var(--ds-bg-hover); }
+.type-primary.focusable:hover,
+.type-primary.focusable:focus { background: #e1e5ea; }
+.type-error      { color: var(--ds-danger-dark); background: var(--ds-danger-subtle); }
+.type-warning    { color: var(--ds-warning-dark); background: var(--ds-warning-subtle); }
+.type-success    { color: var(--ds-success-dark); background: var(--ds-success-subtle); }
+.type-blue-gray  { color: var(--ds-text); background: var(--ds-bg-subtle); }
+.type-blue-light { color: #0086C9; background: #F0F9FF; }
+.type-purple     { color: var(--ds-brand-dark); background: var(--ds-brand-subtle); }
+.type-border     { color: var(--ds-text); border: 1px solid var(--ds-border-strong); background: var(--ds-bg); }
+.type-border.focusable:hover,
+.type-border.focusable:focus { background: var(--ds-bg-hover); }
+
+/* Sizes */
+.size-small  { margin: 2px 0; font-size: 12px; font-weight: 500; line-height: 16.8px; }
+.size-medium { padding: 2px 0; font-size: 14px; font-weight: 500; line-height: 19.6px; }
+.size-large  { padding: 4px 0; font-size: 14px; font-weight: 500; line-height: 19.6px; }
+
+/* Dot */
+.dot-wrapper-sm { width: 8px; height: 8px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 2px 6px; }
+.dot-wrapper-md { width: 8px; height: 8px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 2px 6px 2px 8px; }
+.dot-wrapper-lg { width: 8px; height: 8px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 4px 6px 4px 10px; }
+.dot { width: 6px; height: 6px; border-radius: 9999px; }
+
+/* Cross (remove) */
+.cross-wrapper-sm { width: 12px; height: 12px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 2px 6px 2px 4px; cursor: pointer; }
+.cross-wrapper-md { width: 12px; height: 12px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 2px 8px 2px 4px; cursor: pointer; }
+.cross-wrapper-lg { width: 12px; height: 12px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 4px 10px 4px 4px; cursor: pointer; }
+
+/* Image */
+.image-wrapper-sm { width: 16px; height: 16px; display: flex; justify-content: center; align-items: center; align-self: center; border-radius: 9999px; overflow: hidden; margin: 2px 6px 2px 3px; }
+.image-wrapper-md { width: 16px; height: 16px; display: flex; justify-content: center; align-items: center; align-self: center; border-radius: 9999px; overflow: hidden; margin: 2px 6px 2px 4px; }
+.image-wrapper-lg { width: 16px; height: 16px; display: flex; justify-content: center; align-items: center; align-self: center; border-radius: 9999px; overflow: hidden; margin: 4px 6px; }
+
+/* Left icon */
+.left-icon-wrapper-sm { width: 12px; height: 12px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 2px 4px 2px 6px; font-size: 12px; }
+.left-icon-wrapper-md { width: 12px; height: 12px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 2px 4px 2px 10px; font-size: 12px; }
+.left-icon-wrapper-lg { width: 12px; height: 12px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 4px 4px 4px 12px; font-size: 12px; }
+
+/* Right icon */
+.right-icon-wrapper-sm { width: 12px; height: 12px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 2px 6px 2px 4px; font-size: 12px; }
+.right-icon-wrapper-md { width: 12px; height: 12px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 2px 8px 2px 4px; font-size: 12px; }
+.right-icon-wrapper-lg { width: 12px; height: 12px; display: flex; justify-content: center; align-items: center; align-self: center; margin: 4px 10px 4px 4px; font-size: 12px; }
+
+/* Icon only */
+.icon-wrapper-sm { display: flex; justify-content: center; align-items: center; width: 12px; height: 12px; margin: 4px; font-size: 10px; border-radius: 9999px; }
+.icon-wrapper-md { display: flex; justify-content: center; align-items: center; width: 12px; height: 12px; margin: 6px; font-size: 10px; border-radius: 9999px; }
+.icon-wrapper-lg { display: flex; justify-content: center; align-items: center; width: 12px; height: 12px; margin: 8px; font-size: 10px; border-radius: 9999px; }
+
+.cursor-pointer { cursor: pointer; }

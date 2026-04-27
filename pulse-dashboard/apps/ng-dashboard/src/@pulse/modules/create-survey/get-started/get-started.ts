@@ -11,6 +11,14 @@ export class GetStartedComponent {
   @ViewChild('surveyName') surveyNameRef!: ElementRef<HTMLInputElement>;
 
   nameError = false;
+  qrEnabled = false;
+
+  wizardSteps = [
+    { title: 'Get Started' },
+    { title: 'Select Questions' },
+    { title: 'Configure' },
+    { title: 'Preview & Launch' },
+  ];
 
   constructor(private router: Router) {}
 

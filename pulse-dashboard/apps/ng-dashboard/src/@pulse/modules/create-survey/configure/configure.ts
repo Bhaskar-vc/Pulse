@@ -10,6 +10,13 @@ import { Router } from '@angular/router';
 export class ConfigureComponent {
   @ViewChild('emailBody') emailBodyRef!: ElementRef<HTMLDivElement>;
 
+  wizardSteps = [
+    { title: 'Get Started' },
+    { title: 'Select Questions' },
+    { title: 'Configure' },
+    { title: 'Preview & Launch' },
+  ];
+
   // Scheduling
   activeDuration = '1m';
   startDate = '2025-12-01';

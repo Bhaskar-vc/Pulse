@@ -1,0 +1,137 @@
+/* Popover — Pulse Design System */
+
+:host {
+  display: inline-flex;
+  position: relative;
+}
+
+/* ── Trigger ──────────────────────────────────────────────────── */
+.pop-trigger {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+/* ── Panel shell ──────────────────────────────────────────────── */
+.pop-panel {
+  position: absolute;
+  z-index: 900;
+  min-width: 240px;
+  max-width: 320px;
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border-medium);
+  border-radius: 12px;
+  box-shadow: var(--ds-shadow-popover);
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* ── Placement offsets ────────────────────────────────────────── */
+
+/* Bottom placements */
+.pop-panel--bottom       { top: calc(100% + 8px); left: 50%; transform: translateX(-50%); }
+.pop-panel--bottom-start { top: calc(100% + 8px); left: 0; }
+.pop-panel--bottom-end   { top: calc(100% + 8px); right: 0; }
+
+/* Top placements */
+.pop-panel--top       { bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); }
+.pop-panel--top-start { bottom: calc(100% + 8px); left: 0; }
+.pop-panel--top-end   { bottom: calc(100% + 8px); right: 0; }
+
+/* Right placements */
+.pop-panel--right       { left: calc(100% + 8px); top: 50%; transform: translateY(-50%); }
+.pop-panel--right-start { left: calc(100% + 8px); top: 0; }
+.pop-panel--right-end   { left: calc(100% + 8px); bottom: 0; }
+
+/* Left placements */
+.pop-panel--left       { right: calc(100% + 8px); top: 50%; transform: translateY(-50%); }
+.pop-panel--left-start { right: calc(100% + 8px); top: 0; }
+.pop-panel--left-end   { right: calc(100% + 8px); bottom: 0; }
+
+/* ── Arrow ────────────────────────────────────────────────────── */
+.pop-arrow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border-medium);
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+/* Bottom → arrow on top edge of panel */
+.pop-arrow--bottom       { top: -5px; left: 50%; margin-left: -5px; border-bottom-color: transparent; border-right-color: transparent; }
+.pop-arrow--bottom-start { top: -5px; left: 20px; border-bottom-color: transparent; border-right-color: transparent; }
+.pop-arrow--bottom-end   { top: -5px; right: 20px; border-bottom-color: transparent; border-right-color: transparent; }
+
+/* Top → arrow on bottom edge of panel */
+.pop-arrow--top       { bottom: -5px; left: 50%; margin-left: -5px; border-top-color: transparent; border-left-color: transparent; }
+.pop-arrow--top-start { bottom: -5px; left: 20px; border-top-color: transparent; border-left-color: transparent; }
+.pop-arrow--top-end   { bottom: -5px; right: 20px; border-top-color: transparent; border-left-color: transparent; }
+
+/* Right → arrow on left edge of panel */
+.pop-arrow--right       { left: -5px; top: 50%; margin-top: -5px; border-top-color: transparent; border-right-color: transparent; /* keep left+bottom */ }
+.pop-arrow--right-start { left: -5px; top: 16px; border-top-color: transparent; border-right-color: transparent; }
+.pop-arrow--right-end   { left: -5px; bottom: 16px; border-top-color: transparent; border-right-color: transparent; }
+
+/* Left → arrow on right edge of panel */
+.pop-arrow--left       { right: -5px; top: 50%; margin-top: -5px; border-bottom-color: transparent; border-left-color: transparent; }
+.pop-arrow--left-start { right: -5px; top: 16px; border-bottom-color: transparent; border-left-color: transparent; }
+.pop-arrow--left-end   { right: -5px; bottom: 16px; border-bottom-color: transparent; border-left-color: transparent; }
+
+/* ── Header ───────────────────────────────────────────────────── */
+.pop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 0;
+  gap: 8px;
+}
+
+.pop-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ds-text-heading);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.pop-close {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: var(--ds-text-muted);
+  transition: background .12s, color .12s;
+  padding: 0;
+
+  &:hover { background: var(--ds-bg-muted); color: var(--ds-text-body); }
+}
+
+/* ── Body ─────────────────────────────────────────────────────── */
+.pop-body {
+  padding: 8px 16px 16px;
+  font-size: 14px;
+  color: var(--ds-text-secondary);
+  line-height: 1.6;
+}
+
+/* When no title, give full top padding */
+.pop-panel:not(:has(.pop-header)) .pop-body {
+  padding-top: 16px;
+}
+
+/* ── Footer slot (projected via [footer]) ─────────────────────── */
+:host ::ng-deep [footer] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--ds-bg-subtle);
+  border-top: 1px solid var(--ds-border);
+}

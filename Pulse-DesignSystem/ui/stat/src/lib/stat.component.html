@@ -1,0 +1,47 @@
+<div class="stat" [class.stat--centered]="centered">
+
+  <!-- Figure / icon — supply with <div figure> or <svg figure> -->
+  <ng-content select="[figure]"></ng-content>
+
+  @if (iconClass) {
+    <div class="stat-figure" [class]="iconClass">
+      <ng-content select="[icon]"></ng-content>
+    </div>
+  }
+
+  <div class="stat-content">
+    @if (title) {
+      <div class="stat-title">{{ title }}</div>
+    }
+
+    @if (value) {
+      <div class="stat-value">{{ value }}</div>
+    }
+
+    @if (trend) {
+      <div class="stat-trend"
+           [class.stat-trend--up]="trendDir === 'up'"
+           [class.stat-trend--down]="trendDir === 'down'">
+        @if (trendDir === 'up') {
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        } @else if (trendDir === 'down') {
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        }
+        {{ trend }}
+      </div>
+    }
+
+    @if (desc) {
+      <div class="stat-desc">{{ desc }}</div>
+    }
+
+    <!-- Custom desc / action slots -->
+    <ng-content select="[desc]"></ng-content>
+    <ng-content select="[actions]"></ng-content>
+  </div>
+
+</div>

@@ -1,0 +1,141 @@
+/* Textarea — Pulse Design System */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.field-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ds-text-faint);
+  letter-spacing: 0.03px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.4;
+}
+
+.field-required {
+  color: var(--ds-danger);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--ds-text-placeholder);
+  cursor: help;
+}
+
+.textarea-wrap {
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+
+  &:hover:not(.is-disabled):not(.is-error) {
+    border-color: var(--ds-brand-hover);
+  }
+
+  &:focus-within:not(.is-error) {
+    border-color: var(--ds-brand);
+    box-shadow: 0 0 0 3px var(--ds-brand-focus-shadow);
+  }
+
+  &.is-error {
+    border-color: var(--ds-danger-border);
+  }
+
+  &.is-error:hover {
+    border-color: var(--ds-danger);
+  }
+
+  &.is-error:focus-within {
+    border-color: var(--ds-danger);
+    box-shadow: 0 0 0 3px rgba(240, 68, 56, 0.12);
+  }
+
+  &.is-disabled {
+    background: var(--ds-bg-muted);
+    border-color: var(--ds-border-medium);
+    cursor: not-allowed;
+  }
+}
+
+.textarea-wrap textarea {
+  display: block;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ds-text);
+  line-height: 1.4;
+  resize: vertical;
+  min-height: 80px;
+
+  &::placeholder {
+    color: var(--ds-text-placeholder);
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    box-shadow: none;
+    border: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--ds-text-disabled);
+  }
+
+  &.no-resize {
+    resize: none;
+  }
+}
+
+.field-hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ds-text-faint);
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+
+  &.is-error {
+    color: var(--ds-danger-dark);
+  }
+}
+
+.field-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.char-count {
+  font-size: 11px;
+  color: var(--ds-text-faint);
+  white-space: nowrap;
+  flex-shrink: 0;
+}

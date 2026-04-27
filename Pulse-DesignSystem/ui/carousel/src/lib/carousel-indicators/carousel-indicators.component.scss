@@ -1,0 +1,64 @@
+/* Carousel Indicators — Pulse Design System */
+
+.carousel-indicators {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .indicator {
+    transition: all 300ms;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+
+    &.dot-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+    }
+
+    &.line-indicator {
+      width: 42px;
+      height: 6px;
+      border-radius: 50px;
+    }
+  }
+
+  &.light {
+    background-color: var(--ds-bg-raised);
+
+    .indicator {
+      background: var(--ds-border-strong);
+    }
+    .indicator:hover {
+      background: var(--ds-text-placeholder);
+    }
+    .indicator.active {
+      background: var(--ds-text);
+    }
+  }
+
+  &.dark {
+    background: var(--ds-text);
+
+    .indicator {
+      background: var(--ds-border-strong);
+    }
+    .indicator:hover {
+      background: var(--ds-text-placeholder);
+    }
+    .indicator.active {
+      background: var(--ds-bg);
+    }
+  }
+
+  &.framed {
+    padding: 8px;
+    border-radius: 50px;
+  }
+
+  &:not(.framed) {
+    background: transparent;
+  }
+}

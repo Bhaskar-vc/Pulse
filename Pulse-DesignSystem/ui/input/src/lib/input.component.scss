@@ -1,0 +1,222 @@
+/* Input — Pulse Design System */
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.field-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ds-text-faint);
+  letter-spacing: 0.03px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.4;
+}
+
+.field-required {
+  color: var(--ds-danger);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--ds-text-placeholder);
+  cursor: help;
+}
+
+.field-hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ds-text-faint);
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.field-hint.is-error { color: var(--ds-danger-dark); }
+
+.field-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.char-count {
+  font-size: 11px;
+  color: var(--ds-text-faint);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  border-radius: 6px;
+  height: 36px;
+  padding: 0 12px;
+  gap: 8px;
+  transition: border-color .15s, box-shadow .15s;
+  cursor: text;
+  width: 100%;
+  overflow: hidden;
+}
+
+.input-wrap:hover:not(.is-disabled):not(.is-error) {
+  border-color: var(--ds-brand-hover);
+}
+
+.input-wrap:focus-within:not(.is-error) {
+  border-color: var(--ds-brand);
+  box-shadow: 0 0 0 3px var(--ds-brand-focus-shadow);
+}
+
+.input-wrap.is-error {
+  border-color: var(--ds-danger-border);
+}
+
+.input-wrap.is-error:hover {
+  border-color: var(--ds-danger);
+}
+
+.input-wrap.is-error:focus-within {
+  border-color: var(--ds-danger);
+  box-shadow: 0 0 0 3px rgba(240,68,56,.12);
+}
+
+.input-wrap.is-disabled {
+  background: var(--ds-bg-muted);
+  border-color: var(--ds-border-medium);
+  cursor: not-allowed;
+}
+
+.input-wrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  appearance: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ds-text);
+  line-height: 1.4;
+  min-width: 0;
+}
+
+.input-wrap input::placeholder {
+  color: var(--ds-text-placeholder);
+}
+
+.input-wrap input:focus,
+.input-wrap input:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+
+.input-wrap input:disabled {
+  cursor: not-allowed;
+  color: var(--ds-text-disabled);
+}
+
+.input-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--ds-text-placeholder);
+  line-height: 0;
+
+  > span { display: flex; align-items: center; line-height: 0; }
+  svg { display: block; }
+}
+
+.input-wrap.is-error .input-icon   { color: var(--ds-danger-border); }
+.input-wrap.is-disabled .input-icon { color: var(--ds-border-medium); }
+
+.input-trailing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.input-alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--ds-danger);
+}
+
+.pw-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  color: var(--ds-text-placeholder);
+  border-radius: 4px;
+  transition: color .15s;
+
+  &:hover {
+    color: var(--ds-text-faint);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ds-brand);
+    outline-offset: 2px;
+  }
+}
+
+.input-prefix,
+.input-suffix {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  background: var(--ds-bg-muted);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ds-text-faint);
+  flex-shrink: 0;
+  padding: 0 10px;
+  gap: 4px;
+}
+
+.input-prefix {
+  border-right: 1px solid var(--ds-border);
+  margin-left: -12px;
+}
+
+.input-suffix {
+  border-left: 1px solid var(--ds-border);
+  margin-right: -12px;
+}
+

@@ -1,0 +1,138 @@
+/* Modal — Pulse Design System */
+
+:host { display: contents; }
+
+/* ── Overlay ─────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: var(--ds-overlay);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.modal-overlay.is-open { opacity: 1; pointer-events: all; }
+
+/* ── Modal box ───────────────────────────────────── */
+.modal {
+  background: var(--ds-bg); border-radius: 12px; padding: 24px;
+  width: 400px; max-width: calc(100vw - 32px);
+  box-shadow: 0 20px 24px -4px rgba(16,24,40,.08), 0 8px 8px -4px rgba(16,24,40,.03);
+  display: flex; flex-direction: column; gap: 32px;
+  transform: scale(0.96) translateY(8px);
+  transition: transform 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+.modal-overlay.is-open .modal { transform: scale(1) translateY(0); }
+
+.modal--wide { width: 560px; }
+
+/* ── Centered (stacked) ──────────────────────────── */
+.modal--centered .modal-content { align-items: center; }
+.modal--centered .modal-text { text-align: center; }
+
+/* ── Horizontal layout ───────────────────────────── */
+.modal--horizontal {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  width: 544px;
+}
+.modal-col {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; gap: 32px;
+}
+.modal-text-row {
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.modal-text-row .modal-text { flex: 1; min-width: 0; }
+
+/* ── Featured icon ───────────────────────────────── */
+.modal-feat-icon {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px; border-radius: 28px; border: 8px solid;
+}
+
+.modal-feat-icon--success { background: #d1fadf; border-color: #ecfdf3; color: #039855; }
+.modal-feat-icon--warning  { background: #fef0c7; border-color: #fffaeb; color: #dc6803; }
+.modal-feat-icon--error    { background: #fee4e2; border-color: #fef3f2; color: #d92d20; }
+.modal-feat-icon--info     { background: #d1e9ff; border-color: #eff8ff; color: #1570ef; }
+
+/* Larger icon for centered stacked layout */
+.modal-feat-icon--lg svg   { width: 32px; height: 32px; }
+
+/* ── Content ─────────────────────────────────────── */
+.modal-content { display: flex; flex-direction: column; gap: 20px; }
+
+.modal-icon-row {
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.modal-icon-row__spacer { flex: 1; }
+
+.modal-close-row {
+  display: flex; justify-content: flex-end; width: 100%;
+}
+
+.modal-close {
+  width: 24px; height: 24px; flex-shrink: 0;
+  background: none; border: none; cursor: pointer; padding: 0;
+  color: var(--ds-text-disabled); display: flex; align-items: center; justify-content: center;
+  border-radius: 4px; transition: color 0.15s, background 0.15s;
+}
+.modal-close:hover { color: var(--ds-text); background: var(--ds-bg-muted); }
+
+.modal-text { display: flex; flex-direction: column; gap: 8px; }
+.modal-title { font-size: 16px; font-weight: 600; color: var(--ds-text); line-height: 1.5; }
+.modal-body  { font-size: 14px; color: var(--ds-text-faint); line-height: 1.6; }
+
+
+.modal-actions {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 12px;
+}
+.modal-actions--right    { justify-content: flex-end; }
+.modal-actions--centered { justify-content: center; }
+.modal-actions--stacked  { flex-direction: column; }
+
+/* ── Contained mode (Storybook stories) ─────────── */
+/* Render as a normal block with a simulated overlay background
+   so stories look like the real modal in context.            */
+.modal-overlay--contained {
+  position: static;
+  background: rgba(52, 64, 84, 0.70);
+  backdrop-filter: none;
+  opacity: 1;
+  pointer-events: auto;
+  padding: 40px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  border-radius: 8px;
+}
+.modal-overlay--contained .modal {
+  transform: none;
+}
+
+/* ── Drawer variant ──────────────────────────────── */
+.modal-overlay--drawer {
+  justify-content: flex-end;
+  align-items: stretch;
+}
+
+.modal--drawer {
+  width: 420px;
+  max-width: 92vw;
+  height: 100vh;
+  border-radius: 16px 0 0 16px;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(.25,.1,.25,1);
+  overflow-y: auto;
+}
+
+/* Override default open-state scale transform for the drawer */
+.modal-overlay--drawer.is-open .modal--drawer {
+  transform: translateX(0);
+}

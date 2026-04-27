@@ -1,0 +1,55 @@
+<div class="cal-wrap">
+  <div class="cal-panel">
+    <!-- Month header -->
+    <div class="cal-header">
+      <button type="button" class="cal-nav" (click)="prevMonth()" [disabled]="isPrevDisabled || null" aria-label="Previous month">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <span class="cal-month-label">{{ monthLabel }}</span>
+      <button type="button" class="cal-nav" (click)="nextMonth()" [disabled]="isNextDisabled || null" aria-label="Next month">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Day names row -->
+    <div class="cal-grid">
+      @for (day of dayNames; track day) {
+        <div class="cal-day-hd">{{ day }}</div>
+      }
+
+      <!-- Date cells -->
+      @for (cell of cells; track cell.key) {
+        <div
+          class="cal-cell"
+          [class.is-out]="cell.isOut"
+          [class.is-today]="cell.isToday"
+          [class.is-selected]="cell.isSelected"
+          [class.is-range-start]="cell.isRangeStart"
+          [class.is-range-end]="cell.isRangeEnd"
+          [class.is-in-range]="cell.isInRange"
+          [class.is-disabled]="cell.isDisabled"
+          [attr.aria-label]="cell.ariaLabel"
+          [attr.aria-pressed]="cell.isSelected"
+          role="button"
+          [attr.tabindex]="cell.isOut || cell.isDisabled ? -1 : 0"
+          (click)="!cell.isOut && !cell.isDisabled && selectDate(cell)"
+          (keydown.enter)="!cell.isOut && !cell.isDisabled && selectDate(cell)"
+        >{{ cell.day }}</div>
+      }
+    </div>
+  </div>
+
+  @if (showFooter) {
+    <div class="cal-footer">
+      <div></div>
+      <div class="cal-actions">
+        <button type="button" class="cal-btn cal-btn-cancel" (click)="cancel()">Cancel</button>
+        <button type="button" class="cal-btn cal-btn-apply" (click)="apply()">Apply</button>
+      </div>
+    </div>
+  }
+</div>

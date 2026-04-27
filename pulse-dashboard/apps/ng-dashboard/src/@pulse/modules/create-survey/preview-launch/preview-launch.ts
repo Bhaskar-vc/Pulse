@@ -8,6 +8,13 @@ import { Router } from '@angular/router';
   styleUrl: './preview-launch.scss',
 })
 export class PreviewLaunchComponent {
+  wizardSteps = [
+    { title: 'Get Started' },
+    { title: 'Select Questions' },
+    { title: 'Configure' },
+    { title: 'Preview & Launch' },
+  ];
+
   showExtraQuestions = false;
   showLaunchOverlay = false;
 

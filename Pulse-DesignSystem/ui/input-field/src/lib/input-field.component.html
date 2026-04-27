@@ -1,0 +1,95 @@
+<div class="input-field-wrap">
+  @if (label) {
+    <vc-label
+      [labelFor]="inputfieldId || generatedId"
+      [text]="label"
+      [required]="required"
+    ></vc-label>
+  }
+
+  <div
+    class="input-wrap"
+    [class.is-disabled]="disabled"
+    [class.is-error]="isError"
+    [class.has-tags]="tags.length > 0"
+    [style]="componentStyle"
+    (click)="setFocus()"
+  >
+    @if (iconLeft) {
+      @if (isIconLeftString()) {
+        <span class="input-icon">
+          <i [class]="iconLeft"></i>
+        </span>
+      } @else if (isIconLeftTemplateRef()) {
+        <ng-container *ngTemplateOutlet="getIconLeftAsTemplateRef()"></ng-container>
+      }
+    } @else if (tags.length) {
+      @for (tag of tags; track $index) {
+        <vc-tag
+          #tagElement
+          size="sm"
+          color="primary"
+          componentStyle="display:flex;align-items:center;height:26px;border-radius:5px;"
+          [image]="tag.imageUrl"
+          [focusable]="true"
+          [showX]="true"
+          (keydown)="handleTagKeyDown($event)"
+          (onRemove)="handleRemoveTag($event, $index)"
+        >{{ tag.text }}</vc-tag>
+      }
+    }
+
+    <input
+      #inputField
+      [class.has-tags-input]="tags.length > 0"
+      [class.hide-arrow-button]="hideArrowButton"
+      [id]="inputfieldId || generatedId"
+      [type]="type"
+      [placeholder]="placeholder"
+      [required]="required"
+      [disabled]="disabled || null"
+      [(ngModel)]="displayValue"
+      (ngModelChange)="onModelChange($event)"
+      (input)="handleInputChange($event)"
+      (focus)="handleFocus($event)"
+      (blur)="handleBlur($event)"
+      (keyup)="handleInputKeyUp($event)"
+      (keydown)="handleInputKeyDown($event)"
+      [min]="min ?? null"
+      [max]="max ?? null"
+      [minlength]="minLength ?? null"
+      [maxlength]="maxLength ?? null"
+      [readonly]="readOnly || null"
+    />
+
+    @if (iconRight) {
+      @if (isIconRightString()) {
+        <span class="input-icon" (click)="handleIconRightClick($event)">
+          <i [class]="iconRight"></i>
+        </span>
+      } @else if (isIconRightTemplateRef()) {
+        <ng-container
+          (click)="handleIconRightClick($event)"
+          *ngTemplateOutlet="getIconRightAsTemplateRef()"
+        ></ng-container>
+      }
+    }
+
+    @if (isError) {
+      <span class="input-alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+        </svg>
+      </span>
+    }
+  </div>
+
+  @if (isError && showErrorText) {
+    <span class="field-hint is-error">{{ errorText }}</span>
+  }
+
+  @if (hintText && !isError) {
+    <span class="field-hint" [innerHTML]="hintText"></span>
+  }
+</div>

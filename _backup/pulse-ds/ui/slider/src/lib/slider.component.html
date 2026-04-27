@@ -1,0 +1,35 @@
+<div class="slider-wrap">
+  @if (label || showValue) {
+    <div class="slider-label-row">
+      @if (label) {
+        <label class="slider-label" [attr.for]="sliderId">{{ label }}</label>
+      }
+      @if (showValue) {
+        <span class="slider-value" [attr.id]="sliderId + '-val'">{{ value }}{{ valueSuffix }}</span>
+      }
+    </div>
+  }
+
+  <input
+    class="slider"
+    [class.slider--sm]="size === 'sm'"
+    [class.slider--lg]="size === 'lg'"
+    [class.slider--success]="color === 'success'"
+    [class.slider--error]="color === 'error'"
+    [class.slider--warning]="color === 'warning'"
+    [id]="sliderId"
+    type="range"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    [value]="value"
+    [disabled]="disabled"
+    [style.background]="trackBackground"
+    (input)="onInput($event)"
+    (change)="onInput($event)"
+  />
+
+  @if (hint) {
+    <span class="slider-hint">{{ hint }}</span>
+  }
+</div>

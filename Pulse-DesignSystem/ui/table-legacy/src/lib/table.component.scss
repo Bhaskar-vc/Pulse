@@ -1,0 +1,96 @@
+/* Table Legacy — Pulse Design System */
+
+:host {
+  display: block;
+  font-family: 'Inter', sans-serif;
+}
+
+table {
+  width: 100%;
+
+  th,
+  td {
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: left;
+    border-bottom: 1px var(--ds-border) solid;
+  }
+
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  td {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
+.table-container {
+  width: 100%;
+  border-radius: 8px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.table-shadow {
+  box-shadow: var(--ds-shadow-md);
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding: 20px 24px;
+}
+
+.table-heading {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ds-text-heading);
+}
+
+.table-thead {
+  position: sticky;
+  top: 0;
+}
+
+.row-white {
+  background: var(--ds-bg);
+}
+
+.row-neutral {
+  background: var(--ds-bg-subtle);
+}
+
+.sortable {
+  cursor: pointer;
+}
+
+.th-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-icon {
+  width: 16px;
+  height: 16px;
+}
+
+th.fixed-column,
+td.fixed-column {
+  position: sticky;
+  left: 0;
+  background: inherit;
+  z-index: 1;
+}
+
+th.fixed-column {
+  background: inherit;
+  z-index: 2;
+}

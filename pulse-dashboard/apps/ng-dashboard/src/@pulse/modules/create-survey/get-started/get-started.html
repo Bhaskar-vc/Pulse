@@ -11,27 +11,7 @@
       Back
     </button>
 
-    <div class="steps-check">
-      <div class="steps-check-item is-active">
-        <div class="steps-check-pill"><span class="steps-check-num">1</span></div>
-        <span class="steps-check-label">Get Started</span>
-      </div>
-      <div class="steps-check-line"></div>
-      <div class="steps-check-item">
-        <div class="steps-check-pill"><span class="steps-check-num">2</span></div>
-        <span class="steps-check-label">Select Questions</span>
-      </div>
-      <div class="steps-check-line"></div>
-      <div class="steps-check-item">
-        <div class="steps-check-pill"><span class="steps-check-num">3</span></div>
-        <span class="steps-check-label">Configure</span>
-      </div>
-      <div class="steps-check-line"></div>
-      <div class="steps-check-item">
-        <div class="steps-check-pill"><span class="steps-check-num">4</span></div>
-        <span class="steps-check-label">Preview &amp; Launch</span>
-      </div>
-    </div>
+    <v-steps variant="pill" [steps]="wizardSteps" [activeStep]="0"></v-steps>
   </div>
 
   <!-- Content -->
@@ -200,16 +180,11 @@
               </div>
 
               <!-- QR Codes toggle -->
-              <div class="toggle-row">
-                <input type="checkbox" id="qr-toggle" class="check-btn"/>
-                <label for="qr-toggle" class="check-label">
-                  <svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg>
-                </label>
-                <label for="qr-toggle" class="toggle-row-text" style="cursor:pointer">
-                  <div class="toggle-row-title">QR Codes or Kiosks</div>
-                  <div class="toggle-row-sub">For deskless employees</div>
-                </label>
-              </div>
+              <v-toggle
+                [(ngModel)]="qrEnabled"
+                label="QR Codes or Kiosks"
+                supporting="For deskless employees"
+              ></v-toggle>
 
             </div>
           </div>

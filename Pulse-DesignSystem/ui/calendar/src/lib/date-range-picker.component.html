@@ -1,0 +1,124 @@
+<div class="drp-wrap">
+
+  <!-- ── Sidebar: preset shortcuts ─────────────────────────────── -->
+  <div class="drp-sidebar">
+    @for (preset of presets; track preset.label) {
+      <button
+        type="button"
+        class="drp-preset"
+        [class.is-active]="activePreset === preset.label"
+        (click)="selectPreset(preset)"
+      >{{ preset.label }}</button>
+    }
+  </div>
+
+  <!-- Vertical divider -->
+  <div class="drp-vdivider"></div>
+
+  <!-- ── Right area: calendars + bottom panel ───────────────────── -->
+  <div class="drp-right">
+
+    <!-- Dual calendars -->
+    <div class="drp-calendars" (mouseleave)="onGridLeave()">
+
+      <!-- Left calendar -->
+      <div class="drp-cal">
+        <div class="drp-cal-header">
+          <button type="button" class="drp-nav" (click)="prevMonth()" aria-label="Previous month">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <span class="drp-month-label">{{ leftLabel }}</span>
+          <!-- spacer keeps label centered -->
+          <span class="drp-nav drp-nav--ghost" aria-hidden="true"></span>
+        </div>
+
+        <div class="drp-grid">
+          @for (d of DAY_NAMES; track d) {
+            <div class="drp-day-hd">{{ d }}</div>
+          }
+          @for (cell of leftCells; track cell.date.toISOString()) {
+            <div
+              class="drp-cell"
+              [class.is-out]="cell.isOut"
+              [class.is-today]="cell.isToday && !cell.isRangeStart && !cell.isRangeEnd"
+              [class.is-range-start]="cell.isRangeStart"
+              [class.is-range-end]="cell.isRangeEnd"
+              [class.is-in-range]="cell.isInRange"
+              [class.is-preview-start]="cell.isPreviewStart"
+              [class.is-preview-end]="cell.isPreviewEnd"
+              [class.is-preview-range]="cell.isPreviewRange"
+              (click)="onCellClick(cell)"
+              (mouseenter)="onCellHover(cell)"
+            >
+              <span class="drp-num">{{ cell.day }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Middle vertical divider -->
+      <div class="drp-vdivider"></div>
+
+      <!-- Right calendar -->
+      <div class="drp-cal">
+        <div class="drp-cal-header">
+          <!-- spacer -->
+          <span class="drp-nav drp-nav--ghost" aria-hidden="true"></span>
+          <span class="drp-month-label">{{ rightLabel }}</span>
+          <button type="button" class="drp-nav" (click)="nextMonth()" aria-label="Next month">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="drp-grid">
+          @for (d of DAY_NAMES; track d) {
+            <div class="drp-day-hd">{{ d }}</div>
+          }
+          @for (cell of rightCells; track cell.date.toISOString()) {
+            <div
+              class="drp-cell"
+              [class.is-out]="cell.isOut"
+              [class.is-today]="cell.isToday && !cell.isRangeStart && !cell.isRangeEnd"
+              [class.is-range-start]="cell.isRangeStart"
+              [class.is-range-end]="cell.isRangeEnd"
+              [class.is-in-range]="cell.isInRange"
+              [class.is-preview-start]="cell.isPreviewStart"
+              [class.is-preview-end]="cell.isPreviewEnd"
+              [class.is-preview-range]="cell.isPreviewRange"
+              (click)="onCellClick(cell)"
+              (mouseenter)="onCellHover(cell)"
+            >
+              <span class="drp-num">{{ cell.day }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+    </div><!-- /drp-calendars -->
+
+    <!-- Horizontal divider -->
+    <div class="drp-hdivider"></div>
+
+    <!-- Bottom panel -->
+    <div class="drp-bottom">
+      <div class="drp-inputs">
+        <div class="drp-input-box" [class.is-placeholder]="!rangeStart">
+          {{ rangeStart ? formatDate(rangeStart) : 'Start date' }}
+        </div>
+        <span class="drp-input-sep">–</span>
+        <div class="drp-input-box" [class.is-placeholder]="!rangeEnd">
+          {{ rangeEnd ? formatDate(rangeEnd) : 'End date' }}
+        </div>
+      </div>
+      <div class="drp-actions">
+        <button type="button" class="drp-btn drp-btn-cancel" (click)="cancel()">Cancel</button>
+        <button type="button" class="drp-btn drp-btn-apply"  (click)="apply()">Apply</button>
+      </div>
+    </div>
+
+  </div><!-- /drp-right -->
+</div>

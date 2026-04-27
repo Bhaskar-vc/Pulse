@@ -1,0 +1,24 @@
+<div class="tabs" [class]="tabsClass">
+  <div class="tabs-list" role="tablist">
+    @for (tab of tabItems; track tab.index) {
+      <button
+        type="button"
+        role="tab"
+        class="tab-item"
+        [class.is-active]="tab.isActive"
+        [attr.aria-selected]="tab.isActive"
+        [attr.aria-disabled]="tab.disabled || null"
+        [disabled]="tab.disabled || null"
+        (click)="select(tab.index)"
+      >
+        {{ tab.label }}
+        @if (tab.count !== '' && tab.count !== null && tab.count !== undefined) {
+          <span class="tab-count">{{ tab.count }}</span>
+        }
+      </button>
+    }
+  </div>
+  <div class="tab-panels" role="tabpanel">
+    <ng-content></ng-content>
+  </div>
+</div>

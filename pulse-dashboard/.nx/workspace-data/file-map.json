@@ -1,0 +1,898 @@
+{
+  "version": "6.0",
+  "nxVersion": "21.6.10",
+  "pathMappings": {
+    "@auth/*": [
+      "apps/ng-dashboard/src/@auth/*"
+    ],
+    "@components/*": [
+      "apps/ng-dashboard/src/@components/*"
+    ],
+    "@core/*": [
+      "apps/ng-dashboard/src/@core/*"
+    ],
+    "@pulse/*": [
+      "apps/ng-dashboard/src/@pulse/*"
+    ],
+    "@utils/*": [
+      "apps/ng-dashboard/src/@utils/*"
+    ],
+    "@environments/*": [
+      "apps/ng-dashboard/src/environments/*"
+    ],
+    "@pulse-ds/ui": [
+      "../Pulse-DesignSystem/ui/src/index.ts"
+    ],
+    "@pulse-ds/ui/*": [
+      "../Pulse-DesignSystem/ui/*/src/index.ts"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".editorconfig",
+        "hash": "4165385352547808172"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "8109225823403413348"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "642157963398392941"
+      },
+      {
+        "file": ".npmrc",
+        "hash": "18085261541358865259"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "11411277661116404690"
+      },
+      {
+        "file": "Dockerfile",
+        "hash": "4924309746431737155"
+      },
+      {
+        "file": "Jenkinsfiles/Jenkinsfile.prod",
+        "hash": "5846527774899275123"
+      },
+      {
+        "file": "Jenkinsfiles/Jenkinsfile.test",
+        "hash": "11793182881691006269"
+      },
+      {
+        "file": "Jenkinsfiles/Jenkinsfile.uat",
+        "hash": "10984894508155751415"
+      },
+      {
+        "file": "README.md",
+        "hash": "5930855675439362021"
+      },
+      {
+        "file": "api/pulse/api/v1/survey/getFeedbackCount.js",
+        "hash": "11962395098574904797"
+      },
+      {
+        "file": "api/pulse/api/v1/survey/getOverallSentimentBySurveyId.js",
+        "hash": "7285628022224777980"
+      },
+      {
+        "file": "api/pulse/api/v1/survey/getProcessedSentiments.js",
+        "hash": "17270538945171873796"
+      },
+      {
+        "file": "api/pulse/api/v2/survey/getSurveyComments.js",
+        "hash": "12031248170113856373"
+      },
+      {
+        "file": "api/survey/getFiltersForSurveyReport.js",
+        "hash": "9004471636988661263"
+      },
+      {
+        "file": "api/survey/getSurveysForReport.js",
+        "hash": "16325587349490675476"
+      },
+      {
+        "file": "api/survey/searchSurveysForReport.js",
+        "hash": "11692352436933736860"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "15046207584750152808"
+      },
+      {
+        "file": "mock-api.js",
+        "hash": "3032985917213672653"
+      },
+      {
+        "file": "nx.json",
+        "hash": "12754514717376978607"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "13026210949283767840"
+      },
+      {
+        "file": "package.json",
+        "hash": "17734822152063498956"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "4006654866425806775"
+      },
+      {
+        "file": "vercel.json",
+        "hash": "10256420361418735477"
+      },
+      {
+        "file": "vite.config.js",
+        "hash": "9046565625669238060"
+      }
+    ],
+    "projectFileMap": {
+      "ng-dashboard": [
+        {
+          "file": "apps/ng-dashboard/project.json",
+          "hash": "15570054772263479479"
+        },
+        {
+          "file": "apps/ng-dashboard/proxy.conf.json",
+          "hash": "403181602088006212"
+        },
+        {
+          "file": "apps/ng-dashboard/public/VC-logo.svg",
+          "hash": "1447036080924820375"
+        },
+        {
+          "file": "apps/ng-dashboard/public/assets/templates/change-success.png",
+          "hash": "5101932674298604106"
+        },
+        {
+          "file": "apps/ng-dashboard/public/assets/templates/dei-survey.png",
+          "hash": "10129206645018026979"
+        },
+        {
+          "file": "apps/ng-dashboard/public/assets/templates/psychosocial-health.png",
+          "hash": "4876086609641315448"
+        },
+        {
+          "file": "apps/ng-dashboard/public/assets/templates/quick-engagement-2.png",
+          "hash": "1672120717263139975"
+        },
+        {
+          "file": "apps/ng-dashboard/public/assets/templates/quick-engagement.png",
+          "hash": "12430856108603650419"
+        },
+        {
+          "file": "apps/ng-dashboard/public/avatar.png",
+          "hash": "12979568484573331625"
+        },
+        {
+          "file": "apps/ng-dashboard/public/favicon.ico",
+          "hash": "3988961587069885523"
+        },
+        {
+          "file": "apps/ng-dashboard/public/fit-logo.png",
+          "hash": "15981744610560132316"
+        },
+        {
+          "file": "apps/ng-dashboard/public/icon-ai-scheduling.svg",
+          "hash": "12487368142135875843"
+        },
+        {
+          "file": "apps/ng-dashboard/public/icon-artboard.svg",
+          "hash": "22151005074534329"
+        },
+        {
+          "file": "apps/ng-dashboard/public/icon-rocket.svg",
+          "hash": "5989600802608367237"
+        },
+        {
+          "file": "apps/ng-dashboard/public/team-illustration.png",
+          "hash": "11926865773933050140"
+        },
+        {
+          "file": "apps/ng-dashboard/public/tpl-back-to-office.png",
+          "hash": "13802246809889627662"
+        },
+        {
+          "file": "apps/ng-dashboard/public/tpl-onboarding.png",
+          "hash": "16751806765468702905"
+        },
+        {
+          "file": "apps/ng-dashboard/public/tpl-psychosocial-health.png",
+          "hash": "10761063258978565579"
+        },
+        {
+          "file": "apps/ng-dashboard/public/tpl-work-anniversary.png",
+          "hash": "7125728378680210856"
+        },
+        {
+          "file": "apps/ng-dashboard/public/vantage-fit-logo.svg",
+          "hash": "1809207938872762945"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@auth/components/login-via-credentials/login-via-credentials.component.ts",
+          "hash": "8082016823412500682",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@auth/components/login-via-token/login-via-token.component.ts",
+          "hash": "16438888257326550073",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@auth/guard/auth.guard.ts",
+          "hash": "430200151502012333",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@auth/routes.ts",
+          "hash": "16490001909275221817",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@auth/services/auth.service.ts",
+          "hash": "10553094515689131588",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@auth/state/auth.actions.ts",
+          "hash": "11325983658413990525",
+          "deps": [
+            "npm:@ngrx/store"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@auth/state/auth.effects.ts",
+          "hash": "5798215099253446535",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@ngrx/effects"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@auth/state/auth.reducer.ts",
+          "hash": "7890298057288823905",
+          "deps": [
+            "npm:@ngrx/store"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@auth/state/auth.selectors.ts",
+          "hash": "15095382612915791762",
+          "deps": [
+            "npm:@ngrx/store"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@auth/state/auth.state.ts",
+          "hash": "11385019871411050165",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@ngrx/store",
+            "npm:@ngrx/effects"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@components/left-nav/left-nav.html",
+          "hash": "5777722439044951092"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@components/left-nav/left-nav.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@components/left-nav/left-nav.ts",
+          "hash": "6711838672862924933",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@components/pixel-canvas/pixel-canvas.element.ts",
+          "hash": "15301241137026607163"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@components/skeleton-loader/skeleton-loader.html",
+          "hash": "7459500382577408136"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@components/skeleton-loader/skeleton-loader.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@components/skeleton-loader/skeleton-loader.ts",
+          "hash": "3620903152347273709",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@components/top-nav/top-nav.html",
+          "hash": "4300183962549631877"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@components/top-nav/top-nav.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@components/top-nav/top-nav.ts",
+          "hash": "9788746970601530876",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/guards/not-prod.guard.ts",
+          "hash": "4710621862332937122",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/models/core.model.ts",
+          "hash": "5342341056162839176"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/models/user.model.ts",
+          "hash": "1273871312374921271"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/pipes/filter-out.pipe.ts",
+          "hash": "1652126670609899344",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/pipes/safe-html.pipe.ts",
+          "hash": "7157725444198550339",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/platform-browser"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/services/core.service.ts",
+          "hash": "5398927021317209420",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/services/storage/storage.service.ts",
+          "hash": "11689213876804787700",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/state/core.actions.ts",
+          "hash": "6112991703363627770",
+          "deps": [
+            "npm:@ngrx/store"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/state/core.effects.ts",
+          "hash": "11592437282783421123",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@ngrx/effects"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/state/core.reducer.ts",
+          "hash": "4855343109919344130",
+          "deps": [
+            "npm:@ngrx/store"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/state/core.selectors.ts",
+          "hash": "6098413461820895609",
+          "deps": [
+            "npm:@ngrx/store"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@core/state/core.state.ts",
+          "hash": "9429404047520818926",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@ngrx/store",
+            "npm:@ngrx/effects"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/guard/pulse.guard.ts",
+          "hash": "13175521383713361388",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/interface/pulse.interface.ts",
+          "hash": "16719930884158662084"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/models/pulse.model.ts",
+          "hash": "17053065134757648729"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/add-custom-question/add-custom-question.html",
+          "hash": "7026006084383226790"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/add-custom-question/add-custom-question.scss",
+          "hash": "5273011115389691420"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/add-custom-question/add-custom-question.ts",
+          "hash": "2894016464443924219",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/configure/configure.html",
+          "hash": "7481333101518154032"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/configure/configure.scss",
+          "hash": "5916390252872734548"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/configure/configure.ts",
+          "hash": "13706885705817426750",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/create-survey-routing.module.ts",
+          "hash": "3815958879203146011",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/create-survey.html",
+          "hash": "17120121603138975680"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/create-survey.module.ts",
+          "hash": "16775757060091513954",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/forms"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/create-survey.scss",
+          "hash": "13491817917184737435"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/create-survey.ts",
+          "hash": "16858858292041179520",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/get-started/get-started.html",
+          "hash": "7488408018921653362"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/get-started/get-started.scss",
+          "hash": "15173005039646195953"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/get-started/get-started.ts",
+          "hash": "6808410780269024560",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/preview-launch/preview-launch.html",
+          "hash": "4922463850979837262"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/preview-launch/preview-launch.scss",
+          "hash": "3792370029736642235"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/preview-launch/preview-launch.ts",
+          "hash": "18079229482286254136",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/select-questions/select-questions.html",
+          "hash": "11959581120152535609"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/select-questions/select-questions.scss",
+          "hash": "10318705807880165103"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/create-survey/select-questions/select-questions.ts",
+          "hash": "12019537623449206943",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/dashboard/dashboard-routing.module.ts",
+          "hash": "14623603128184598733",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/dashboard/dashboard.module.ts",
+          "hash": "3179456716206003342",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/dashboard/overview.html",
+          "hash": "2188151304881790667"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/dashboard/overview.scss",
+          "hash": "9851914897116693882"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/dashboard/overview.ts",
+          "hash": "13342094840352037182",
+          "deps": [
+            "npm:@angular/core",
+            "npm:chart.js"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/insights/ai-hub.html",
+          "hash": "7369795421219416615"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/insights/ai-hub.scss",
+          "hash": "12630332210536617365"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/insights/ai-hub.ts",
+          "hash": "17621768322854060077",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/insights/insights-routing.module.ts",
+          "hash": "6748006309774877918",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/insights/insights.module.ts",
+          "hash": "3837441630606968099",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/forms"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/reports/reports-routing.module.ts",
+          "hash": "441636135485350882",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/reports/reports.html",
+          "hash": "1050429690820366353"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/reports/reports.module.ts",
+          "hash": "7319923742894027215",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/forms"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/reports/reports.scss",
+          "hash": "17746880115219994920"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/modules/reports/reports.ts",
+          "hash": "5609918468304131323",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/pulse-routing.module.ts",
+          "hash": "13069737404388812820",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/pulse.component.ts",
+          "hash": "8089444896331842614",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/pulse.module.ts",
+          "hash": "7721289043260031085",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/services/pulse.service.ts",
+          "hash": "7402733532122325053",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/services/reports.service.ts",
+          "hash": "12966897162143386799",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/shared/components/date-picker/date-picker.html",
+          "hash": "12614437533038376757"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/shared/components/date-picker/date-picker.scss",
+          "hash": "151838850155267437"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/shared/components/date-picker/date-picker.ts",
+          "hash": "7456263067110862668",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/shared/components/expandable-card/expandable-card.html",
+          "hash": "17658133399113793458"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/shared/components/expandable-card/expandable-card.scss",
+          "hash": "16134312095342256063"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/shared/components/expandable-card/expandable-card.ts",
+          "hash": "5321227018688984158",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/shared/components/survey-carousel/survey-carousel.html",
+          "hash": "17412085629900268659"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/shared/components/survey-carousel/survey-carousel.scss",
+          "hash": "1887468383080997285"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@pulse/shared/components/survey-carousel/survey-carousel.ts",
+          "hash": "12253554598230229595",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@utils/base.service.ts",
+          "hash": "3397327337487288735",
+          "deps": [
+            "npm:@angular/common",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@utils/directives/drag-drop.directive.ts",
+          "hash": "4278527758458487435",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@utils/helpers.ts",
+          "hash": "17373433579422242579"
+        },
+        {
+          "file": "apps/ng-dashboard/src/@utils/pipes/safe.pipe.ts",
+          "hash": "3180601432385203924",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/platform-browser"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/@utils/pipes/string.pipe.ts",
+          "hash": "10778990056571688336",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/app/app.html",
+          "hash": "8024802200817413591"
+        },
+        {
+          "file": "apps/ng-dashboard/src/app/app.scss",
+          "hash": "9068269395871012907"
+        },
+        {
+          "file": "apps/ng-dashboard/src/app/app.ts",
+          "hash": "12702116876760712536",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/app/portal/portal-routing.module.ts",
+          "hash": "8920938261417547238",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/app/portal/portal.component.html",
+          "hash": "7602132988094077641"
+        },
+        {
+          "file": "apps/ng-dashboard/src/app/portal/portal.component.scss",
+          "hash": "14715089297228254223"
+        },
+        {
+          "file": "apps/ng-dashboard/src/app/portal/portal.component.ts",
+          "hash": "7440367915532460709",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/app/portal/portal.module.ts",
+          "hash": "12482781295648329243",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/app/services/global.service.ts",
+          "hash": "2478480017675083370",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/app/services/interceptors/interceptor.service.ts",
+          "hash": "15402811919042243148",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/environments/environment.prod.ts",
+          "hash": "11217264706105859740"
+        },
+        {
+          "file": "apps/ng-dashboard/src/environments/environment.test.ts",
+          "hash": "10994552919590208917"
+        },
+        {
+          "file": "apps/ng-dashboard/src/environments/environment.ts",
+          "hash": "3843328080915862894"
+        },
+        {
+          "file": "apps/ng-dashboard/src/environments/environment.uat.ts",
+          "hash": "7298839815231853878"
+        },
+        {
+          "file": "apps/ng-dashboard/src/index.html",
+          "hash": "4816621548551041594"
+        },
+        {
+          "file": "apps/ng-dashboard/src/main.ts",
+          "hash": "1479386905908057694",
+          "deps": [
+            "npm:@angular/platform-browser",
+            "npm:@angular/router",
+            "npm:@angular/common",
+            "npm:@ngrx/store",
+            "npm:@ngrx/effects",
+            "npm:@ngrx/store-devtools"
+          ]
+        },
+        {
+          "file": "apps/ng-dashboard/src/styles.scss",
+          "hash": "17836272830756519554"
+        },
+        {
+          "file": "apps/ng-dashboard/tailwind.config.js",
+          "hash": "3251614513657300506"
+        },
+        {
+          "file": "apps/ng-dashboard/tsconfig.app.json",
+          "hash": "8369321240499881643"
+        },
+        {
+          "file": "apps/ng-dashboard/tsconfig.json",
+          "hash": "6647368098917765356"
+        },
+        {
+          "file": "apps/ng-dashboard/tsconfig.spec.json",
+          "hash": "17583206669148233232"
+        }
+      ]
+    }
+  },
+  "externalNodesHash": "3981438255412228013"
+}

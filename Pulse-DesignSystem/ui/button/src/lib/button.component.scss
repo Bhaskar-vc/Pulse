@@ -1,0 +1,256 @@
+:host {
+  width: auto;
+  height: auto;
+  display: inline-flex;
+}
+
+/* ── Base ──────────────────────────────────────────────────── */
+button.btn {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 4px 16px;
+  min-width: 64px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  outline: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, opacity 0.15s;
+
+  svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* ── Sizes ── */
+  &.btn-xs { height: 28px; padding: 1px 10px; font-size: 12px; min-width: 48px; border-radius: 6px; }
+  &.btn-sm { height: 32px; padding: 2px 12px; font-size: 13px; min-width: 56px; }
+  &.btn-lg { height: 40px; padding: 6px 20px; font-size: 15px; min-width: 72px; }
+
+  /* ── Shape ── */
+  &.btn-square { aspect-ratio: 1 / 1; padding: 0; min-width: unset; }
+
+  /* ── Radius overrides ── */
+  &.btn-radius-none { border-radius: 0; }
+  &.btn-radius-full { border-radius: 9999px; }
+
+  /* ── Disabled ── */
+  &:disabled,
+  &[aria-disabled="true"] {
+    background: var(--ds-bg-hover) !important;
+    color: var(--ds-text-placeholder) !important;
+    border-color: transparent !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+  }
+
+  /* ── Loading ── */
+  &.btn-loading { pointer-events: none; }
+
+  /* ══ Solid ══════════════════════════════════════════════════ */
+  &.btn-solid-primary   { background: var(--ds-btn-primary-bg); color: var(--ds-btn-primary-color); border-color: var(--ds-btn-primary-border); }
+  &.btn-solid-primary:not(:disabled):hover   { background: var(--ds-btn-primary-hover-bg); color: var(--ds-btn-primary-hover-color); border-color: var(--ds-btn-primary-hover-border); }
+  &.btn-solid-primary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-brand-focus-shadow); }
+
+  &.btn-solid-secondary { background: var(--ds-brand-dark); color: #fff; border-color: var(--ds-brand-dark); }
+  &.btn-solid-secondary:not(:disabled):hover { background: #5531a1; border-color: #5531a1; }
+  &.btn-solid-secondary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-brand-border); }
+
+  &.btn-solid-success   { background: var(--ds-success); color: #fff; border-color: var(--ds-success); }
+  &.btn-solid-success:not(:disabled):hover   { background: #0e9155; border-color: #0e9155; }
+  &.btn-solid-success:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-success-border); }
+
+  &.btn-solid-info      { background: var(--ds-info); color: #fff; border-color: var(--ds-info); }
+  &.btn-solid-info:not(:disabled):hover      { background: var(--ds-info-dark); border-color: var(--ds-info-dark); }
+  &.btn-solid-info:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-info-border); }
+
+  &.btn-solid-warning   { background: var(--ds-warning); color: #fff; border-color: var(--ds-warning); }
+  &.btn-solid-warning:not(:disabled):hover   { background: var(--ds-warning-dark); border-color: var(--ds-warning-dark); }
+  &.btn-solid-warning:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-warning-border); }
+
+  &.btn-solid-error     { background: var(--ds-danger); color: #fff; border-color: var(--ds-danger); }
+  &.btn-solid-error:not(:disabled):hover     { background: var(--ds-danger-dark); border-color: var(--ds-danger-dark); }
+  &.btn-solid-error:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-danger-border); }
+
+  /* ══ Light ══════════════════════════════════════════════════ */
+  &.btn-light-primary   { background: var(--ds-brand-subtle); color: var(--ds-text); border-color: transparent; }
+  &.btn-light-primary:not(:disabled):hover   { background: var(--ds-brand-light); }
+  &.btn-light-primary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-brand-focus-shadow); }
+
+  &.btn-light-secondary { background: var(--ds-brand-subtle); color: var(--ds-brand-dark); border-color: transparent; }
+  &.btn-light-secondary:not(:disabled):hover { background: var(--ds-brand-light); }
+  &.btn-light-secondary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-brand-border); }
+
+  &.btn-light-success   { background: var(--ds-success-subtle); color: var(--ds-success-darkest); border-color: transparent; }
+  &.btn-light-success:not(:disabled):hover   { background: var(--ds-success-light); }
+  &.btn-light-success:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-success-border); }
+
+  &.btn-light-info      { background: var(--ds-info-subtle); color: var(--ds-info-darkest); border-color: transparent; }
+  &.btn-light-info:not(:disabled):hover      { background: var(--ds-info-light); }
+  &.btn-light-info:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-info-border); }
+
+  &.btn-light-warning   { background: var(--ds-warning-subtle); color: var(--ds-warning-darkest); border-color: transparent; }
+  &.btn-light-warning:not(:disabled):hover   { background: var(--ds-warning-light); }
+  &.btn-light-warning:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-warning-border); }
+
+  &.btn-light-error     { background: var(--ds-danger-subtle); color: var(--ds-danger-darkest); border-color: transparent; }
+  &.btn-light-error:not(:disabled):hover     { background: var(--ds-danger-light); }
+  &.btn-light-error:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-danger-border); }
+
+  /* ══ Ghost ══════════════════════════════════════════════════ */
+  &.btn-ghost-primary   { background: transparent; color: var(--ds-text); border-color: transparent; }
+  &.btn-ghost-primary:not(:disabled):hover   { background: var(--ds-brand-subtle); }
+  &.btn-ghost-primary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-brand-focus-shadow); }
+
+  &.btn-ghost-secondary { background: transparent; color: var(--ds-brand-dark); border-color: transparent; }
+  &.btn-ghost-secondary:not(:disabled):hover { background: var(--ds-brand-subtle); }
+  &.btn-ghost-secondary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-brand-border); }
+
+  &.btn-ghost-success   { background: transparent; color: var(--ds-success-darkest); border-color: transparent; }
+  &.btn-ghost-success:not(:disabled):hover   { background: var(--ds-success-subtle); }
+  &.btn-ghost-success:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-success-border); }
+
+  &.btn-ghost-info      { background: transparent; color: var(--ds-info-darkest); border-color: transparent; }
+  &.btn-ghost-info:not(:disabled):hover      { background: var(--ds-info-subtle); }
+  &.btn-ghost-info:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-info-border); }
+
+  &.btn-ghost-warning   { background: transparent; color: var(--ds-warning-darkest); border-color: transparent; }
+  &.btn-ghost-warning:not(:disabled):hover   { background: var(--ds-warning-subtle); }
+  &.btn-ghost-warning:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-warning-border); }
+
+  &.btn-ghost-error     { background: transparent; color: var(--ds-danger-darkest); border-color: transparent; }
+  &.btn-ghost-error:not(:disabled):hover     { background: var(--ds-danger-subtle); }
+  &.btn-ghost-error:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-danger-border); }
+
+  /* ══ Outlined ═══════════════════════════════════════════════ */
+  &.btn-outlined-primary   { background: var(--ds-bg); color: var(--ds-text); border-color: var(--ds-text); }
+  &.btn-outlined-primary:not(:disabled):hover   { background: var(--ds-brand-subtle); }
+  &.btn-outlined-primary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-brand-focus-shadow); }
+
+  &.btn-outlined-secondary { background: var(--ds-bg); color: var(--ds-brand-dark); border-color: var(--ds-brand-dark); }
+  &.btn-outlined-secondary:not(:disabled):hover { background: var(--ds-brand-subtle); }
+  &.btn-outlined-secondary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-brand-border); }
+
+  &.btn-outlined-success   { background: var(--ds-bg); color: var(--ds-success-darkest); border-color: var(--ds-success); }
+  &.btn-outlined-success:not(:disabled):hover   { background: var(--ds-success-subtle); }
+  &.btn-outlined-success:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-success-border); }
+
+  &.btn-outlined-info      { background: var(--ds-bg); color: var(--ds-info-darkest); border-color: var(--ds-info); }
+  &.btn-outlined-info:not(:disabled):hover      { background: var(--ds-info-subtle); }
+  &.btn-outlined-info:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-info-border); }
+
+  &.btn-outlined-warning   { background: var(--ds-bg); color: var(--ds-warning-darkest); border-color: var(--ds-warning); }
+  &.btn-outlined-warning:not(:disabled):hover   { background: var(--ds-warning-subtle); }
+  &.btn-outlined-warning:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-warning-border); }
+
+  &.btn-outlined-error     { background: var(--ds-bg); color: var(--ds-danger-darkest); border-color: var(--ds-danger); }
+  &.btn-outlined-error:not(:disabled):hover     { background: var(--ds-danger-subtle); }
+  &.btn-outlined-error:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-danger-border); }
+
+  /* ══ Tinted ══════════════════════════════════════════════════ */
+  &.btn-tinted-primary   { background: var(--ds-brand-subtle); color: var(--ds-text); border-color: var(--ds-text); }
+  &.btn-tinted-primary:not(:disabled):hover   { background: var(--ds-brand-light); }
+  &.btn-tinted-primary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-brand-focus-shadow); }
+
+  &.btn-tinted-secondary { background: var(--ds-brand-subtle); color: var(--ds-brand-dark); border-color: var(--ds-brand-dark); }
+  &.btn-tinted-secondary:not(:disabled):hover { background: var(--ds-brand-light); }
+  &.btn-tinted-secondary:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-brand-border); }
+
+  &.btn-tinted-success   { background: var(--ds-success-subtle); color: var(--ds-success-darkest); border-color: var(--ds-success); }
+  &.btn-tinted-success:not(:disabled):hover   { background: var(--ds-success-light); }
+  &.btn-tinted-success:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-success-border); }
+
+  &.btn-tinted-info      { background: var(--ds-info-subtle); color: var(--ds-info-darkest); border-color: var(--ds-info); }
+  &.btn-tinted-info:not(:disabled):hover      { background: var(--ds-info-light); }
+  &.btn-tinted-info:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-info-border); }
+
+  &.btn-tinted-warning   { background: var(--ds-warning-subtle); color: var(--ds-warning-darkest); border-color: var(--ds-warning); }
+  &.btn-tinted-warning:not(:disabled):hover   { background: var(--ds-warning-light); }
+  &.btn-tinted-warning:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-warning-border); }
+
+  &.btn-tinted-error     { background: var(--ds-danger-subtle); color: var(--ds-danger-darkest); border-color: var(--ds-danger); }
+  &.btn-tinted-error:not(:disabled):hover     { background: var(--ds-danger-light); }
+  &.btn-tinted-error:not(:disabled):focus-visible { box-shadow: 0 0 0 3px var(--ds-danger-border); }
+}
+
+/* ── Dark mode overrides ─────────────────────────────────────── */
+[data-theme="dark"] button.btn {
+
+  /* Disabled — softer muted appearance */
+  &:disabled,
+  &[aria-disabled="true"] {
+    background: var(--ds-bg-subtle) !important;
+    color: var(--ds-text-disabled) !important;
+  }
+
+  /* btn-solid-primary — handled via CSS variables in styles.scss */
+
+  /* ── Solid secondary → brand-toned dark card ── */
+  &.btn-solid-secondary {
+    background: var(--ds-brand-subtle);
+    color: var(--ds-brand-text);
+    border-color: transparent;
+  }
+  &.btn-solid-secondary:not(:disabled):hover {
+    background: var(--ds-brand-light);
+    color: var(--ds-text);
+  }
+
+  /* ── Solid semantic (success / info / warning / error) — keep colored,
+        use dark-mode token values which are already softened ──────── */
+  &.btn-solid-success   { background: var(--ds-success);  color: #fff; border-color: var(--ds-success);  }
+  &.btn-solid-info      { background: var(--ds-info);     color: #fff; border-color: var(--ds-info);     }
+  &.btn-solid-warning   { background: var(--ds-warning);  color: #fff; border-color: var(--ds-warning);  }
+  &.btn-solid-error     { background: var(--ds-danger);   color: #fff; border-color: var(--ds-danger);   }
+
+  /* ── Ghost primary → text uses dark text tokens ── */
+  &.btn-ghost-primary   { background: transparent; color: var(--ds-text-secondary); border-color: transparent; }
+  &.btn-ghost-primary:not(:disabled):hover {
+    background: var(--ds-bg-muted);
+    color: var(--ds-text);
+  }
+
+  /* ── Outlined primary → visible but softer border ── */
+  &.btn-outlined-primary {
+    background: var(--ds-bg-subtle);
+    color: var(--ds-text-secondary);
+    border-color: var(--ds-border-strong);
+  }
+  &.btn-outlined-primary:not(:disabled):hover {
+    background: var(--ds-bg-muted);
+    color: var(--ds-text);
+    border-color: var(--ds-border-medium);
+  }
+
+  /* ── Light primary → darker card, no border (reference: Image #10) ── */
+  &.btn-light-primary {
+    background: var(--ds-bg-subtle);
+    color: var(--ds-text-secondary);
+    border-color: transparent;
+  }
+  &.btn-light-primary:not(:disabled):hover {
+    background: var(--ds-bg-muted);
+    color: var(--ds-text);
+    border-color: transparent;
+  }
+
+  /* ── Tinted primary ── */
+  &.btn-tinted-primary {
+    background: var(--ds-brand-subtle);
+    color: var(--ds-brand-text);
+    border-color: var(--ds-brand-border);
+  }
+  &.btn-tinted-primary:not(:disabled):hover {
+    background: var(--ds-brand-light);
+    color: var(--ds-text);
+  }
+}

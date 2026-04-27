@@ -1,0 +1,25 @@
+[33m❯[39m Building...
+[32m✔[39m Building...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m               [2m | [22m [1mRaw size[22m[39m
+[37m[32mchunk-WSBZF3JM.js[39m[37m  [2m | [22m[2m-[22m                   [2m | [22m  [36m1.37 MB[39m[37m[2m | [22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m                [2m | [22m[36m247.23 kB[39m[37m[2m | [22m[39m
+[37m[32mstyles.css[39m[37m         [2m | [22m[2mstyles[22m              [2m | [22m[36m112.05 kB[39m[37m[2m | [22m[39m
+[37m[32mpolyfills.js[39m[37m       [2m | [22m[2mpolyfills[22m           [2m | [22m [36m89.70 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-OGEK3762.js[39m[37m  [2m | [22m[2m-[22m                   [2m | [22m  [36m5.53 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1m [22m                  [2m | [22m[1mInitial total[22m       [2m | [22m  [1m1.83 MB[22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m               [2m | [22m [1mRaw size[22m[39m
+[37m[32mchunk-F4H2HLYB.js[39m[37m  [2m | [22m[2mcreate-survey-module[22m[2m | [22m  [36m1.57 MB[39m[37m[2m | [22m[39m
+[37m[32mchunk-44JDXDP2.js[39m[37m  [2m | [22m[2mdashboard-module[22m    [2m | [22m[36m619.62 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-QTNA2PFU.js[39m[37m  [2m | [22m[2mreports-module[22m      [2m | [22m[36m285.81 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-U4SB4SGH.js[39m[37m  [2m | [22m[2m-[22m                   [2m | [22m[36m151.70 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-7K7L6H54.js[39m[37m  [2m | [22m[2minsights-module[22m     [2m | [22m [36m84.64 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-HI2NOQQ4.js[39m[37m  [2m | [22m[2mportal-module[22m       [2m | [22m [36m74.14 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-DR37WRZA.js[39m[37m  [2m | [22m[2mroutes[22m              [2m | [22m  [36m3.89 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-LT2AP6MZ.js[39m[37m  [2m | [22m[2mpulse-module[22m        [2m | [22m  [36m3.48 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [3.693 seconds] - 2026-04-27T08:37:10.526Z[39m
+[37m[39m
+[37mOutput location: /Volumes/My_drive/Dashboard-pulse/pulse-dashboard/dist/apps/ng-dashboard[39m
+[37m[39m
